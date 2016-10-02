@@ -33,6 +33,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
+        }
+        debug {
+            buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
         }
     }
 }
@@ -60,4 +64,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
+    compile "com.squareup:seismic:$rootProject.ext.seismicVersion"
+    compile "com.amazonaws:aws-android-sdk-s3:$rootProject.ext.awsS3Version"
 }
