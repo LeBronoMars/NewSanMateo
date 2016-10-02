@@ -6,5 +6,7 @@ package sanmateo.com.profileapp.enums;
 
 public enum  ApiAction {
 
-    POST_AUTH
+    POST_AUTH,
+
+    POST_REGISTER
 }

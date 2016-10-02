@@ -25,4 +25,18 @@ public interface ApiInterface {
     @FormUrlEncoded
     Observable<AuthResponse> authenticateUser(@Field("email") String email,
                                               @Field("password") String password);
+
+    /**
+     * create user
+     * */
+    @POST("/api/v1/user")
+    @FormUrlEncoded
+    Observable<AuthResponse> createUser(@Field("first_name") String firstName,
+                                        @Field("last_name") String lastName,
+                                        @Field("contact_no") String contactNo,
+                                        @Field("gender") String gender,
+                                        @Field("email") String email,
+                                        @Field("address") String address,
+                                        @Field("user_level") String userLevel,
+                                        @Field("password") String password);
 }

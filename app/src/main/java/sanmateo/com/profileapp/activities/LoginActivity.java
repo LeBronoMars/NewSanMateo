@@ -111,8 +111,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
 
     @OnClick(R.id.btn_create_account)
     public void showRegistrationPage() {
-        //startActivity(new Intent(this, RegistrationActivity.class));
-        animateToLeft(this);
+        moveToOtherActivity(RegistrationActivity.class);
     }
 
     @Override

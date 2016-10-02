@@ -28,6 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- registration activity -->
+        <activity android:name=".activities.RegistrationActivity"
+            android:screenOrientation="portrait"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="c277574b48aa967c2623d91a564e6db73440d04a" />

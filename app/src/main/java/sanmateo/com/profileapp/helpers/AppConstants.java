@@ -16,6 +16,7 @@ public class AppConstants {
     public static final String WARN_CANT_GET_IMAGE = "We can't get your image. Please try again.";
     public static final String WARN_INVALID_ACCOUNT = "Invalid account!";
     public static final String WARN_INVALID_CONTACT_NO = "Invalid contact no";
+    public static final String WARN_SELECT_GENDER = "Please specifiy your gender!";
 
     /** aws s3 buckets */
     public static final String BUCKET_ROOT = "sanmateoprofileapp";

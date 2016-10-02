@@ -28,6 +28,15 @@ public class ApiRequestHelper {
         handleObservableResult(ApiAction.POST_AUTH, observable);
     }
 
+    public void createUser(final String firstName, final String lastName, final String contactNo,
+                           final String gender, final String email, final String address,
+                           final String userLevel, final String password) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.POST_REGISTER);
+        final Observable<AuthResponse> observable = apiInterface.createUser(firstName, lastName,
+                contactNo, gender, email, address, userLevel, password);
+        handleObservableResult(ApiAction.POST_REGISTER, observable);
+    }
+
     /**
      * handle api result using lambda
      *
