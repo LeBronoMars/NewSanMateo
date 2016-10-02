@@ -1,6 +1,35 @@
 <resources>
     <string name="app_name">Profile App</string>
+    <!-- login screen -->
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+
+    <!-- login dialog fragment -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 
     <!-- custom dialog progress with bar -->
     <string name="uploading_image">Uploading image, Please wait...</string>
+
+    <!-- panic settings dialog fragment -->
+    <string name="panic_settings_header">Set emergency contacts</string>
+    <string name="no_contacts">No contact/s found!</string>
+    <string name="select_contact">Select from Contacts</string>
+    <string name="close">Close</string>
+
+    <!-- user registration dialog fragment -->
+    <string name="registration">Registration</string>
+    <string name="user_info">Your Information</string>
+    <string name="user_account">Your Account</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="nick_name">Nick Name</string>
+    <string name="gender">Gender</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="contact_no">Contact No</string>
+    <string name="address">Address</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="create_my_account">Create my account</string>
+    <string name="select_gender">Select Gender</string>
 </resources>

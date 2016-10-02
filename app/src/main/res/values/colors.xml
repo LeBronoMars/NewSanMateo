@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#49A3c7</color>
+    <color name="colorPrimaryAlpha">#9649A3c7</color>
+    <color name="colorPrimaryDark">#33728b</color>
+    <color name="colorAccent">#49A3c7</color>
+    <color name="gray_bg">#445b63</color>
+    <color name="shade1">@color/colorPrimary</color>
+    <color name="shade2">#4192b3</color>
+    <color name="shade3">#3a829f</color>
+    <color name="shade4">#33728b</color>
+    <color name="shade5">#2b6177</color>
+    <color name="shade6">#245163</color>
+    <color name="shade7">#1d414f</color>
+    <color name="shade8">#15303b</color>
+    <color name="shade9">#0e2027</color>
+    <color name="shade10">#071013</color>
+    <array name="shade_array">
+        <item>@color/shade1</item>
+        <item>@color/shade2</item>
+        <item>@color/shade3</item>
+        <item>@color/shade4</item>
+        <item>@color/shade5</item>
+        <item>@color/shade6</item>
+        <item>@color/shade7</item>
+        <item>@color/shade8</item>
+        <item>@color/shade9</item>
+        <item>@color/shade10</item>
+    </array>
+    <color name="fb_button_bg">#3b589d</color>
+    <color name="report_button_bg">#be0d0d</color>
+    <color name="report_button_bg_dark">#720707</color>
+
+    <color name="water_level_alert">#1E90FF</color>
+    <color name="water_level_alarm">#BA55D3</color>
+    <color name="water_level_critical">#be0d0d</color>
+
+    <color name="dirty_white">#f5f5f5</color>
+    <color name="dirty_white_clicked">#c4c4c4</color>
+    <color name="black_transparent">#50000000</color>
+    <color name="black_translucent">#80000000</color>
+
+    <color name="yellow">#FFCC00</color>
+    <color name="metro_orange">#da532c</color>
 </resources>

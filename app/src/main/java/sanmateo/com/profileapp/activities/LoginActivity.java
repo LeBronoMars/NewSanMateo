@@ -19,12 +19,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.interfaces.OnApiRquestListener;
+import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 
 
 /**
  * Created by rsbulanon on 10/2/16.
  */
-public class LoginActivity extends BaseActivity implements OnApiRequestListener, SurfaceHolder.Callback {
+public class LoginActivity extends BaseActivity implements OnApiRquestListener, SurfaceHolder.Callback {
 
     @BindView(R.id.btnSignIn) Button btnSignIn;
     @BindView(R.id.surfaceView) SurfaceView surfaceView;
@@ -32,7 +35,6 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
     private static final int REQUEST_PERMISSIONS = 1;
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mp;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
