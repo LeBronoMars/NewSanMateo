@@ -31,13 +31,11 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.squareup.seismic.ShakeDetector;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -51,7 +49,14 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import retrofit2.adapter.rxjava.HttpException;
+import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.fragments.CustomProgressBarDialogFragment;
+import sanmateo.com.profileapp.fragments.CustomProgressDialogFragment;
+import sanmateo.com.profileapp.helpers.AmazonS3Helper;
+import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
+import sanmateo.com.profileapp.singletons.BusSingleton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -93,7 +98,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     public void showToast(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public boolean isValidEmail(final String email) {
@@ -104,7 +109,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         if (customProgressDialogFragment == null) {
             customProgressDialogFragment = CustomProgressDialogFragment.newInstance(message);
             customProgressDialogFragment.setCancelable(false);
-            customProgressDialogFragment.show(getFragmentManager(),"progress");
+            customProgressDialogFragment.show(getFragmentManager(), "progress");
         }
     }
 
@@ -113,7 +118,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
             customProgressBarDialogFragment = CustomProgressBarDialogFragment
                     .newInstance(max, current, total);
             customProgressBarDialogFragment.setCancelable(false);
-            customProgressBarDialogFragment.show(getFragmentManager(),"progress");
+            customProgressBarDialogFragment.show(getFragmentManager(), "progress");
         }
     }
 
@@ -125,7 +130,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
 
     public void updateCustomProgressBar(final int progress, final int max) {
         if (customProgressBarDialogFragment != null) {
-            customProgressBarDialogFragment.updateProgress(progress,max);
+            customProgressBarDialogFragment.updateProgress(progress, max);
         }
     }
 
@@ -143,48 +148,25 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         }
     }
 
-    public void showConfirmDialog(final String action, final String header, final String message,
+    public void showConfirmDialog(final String action, final String title, final String content,
                                   final String positiveText, final String negativeText,
                                   final OnConfirmDialogListener onConfirmDialogListener) {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_error_confirm);
-        ((TextView)dialog.findViewById(R.id.tvHeader)).setText(header);
-        ((TextView)dialog.findViewById(R.id.tvMessage)).setText(message);
-        final Display display = getWindowManager().getDefaultDisplay();
-        final Point size = new Point();
-        display.getSize(size);
-        dialog.layoutParams((int) (size.x * .70), LinearLayout.LayoutParams.WRAP_CONTENT);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        if (!positiveText.isEmpty()) {
-            dialog.positiveAction(positiveText);
-            dialog.positiveActionTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-            dialog.positiveActionClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    if (onConfirmDialogListener != null) {
-                        onConfirmDialogListener.onConfirmed(action);
-                    }
-                }
-            });
-        }
-        dialog.negativeAction(negativeText);
-        dialog.negativeActionTextColor(ContextCompat.getColor(this, R.color.colorPrimary));
-        dialog.negativeActionClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (onConfirmDialogListener != null) {
+        new MaterialDialog.Builder(this)
+                .title(title)
+                .content(content)
+                .positiveText(positiveText)
+                .negativeText(negativeText)
+                .onPositive((dialog, which) -> {
+                    onConfirmDialogListener.onConfirmed(action);
+                })
+                .onNegative((dialog, which) -> {
                     onConfirmDialogListener.onCancelled(action);
-                }
-            }
-        });
-        dialog.show();
+                })
+                .show();
     }
 
-    public void showSnackbar(final View parent,final String message) {
-        Snackbar.make(parent,message,Snackbar.LENGTH_LONG).show();
+    public void showSnackbar(final View parent, final String message) {
+        Snackbar.make(parent, message, Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -218,7 +200,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     public Drawable getImageById(final int id) {
-        return ContextCompat.getDrawable(this,id);
+        return ContextCompat.getDrawable(this, id);
     }
 
     public void setToolbarTitle(final String title) {
@@ -259,9 +241,13 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         animateToRight(this);
     }
 
-    public SimpleDateFormat getDateFormatter() { return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss"); }
+    public SimpleDateFormat getDateFormatter() {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    }
 
-    public SimpleDateFormat getSDF() { return  new SimpleDateFormat("EEE, yyyy-MM-dd hh:mm a"); }
+    public SimpleDateFormat getSDF() {
+        return new SimpleDateFormat("EEE, yyyy-MM-dd hh:mm a");
+    }
 
     public PrettyTime getPrettyTime() {
         return new PrettyTime();
@@ -269,8 +255,8 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
 
     public String getFilePath(final Intent data) {
         final Uri selectedImage = data.getData();
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
         cursor.moveToFirst();
         final int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         final String picturePath = cursor.getString(columnIndex);
@@ -288,10 +274,10 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
             return bitmap;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            LogHelper.log("img","file not found exception --> " + e.getMessage());
+            LogHelper.log("img", "file not found exception --> " + e.getMessage());
         } catch (IOException ioe) {
             ioe.printStackTrace();
-            LogHelper.log("img","io exception ---> " + ioe.getMessage());
+            LogHelper.log("img", "io exception ---> " + ioe.getMessage());
         }
         return null;
     }
@@ -313,7 +299,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
             fos.close();
             return f;
         } catch (IOException e) {
-            LogHelper.log("select_image","unable to select image --> " + e.getMessage());
+            LogHelper.log("select_image", "unable to select image --> " + e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -344,7 +330,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         return file;
     }
 
-    private void resizeImage(final File file,final Matrix matrix) {
+    private void resizeImage(final File file, final Matrix matrix) {
         try {
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 0; //try to decrease decoded image
@@ -352,7 +338,8 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
             FileOutputStream fos = new FileOutputStream(file);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fos);
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+        }
     }
 
     public File createImageFile() {
@@ -408,12 +395,12 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
             panicSettingsFragment.dismiss();
             initPanicContact();
         });
-        panicSettingsFragment.show(getSupportFragmentManager(),"panic");
+        panicSettingsFragment.show(getSupportFragmentManager(), "panic");
     }
 
     public void initPanicContact() {
         if (PrefsHelper.getInt(this, "panicContactSize") == 0) {
-            LogHelper.log("book","show");
+            LogHelper.log("book", "show");
             showConfirmDialog("", "Emergency Contacts", "Please add at least one contact person" +
                     " for emergency purposes", "Ok", "", new OnConfirmDialogListener() {
                 @Override
@@ -427,13 +414,13 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
                 }
             });
         } else {
-            LogHelper.log("book","do not show");
+            LogHelper.log("book", "do not show");
         }
     }
 
     public List<LocalGallery> toLocalGallery(List<Photo> photoList) {
         List<LocalGallery> localGalleryList = new ArrayList<>();
-        for (Photo p: photoList) {
+        for (Photo p : photoList) {
             int id = p.getId();
             String createdAt = p.getCreatedAt();
             String updatedAt = p.getUpdatedAt();
@@ -451,20 +438,20 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
     public void uploadImageToS3(final String bucketName, final File fileToUpload, final int current,
                                 final int total) {
         if (isNetworkAvailable()) {
-            showCustomProgressBar(0,current,total);
-            amazonS3Helper.uploadImage(bucketName,fileToUpload).setTransferListener(new TransferListener() {
+            showCustomProgressBar(0, current, total);
+            amazonS3Helper.uploadImage(bucketName, fileToUpload).setTransferListener(new TransferListener() {
                 @Override
                 public void onStateChanged(int id, TransferState state) {
                     if (state.name().equals("COMPLETED")) {
                         dismissCustomProgressBar();
-                        final String url = amazonS3Helper.getResourceUrl(bucketName,fileToUpload.getName());
+                        final String url = amazonS3Helper.getResourceUrl(bucketName, fileToUpload.getName());
                         onS3UploadListener.onUploadFinished(bucketName, url);
                     }
                 }
 
                 @Override
                 public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-                    updateCustomProgressBar((int)bytesCurrent,(int)bytesTotal);
+                    updateCustomProgressBar((int) bytesCurrent, (int) bytesTotal);
                 }
 
                 @Override
@@ -473,35 +460,35 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
                 }
             });
         } else {
-            showConfirmDialog("","No Connection",AppConstants.WARN_CONNECTION,"Close","",null);
+            showConfirmDialog("", "No Connection", AppConstants.WARN_CONNECTION, "Close", "", null);
         }
     }
 
     public void deleteImage(final String bucketName, final String fileName) {
-        new DeleteImageFromS3(bucketName,fileName).execute();
+        new DeleteImageFromS3(bucketName, fileName).execute();
     }
 
-    private class DeleteImageFromS3 extends AsyncTask<Void,Void,Void> {
+    private class DeleteImageFromS3 extends AsyncTask<Void, Void, Void> {
 
         private String bucketName;
         private String fileName;
 
         public DeleteImageFromS3(String bucketName, String fileName) {
             this.bucketName = bucketName;
-            this.fileName = fileName.replace("https://s3-us-west-1.amazonaws.com/"+AppConstants.BUCKET_ROOT+"/","");
-            LogHelper.log("aa","file name to delete --> " + this.fileName);
+            this.fileName = fileName.replace("https://s3-us-west-1.amazonaws.com/" + AppConstants.BUCKET_ROOT + "/", "");
+            LogHelper.log("aa", "file name to delete --> " + this.fileName);
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            amazonS3Helper.deleteImage(bucketName,fileName);
+            amazonS3Helper.deleteImage(bucketName, fileName);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            LogHelper.log("aa","image successfully deleted from s3");
+            LogHelper.log("aa", "image successfully deleted from s3");
         }
     }
 
@@ -518,13 +505,13 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
 
     public void handleApiException(final Throwable t) {
         final HttpException ex = (HttpException) t;
-        LogHelper.log("err","CODE ---> " + ex.code() + " message --> " + ex.getMessage());
+        LogHelper.log("err", "CODE ---> " + ex.code() + " message --> " + ex.getMessage());
         if (ex.code() == 401) {
             showConfirmDialog("", "Session Expired", "Sorry, but your session has expired", "Close",
                     "", new OnConfirmDialogListener() {
                         @Override
                         public void onConfirmed(String action) {
-                           Intent intent = null;
+                            Intent intent = null;
                             if (BuildConfig.FLAVOR.equals("admin")) {
                                 intent = new Intent(BaseActivity.this, AdminLoginActivity.class);
                             } else {
@@ -550,12 +537,12 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         final PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0, new Intent(DELIVERED), 0);
 
         /** when the SMS has been sent */
-        registerReceiver(new BroadcastReceiver(){
+        registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        LogHelper.log("sms","sms sent!");
+                        LogHelper.log("sms", "sms sent!");
                         showToast("Your concern has been successfully sent to Mayor Tina!");
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
@@ -565,25 +552,25 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
                         showToast("Unable to send your text concern, Please check your network connection");
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
-                        LogHelper.log("sms","null pdu");
+                        LogHelper.log("sms", "null pdu");
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        LogHelper.log("sms","radio off");
+                        LogHelper.log("sms", "radio off");
                         break;
                 }
             }
         }, new IntentFilter(SENT));
 
         /** when the SMS has been delivered */
-        registerReceiver(new BroadcastReceiver(){
+        registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
-                        LogHelper.log("sms","sms delivered!");
+                        LogHelper.log("sms", "sms delivered!");
                         break;
                     case Activity.RESULT_CANCELED:
-                        LogHelper.log("sms","sms not delivered");
+                        LogHelper.log("sms", "sms not delivered");
                         break;
                 }
             }
@@ -597,16 +584,16 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
     public void hearShake() {
         for (PanicContact panicContact : DaoHelper.getAllPanicContacts()) {
             showToast("Sending SOS to all contacts in your panic phone book...");
-            sendSMS(panicContact.getContactNo(),"Help me!");
+            sendSMS(panicContact.getContactNo(), "Help me!");
         }
     }
 
     private void initShakeDetector() {
         if (sensorManager == null) {
-            sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+            sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
             shakeDetector = new ShakeDetector(this);
             shakeDetector.start(sensorManager);
-            LogHelper.log("shake","on shake initialized!");
+            LogHelper.log("shake", "on shake initialized!");
         }
     }
 

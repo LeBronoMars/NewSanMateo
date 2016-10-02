@@ -39,6 +39,10 @@ android {
             buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 
@@ -66,4 +70,7 @@ dependencies {
     }
     compile "com.squareup:seismic:$rootProject.ext.seismicVersion"
     compile "com.amazonaws:aws-android-sdk-s3:$rootProject.ext.awsS3Version"
+    compile "com.afollestad.material-dialogs:core:$rootProject.ext.materialDialogCoreVersion"
+    compile "org.ocpsoft.prettytime:prettytime:$rootProject.ext.prettyTimeVersion"
+    compile "com.google.android.gms:play-services-maps:$rootProject.ext.playServicesVersion"
 }
