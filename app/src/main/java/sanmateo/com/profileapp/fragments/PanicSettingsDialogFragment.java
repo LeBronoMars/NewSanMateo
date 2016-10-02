@@ -21,8 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONObject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,7 +31,7 @@ import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.helpers.PrefsHelper;
 import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
-import sanmateo.com.profileapp.models.request.PanicContact;
+import sanmateo.com.profileapp.models.realm.PanicContact;
 
 /**
  * Created by rsbulanon on 10/2/16.

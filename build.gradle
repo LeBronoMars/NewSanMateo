@@ -50,4 +50,5 @@ ext {
     materialDialogCoreVersion = '0.9.0.2'
     prettyTimeVersion = '4.0.1.Final'
     playServicesVersion = '8.4.0'
+    circleImageViewVersion = '2.0.0'
 }

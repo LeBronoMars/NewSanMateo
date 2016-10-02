@@ -1,6 +1,5 @@
 package sanmateo.com.profileapp.activities;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaPlayer;
@@ -20,17 +19,27 @@ import butterknife.OnClick;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
-import sanmateo.com.profileapp.interfaces.OnApiRquestListener;
+import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.fragments.LoginDialogFragment;
+import sanmateo.com.profileapp.helpers.ApiErrorHelper;
+import sanmateo.com.profileapp.helpers.ApiRequestHelper;
+import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
+import sanmateo.com.profileapp.models.response.ApiError;
+import sanmateo.com.profileapp.models.response.AuthResponse;
 
 
 /**
  * Created by rsbulanon on 10/2/16.
  */
-public class LoginActivity extends BaseActivity implements OnApiRquestListener, SurfaceHolder.Callback {
+public class LoginActivity extends BaseActivity implements OnApiRequestListener, SurfaceHolder.Callback {
 
-    @BindView(R.id.btnSignIn) Button btnSignIn;
-    @BindView(R.id.surfaceView) SurfaceView surfaceView;
+    @BindView(R.id.btn_sign_in)
+    Button btnSignIn;
+    @BindView(R.id.surfaceView)
+    SurfaceView surfaceView;
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
     private SurfaceHolder surfaceHolder;
@@ -76,72 +85,73 @@ public class LoginActivity extends BaseActivity implements OnApiRquestListener, 
     }
 
     private void initialize() {
-        if (!DaoHelper.haCurrentUser()) {
-            AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
-            apiRequestHelper = new ApiRequestHelper(this);
-        } else {
-            moveToHome();
-        }
+        AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
+        apiRequestHelper = new ApiRequestHelper(this);
+//        if (!DaoHelper.haCurrentUser()) {
+//            AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
+//            apiRequestHelper = new ApiRequestHelper(this);
+//        } else {
+//            moveToHome();
+//        }
     }
 
-    @OnClick(R.id.btnSignIn)
+    @OnClick(R.id.btn_sign_in)
     public void showLoginDialogFragment() {
         if (isNetworkAvailable()) {
             final LoginDialogFragment loginDialogFragment = LoginDialogFragment.newInstance();
             loginDialogFragment.setOnLoginListener((email, password) -> {
                 loginDialogFragment.dismiss();
-                apiRequestHelper.authenticateUser(email,password);
+                apiRequestHelper.authenticateUser(email, password);
             });
-            loginDialogFragment.show(getFragmentManager(),"login");
+            loginDialogFragment.show(getFragmentManager(), "login");
         } else {
             showSnackbar(btnSignIn, AppConstants.WARN_CONNECTION);
         }
     }
 
-    @OnClick(R.id.btnCreateAccount)
+    @OnClick(R.id.btn_create_account)
     public void showRegistrationPage() {
-        startActivity(new Intent(this, RegistrationActivity.class));
+        //startActivity(new Intent(this, RegistrationActivity.class));
         animateToLeft(this);
     }
 
     @Override
-    public void onApiRequestBegin(String action) {
-        if (action.equals(AppConstants.ACTION_LOGIN)) {
+    public void onApiRequestBegin(ApiAction action) {
+        if (action.equals(ApiAction.POST_AUTH)) {
             showCustomProgress("Logging in, Please wait...");
         }
     }
 
     @Override
-    public void onApiRequestSuccess(String action, Object result) {
+    public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
-        if (action.equals(AppConstants.ACTION_LOGIN)) {
-            final AuthResponse authResponse = (AuthResponse)result;
+        if (action.equals(ApiAction.POST_AUTH)) {
+            final AuthResponse authResponse = (AuthResponse) result;
             if (authResponse.getUserLevel().equals("superadmin") ||
                     authResponse.getUserLevel().equals("admin")) {
                 showSnackbar(btnSignIn, AppConstants.WARN_INVALID_ACCOUNT);
             } else {
-                DaoHelper.saveCurrentUser(authResponse);
+                //DaoHelper.saveCurrentUser(authResponse);
                 moveToHome();
             }
         }
     }
 
     @Override
-    public void onApiRequestFailed(String action, Throwable t) {
+    public void onApiRequestFailed(ApiAction action, Throwable t) {
         dismissCustomProgress();
         handleApiException(t);
-        LogHelper.log("err","error in ---> " + action + " cause ---> " + t.getMessage());
+        LogHelper.log("err", "error in ---> " + action + " cause ---> " + t.getMessage());
         if (t instanceof HttpException) {
-            if (action.equals(AppConstants.ACTION_LOGIN)) {
+            if (action.equals(ApiAction.POST_AUTH)) {
                 final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
-                showConfirmDialog(action,"Login Failed", apiError.getMessage(),"Close","",null);
+                showConfirmDialog("", "Login Failed", apiError.getMessage(), "Close", "", null);
             }
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantResults) {
-        LogHelper.log("res","ON REQUEST PERMISSION");
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case REQUEST_PERMISSIONS:
                 final boolean writeExternalPermitted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
@@ -168,7 +178,6 @@ public class LoginActivity extends BaseActivity implements OnApiRquestListener, 
 
                         }
                     });
-                    LogHelper.log("res","permission denied");
                 }
                 break;
         }
@@ -186,7 +195,7 @@ public class LoginActivity extends BaseActivity implements OnApiRquestListener, 
                     mp.setDataSource(LoginActivity.this, video);
                     mp.prepare();
                 } catch (IOException e) {
-                    LogHelper.log("video","error inflating video background --> " + e.getMessage());
+                    LogHelper.log("video", "error inflating video background --> " + e.getMessage());
                     e.printStackTrace();
                 }
             } else {
@@ -247,8 +256,8 @@ public class LoginActivity extends BaseActivity implements OnApiRquestListener, 
     }
 
     private void moveToHome() {
-        startActivity(new Intent(this, NewHomeActivity.class));
-        animateToLeft(this);
-        finish();
+//        startActivity(new Intent(this, NewHomeActivity.class));
+//        animateToLeft(this);
+//        finish();
     }
 }

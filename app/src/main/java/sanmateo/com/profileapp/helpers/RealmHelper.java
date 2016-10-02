@@ -4,7 +4,7 @@ import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import sanmateo.com.profileapp.models.request.PanicContact;
+import sanmateo.com.profileapp.models.realm.PanicContact;
 
 /**
  * Created by rsbulanon on 10/2/16.

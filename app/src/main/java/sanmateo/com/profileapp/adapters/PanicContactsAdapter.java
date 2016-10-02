@@ -10,7 +10,7 @@ import android.widget.TextView;
 import io.realm.RealmList;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
-import sanmateo.com.profileapp.models.request.PanicContact;
+import sanmateo.com.profileapp.models.realm.PanicContact;
 
 
 /**

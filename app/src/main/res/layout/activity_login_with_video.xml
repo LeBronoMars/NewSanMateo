@@ -53,9 +53,8 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
-
             <Button
-                android:id="@+id/btnSignIn"
+                android:id="@+id/btn_sign_in"
                 android:layout_width="0dp"
                 android:layout_weight="50"
                 android:layout_height="wrap_content"
@@ -72,7 +71,7 @@
                 android:layout_height="wrap_content" />
 
             <Button
-                android:id="@+id/btnCreateAccount"
+                android:id="@+id/btn_create_account"
                 android:layout_width="0dp"
                 android:layout_weight="50"
                 android:layout_height="wrap_content"

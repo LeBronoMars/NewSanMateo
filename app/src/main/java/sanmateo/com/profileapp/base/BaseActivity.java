@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
@@ -31,15 +32,20 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.seismic.ShakeDetector;
+
+import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -49,17 +55,22 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.UUID;
 
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.activities.LoginActivity;
 import sanmateo.com.profileapp.fragments.CustomProgressBarDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomProgressDialogFragment;
+import sanmateo.com.profileapp.fragments.PanicSettingsDialogFragment;
 import sanmateo.com.profileapp.helpers.AmazonS3Helper;
+import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.helpers.PrefsHelper;
+import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
+import sanmateo.com.profileapp.models.realm.PanicContact;
 import sanmateo.com.profileapp.singletons.BusSingleton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -422,23 +433,6 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         }
     }
 
-    public List<LocalGallery> toLocalGallery(List<Photo> photoList) {
-        List<LocalGallery> localGalleryList = new ArrayList<>();
-        for (Photo p : photoList) {
-            int id = p.getId();
-            String createdAt = p.getCreatedAt();
-            String updatedAt = p.getUpdatedAt();
-            String deletedAt = p.getDeletedAt();
-            String title = p.getTitle();
-            String imageUrl = p.getImageUrl();
-            String description = p.getDescription();
-            localGalleryList.add(new LocalGallery(null, String.valueOf(id), createdAt,
-                    updatedAt, deletedAt, title, imageUrl, description));
-        }
-
-        return localGalleryList;
-    }
-
     public void uploadImageToS3(final String bucketName, final File fileToUpload, final int current,
                                 final int total) {
         if (isNetworkAvailable()) {
@@ -515,13 +509,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
                     "", new OnConfirmDialogListener() {
                         @Override
                         public void onConfirmed(String action) {
-                            Intent intent = null;
-                            if (BuildConfig.FLAVOR.equals("admin")) {
-                                intent = new Intent(BaseActivity.this, AdminLoginActivity.class);
-                            } else {
-                                intent = new Intent(BaseActivity.this, LoginActivity.class);
-                            }
-                            DaoHelper.deleteCurrentUser();
+                            final Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         }
@@ -586,7 +574,8 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
 
     @Override
     public void hearShake() {
-        for (PanicContact panicContact : DaoHelper.getAllPanicContacts()) {
+        final RealmHelper<PanicContact> realmHelper = new RealmHelper<>();
+        for (PanicContact panicContact : realmHelper.findAll(PanicContact.class)) {
             showToast("Sending SOS to all contacts in your panic phone book...");
             sendSMS(panicContact.getContactNo(), "Help me!");
         }

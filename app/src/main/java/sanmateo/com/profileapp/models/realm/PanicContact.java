@@ -1,4 +1,4 @@
-package sanmateo.com.profileapp.models.request;
+package sanmateo.com.profileapp.models.realm;
 
 import io.realm.RealmObject;
 
@@ -9,6 +9,9 @@ import io.realm.RealmObject;
 public class PanicContact extends RealmObject {
     private String contactName;
     private String contactNo;
+
+    public PanicContact() {
+    }
 
     public PanicContact(String contactName, String contactNo) {
         this.contactName = contactName;

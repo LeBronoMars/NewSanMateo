@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Profile App</string>
+    <string name="app_name">San Mateo Profile App</string>
     <!-- login screen -->
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
