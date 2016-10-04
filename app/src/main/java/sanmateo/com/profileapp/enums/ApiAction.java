@@ -12,6 +12,8 @@ public enum  ApiAction {
 
     GET_NEWS,
 
+    GET_NEWS_BY_ID,
+
     PUT_CHANGE_PW,
 
     PUT_CHANGE_PROFILE_PIC

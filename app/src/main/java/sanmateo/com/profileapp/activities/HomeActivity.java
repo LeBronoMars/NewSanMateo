@@ -24,7 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.Api;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -51,6 +50,7 @@ import sanmateo.com.profileapp.fragments.BannerFragment;
 import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
 import sanmateo.com.profileapp.fragments.ETextSiMayorDialogFragment;
+import sanmateo.com.profileapp.fragments.MayorMessageDialogFragment;
 import sanmateo.com.profileapp.fragments.SanMateoBannerFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
@@ -351,7 +351,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         if (action.equals(ApiAction.GET_NEWS)) {
             final ArrayList<News> news = (ArrayList<News>) result;
             newsSingleton.getAllNews().addAll(news);
-        } else if (action.equals(AppConstants.ACTION_GET_NEWS_BY_ID)) {
+        } else if (action.equals(ApiAction.GET_NEWS_BY_ID)) {
             final News news = (News) result;
             newsSingleton.getAllNews().add(0, news);
         } else if (action.equals(ApiAction.PUT_CHANGE_PW)) {
