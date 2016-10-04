@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.activities.ImageFullViewActivity;
 import sanmateo.com.profileapp.activities.IncidentsActivity;
 import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.models.response.AuthResponse;

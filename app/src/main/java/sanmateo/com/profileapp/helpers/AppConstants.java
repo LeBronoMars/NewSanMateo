@@ -47,4 +47,7 @@ public class AppConstants {
     public static final String IMAGE_URL_MARKER_MARKET_1 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/PublicMarket_pic1.png";
     public static final String IMAGE_URL_MARKER_MARKET_2 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/PublicMarket_pic2.png";
     public static final String IMAGE_URL_MARKER_MARKET_3 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/PublicMarket_pic3.png";
+
+    public static String SAN_MATEO_LOGO = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/banners/san_mateo_logo.png";
+
 }

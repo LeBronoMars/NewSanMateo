@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
@@ -73,7 +74,7 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
         amazonS3Helper = new AmazonS3Helper(this);
         apiRequestHelper = new ApiRequestHelper(this);
         incidentsSingleton = IncidentsSingleton.getInstance();
-        currentUserSingleton = CurrentUserSingleton.newInstance();
+        currentUserSingleton = CurrentUserSingleton.getInstance();
         token = currentUserSingleton.getCurrentUser().getToken();
         shareCallBackManager = CallbackManager.Factory.create();
 
