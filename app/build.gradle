@@ -34,11 +34,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'HOST_NAME', '\"https://freya.manila.exist.com\"'
+            buildConfigField 'String', 'HOST_NAME', '\"http://54.169.17.222:7000\"'
             buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
         }
         debug {
-            buildConfigField 'String', 'HOST_NAME', '\"https://freya.manila.exist.com\"'
+            buildConfigField 'String', 'HOST_NAME', '\"http://54.169.17.222:7000\"'
             buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
         }
     }

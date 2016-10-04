@@ -184,46 +184,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
 
     @Override
     public void surfaceCreated(final SurfaceHolder surfaceHolder) {
-        if (mp == null) {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                mp = new MediaPlayer();
-                LogHelper.log("video", "play video");
-                final Uri video = Uri.parse("android.resource://" + getPackageName() + "/"
-                        + R.raw.san_mateo_avp);
-                try {
-                    mp.setDataSource(LoginActivity.this, video);
-                    mp.prepare();
-                } catch (IOException e) {
-                    LogHelper.log("video", "error inflating video background --> " + e.getMessage());
-                    e.printStackTrace();
-                }
-            } else {
-                mp = MediaPlayer.create(this, R.raw.san_mateo_avp);
-            }
-            mp.setDisplay(surfaceHolder);
-
-            final Display display = getWindowManager().getDefaultDisplay();
-            final Point size = new Point();
-            display.getSize(size);
-
-            //Get the SurfaceView layout parameters
-            final android.view.ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
-
-            //Set the width of the SurfaceView to the width of the screen
-            lp.width = size.x;
-
-            //Set the height of the SurfaceView to match the aspect ratio of the video
-            //be sure to cast these as floats otherwise the calculation will likely be 0
-            //lp.height = (int) (((float)videoHeight / (float)videoWidth) * (float)size.x);
-            lp.height = size.y;
-
-            //Commit the layout parameters
-            surfaceView.setLayoutParams(lp);
-
-            //Start video
-            mp.start();
-            mp.setLooping(true);
-        }
+        playVideo();
     }
 
     @Override
@@ -244,6 +205,9 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
     @Override
     protected void onResume() {
         super.onResume();
+        if (mp != null) {
+            playVideo();
+        }
     }
 
     @Override
@@ -251,6 +215,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
         super.onPause();
         if (mp != null) {
             mp.pause();
+            mp = null;
         }
     }
 
@@ -258,5 +223,47 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
 //        startActivity(new Intent(this, NewHomeActivity.class));
 //        animateToLeft(this);
 //        finish();
+    }
+
+    private void playVideo() {
+        mp = null;
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+            mp = new MediaPlayer();
+            LogHelper.log("video", "play video");
+            final Uri video = Uri.parse("android.resource://" + getPackageName() + "/"
+                    + R.raw.san_mateo_avp);
+            try {
+                mp.setDataSource(LoginActivity.this, video);
+                mp.prepare();
+            } catch (IOException e) {
+                LogHelper.log("video", "error inflating video background --> " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            mp = MediaPlayer.create(this, R.raw.san_mateo_avp);
+        }
+        mp.setDisplay(surfaceHolder);
+
+        final Display display = getWindowManager().getDefaultDisplay();
+        final Point size = new Point();
+        display.getSize(size);
+
+        //Get the SurfaceView layout parameters
+        final android.view.ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
+
+        //Set the width of the SurfaceView to the width of the screen
+        lp.width = size.x;
+
+        //Set the height of the SurfaceView to match the aspect ratio of the video
+        //be sure to cast these as floats otherwise the calculation will likely be 0
+        //lp.height = (int) (((float)videoHeight / (float)videoWidth) * (float)size.x);
+        lp.height = size.y;
+
+        //Commit the layout parameters
+        surfaceView.setLayoutParams(lp);
+
+        //Start video
+        mp.start();
+        mp.setLooping(true);
     }
 }

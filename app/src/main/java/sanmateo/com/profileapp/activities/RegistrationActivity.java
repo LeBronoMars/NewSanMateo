@@ -22,6 +22,8 @@ import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.ApiError;
+import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 
 /**
  * Created by rsbulanon on 10/2/16.
@@ -36,7 +38,6 @@ public class RegistrationActivity extends BaseActivity implements OnApiRequestLi
     @BindView(R.id.et_password) EditText et_password;
     @BindView(R.id.et_confirm_password) EditText et_confirm_password;
     @BindView(R.id.spnr_gender) Spinner spnr_gender;
-
     private ApiRequestHelper apiRequestHelper;
 
     @Override
@@ -114,10 +115,13 @@ public class RegistrationActivity extends BaseActivity implements OnApiRequestLi
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
-        LogHelper.log("registration", "success >>> " + action);
         if (action.equals(ApiAction.POST_REGISTER)) {
-            //startActivity(new Intent(this, NewHomeActivity.class));
-            //finish();
+            showToast("Congratulation! You have successfully created your account!");
+            final AuthResponse authResponse = (AuthResponse) result;
+            CurrentUserSingleton.newInstance().setCurrentUser(authResponse);
+            startActivity(new Intent(this, HomeActivity.class));
+            animateToLeft(RegistrationActivity.this);
+            finish();
         }
     }
 
