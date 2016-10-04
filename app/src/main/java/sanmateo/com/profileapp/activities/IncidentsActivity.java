@@ -7,6 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -21,11 +26,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.adapters.IncidentsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.helpers.AmazonS3Helper;
+import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
+import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.helpers.PrefsHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
+import sanmateo.com.profileapp.models.response.ApiError;
+import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 
@@ -34,9 +47,9 @@ import sanmateo.com.profileapp.singletons.IncidentsSingleton;
  */
 public class IncidentsActivity extends BaseActivity implements OnApiRequestListener, OnS3UploadListener {
 
-    @BindView(R.id.rvIncidents)
-    RecyclerView rvIncidents;
-    @BindView(R.id.btnAdd)
+    @BindView(R.id.rv_incidents)
+    RecyclerView rv_incidents;
+    @BindView(R.id.btn_add)
     FloatingActionButton btnAdd;
     private ApiRequestHelper apiRequestHelper;
     private IncidentsSingleton incidentsSingleton;
@@ -76,41 +89,41 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
     }
 
     @Override
-    public void onApiRequestBegin(String action) {
+    public void onApiRequestBegin(final ApiAction action) {
         LogHelper.log("api","begin --> " + action);
-        if (action.equals(AppConstants.ACTION_GET_INCIDENTS)) {
+        if (action.equals(ApiAction.GET_INCIDENTS)) {
             showCustomProgress("Fetching all incident reports, Please wait...");
-        } else if (action.equals(AppConstants.ACTION_GET_LATEST_INCIDENTS)) {
+        } else if (action.equals(ApiAction.GET_LATEST_INCIDENTS)) {
             showCustomProgress("Fetching latest incident reports, Please wait...");
-        } else if (action.equals(AppConstants.ACTION_POST_INCIDENT_REPORT)) {
+        } else if (action.equals(ApiAction.POST_INCIDENT_REPORT)) {
             showCustomProgress("Filing your incident report, Please wait...");
-        } else if (action.equals(AppConstants.ACTION_POST_REPORT_MALICIOUS_INCIDENT)) {
+        } else if (action.equals(ApiAction.POST_MALICIOUS_REPORT)) {
             showCustomProgress("Submitting your report, Please wait...");
         }
     }
 
     @Override
-    public void onApiRequestSuccess(final String action,final Object result) {
+    public void onApiRequestSuccess(final ApiAction action, final Object result) {
         dismissCustomProgress();
-        if (action.equals(AppConstants.ACTION_GET_INCIDENTS) || action.equals(AppConstants.ACTION_GET_LATEST_INCIDENTS)) {
+        if (action.equals(ApiAction.GET_INCIDENTS) || action.equals(ApiAction.GET_LATEST_INCIDENTS)) {
             final ArrayList<Incident> incidents = (ArrayList<Incident>)result;
             LogHelper.log("api","success size --> " + incidents);
             incidentsSingleton.getIncidents(status).addAll(0,incidents);
-            rvIncidents.getAdapter().notifyDataSetChanged();
-            if (action.equals(AppConstants.ACTION_GET_LATEST_INCIDENTS)) {
+            rv_incidents.getAdapter().notifyDataSetChanged();
+            if (action.equals(ApiAction.GET_LATEST_INCIDENTS)) {
                 PrefsHelper.setBoolean(this,"refresh_incidents",false);
             }
-        } else if (action.equals(AppConstants.ACTION_POST_REPORT_MALICIOUS_INCIDENT)) {
+        } else if (action.equals(ApiAction.POST_MALICIOUS_REPORT)) {
             showConfirmDialog("","Malicious Incident Report","You have successfully filed a complaint about this " +
                     "incident report.","Close","",null);
-        } else if (action.equals(AppConstants.ACTION_POST_INCIDENT_REPORT)) {
+        } else if (action.equals(ApiAction.POST_INCIDENT_REPORT)) {
             showConfirmDialog("","Incident Report","You have successfully filed an incident report" +
                     ". Admins will review it first for publication.","Close","",null);
         }
     }
 
     @Override
-    public void onApiRequestFailed(String action, Throwable t) {
+    public void onApiRequestFailed(final ApiAction action, Throwable t) {
         dismissCustomProgress();
         handleApiException(t);
         LogHelper.log("err","error in ---> " + action + " cause ---> " + t.getMessage());
@@ -182,8 +195,8 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
                 fragment.show(getFragmentManager(),"report incident");
             }
         });
-        rvIncidents.setLayoutManager(new LinearLayoutManager(this));
-        rvIncidents.setAdapter(adapter);
+        rv_incidents.setLayoutManager(new LinearLayoutManager(this));
+        rv_incidents.setAdapter(adapter);
     }
 
     @Subscribe
@@ -206,7 +219,7 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
                                     .getIncidents(status).get(0).getIncidentId());
                         }
                     }
-                    rvIncidents.getAdapter().notifyDataSetChanged();
+                    rv_incidents.getAdapter().notifyDataSetChanged();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -214,7 +227,7 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
         });
     }
 
-    @OnClick(R.id.btnAdd)
+    @OnClick(R.id.btn_add)
     public void fileIncidentReport() {
         final FileIncidentReportDialogFragment fragment = FileIncidentReportDialogFragment.newInstance();
         fragment.setOnFileIncidentReportListener(new FileIncidentReportDialogFragment.OnFileIncidentReportListener() {

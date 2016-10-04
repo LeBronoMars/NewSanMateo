@@ -12,7 +12,7 @@ public class CurrentUserSingleton {
 
     private CurrentUserSingleton() {}
 
-    public static CurrentUserSingleton newInstance() {
+    public static CurrentUserSingleton getInstance() {
         return CURR_USER;
     }
 
