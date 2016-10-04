@@ -381,7 +381,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         if (t instanceof HttpException) {
             final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
             if (action.equals(ApiAction.PUT_CHANGE_PW)) {
-                showConfirmDialog(action, "Change Password Failed", apiError.getMessage(), "Close", "", null);
+                showConfirmDialog(action.name(), "Change Password Failed", apiError.getMessage(), "Close", "", null);
             }
         }
     }
@@ -442,7 +442,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             public void onSelectedMenu(int position) {
                 if (tvNotification.isShown()) {
                     tvNotification.setVisibility(View.INVISIBLE);
-                    PrefsHelper.setBoolean(NewHomeActivity.this, "has_notifications", false);
+                    PrefsHelper.setBoolean(HomeActivity.this, "has_notifications", false);
                 }
                 fragment.dismiss();
                 if (position == 0) {

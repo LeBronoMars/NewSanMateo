@@ -78,6 +78,20 @@ public interface ApiInterface {
                                  @Path("id") int id);
 
     /**
+     * change profile pic
+     *
+     * @param token represents the user that trying to make the request
+     * @param userId id of the current user
+     * @param newPicUrl url of the newly uploaded image to aws s3
+     *
+     * */
+    @PUT("/api/v1/change_profile_pic")
+    @FormUrlEncoded
+    Observable<GenericMessage> changeProfilePic(@Header("Authorization") String token,
+                                                @Field("user_id") int userId,
+                                                @Field("new_pic_url") String newPicUrl);
+
+    /**
      * change password
      *
      * @param token represents the user that trying to make the request

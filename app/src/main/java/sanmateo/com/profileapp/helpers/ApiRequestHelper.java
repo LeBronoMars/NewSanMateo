@@ -61,6 +61,11 @@ public class ApiRequestHelper {
         handleObservableResult(ApiAction.GET_NEWS_BY_ID, observable);
     }
 
+    public void changeProfilePic(final String token, final int userId, final String newPicUrl) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.PUT_CHANGE_PROFILE_PIC);
+        final Observable<GenericMessage> observable = apiInterface.changeProfilePic(token,userId,newPicUrl);
+        handleObservableResult(ApiAction.PUT_CHANGE_PROFILE_PIC, observable);
+    }
 
     /**
      * handle api result using lambda
