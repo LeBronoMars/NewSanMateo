@@ -36,10 +36,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'HOST_NAME', '\"http://54.169.17.222:7000\"'
             buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
+            buildConfigField 'String', 'PUSHER_CLIENT_ID', '\"d37253507ae4d71dee6b\"'
+            buildConfigField 'String', 'PUSHER_CLUSTER', '\"api\"'
         }
         debug {
             buildConfigField 'String', 'HOST_NAME', '\"http://54.169.17.222:7000\"'
             buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
+            buildConfigField 'String', 'PUSHER_CLIENT_ID', '\""d37253507ae4d71dee6b"\"'
+            buildConfigField 'String', 'PUSHER_CLIENT_ID', '\"d37253507ae4d71dee6b\"'
+            buildConfigField 'String', 'PUSHER_CLUSTER', '\"api\"'
         }
     }
     compileOptions {
@@ -78,4 +83,5 @@ dependencies {
     compile "org.ocpsoft.prettytime:prettytime:$rootProject.ext.prettyTimeVersion"
     compile "com.google.android.gms:play-services-maps:$rootProject.ext.playServicesVersion"
     compile "de.hdodenhof:circleimageview:$rootProject.ext.circleImageViewVersion"
+    compile "com.pusher:pusher-java-client:$rootProject.ext.pusherVersion"
 }

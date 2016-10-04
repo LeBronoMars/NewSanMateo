@@ -17,6 +17,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'http://clojars.org/repo' }
     }
 }
 
@@ -51,4 +52,5 @@ ext {
     prettyTimeVersion = '4.0.1.Final'
     playServicesVersion = '8.4.0'
     circleImageViewVersion = '2.0.0'
+    pusherVersion = '1.2.2'
 }
