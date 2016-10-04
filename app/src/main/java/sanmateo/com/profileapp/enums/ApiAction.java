@@ -10,5 +10,7 @@ public enum  ApiAction {
 
     POST_REGISTER,
 
-    GET_NEWS
+    GET_NEWS,
+
+    PUT_CHANGE_PW
 }

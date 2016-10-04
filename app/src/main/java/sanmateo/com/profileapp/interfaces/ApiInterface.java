@@ -7,9 +7,11 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import rx.Observable;
 import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.News;
 
 /**
@@ -62,4 +64,19 @@ public interface ApiInterface {
                                    @Query("limit") int limit,
                                    @Query("status") String status,
                                    @Query("when") String when);
+
+    /**
+     * change password
+     *
+     * @param token represents the user that trying to make the request
+     * @param email email of user trying to change password
+     * @param oldPassword current password of the user
+     * @param newPassword new password of the user
+     * */
+    @PUT("/api/v1/change_password")
+    @FormUrlEncoded
+    Observable<GenericMessage> changePassword(@Header("Authorization") String token,
+                                              @Field("email") String email,
+                                              @Field("old_password") String oldPassword,
+                                              @Field("new_password") String newPassword);
 }

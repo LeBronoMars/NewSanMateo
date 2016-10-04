@@ -10,6 +10,7 @@ import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.interfaces.ApiInterface;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.singletons.RetrofitSingleton;
 
@@ -38,6 +39,14 @@ public class ApiRequestHelper {
         final Observable<AuthResponse> observable = apiInterface.createUser(firstName, lastName,
                 contactNo, gender, email, address, userLevel, password);
         handleObservableResult(ApiAction.POST_REGISTER, observable);
+    }
+
+    public void changePassword(final String token, final String email, final String oldPassword,
+                               final String newPassword) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.PUT_CHANGE_PW);
+        final Observable<GenericMessage> observable = apiInterface.changePassword(token, email,
+                oldPassword, newPassword);
+        handleObservableResult(ApiAction.PUT_CHANGE_PW, observable);
     }
 
     public void getNews(final String token, final int start, final int limit, final String status, final String when) {
