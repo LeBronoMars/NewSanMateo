@@ -48,12 +48,14 @@ import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.BannerFragment;
 import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
+import sanmateo.com.profileapp.fragments.CustomBottomSheetDialogFragment;
 import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
 import sanmateo.com.profileapp.fragments.ETextSiMayorDialogFragment;
 import sanmateo.com.profileapp.fragments.MayorMessageDialogFragment;
 import sanmateo.com.profileapp.fragments.SanMateoBannerFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
+import sanmateo.com.profileapp.helpers.AppBarStateListener;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.helpers.PicassoHelper;
@@ -462,31 +464,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
     private void showChangeProfilePicMenu() {
         uploadToBucket = AppConstants.BUCKET_PROFILE_PIC;
-        new BottomSheet.Builder(this)
-                .title("Change Profile Pic").sheet(R.menu.menu_upload_image)
-                .listener((dialog, which) -> {
-                    switch (which) {
-                        case R.id.open_gallery:
-                            final Intent intent = new Intent();
-                            intent.setType("image/*");
-                            intent.setAction(Intent.ACTION_GET_CONTENT);//
-                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
-                            break;
-                        case R.id.open_camera:
-                            final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            try {
-                                fileToUpload = createImageFile();
-                                fileUri = Uri.fromFile(fileToUpload);
-                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                                startActivityForResult(cameraIntent, CAPTURE_IMAGE);
-                            } catch (Exception ex) {
-                                showConfirmDialog("", "Capture Image",
-                                        "We can't get your image. Please try again.", "Close", "", null);
-                            }
-                            break;
-                    }
-                })
-                .show();
+        CustomBottomSheetDialogFragment.newInstance().show(getSupportFragmentManager(), "bottom sheet");
     }
 
     @Override
