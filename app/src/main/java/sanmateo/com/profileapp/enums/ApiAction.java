@@ -12,5 +12,7 @@ public enum  ApiAction {
 
     GET_NEWS,
 
-    PUT_CHANGE_PW
+    PUT_CHANGE_PW,
+
+    PUT_CHANGE_PROFILE_PIC
 }

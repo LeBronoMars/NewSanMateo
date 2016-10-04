@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.Api;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -43,19 +44,26 @@ import retrofit2.adapter.rxjava.HttpException;
 
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.BannerAdapter;
+import sanmateo.com.profileapp.adapters.NewsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.BannerFragment;
 import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
 import sanmateo.com.profileapp.fragments.SanMateoBannerFragment;
+import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.helpers.PicassoHelper;
 import sanmateo.com.profileapp.helpers.PrefsHelper;
+import sanmateo.com.profileapp.interfaces.EndlessRecyclerViewScrollListener;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
+import sanmateo.com.profileapp.models.response.ApiError;
+import sanmateo.com.profileapp.models.response.GenericMessage;
+import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.services.PusherService;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
@@ -309,10 +317,10 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     private void initNews() {
         final NewsAdapter newsAdapter = new NewsAdapter(this, newsSingleton.getAllNews());
         newsAdapter.setOnSelectNewsListener(n -> {
-            final Intent intent = new Intent(NewHomeActivity.this, NewsFullPreviewActivity.class);
+            final Intent intent = new Intent(HomeActivity.this, NewsFullPreviewActivity.class);
             intent.putExtra("news", n);
             startActivity(intent);
-            animateToLeft(NewHomeActivity.this);
+            animateToLeft(HomeActivity.this);
         });
         rvHomeMenu.setAdapter(newsAdapter);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -327,11 +335,11 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
     @Override
     public void onApiRequestBegin(ApiAction action) {
-        if (action.equals(AppConstants.ACTION_GET_NEWS)) {
+        if (action.equals(ApiAction.GET_NEWS)) {
             showCustomProgress("Fetching news, Please wait...");
-        } else if (action.equals(AppConstants.ACTION_PUT_CHANGE_PASSWORD)) {
+        } else if (action.equals(ApiAction.PUT_CHANGE_PW)) {
             showCustomProgress("Changing password, Please wait...");
-        } else if (action.equals(AppConstants.ACTION_PUT_CHANGE_PROFILE_PIC)) {
+        } else if (action.equals(ApiAction.PUT_CHANGE_PROFILE_PIC)) {
             showCustomProgress("Changing your profile pic, Please wait...");
         }
     }
@@ -339,29 +347,26 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
-        if (action.equals(AppConstants.ACTION_GET_NEWS)) {
+        if (action.equals(ApiAction.GET_NEWS)) {
             final ArrayList<News> news = (ArrayList<News>) result;
             newsSingleton.getAllNews().addAll(news);
         } else if (action.equals(AppConstants.ACTION_GET_NEWS_BY_ID)) {
             final News news = (News) result;
             newsSingleton.getAllNews().add(0, news);
-        } else if (action.equals(AppConstants.ACTION_PUT_CHANGE_PASSWORD)) {
+        } else if (action.equals(ApiAction.PUT_CHANGE_PW)) {
             final GenericMessage genericMessage = (GenericMessage) result;
             showToast(genericMessage.getMessage());
-        } else if (action.equals(AppConstants.ACTION_PUT_CHANGE_PROFILE_PIC)) {
+        } else if (action.equals(ApiAction.PUT_CHANGE_PW)) {
             final GenericMessage genericMessage = (GenericMessage) result;
             showToast("You have successfully changed your profile pic");
             /** save new profile pic url */
-            final CurrentUser currentUser = currentUserSingleton.getCurrentUser();
-            currentUser.setPicUrl(genericMessage.getMessage());
-            DaoHelper.updateCurrentUser(currentUser);
             fileToUpload = null;
             fileUri = null;
             PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
                     profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
         }
 
-        if (!action.equals(AppConstants.ACTION_PUT_CHANGE_PASSWORD)) {
+        if (!action.equals(ApiAction.PUT_CHANGE_PW)) {
             rvHomeMenu.getAdapter().notifyDataSetChanged();
             rvHomeMenu.smoothScrollToPosition(0);
         }
@@ -374,9 +379,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         LogHelper.log("err", "error in ---> " + action + " cause ---> " + t.getMessage());
         if (t instanceof HttpException) {
             final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
-            if (action.equals(AppConstants.ACTION_LOGIN)) {
-                showConfirmDialog(action, "Login Failed", apiError.getMessage(), "Close", "", null);
-            } else if (action.equals(AppConstants.ACTION_PUT_CHANGE_PASSWORD)) {
+            if (action.equals(ApiAction.PUT_CHANGE_PW)) {
                 showConfirmDialog(action, "Change Password Failed", apiError.getMessage(), "Close", "", null);
             }
         }
