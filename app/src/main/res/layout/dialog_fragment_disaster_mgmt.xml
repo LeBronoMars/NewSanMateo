@@ -30,10 +30,10 @@
     <ListView
         android:id="@+id/lv_disaster_menu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content" />
 
-    <com.rey.material.widget.Button
-        android:id="@+id/btnClose"
+    <Button
+        android:id="@+id/btn_close"
         fontPath="fonts/Roboto-Light.ttf"
         android:layout_width="match_parent"
         android:layout_weight="50"
@@ -43,10 +43,7 @@
         android:background="@color/colorPrimary"
         android:text="@string/close"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/_14sdp"
-        app:rd_enable="true"
-        app:rd_maxRippleRadius="match_view"
-        app:rd_rippleType="touch" />
+        android:textSize="@dimen/_14sdp" />
 
 </LinearLayout>
 

@@ -39,7 +39,7 @@
 
     </ScrollView>
 
-    <com.rey.material.widget.Button
+    <Button
         android:id="@+id/btn_close"
         fontPath="fonts/Roboto-Light.ttf"
         android:layout_width="match_parent"
@@ -50,10 +50,7 @@
         android:background="@color/colorPrimary"
         android:text="@string/close"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/_14sdp"
-        app:rd_enable="true"
-        app:rd_maxRippleRadius="match_view"
-        app:rd_rippleType="touch" />
+        android:textSize="@dimen/_14sdp" />
 
 </LinearLayout>
 

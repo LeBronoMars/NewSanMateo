@@ -84,4 +84,5 @@ dependencies {
     compile "com.google.android.gms:play-services-maps:$rootProject.ext.playServicesVersion"
     compile "de.hdodenhof:circleimageview:$rootProject.ext.circleImageViewVersion"
     compile "com.pusher:pusher-java-client:$rootProject.ext.pusherVersion"
+    compile "com.facebook.android:facebook-android-sdk:$rootProject.ext.facebookVersion"
 }

@@ -68,8 +68,8 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:orientation="vertical">
 
-        <com.rey.material.widget.Button
-            android:id="@+id/btnSend"
+        <Button
+            android:id="@+id/btn_send"
             fontPath="fonts/Roboto-Light.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,13 +78,10 @@
             android:background="@color/colorPrimary"
             android:text="@string/send"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/_14sdp"
-            app:rd_enable="true"
-            app:rd_maxRippleRadius="match_view"
-            app:rd_rippleType="touch" />
+            android:textSize="@dimen/_14sdp" />
 
-        <com.rey.material.widget.Button
-            android:id="@+id/btnCancel"
+        <Button
+            android:id="@+id/btn_cancel"
             fontPath="fonts/Roboto-Light.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,10 +90,7 @@
             android:background="@color/colorPrimaryDark"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/_14sdp"
-            app:rd_enable="true"
-            app:rd_maxRippleRadius="match_view"
-            app:rd_rippleType="touch" />
+            android:textSize="@dimen/_14sdp" />
 
     </LinearLayout>
 

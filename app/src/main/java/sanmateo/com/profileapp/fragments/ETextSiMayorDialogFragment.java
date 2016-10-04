@@ -62,7 +62,7 @@ public class ETextSiMayorDialogFragment extends DialogFragment {
         return mDialog;
     }
 
-    @OnClick(R.id.btnSend)
+    @OnClick(R.id.btn_send)
     public void sendSMSToMayor() {
         final String classification = spnrClassification.getSelectedItem().toString();
         final String message = et_message.getText().toString().trim();

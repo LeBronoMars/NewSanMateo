@@ -53,4 +53,5 @@ ext {
     playServicesVersion = '8.4.0'
     circleImageViewVersion = '2.0.0'
     pusherVersion = '1.2.2'
+    facebookVersion = '4.15.0'
 }

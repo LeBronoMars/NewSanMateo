@@ -59,10 +59,10 @@ public class ChangePasswordDialogFragment extends DialogFragment {
         return mDialog;
     }
 
-    @OnClick({R.id.btnChangePassword, R.id.btnCancel})
+    @OnClick({R.id.btn_change_password, R.id.btnCancel})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnChangePassword:
+            case R.id.btn_change_password:
                 if (!activity.isNetworkAvailable()) {
                     activity.showToast(AppConstants.WARN_CONNECTION);
                 } else if (et_old_password.getText().toString().isEmpty()) {
