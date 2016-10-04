@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <!-- header -->
+        <TextView
+            android:id="@+id/tv_header"
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:text="@string/disaster_mgmt"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/_25sdp" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_disaster_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+    <com.rey.material.widget.Button
+        android:id="@+id/btnClose"
+        fontPath="fonts/Roboto-Light.ttf"
+        android:layout_width="match_parent"
+        android:layout_weight="50"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimary"
+        android:text="@string/close"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_14sdp"
+        app:rd_enable="true"
+        app:rd_maxRippleRadius="match_view"
+        app:rd_rippleType="touch" />
+
+</LinearLayout>
+
