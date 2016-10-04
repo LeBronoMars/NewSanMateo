@@ -1,5 +1,7 @@
 package sanmateo.com.profileapp.helpers;
 
+import java.util.List;
+
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -8,6 +10,7 @@ import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.interfaces.ApiInterface;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.singletons.RetrofitSingleton;
 
 /**
@@ -37,16 +40,22 @@ public class ApiRequestHelper {
         handleObservableResult(ApiAction.POST_REGISTER, observable);
     }
 
+    public void getNews(final String token, final int start, final int limit, final String status, final String when) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_NEWS);
+        final Observable<List<News>> observable = apiInterface.getNews(token, start, limit, status, when);
+        handleObservableResult(ApiAction.GET_NEWS, observable);
+    }
+
     /**
      * handle api result using lambda
      *
-     * @param action identification of the current api request
+     * @param action     identification of the current api request
      * @param observable actual process of the api request
-     * */
+     */
     private void handleObservableResult(final ApiAction action, final Observable observable) {
         observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(result -> onApiRequestListener.onApiRequestSuccess(action,result),
+                .subscribe(result -> onApiRequestListener.onApiRequestSuccess(action, result),
                         throwable -> onApiRequestListener.onApiRequestFailed(action, (Throwable) throwable),
-                        () -> LogHelper.log("api","Api request completed --> " + action));
+                        () -> LogHelper.log("api", "Api request completed --> " + action));
     }
 }

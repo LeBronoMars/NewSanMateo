@@ -8,5 +8,7 @@ public enum  ApiAction {
 
     POST_AUTH,
 
-    POST_REGISTER
+    POST_REGISTER,
+
+    GET_NEWS
 }

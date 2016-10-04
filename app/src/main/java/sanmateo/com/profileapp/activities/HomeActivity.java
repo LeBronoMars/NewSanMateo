@@ -42,11 +42,19 @@ import butterknife.OnClick;
 import retrofit2.adapter.rxjava.HttpException;
 
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.adapters.BannerAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.fragments.BannerFragment;
+import sanmateo.com.profileapp.fragments.SanMateoBannerFragment;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
+import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.helpers.PicassoHelper;
+import sanmateo.com.profileapp.helpers.PrefsHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
+import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
+import sanmateo.com.profileapp.services.PusherService;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 import sanmateo.com.profileapp.singletons.NewsSingleton;
@@ -55,20 +63,32 @@ import sanmateo.com.profileapp.singletons.NewsSingleton;
  * Created by rsbulanon on 7/12/16.
  */
 public class HomeActivity extends BaseActivity implements OnApiRequestListener, OnS3UploadListener {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.navigationView) NavigationView navigationView;
-    @BindView(R.id.vp_banner) ViewPager vp_banner;
-    @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
-    @BindView(R.id.rvHomeMenu) RecyclerView rvHomeMenu;
-    @BindView(R.id.appBarLayout) AppBarLayout appBarLayout;
-    @BindView(R.id.tvNotification) TextView tvNotification;
-    @BindView(R.id.llHeader) LinearLayout llHeader;
-    @BindString(R.string.disaster_mgmt) String headerDisasterManagement;
-    @BindString(R.string.message_alert_notifications) String headerAlertNotifications;
-    @BindDimen(R.dimen._90sdp) int profilePicSize;
-    private ImageView ivProfileImage;
-    private ProgressBar pbLoadImage;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.navigationView)
+    NavigationView navigationView;
+    @BindView(R.id.vp_banner)
+    ViewPager vp_banner;
+    @BindView(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.rvHomeMenu)
+    RecyclerView rvHomeMenu;
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.tvNotification)
+    TextView tvNotification;
+    @BindView(R.id.llHeader)
+    LinearLayout llHeader;
+    @BindString(R.string.disaster_mgmt)
+    String headerDisasterManagement;
+    @BindString(R.string.message_alert_notifications)
+    String headerAlertNotifications;
+    @BindDimen(R.dimen._90sdp)
+    int profilePicSize;
+    private ImageView iv_profile_image;
+    private ProgressBar pb_load_image;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private CurrentUserSingleton currentUserSingleton;
     private NewsSingleton newsSingleton;
@@ -103,13 +123,13 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         }
 
         if (newsSingleton.getNewsPrevious().size() == 0) {
-            apiRequestHelper.getNews(token,0,10,"active",null);
+            apiRequestHelper.getNews(token, 0, 10, "active", null);
         }
 
         initAppBarLayoutListener();
 
         /** display notification if there are any */
-        if (PrefsHelper.getBoolean(this,"has_notifications")) {
+        if (PrefsHelper.getBoolean(this, "has_notifications")) {
             tvNotification.setVisibility(View.VISIBLE);
         }
     }
@@ -117,20 +137,16 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     private void animateBanners() {
         final ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(SanMateoBannerFragment.newInstance());
-        fragments.add(SanMateoBannerFragment.newInstance());
-        fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this,R.drawable.image_1)));
-        fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this,R.drawable.image_2)));
-        fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this,R.drawable.image_3)));
-        viewPager.setAdapter(new BannerAdapter(getSupportFragmentManager(), fragments));
-        viewPager.setOffscreenPageLimit(fragments.size());
-        viewPager.setInterval(2000);
-        viewPager.startAutoScroll();
-        viewPager.setScrollDurationFactor(10);
+        fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this, R.drawable.image_1)));
+        fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this, R.drawable.image_2)));
+        fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this, R.drawable.image_3)));
+        vp_banner.setAdapter(new BannerAdapter(getSupportFragmentManager(), fragments));
+        vp_banner.setOffscreenPageLimit(fragments.size());
     }
 
     public void initNavigationDrawer() {
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,
-                R.string.open_drawer,R.string.close_drawer) {
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.open_drawer, R.string.close_drawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -147,25 +163,25 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     }
 
     private void initSideDrawerMenu() {
-        final View view = getLayoutInflater().inflate(R.layout.navigation_header,null,false);
-        ivProfileImage = (ImageView)view.findViewById(R.id.ivProfileImage);
-        pbLoadImage = (ProgressBar)view.findViewById(R.id.pbLoadImage);
-        final TextView tvProfileName = (TextView)view.findViewById(R.id.tvProfileName);
+        final View view = getLayoutInflater().inflate(R.layout.navigation_header, null, false);
+        iv_profile_image = (ImageView) view.findViewById(R.id.iv_profile_image);
+        pb_load_image = (ProgressBar) view.findViewById(R.id.pb_load_image);
+        final TextView tv_profile_name = (TextView) view.findViewById(R.id.tv_profile_name);
 
         final int screenHeight = getScreenDimension("height");
         final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                ((int)(screenHeight * .4)));
+                ((int) (screenHeight * .4)));
 
-        ivProfileImage.setOnClickListener(view1 -> showChangeProfilePicMenu());
+        iv_profile_image.setOnClickListener(view1 -> showChangeProfilePicMenu());
 
         navigationView.addHeaderView(view);
         navigationView.inflateMenu(R.menu.menu_side_drawer);
         navigationView.getHeaderView(0).setLayoutParams(params);
 
         PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
-                profilePicSize, Color.TRANSPARENT,ivProfileImage,pbLoadImage);
+                profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
 
-        tvProfileName.setText(currentUserSingleton.getCurrentUser().getFirstName() + " " +
+        tv_profile_name.setText(currentUserSingleton.getCurrentUser().getFirstName() + " " +
                 currentUserSingleton.getCurrentUser().getLastName());
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -238,7 +254,6 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
                             }
 
-
                             @Override
                             public void onClose() {
                                 fragment.dismiss();
@@ -261,12 +276,11 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                                         newsSingleton.clearAll();
                                         incidentsSingleton.clearAll();
                                         currentUserSingleton.setCurrentUser(null);
-                                        PrefsHelper.setString(NewHomeActivity.this,
+                                        PrefsHelper.setString(HomeActivity.this,
                                                 AppConstants.PREFS_LOCAL_EMERGENCY_KITS, "");
-                                        DaoHelper.deleteCurrentUser();
-                                        startActivity(new Intent(NewHomeActivity.this, LoginActivity.class));
+                                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                                         finish();
-                                        animateToRight(NewHomeActivity.this);
+                                        animateToRight(HomeActivity.this);
                                     }
 
                                     @Override
@@ -285,16 +299,16 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     private void changePassword() {
         ChangePasswordDialogFragment fragment = ChangePasswordDialogFragment.newInstance();
         fragment.setOnChangePasswordListener((oldPassword, newPassword) ->
-                apiRequestHelper.changePassword(token,currentUserSingleton.getCurrentUser().getEmail(),
-                oldPassword,newPassword));
-        fragment.show(getFragmentManager(),"chane password");
+                apiRequestHelper.changePassword(token, currentUserSingleton.getCurrentUser().getEmail(),
+                        oldPassword, newPassword));
+        fragment.show(getFragmentManager(), "chane password");
     }
 
     private void initNews() {
         final NewsAdapter newsAdapter = new NewsAdapter(this, newsSingleton.getAllNews());
         newsAdapter.setOnSelectNewsListener(n -> {
             final Intent intent = new Intent(NewHomeActivity.this, NewsFullPreviewActivity.class);
-            intent.putExtra("news",n);
+            intent.putExtra("news", n);
             startActivity(intent);
             animateToLeft(NewHomeActivity.this);
         });
@@ -304,7 +318,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         rvHomeMenu.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                apiRequestHelper.getNews(token,newsSingleton.getAllNews().size(),10,"active",null);
+                apiRequestHelper.getNews(token, newsSingleton.getAllNews().size(), 10, "active", null);
             }
         });
     }
@@ -324,16 +338,16 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
         if (action.equals(AppConstants.ACTION_GET_NEWS)) {
-            final ArrayList<News> news = (ArrayList<News>)result;
+            final ArrayList<News> news = (ArrayList<News>) result;
             newsSingleton.getAllNews().addAll(news);
         } else if (action.equals(AppConstants.ACTION_GET_NEWS_BY_ID)) {
-            final News news = (News)result;
-            newsSingleton.getAllNews().add(0,news);
+            final News news = (News) result;
+            newsSingleton.getAllNews().add(0, news);
         } else if (action.equals(AppConstants.ACTION_PUT_CHANGE_PASSWORD)) {
-            final GenericMessage genericMessage = (GenericMessage)result;
+            final GenericMessage genericMessage = (GenericMessage) result;
             showToast(genericMessage.getMessage());
         } else if (action.equals(AppConstants.ACTION_PUT_CHANGE_PROFILE_PIC)) {
-            final GenericMessage genericMessage = (GenericMessage)result;
+            final GenericMessage genericMessage = (GenericMessage) result;
             showToast("You have successfully changed your profile pic");
             /** save new profile pic url */
             final CurrentUser currentUser = currentUserSingleton.getCurrentUser();
@@ -342,7 +356,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             fileToUpload = null;
             fileUri = null;
             PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
-                    profilePicSize, Color.TRANSPARENT,ivProfileImage,pbLoadImage);
+                    profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
         }
 
         if (!action.equals(AppConstants.ACTION_PUT_CHANGE_PASSWORD)) {
@@ -355,25 +369,25 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     public void onApiRequestFailed(ApiAction action, Throwable t) {
         dismissCustomProgress();
         handleApiException(t);
-        LogHelper.log("err","error in ---> " + action + " cause ---> " + t.getMessage());
+        LogHelper.log("err", "error in ---> " + action + " cause ---> " + t.getMessage());
         if (t instanceof HttpException) {
             final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
             if (action.equals(AppConstants.ACTION_LOGIN)) {
-                showConfirmDialog(action,"Login Failed", apiError.getMessage(),"Close","",null);
+                showConfirmDialog(action, "Login Failed", apiError.getMessage(), "Close", "", null);
             } else if (action.equals(AppConstants.ACTION_PUT_CHANGE_PASSWORD)) {
-                showConfirmDialog(action,"Change Password Failed", apiError.getMessage(),"Close","",null);
+                showConfirmDialog(action, "Change Password Failed", apiError.getMessage(), "Close", "", null);
             }
         }
     }
 
     @Subscribe
-    public void handleResponse(final HashMap<String,Object> map) {
+    public void handleResponse(final HashMap<String, Object> map) {
         if (map.containsKey("data")) {
             try {
                 final JSONObject json = new JSONObject(map.get("data").toString());
                 if (json.has("action")) {
                     if (json.getString("action").equals("news created")) {
-                        apiRequestHelper.getNewsById(token,json.getInt("id"));
+                        apiRequestHelper.getNewsById(token, json.getInt("id"));
                     } else if (json.getString("action").equals("announcements") ||
                             json.getString("action").equals("water level")) {
                         runOnUiThread(() -> {
@@ -392,7 +406,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     @OnClick(R.id.ivMayorImage)
     public void showMayorImage() {
         final MayorMessageDialogFragment fragment = MayorMessageDialogFragment.newInstance();
-        fragment.show(getFragmentManager(),"mayor message");
+        fragment.show(getFragmentManager(), "mayor message");
     }
 
     private void initAppBarLayoutListener() {
@@ -416,13 +430,13 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         menu.add("Public Announcements");
         menu.add("Water Level Monitoring");
         final DisasterMgtMenuDialogFragment fragment = DisasterMgtMenuDialogFragment
-                .newInstance(headerAlertNotifications,menu);
+                .newInstance(headerAlertNotifications, menu);
         fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
             @Override
             public void onSelectedMenu(int position) {
                 if (tvNotification.isShown()) {
                     tvNotification.setVisibility(View.INVISIBLE);
-                    PrefsHelper.setBoolean(NewHomeActivity.this,"has_notifications",false);
+                    PrefsHelper.setBoolean(NewHomeActivity.this, "has_notifications", false);
                 }
                 fragment.dismiss();
                 if (position == 0) {
@@ -437,7 +451,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 fragment.dismiss();
             }
         });
-        fragment.show(getFragmentManager(),"show notifications");
+        fragment.show(getFragmentManager(), "show notifications");
     }
 
     private void showChangeProfilePicMenu() {
@@ -460,8 +474,8 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                                 startActivityForResult(cameraIntent, CAPTURE_IMAGE);
                             } catch (Exception ex) {
-                                showConfirmDialog("","Capture Image",
-                                        "We can't get your image. Please try again.","Close","",null);
+                                showConfirmDialog("", "Capture Image",
+                                        "We can't get your image. Please try again.", "Close", "", null);
                             }
                             break;
                     }
@@ -474,7 +488,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_IMAGE) {
-                fileToUpload = getFile(data.getData(),UUID.randomUUID().toString()+".png");
+                fileToUpload = getFile(data.getData(), UUID.randomUUID().toString() + ".png");
                 uploadFileToAmazon();
             } else if (requestCode == CAPTURE_IMAGE) {
                 fileToUpload = rotateBitmap(fileUri.getPath());
@@ -489,7 +503,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 .contains("http://www.gravatar.com/avatar/")) {
             deleteImage(AppConstants.BUCKET_ROOT, currentUserSingleton.getCurrentUser().getPicUrl());
         }
-        uploadImageToS3(uploadToBucket,fileToUpload, 1, 1);
+        uploadImageToS3(uploadToBucket, fileToUpload, 1, 1);
     }
 
     @Override
@@ -514,8 +528,8 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 builder.append("Classification : " + classification + "\n\n");
                 builder.append("Concern : " + message + "\n\n");
                 builder.append("Sent via San Mateo Profile App");
-                LogHelper.log("sms","CONCERN ---> " + builder.toString());
-                sendSMS("09255804848",builder.toString());
+                LogHelper.log("sms", "CONCERN ---> " + builder.toString());
+                sendSMS("09255804848", builder.toString());
             }
 
             @Override
@@ -523,7 +537,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 fragment.dismiss();
             }
         });
-        fragment.show(getFragmentManager(),"sms");
+        fragment.show(getFragmentManager(), "sms");
     }
 
     @Override
@@ -534,7 +548,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     @Override
     protected void onResume() {
         /** display notification if there are any */
-        if (PrefsHelper.getBoolean(this,"has_notifications")) {
+        if (PrefsHelper.getBoolean(this, "has_notifications")) {
             tvNotification.setVisibility(View.VISIBLE);
         } else {
             tvNotification.setVisibility(View.INVISIBLE);

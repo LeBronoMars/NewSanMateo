@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_panic_emergency"
+        android:title="@string/menu_panic_emergency"
+        android:icon="@drawable/menu_alarm"/>
+
+    <item
+        android:id="@+id/menu_incident_report"
+        android:title="@string/menu_incident_report"
+        android:icon="@drawable/menu_ambulance"/>
+
+    <item
+        android:id="@+id/menu_information"
+        android:title="@string/menu_information"
+        android:icon="@drawable/menu_info"/>
+
+    <item
+        android:id="@+id/menu_map"
+        android:title="@string/menu_map"
+        android:icon="@drawable/menu_locations"/>
+
+    <item
+        android:id="@+id/menu_directories"
+        android:title="@string/menu_directories"
+        android:icon="@drawable/menu_directories"/>
+
+    <item
+        android:id="@+id/menu_gallery"
+        android:title="@string/menu_gallery"
+        android:icon="@drawable/menu_gallery"/>
+
+    <!--<item
+        android:id="@+id/menu_news_events"
+        android:title="@string/menu_news_events"
+        android:icon="@drawable/menu_news"/>-->
+
+    <item
+        android:id="@+id/menu_social_media"
+        android:title="@string/menu_social_media"
+        android:icon="@drawable/menu_fb"/>
+
+    <item
+        android:id="@+id/menu_disaster_management"
+        android:title="@string/menu_disaster_management"
+        android:icon="@drawable/menu_announcement"/>
+
+    <item
+        android:id="@+id/menu_rate_us"
+        android:title="@string/menu_rate_us"
+        android:icon="@drawable/menu_rate_us"/>
+
+    <item
+        android:id="@+id/menu_change_pass"
+        android:title="@string/menu_change_pass"
+        android:icon="@drawable/menu_padlock"/>
+
+    <item
+        android:id="@+id/menu_logout"
+        android:title="@string/menu_logout"
+        android:icon="@drawable/menu_logout"/>
+
+
+</menu>
