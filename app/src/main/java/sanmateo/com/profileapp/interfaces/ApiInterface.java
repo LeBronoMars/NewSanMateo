@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 import sanmateo.com.profileapp.models.response.AuthResponse;
@@ -64,6 +65,17 @@ public interface ApiInterface {
                                    @Query("limit") int limit,
                                    @Query("status") String status,
                                    @Query("when") String when);
+
+    /**
+     * get news by id
+     *
+     * @param token represents the user that trying to make the request
+     * @param id unique identification of news to fetch
+     *
+     * */
+    @GET("/api/v1/news/{id}")
+    Observable<News> getNewsById(@Header("Authorization") String token,
+                                 @Path("id") int id);
 
     /**
      * change password

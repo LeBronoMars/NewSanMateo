@@ -55,6 +55,13 @@ public class ApiRequestHelper {
         handleObservableResult(ApiAction.GET_NEWS, observable);
     }
 
+    public void getNewsById(final String token, final int id) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_NEWS_BY_ID);
+        final Observable<News> observable = apiInterface.getNewsById(token,id);
+        handleObservableResult(ApiAction.GET_NEWS_BY_ID, observable);
+    }
+
+
     /**
      * handle api result using lambda
      *
