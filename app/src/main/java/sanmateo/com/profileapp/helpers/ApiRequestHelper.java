@@ -11,6 +11,7 @@ import sanmateo.com.profileapp.interfaces.ApiInterface;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
+import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.singletons.RetrofitSingleton;
 
@@ -49,7 +50,8 @@ public class ApiRequestHelper {
         handleObservableResult(ApiAction.PUT_CHANGE_PW, observable);
     }
 
-    public void getNews(final String token, final int start, final int limit, final String status, final String when) {
+    public void getNews(final String token, final int start, final int limit, final String status,
+                        final String when) {
         onApiRequestListener.onApiRequestBegin(ApiAction.GET_NEWS);
         final Observable<List<News>> observable = apiInterface.getNews(token, start, limit, status, when);
         handleObservableResult(ApiAction.GET_NEWS, observable);
@@ -57,13 +59,47 @@ public class ApiRequestHelper {
 
     public void getNewsById(final String token, final int id) {
         onApiRequestListener.onApiRequestBegin(ApiAction.GET_NEWS_BY_ID);
-        final Observable<News> observable = apiInterface.getNewsById(token,id);
+        final Observable<News> observable = apiInterface.getNewsById(token, id);
         handleObservableResult(ApiAction.GET_NEWS_BY_ID, observable);
+    }
+
+    public void getAllIncidents(final String token, final int start, final String incidentType,
+                                final String status) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_INCIDENTS);
+        final Observable<List<Incident>> observable = apiInterface.getIncidents(token, start,
+                incidentType, status);
+        handleObservableResult(ApiAction.GET_INCIDENTS, observable);
+    }
+
+    public void getLatestIncidents(final String token, final int incidentId) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_LATEST_INCIDENTS);
+        final Observable<List<Incident>> observable = apiInterface.getLatestIncidents(token,
+                incidentId);
+        handleObservableResult(ApiAction.GET_LATEST_INCIDENTS, observable);
+    }
+
+    public void fileIncidentReport(final String token, final String address, final String description,
+                                   final String incidentType, final double latitude, final double longitude,
+                                   final int reportedBy, final String images) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.POST_INCIDENT_REPORT);
+        final Observable<Incident> observable = apiInterface.fileNewIncidentReport(token,address,
+                description,incidentType,latitude,longitude,reportedBy,images);
+        handleObservableResult(ApiAction.POST_INCIDENT_REPORT, observable);
+    }
+
+    public void reportMaliciousIncidentReport(final String token, final int incidentId,
+                                              final int postedBy, final int reportedBy,
+                                              final String remarks) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.POST_MALICIOUS_REPORT);
+        final Observable<ResponseBody> observable = apiInterface.reportMaliciousIncidentReport(token,
+                incidentId, postedBy, reportedBy, remarks);
+        handleObservableResult(ApiAction.POST_MALICIOUS_REPORT, observable);
     }
 
     public void changeProfilePic(final String token, final int userId, final String newPicUrl) {
         onApiRequestListener.onApiRequestBegin(ApiAction.PUT_CHANGE_PROFILE_PIC);
-        final Observable<GenericMessage> observable = apiInterface.changeProfilePic(token,userId,newPicUrl);
+        final Observable<GenericMessage> observable = apiInterface.changeProfilePic(token, userId,
+                newPicUrl);
         handleObservableResult(ApiAction.PUT_CHANGE_PROFILE_PIC, observable);
     }
 
@@ -76,7 +112,8 @@ public class ApiRequestHelper {
     private void handleObservableResult(final ApiAction action, final Observable observable) {
         observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
                 .subscribe(result -> onApiRequestListener.onApiRequestSuccess(action, result),
-                        throwable -> onApiRequestListener.onApiRequestFailed(action, (Throwable) throwable),
+                        throwable -> onApiRequestListener.onApiRequestFailed(action,
+                                (Throwable) throwable),
                         () -> LogHelper.log("api", "Api request completed --> " + action));
     }
 }

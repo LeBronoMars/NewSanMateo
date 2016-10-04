@@ -30,6 +30,8 @@ import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.IncidentsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.fragments.FileIncidentReportDialogFragment;
+import sanmateo.com.profileapp.fragments.ReportIncidentReportDialogFragment;
 import sanmateo.com.profileapp.helpers.AmazonS3Helper;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
@@ -79,19 +81,19 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
         shareCallBackManager = CallbackManager.Factory.create();
 
         //check if there are new incidents needed to be fetched from api
-        if (PrefsHelper.getBoolean(this,"refresh_incidents") && incidentsSingleton.getIncidents(status).size() > 0) {
-            apiRequestHelper.getLatestIncidents(token,incidentsSingleton.getIncidents(status).get(0).getIncidentId());
+        if (PrefsHelper.getBoolean(this, "refresh_incidents") && incidentsSingleton.getIncidents(status).size() > 0) {
+            apiRequestHelper.getLatestIncidents(token, incidentsSingleton.getIncidents(status).get(0).getIncidentId());
         } else if (incidentsSingleton.getIncidents(status).size() == 0) {
             //if incidents is empty, fetch it from api
-            LogHelper.log("api","must get all");
-            apiRequestHelper.getAllIncidents(token,0,null,status);
+            LogHelper.log("api", "must get all");
+            apiRequestHelper.getAllIncidents(token, 0, null, status);
         }
         initIncidents();
     }
 
     @Override
     public void onApiRequestBegin(final ApiAction action) {
-        LogHelper.log("api","begin --> " + action);
+        LogHelper.log("api", "begin --> " + action);
         if (action.equals(ApiAction.GET_INCIDENTS)) {
             showCustomProgress("Fetching all incident reports, Please wait...");
         } else if (action.equals(ApiAction.GET_LATEST_INCIDENTS)) {
@@ -107,19 +109,19 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
     public void onApiRequestSuccess(final ApiAction action, final Object result) {
         dismissCustomProgress();
         if (action.equals(ApiAction.GET_INCIDENTS) || action.equals(ApiAction.GET_LATEST_INCIDENTS)) {
-            final ArrayList<Incident> incidents = (ArrayList<Incident>)result;
-            LogHelper.log("api","success size --> " + incidents);
-            incidentsSingleton.getIncidents(status).addAll(0,incidents);
+            final ArrayList<Incident> incidents = (ArrayList<Incident>) result;
+            LogHelper.log("api", "success size --> " + incidents);
+            incidentsSingleton.getIncidents(status).addAll(0, incidents);
             rv_incidents.getAdapter().notifyDataSetChanged();
             if (action.equals(ApiAction.GET_LATEST_INCIDENTS)) {
-                PrefsHelper.setBoolean(this,"refresh_incidents",false);
+                PrefsHelper.setBoolean(this, "refresh_incidents", false);
             }
         } else if (action.equals(ApiAction.POST_MALICIOUS_REPORT)) {
-            showConfirmDialog("","Malicious Incident Report","You have successfully filed a complaint about this " +
-                    "incident report.","Close","",null);
+            showConfirmDialog("", "Malicious Incident Report", "You have successfully filed a complaint about this " +
+                    "incident report.", "Close", "", null);
         } else if (action.equals(ApiAction.POST_INCIDENT_REPORT)) {
-            showConfirmDialog("","Incident Report","You have successfully filed an incident report" +
-                    ". Admins will review it first for publication.","Close","",null);
+            showConfirmDialog("", "Incident Report", "You have successfully filed an incident report" +
+                    ". Admins will review it first for publication.", "Close", "", null);
         }
     }
 
@@ -127,19 +129,19 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
     public void onApiRequestFailed(final ApiAction action, Throwable t) {
         dismissCustomProgress();
         handleApiException(t);
-        LogHelper.log("err","error in ---> " + action + " cause ---> " + t.getMessage());
+        LogHelper.log("err", "error in ---> " + action + " cause ---> " + t.getMessage());
         if (t instanceof HttpException) {
             final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
-            showConfirmDialog(action,"Failed", apiError.getMessage(),"Close","",null);
+            showConfirmDialog(action.name(), "Failed", apiError.getMessage(), "Close", "", null);
         }
     }
 
     private void initIncidents() {
-        final IncidentsAdapter adapter = new IncidentsAdapter(this,incidentsSingleton.getIncidents(status));
+        final IncidentsAdapter adapter = new IncidentsAdapter(this, incidentsSingleton.getIncidents(status));
         adapter.setOnShareAndReportListener(new IncidentsAdapter.OnShareAndReportListener() {
             @Override
             public void onShare(int position) {
-                LogHelper.log("fb","must share --> " + position);
+                LogHelper.log("fb", "must share --> " + position);
                 if (isNetworkAvailable()) {
                     final Incident incident = incidentsSingleton.getIncidents(status).get(position);
                     final String imageUrl = incident.getImages().contains("###") ?
@@ -148,7 +150,7 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
                     shareDialog.registerCallback(shareCallBackManager, new FacebookCallback<Sharer.Result>() {
                         @Override
                         public void onSuccess(Sharer.Result result) {
-                            LogHelper.log("fb","Successfully shared in facebook ---> " + result.getPostId());
+                            LogHelper.log("fb", "Successfully shared in facebook ---> " + result.getPostId());
                         }
 
                         @Override
@@ -158,7 +160,7 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
 
                         @Override
                         public void onError(FacebookException error) {
-                            LogHelper.log("fb","Unable to share with error --> " + error.getMessage());
+                            LogHelper.log("fb", "Unable to share with error --> " + error.getMessage());
                         }
                     });
                     if (ShareDialog.canShow(ShareLinkContent.class)) {
@@ -183,8 +185,8 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
                     @Override
                     public void onReportIncident(String remarks) {
                         fragment.dismiss();
-                        apiRequestHelper.reportMaliciousIncidentReport(token,incident.getIncidentId(),
-                                incident.getReporterId(),currentUserSingleton.getCurrentUser().getUserId(),
+                        apiRequestHelper.reportMaliciousIncidentReport(token, incident.getIncidentId(),
+                                incident.getReporterId(), currentUserSingleton.getCurrentUser().getId(),
                                 remarks);
                     }
 
@@ -193,7 +195,7 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
                         fragment.dismiss();
                     }
                 });
-                fragment.show(getFragmentManager(),"report incident");
+                fragment.show(getFragmentManager(), "report incident");
             }
         });
         rv_incidents.setLayoutManager(new LinearLayoutManager(this));
@@ -201,7 +203,7 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
     }
 
     @Subscribe
-    public void handleApiResponse(final HashMap<String,Object> map) {
+    public void handleApiResponse(final HashMap<String, Object> map) {
         runOnUiThread(() -> {
             try {
                 final JSONObject json = new JSONObject(map.get("data").toString());
@@ -210,13 +212,13 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
 
                     /** new incident notification */
                     if (action.equals("new incident")) {
-                        LogHelper.log("api","must fetch latest incident reports");
+                        LogHelper.log("api", "must fetch latest incident reports");
                         if (incidentsSingleton.getIncidents(status).size() == 0) {
                             //if incidents is empty, fetch it from api
-                            LogHelper.log("api","must get all");
-                            apiRequestHelper.getAllIncidents(token,0,null,"active");
+                            LogHelper.log("api", "must get all");
+                            apiRequestHelper.getAllIncidents(token, 0, null, "active");
                         } else {
-                            apiRequestHelper.getLatestIncidents(token,incidentsSingleton
+                            apiRequestHelper.getLatestIncidents(token, incidentsSingleton
                                     .getIncidents(status).get(0).getIncidentId());
                         }
                     }
@@ -237,18 +239,18 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
                                      String incidentType, final ArrayList<File> files) {
                 fragment.dismiss();
                 if (files.size() > 0) {
-                    bundle.putString("incidentDescription",incidentDescription);
-                    bundle.putString("incidentLocation",incidentLocation);
-                    bundle.putString("incidentType",incidentType);
+                    bundle.putString("incidentDescription", incidentDescription);
+                    bundle.putString("incidentLocation", incidentLocation);
+                    bundle.putString("incidentType", incidentType);
                     filesToUpload.clear();
                     filesToUpload.addAll(files);
                     filesToUploadCtr = 0;
                     uploadedFilesUrl.setLength(0);
                     uploadImage();
                 } else {
-                    apiRequestHelper.fileIncidentReport(token,incidentLocation,
-                            incidentDescription,incidentType, 1,1,
-                            currentUserSingleton.getCurrentUser().getUserId(), "");
+                    apiRequestHelper.fileIncidentReport(token, incidentLocation,
+                            incidentDescription, incidentType, 1, 1,
+                            currentUserSingleton.getCurrentUser().getId(), "");
                 }
             }
 
@@ -263,23 +265,23 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
             }
         });
         fragment.setCancelable(false);
-        fragment.show(getFragmentManager(),"file incident report");
+        fragment.show(getFragmentManager(), "file incident report");
     }
 
     private void uploadImage() {
         if (filesToUploadCtr < filesToUpload.size()) {
-            uploadImageToS3(AppConstants.BUCKET_INCIDENTS,filesToUpload.get(filesToUploadCtr),
-                    filesToUploadCtr+1,filesToUpload.size());
+            uploadImageToS3(AppConstants.BUCKET_INCIDENTS, filesToUpload.get(filesToUploadCtr),
+                    filesToUploadCtr + 1, filesToUpload.size());
         } else {
             for (File f : filesToUpload) {
                 f.delete();
             }
             dismissCustomProgress();
-            LogHelper.log("s3","uploading of all files successfully finished!");
-            LogHelper.log("s3","FINAL URL --->  " + uploadedFilesUrl.toString());
-            apiRequestHelper.fileIncidentReport(token,bundle.getString("incidentLocation"),
-                    bundle.getString("incidentDescription"),bundle.getString("incidentType"),
-                    1,1,currentUserSingleton.getCurrentUser().getUserId(),
+            LogHelper.log("s3", "uploading of all files successfully finished!");
+            LogHelper.log("s3", "FINAL URL --->  " + uploadedFilesUrl.toString());
+            apiRequestHelper.fileIncidentReport(token, bundle.getString("incidentLocation"),
+                    bundle.getString("incidentDescription"), bundle.getString("incidentType"),
+                    1, 1, currentUserSingleton.getCurrentUser().getId(),
                     uploadedFilesUrl.toString());
         }
     }
@@ -294,7 +296,7 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
     public void onUploadFinished(String bucketName, String imageUrl) {
         if (bucketName.equals(AppConstants.BUCKET_INCIDENTS)) {
             filesToUploadCtr++;
-            uploadedFilesUrl.append(imageUrl+"###");
+            uploadedFilesUrl.append(imageUrl + "###");
         }
         uploadImage();
     }
