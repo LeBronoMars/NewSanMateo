@@ -1,21 +1,10 @@
 <resources>
-    <string name="app_name">San Mateo Profile App</string>
-    <!-- login screen -->
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
 
     <!-- login dialog fragment -->
     <string name="email">Email</string>
     <string name="password">Password</string>
-
-    <!-- custom dialog progress with bar -->
-    <string name="uploading_image">Uploading image, Please wait...</string>
-
-    <!-- panic settings dialog fragment -->
-    <string name="panic_settings_header">Set emergency contacts</string>
-    <string name="no_contacts">No contact/s found!</string>
-    <string name="select_contact">Select from Contacts</string>
-    <string name="close">Close</string>
 
     <!-- user registration dialog fragment -->
     <string name="registration">Registration</string>
@@ -32,4 +21,204 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="create_my_account">Create my account</string>
     <string name="select_gender">Select Gender</string>
+
+    <!-- san mateo fragment header -->
+    <string name="welcome_to">Welcome to</string>
+    <string name="san_mateo">San Mateo Rizal</string>
+    <string name="official_mobile_app">Official Mobile App</string>
+
+    <!-- navigation drawer -->
+    <string name="open_drawer">Open</string>
+    <string name="close_drawer">Close</string>
+    <string name="welcome">Welcome!</string>
+
+    <!-- incident row -->
+    <string name="incident_report_by">Incident report by</string>
+    <string name="malicious_report_by">Malicious report by</string>
+    <string name="reported_by">Reported By</string>
+    <string name="share_via_fb">Share</string>
+    <string name="report_this">Report</string>
+
+    <!-- file incident report dialog fragment -->
+    <string name="file_incident_report_header">File incident report</string>
+    <string name="incident_description">Write something about the incident</string>
+    <string name="incident_address">Location of incident</string>
+    <string name="select_incident_type">Select incident type</string>
+    <string name="add_photo">+\nAdd Photo</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="file">File</string>
+    <string name="cancel">Cancel</string>
+    <string name="note_before_filing_of_report"><b>NOTE : </b><i>Please be advised that reports
+                having malicious contents or false reports are subjected for deletion and you may
+                also be banned from the Community.</i></string>
+    <string name="i_understand">I Understand</string>
+
+
+    <!-- facebook config -->
+    <string name="fb_app_id">1183940438317855</string>
+
+    <!-- report incident report -->
+    <string name="report_incident_report_header">Report this Incident</string>
+    <string name="remarks">Remarks</string>
+    <string name="submit">Submit</string>
+    <string name="note_before_reporting_incident"><b>NOTE : </b><i>Please be advised that your report
+         for this incident report is still be reviewed by the admins.</i></string>
+
+    <!-- review incident report -->
+    <string name="block_this_report">Block</string>
+    <string name="approve_report">Approve</string>
+    <string name="disapprove_report">Disapprove</string>
+    <string name="block">Block</string>
+    <string name="Unblock">Unblock</string>
+
+    <string name="san_mateo_govt">The existing organizational structure of the Municipal Government of San Mateo is typical of the present structure of all local governments in the country. The Chief Executive of the Municipal organization is the Municipal Mayor.
+        The main function of the Mayor is the administration and supervision of operations of the Municipal Government. Ordinances passed by the Sangguniang Bayan are approved by the Mayor for execution and implementation. The Chief Executive also implements decrees, letter of instructions, circulars, memorandums and order of authorities.
+        \n\n<b>Message</b>\n\n
+        We have a lot to be proud of our town - San Mateo has great neighborhoods and schools, outstanding tourism events, places to see, and some of the most famous fast food and restaurants in Manila. With a population of over 180,000 residents, we take pride in our reputation of being both a great place to live and do business.
+        Our Town has something for everyone. Stroll along our newly remodeled Town Plaza, Plaza Natividad , or visit the Nuestra Senora de Aranzazu Parish , which is one of the oldest and most beautiful churches in the province.
+        Check out our new Municipal Hall Building, it offers the utmost in public service convenience and serve as one of the premier government centers for the entire province of Rizal.
+        San Mateo is an ideal commercial location, situated at the crossroads of a municipality and three major cities: It is bounded on the South by Marikina City and on the North by the Town of Rodriguez (formerly Montalban). To the West lies Quezon City and to the East is the City of Antipolo. San Mateo\'s close proximity to Quezon City thru the San Mateo-Batasan Bridge provides a convenient, fast and safe mode of travel from our town to any point in Metro Manila and vice-versa.
+        Maintaining the quality of life remains a key goal for our community. The Municipality\'s strategic business plan for economic development is designed to achieve this goal. We recognize that our financial strength relies on a strong partnership between our residential and business community. Our growth is carefully planned by our elected officials and the many citizen volunteers who serve on our different local boards.
+        The Local Government has a dedicated work force which is known for its professionalism, contemporary organizational style and responsiveness. We offer a full range of services as well as many excellent public facilities.
+        I hope this website will help you get to know San Mateo and what we have to offer. Welcome to our town, we are happy to share it with you!</string>
+    <string name="history_sanmateo">    In his book Conquistas de las Islas Filipinas, Father Gaspar de San Agustin records the Municipality of San Mateo in 1572 as a town annexed to Pasig. He described the inhabitants as "fierce but friendly and of quiet disposition." Father Juan de Medina, in his account Relacion de los Con ventos Y Pueblos Fundados por los PP. Agustinos, likewise put 1572 as the year the Parish of San Mateo was established. However according to Miguel López de Legazpi, the first Spanish Governor in the Philippines (1571 to 1572), it was Juan de Salcedo, his nephew who discovered the site of present-day San Mateo during one of his expeditions to Manila from Cebu. Accounts say that two years before he came to Manila from Cebu, Legazpi sent Salcedo along with 150 soldiers to prepare the inauguration of the City of Manila. It must have been Salcedo who discovered the town before Legazpi inaugurated Manila on June 24, 1571.
+        Still, another account was that of Father Cavada, an Augustinian priest, who said that the first chapel in the country, having the Patron Saint Matthew was built by the riverside in 1596 south of the present Poblacion of San Mateo which was then only a Barrio of Tondo. Saint Matthew thus gave to the town its name when the chapel was set up during his feast day.
+        What may be gleaned from the above accounts somehow is that San Mateo was discovered sometime in 1571, while it was in 1596 when it acquired its first church. It may be true, too, that the Parish of San Mateo was set up in 1572.
+        Aside from the controversy over the date of its discovery or creation, there is also uncertainty as to how San Mateo acquired its name. According to one account, when the Spaniards made a reconnaissance of Manila\'s environs, they came upon the San Mateo flood plains and became enamored by the natural beauty of the place. They decided to establish a community in the place and one day, a Spanish scribe happened to stand on a mound with a book on one hand and a pen on the other. His statue-like pose prompted a companion to laugh and comment, "Muy" friend, the way you are now makes you look like Saint Matthew, referring of course to the usual way the evangelist saint is depicted in his statues. In the midst of their banter and merriment, they decided to call the place they discovered ‘San Mateo’.
+        Another account says that the Municipality of San Mateo was so called because of its geographical resemblance to another town in Spain with the same name. As described by Paluzie in a geographical book, this small Spanish town was near a high mountain (and) has a river that flows in its center which often floods but quickly recedes. this town is also a grazing ground for big animals and a fishing village. San Mateo is traversed by the Maly and Nangka rivers and its flood plains may have been a lush grazing area then.
+        The Augustinian priests in San Mateo were later formally replaced (in 1689) by the Jesuits who as early as 1637 included San Mateo as one of their missions, with the missions of San Isidro and Paynaan under it. The Jesuit Order brought with them an image of the Virgin Mary which came from the town of Aranzazu, Nueva Vizcaya, Spain. The Jesuits were the ones responsible for building the church now located in the Poblacion since the original chapel set up by the Augustinians beside the river was destroyed during a flood. The location of the present church is in Barangay Sta. Ana and its patron saint is the Virgin Mary of Aranzazu. The original images of Saint Matthew which was housed in the old Augustinian chapel has been transferred to Barangay Dulongbayan (formerly llaya) and is now the patron saint of the Barangay and whose feast day is always celebrated on September 21.
+        Over the centuries, San Mateo has had a colorful and distinguished history. In 1639, a pitched battle ensued between Chinese rebels, on one hand and Spanish and native troops, on the other. The Chinese were defeated and retreated east to the Sierra Madre Mountains, but not before burning the town and its church.
+        On May 16, 1687, the territory and convent of San Mateo were added to Pasig by the Augustinians, with the headquarters and residences of the missionary at Mariquina (Marikina). Two years later, the Agustinians handed over the ecclesiastical administration of San Mateo to the Jesuits. In 1699, the convent of St. Augustine won in a court case against the native inhabitants with regard to a claim over a ranch in the district of San Mateo.
+        From 1696 to 1746, the town residents rebelled against the Spanish authority in the municipality. They were forced to go to the mountains and abandon the lowland settlement. However, in 1746, the townspeople returned to the lowlands after having been wooed and persuaded by the[Jesuit priests.
+        The independent-mindedness of the San Mateo people showed itself again in the 15-year period from 1751 to 1765 when the natives rebelled against Spanish governance. The residents were ordered to surrender their weapons, but they refused. With this resistance, the Spanish government was forced to reduce the town to ruins.
+        In 1712, the Conde de Lizarriaga, the Governor of the Islands, sent Captain Don Lorenzo de Yturriaga together with 12 soldiers to punish Captain Pambila, a native chieftain who was reportedly inciting the residents to revolt against the Spanish government and the local Spanish priest. Captain Pambila attacked the Spanish officer, but the latter was able to parry the blow and shot the native leader dead.</string>
+
+    <!-- create news dialog fragment -->
+    <string name="create_news_header">Create News</string>
+    <string name="news_title">Title</string>
+    <string name="news_body">Content</string>
+    <string name="source_url">Source URL (Optional)</string>
+    <string name="image_url">News banner image url (Optional)</string>
+    <string name="create">Create</string>
+
+
+    <!-- create announcement header -->
+    <string name="announcement_header">Create Announcement</string>
+    <string name="message">Message</string>
+    <string name="announce">Announce</string>
+
+    <!-- water level activity -->
+    <string name="water_level_source">Source : www.pagasa.dost.gov.ph</string>
+    <string name="alert_list">Alert List</string>
+    <string name="water_level_header">Water Level Notification</string>
+    <string name="water_level">Water Level</string>
+    <string name="alarm_level">Alarm Level</string>
+
+    <!-- menu items -->
+    <string name="menu_panic_emergency">Panic/Emergency</string>
+    <string name="menu_incident_report">Incident Report</string>
+    <string name="menu_information">Information</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_directories">Directories</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_news_events">News/Events</string>
+    <string name="menu_social_media">Social Media</string>
+    <string name="menu_disaster_management">Disaster Management</string>
+    <string name="menu_contact_us">Contact Us</string>
+    <string name="menu_rate_us">Rate Us</string>
+    <string name="menu_change_pass">Change Password</string>
+    <string name="menu_logout">Log Out</string>
+
+    <!-- other labels -->
+    <string name="change_password_header">Change password</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="marker_header">Map Marker</string>
+    <string name="view_image">View Image</string>
+
+    <!-- panic settings dialog fragment -->
+    <string name="panic_settings_header">Set emergency contacts</string>
+    <string name="no_contacts">No contact/s found!</string>
+    <string name="select_contact">Select from Contacts</string>
+    <string name="close">Close</string>
+
+    <!-- disaster management -->
+    <string name="disaster_mgmt">Disaster Management</string>
+
+    <!-- mayor message -->
+    <string name="mayor_message_header">Message from the Mayor</string>
+    <string name="mayor_message">
+        <b>Message</b>
+            \n\nWe have a lot to be proud of our town - San Mateo has great neighborhoods and schools, outstanding tourism events, places to see, and some of the most famous fast food and restaurants in Manila. With a population of over 180,000 residents, we take pride in our reputation of being both a great place to live and do business.
+            \n\nOur Town has something for everyone. Stroll along our newly remodeled Town Plaza, Plaza Natividad , or visit the Nuestra Senora de Aranzazu Parish , which is one of the oldest and most beautiful churches in the province.
+            \n\nCheck out our new Municipal Hall Building, it offers the utmost in public service convenience and serve as one of the premier government centers for the entire province of Rizal.
+            \n\nSan Mateo is an ideal commercial location, situated at the crossroads of a municipality and three major cities: It is bounded on the South by Marikina City and on the North by the Town of Rodriguez (formerly Montalban). To the West lies Quezon City and to the East is the City of Antipolo. San Mateo\'s close proximity to Quezon City thru the San Mateo-Batasan Bridge provides a convenient, fast and safe mode of travel from our town to any point in Metro Manila and vice-versa.
+            \n\nMaintaining the quality of life remains a key goal for our community. The Municipality\'s strategic business plan for economic development is designed to achieve this goal. We recognize that our financial strength relies on a strong partnership between our residential &amp; business community. Our growth is carefully planned by our elected officials &amp; the many citizen volunteers who serve on our different local boards.
+            \n\nThe Local Government has a dedicated work force which is known for its professionalism, contemporary organizational style and responsiveness. We offer a full range of services as well as many excellent public facilities.
+            \n\nI hope this website will help you get to know San Mateo and what we have to offer. Welcome to our town, we are happy to share it with you!\n\n
+    </string>
+
+    <string name="new_and_events">Latest News and Events</string>
+    <string name="exclamation">!</string>
+    <string name="message_alert_notifications">Message Alerts / Notifications</string>
+
+    <string name="tb_header_san_mateo">1SANMATEO</string>
+    <string name="tb_header_tayo_naman"><i>, Tayo Naman!</i></string>
+
+    <string name="image_still_loading">Loading banner image, Please wait...</string>
+    <string name="unable_to_load_image">Unable to load banner image</string>
+
+    <string name="or">OR</string>
+    <string name="select_from_gallery">Select from gallery</string>
+
+    <string name="emergency_kit_header">Recommended items to be included in your emergency
+        \nsupply kit. This list shows you to check items that you currently
+        \nhave in your kit.</string>
+
+    <string name="cpr_header">How to perform Cardiopulmonary Resuscitation (CPR)</string>
+
+    <!-- create official dialog fragment -->
+    <string name="create_official_header">Create official record</string>
+    <string name="official_position">Position</string>
+    <string name="official_background">Background</string>
+    <string name="official_pic_url">Enter official\'s pic url</string>
+    <string name="uploading_image">Uploading image, Please wait...</string>
+
+    <string name="select_area">Select Area</string>
+    <string-array name="array_flood_prone_areas">
+        <item>Batasan-San Mateo Bridge</item>
+        <item>San Mateo Public Market</item>
+    </string-array>
+
+    <!-- e text si mayor -->
+    <string name="text_si_mayor">I-txt mo si Mayor</string>
+    <string name="text_message">Your message here</string>
+    <string name="send">Send</string>
+    <string name="text_disclaimer">
+        <b>Note:</b>
+            <i>For citizen’s reporting of Incident/Accident (fire, crimes, traffic, disaster, others)
+                please use the Incident Report in the slider menu of the app but will need internet
+                connection to be able to send specific report. </i>\n\n
+        <b>DISCLAIMER : </b>
+        <i>Sending sms message to the Mayor will incur regular sms load to your network credit\n</i>
+    </string>
+    <string name="select_classification">Select Classification</string>
+    <string-array name="array_text_classification">
+        <item>Complaints on National Govt Services</item>
+        <item>Complaints on Municipal Govt. Services</item>
+        <item>Complaints on Barangay Services</item>
+        <item>Complaints on Neighborhood</item>
+        <item>Suggestions</item>
+        <item>Other General Remarks/Observations</item>
+    </string-array>
+
+    <string name="municipality_of_san_mateo">Municipality of San Mateo</string>
+
+    <string name="create_gallery_header">Create gallery record</string>
+    <string name="gallery_title">Gallery Title</string>
+    <string name="gallery_description">Gallery Description</string>
+    <string name="enter_gallery_url">Enter image url</string>
+
 </resources>
