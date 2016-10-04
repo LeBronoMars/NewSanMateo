@@ -50,6 +50,7 @@ import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.BannerFragment;
 import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
+import sanmateo.com.profileapp.fragments.ETextSiMayorDialogFragment;
 import sanmateo.com.profileapp.fragments.SanMateoBannerFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
