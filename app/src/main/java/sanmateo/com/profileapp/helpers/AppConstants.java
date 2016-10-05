@@ -50,4 +50,14 @@ public class AppConstants {
 
     public static String SAN_MATEO_LOGO = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/banners/san_mateo_logo.png";
 
+    /** categories */
+    public static final String CATEGORY_PEACE_AND_SECURITY = "Peace & Security";
+    public static final String CATEGORY_SOCIAL_AND_DEVELOPMENT = "Social & Development Sector";
+    public static final String CATEGORY_HEALTH = "Health Sector";
+    public static final String CATEGORY_RESORT = "Resort";
+    public static final String CATEGORY_SHOPPING_MALL = "Shopping Mall";
+    public static final String CATEGORY_AUTHENTIC_RESTAURANT = "Authentic Restaurant";
+    public static final String CATEGORY_HERITAGE_SITE = "Heritage Site";
+    public static final String CATEGORY_MUNICIPAL = "Municipal Government";
+    public static final String CATEGORY_BARANGAY = "Barangay Government";
 }
