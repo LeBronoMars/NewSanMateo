@@ -24,5 +24,7 @@ public enum  ApiAction {
 
     POST_INCIDENT_REPORT,
 
-    POST_MALICIOUS_REPORT
+    POST_MALICIOUS_REPORT,
+
+    GET_OFFICIALS
 }

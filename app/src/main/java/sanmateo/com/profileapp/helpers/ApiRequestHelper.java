@@ -13,6 +13,7 @@ import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
+import sanmateo.com.profileapp.models.response.Official;
 import sanmateo.com.profileapp.singletons.RetrofitSingleton;
 
 /**
@@ -101,6 +102,12 @@ public class ApiRequestHelper {
         final Observable<GenericMessage> observable = apiInterface.changeProfilePic(token, userId,
                 newPicUrl);
         handleObservableResult(ApiAction.PUT_CHANGE_PROFILE_PIC, observable);
+    }
+
+    public void getOfficials(final String token) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_OFFICIALS);
+        final Observable<List<Official>> observable = apiInterface.getOfficials(token);
+        handleObservableResult(ApiAction.GET_OFFICIALS, observable);
     }
 
     /**

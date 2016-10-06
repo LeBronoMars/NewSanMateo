@@ -16,6 +16,7 @@ import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
+import sanmateo.com.profileapp.models.response.Official;
 
 /**
  * Created by rsbulanon on 10/2/16.
@@ -177,4 +178,12 @@ public interface ApiInterface {
                                               @Field("email") String email,
                                               @Field("old_password") String oldPassword,
                                               @Field("new_password") String newPassword);
+
+    /**
+     * get all list of active officials
+     *
+     * @param token represents the user that trying to make the request
+     * */
+    @GET("/api/v1/officials")
+    Observable<List<Official>> getOfficials(@Header("Authorization") String token);
 }
