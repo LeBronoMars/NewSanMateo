@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -256,7 +257,13 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                     fragment.show(getFragmentManager(), "disaster menu");
                     break;
                 case R.id.menu_rate_us:
-                    showToast("Rate us feature coming soon...");
+                    final Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                    final Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    try {
+                        startActivity(myAppLinkToMarket);
+                    } catch (ActivityNotFoundException e) {
+                        showToast(AppConstants.WARN_UNABLE_TO_FIND_APP);
+                    }
                     break;
                 case R.id.menu_change_pass:
                     changePassword();

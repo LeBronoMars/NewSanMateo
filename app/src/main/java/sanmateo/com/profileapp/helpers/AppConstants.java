@@ -17,6 +17,7 @@ public class AppConstants {
     public static final String WARN_INVALID_ACCOUNT = "Invalid account!";
     public static final String WARN_INVALID_CONTACT_NO = "Invalid contact no";
     public static final String WARN_SELECT_GENDER = "Please specifiy your gender!";
+    public static final String WARN_UNABLE_TO_FIND_APP = "Unavailable to find this app in Google Playstore market";
 
     /** aws s3 buckets */
     public static final String BUCKET_ROOT = "sanmateoprofileapp";
