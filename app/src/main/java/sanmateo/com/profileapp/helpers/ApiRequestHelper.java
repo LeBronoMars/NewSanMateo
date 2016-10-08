@@ -10,6 +10,7 @@ import rx.schedulers.Schedulers;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.interfaces.ApiInterface;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
+import sanmateo.com.profileapp.models.response.Announcement;
 import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.Gallery;
 import sanmateo.com.profileapp.models.response.GenericMessage;
@@ -116,6 +117,18 @@ public class ApiRequestHelper {
         onApiRequestListener.onApiRequestBegin(ApiAction.GET_PHOTOS);
         final Observable<ArrayList<Gallery>> observable = apiInterface.getGalleries(token);
         handleObservableResult(ApiAction.GET_PHOTOS, observable);
+    }
+
+    public void getAnnouncements(final String token, final int start, final int limit) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_ANNOUNCEMENTS);
+        final Observable<List<Announcement>> observable = apiInterface.getAnnouncements(token,start,limit);
+        handleObservableResult(ApiAction.GET_ANNOUNCEMENTS, observable);
+    }
+
+    public void getLatestAnnouncements(final String token, final int announcementId) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_LATEST_ANNOUNCEMENTS);
+        final Observable<List<Announcement>> observable = apiInterface.getLatestAnnouncements(token,announcementId);
+        handleObservableResult(ApiAction.GET_LATEST_ANNOUNCEMENTS, observable);
     }
 
     /**

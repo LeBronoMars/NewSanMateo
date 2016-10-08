@@ -70,6 +70,10 @@
         <activity android:name=".activities.SocialMediaActivity"
             android:screenOrientation="portrait" />
 
+        <!-- public announcement activity -->
+        <activity android:name=".activities.PublicAnnouncementsActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".services.PusherService" />
 
         <meta-data

@@ -28,5 +28,9 @@ public enum  ApiAction {
 
     GET_OFFICIALS,
 
-    GET_PHOTOS
+    GET_PHOTOS,
+
+    GET_ANNOUNCEMENTS,
+
+    GET_LATEST_ANNOUNCEMENTS
 }
