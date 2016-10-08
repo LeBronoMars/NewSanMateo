@@ -90,6 +90,10 @@
         <activity android:name=".activities.GlobalDisasterActivity"
             android:screenOrientation="portrait" />
 
+        <!-- hot lines activity -->
+        <activity android:name=".activities.HotlinesActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".services.PusherService" />
 
         <meta-data
