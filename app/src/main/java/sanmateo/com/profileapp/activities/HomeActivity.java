@@ -217,9 +217,6 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                     case R.id.menu_gallery:
                         moveToOtherActivity(GalleryActivity.class);
                         break;
-                    /*case R.id.menu_news_events:
-                        moveToOtherAcitivity(NewsEventsManagementActivity.class);
-                        break;*/
                     case R.id.menu_social_media:
                         if (isNetworkAvailable()) {
                             moveToOtherActivity(SocialMediaActivity.class);

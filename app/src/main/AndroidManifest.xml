@@ -66,6 +66,10 @@
         <activity android:name=".activities.GalleryActivity"
             android:screenOrientation="portrait" />
 
+        <!-- social media activity -->
+        <activity android:name=".activities.SocialMediaActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".services.PusherService" />
 
         <meta-data
