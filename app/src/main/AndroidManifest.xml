@@ -102,6 +102,10 @@
         <activity android:name=".activities.CprActivity"
             android:screenOrientation="portrait" />
 
+        <!-- new full preview activity -->
+        <activity android:name=".activities.NewsFullPreviewActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".services.PusherService" />
 
         <meta-data
