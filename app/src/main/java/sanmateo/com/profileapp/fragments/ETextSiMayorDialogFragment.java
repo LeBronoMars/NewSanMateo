@@ -76,7 +76,7 @@ public class ETextSiMayorDialogFragment extends DialogFragment {
         }
     }
 
-    @OnClick(R.id.btnCancel)
+    @OnClick(R.id.btn_cancel)
     public void cancel() {
         if (onTextMayorListener != null) {
             onTextMayorListener.onCancel();
