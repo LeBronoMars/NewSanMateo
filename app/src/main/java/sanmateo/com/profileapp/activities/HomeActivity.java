@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
@@ -183,111 +184,108 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         tv_profile_name.setText(currentUserSingleton.getCurrentUser().getFirstName() + " " +
                 currentUserSingleton.getCurrentUser().getLastName());
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_panic_emergency:
-                        setPanicContacts();
-                        break;
-                    case R.id.menu_incident_report:
-                        moveToOtherActivity(IncidentsActivity.class);
-                        break;
-                    case R.id.menu_information:
-                        moveToOtherActivity(InformationActivity.class);
-                        break;
-                    case R.id.menu_map:
-                        moveToOtherActivity(MapActivity.class);
-                        break;
-                    case R.id.menu_directories:
-                        moveToOtherActivity(DirectoriesActivity.class);
-                        break;
-                    case R.id.menu_gallery:
-                        moveToOtherActivity(GalleryActivity.class);
-                        break;
-                    case R.id.menu_social_media:
-                        if (isNetworkAvailable()) {
-                            moveToOtherActivity(SocialMediaActivity.class);
-                        } else {
-                            showToast(AppConstants.WARN_CONNECTION);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menu_panic_emergency:
+                    setPanicContacts();
+                    break;
+                case R.id.menu_incident_report:
+                    moveToOtherActivity(IncidentsActivity.class);
+                    break;
+                case R.id.menu_information:
+                    moveToOtherActivity(InformationActivity.class);
+                    break;
+                case R.id.menu_map:
+                    moveToOtherActivity(MapActivity.class);
+                    break;
+                case R.id.menu_directories:
+                    moveToOtherActivity(DirectoriesActivity.class);
+                    break;
+                case R.id.menu_gallery:
+                    moveToOtherActivity(GalleryActivity.class);
+                    break;
+                case R.id.menu_social_media:
+                    if (isNetworkAvailable()) {
+                        moveToOtherActivity(SocialMediaActivity.class);
+                    } else {
+                        showToast(AppConstants.WARN_CONNECTION);
+                    }
+                    break;
+                case R.id.menu_disaster_management:
+                    final ArrayList<String> menu = new ArrayList<>();
+                    menu.add("Public Announcements");
+                    menu.add("Typhoon Watch");
+                    menu.add("Water Level Monitoring");
+                    menu.add("Alert Level(Water Level)");
+                    menu.add("Global Disaster Monitoring");
+                    menu.add("Emergency Numbers");
+                    menu.add("Emergency Kit");
+                    menu.add("How to CPR");
+                    menu.add("Disaster 101");
+                    final DisasterMgtMenuDialogFragment fragment = DisasterMgtMenuDialogFragment
+                            .newInstance(headerDisasterManagement, menu);
+                    fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
+                        @Override
+                        public void onSelectedMenu(int position) {
+                            if (position == 0) {
+                                moveToOtherActivity(PublicAnnouncementsActivity.class);
+                            } else if (position == 1) {
+                                moveToOtherActivity(TyphoonWatchActivity.class);
+                            } else if (position == 2) {
+                                moveToOtherActivity(WaterLevelMonitoringActivity.class);
+                            } else if (position == 3) {
+                                moveToOtherActivity(AlertLevelActivity.class);
+                            } else if (position == 4) {
+                                moveToOtherActivity(GlobalDisasterActivity.class);
+                            } else if (position == 5) {
+                                moveToOtherActivity(HotlinesActivity.class);
+                            } else if (position == 6) {
+                                moveToOtherActivity(EmergencyKitActivity.class);
+                            } else if (position == 7) {
+                                moveToOtherActivity(CprActivity.class);
+                            } else if (position == 8) {
+                                //moveToOtherActivity(Disaster101Activity.class);
+                            }
                         }
-                        break;
-                    case R.id.menu_disaster_management:
-                        final ArrayList<String> menu = new ArrayList<>();
-                        menu.add("Public Announcements");
-                        menu.add("Typhoon Watch");
-                        menu.add("Water Level Monitoring");
-                        menu.add("Alert Level(Water Level)");
-                        menu.add("Global Disaster Monitoring");
-                        menu.add("Emergency Numbers");
-                        menu.add("Emergency Kit");
-                        menu.add("How to CPR");
-                        menu.add("Disaster 101");
-                        final DisasterMgtMenuDialogFragment fragment = DisasterMgtMenuDialogFragment
-                                .newInstance(headerDisasterManagement, menu);
-                        fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
-                            @Override
-                            public void onSelectedMenu(int position) {
-                                if (position == 0) {
-                                    moveToOtherActivity(PublicAnnouncementsActivity.class);
-                                } else if (position == 1) {
-                                    moveToOtherActivity(TyphoonWatchActivity.class);
-                                } else if (position == 2) {
-                                    moveToOtherActivity(WaterLevelMonitoringActivity.class);
-                                } else if (position == 3) {
-                                    moveToOtherActivity(AlertLevelActivity.class);
-                                } else if (position == 4) {
-                                    moveToOtherActivity(GlobalDisasterActivity.class);
-                                } else if (position == 5) {
-                                    moveToOtherActivity(HotlinesActivity.class);
-                                } else if (position == 6) {
-                                    moveToOtherActivity(EmergencyKitActivity.class);
-                                } else if (position == 7) {
-                                    moveToOtherActivity(CprActivity.class);
-                                } else if (position == 8) {
-                                    //moveToOtherActivity(Disaster101Activity.class);
+
+                        @Override
+                        public void onClose() {
+                            fragment.dismiss();
+                        }
+                    });
+                    fragment.show(getFragmentManager(), "disaster menu");
+                    break;
+                case R.id.menu_rate_us:
+                    showToast("Rate us feature coming soon...");
+                    break;
+                case R.id.menu_change_pass:
+                    changePassword();
+                    break;
+                case R.id.menu_logout:
+                    showConfirmDialog("", "Logout", "Are you sure you want to logout from the app?",
+                            "Yes", "No", new OnConfirmDialogListener() {
+                                @Override
+                                public void onConfirmed(String action) {
+                                    /** clear all singletons */
+                                    newsSingleton.clearAll();
+                                    incidentsSingleton.clearAll();
+                                    currentUserSingleton.setCurrentUser(null);
+                                    PrefsHelper.setString(HomeActivity.this,
+                                            AppConstants.PREFS_LOCAL_EMERGENCY_KITS, "");
+                                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                                    finish();
+                                    animateToRight(HomeActivity.this);
                                 }
-                            }
 
-                            @Override
-                            public void onClose() {
-                                fragment.dismiss();
-                            }
-                        });
-                        fragment.show(getFragmentManager(), "disaster menu");
-                        break;
-                    case R.id.menu_rate_us:
-                        showToast("Rate us feature coming soon...");
-                        break;
-                    case R.id.menu_change_pass:
-                        changePassword();
-                        break;
-                    case R.id.menu_logout:
-                        showConfirmDialog("", "Logout", "Are you sure you want to logout from the app?",
-                                "Yes", "No", new OnConfirmDialogListener() {
-                                    @Override
-                                    public void onConfirmed(String action) {
-                                        /** clear all singletons */
-                                        newsSingleton.clearAll();
-                                        incidentsSingleton.clearAll();
-                                        currentUserSingleton.setCurrentUser(null);
-                                        PrefsHelper.setString(HomeActivity.this,
-                                                AppConstants.PREFS_LOCAL_EMERGENCY_KITS, "");
-                                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                                        finish();
-                                        animateToRight(HomeActivity.this);
-                                    }
+                                @Override
+                                public void onCancelled(String action) {
 
-                                    @Override
-                                    public void onCancelled(String action) {
-
-                                    }
-                                });
-                        break;
-                }
-                drawerLayout.closeDrawers();
-                return true;
+                                }
+                            });
+                    break;
             }
+            drawerLayout.closeDrawers();
+            return true;
         });
     }
 
@@ -446,7 +444,34 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
     private void showChangeProfilePicMenu() {
         uploadToBucket = AppConstants.BUCKET_PROFILE_PIC;
-        CustomBottomSheetDialogFragment.newInstance().show(getSupportFragmentManager(), "bottom sheet");
+        final CustomBottomSheetDialogFragment bottomSheetDialogFragment = CustomBottomSheetDialogFragment.newInstance();
+        bottomSheetDialogFragment.setOnChangeProfilePicListener(new CustomBottomSheetDialogFragment.OnChangeProfilePicListener() {
+            @Override
+            public void onSelectPictureVia(String action) {
+                bottomSheetDialogFragment.dismiss();
+                switch (action) {
+                    case "via gallery":
+                        final Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
+                        break;
+                    case "via camera":
+                        final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        try {
+                            fileToUpload = createImageFile();
+                            fileUri = Uri.fromFile(fileToUpload);
+                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                            startActivityForResult(cameraIntent, CAPTURE_IMAGE);
+                        } catch (Exception ex) {
+                            showConfirmDialog("","Capture Image",
+                                    "We can't get your image. Please try again.","Close","",null);
+                        }
+                        break;
+                }
+            }
+        });
+        bottomSheetDialogFragment.show(getSupportFragmentManager(), "bottom sheet");
     }
 
     @Override

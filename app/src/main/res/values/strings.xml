@@ -222,4 +222,5 @@
     <string name="gallery_description">Gallery Description</string>
     <string name="enter_gallery_url">Enter image url</string>
 
+    <string name="change_profile_pic">Change profile pic</string>
 </resources>
