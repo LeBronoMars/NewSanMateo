@@ -31,12 +31,9 @@ import sanmateo.com.profileapp.models.others.Location;
  */
 public class MapActivity extends BaseActivity implements OnMapReadyCallback {
 
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.appBarLayout)
-    AppBarLayout appBarLayout;
+    @BindView(R.id.viewPager) ViewPager viewPager;
+    @BindView(R.id.tabLayout) TabLayout tabLayout;
+    @BindView(R.id.appBarLayout) AppBarLayout appBarLayout;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private GoogleMap map;
 
@@ -47,6 +44,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
         ButterKnife.bind(this);
         initTabs();
         initMap();
+        setToolbarTitle("Map");
     }
 
     private void initTabs() {
@@ -61,11 +59,6 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     private void initMap() {
         final MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
-
-    @OnClick(R.id.llHeader)
-    public void goBack() {
-        onBackPressed();
     }
 
     @Override

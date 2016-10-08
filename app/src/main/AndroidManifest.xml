@@ -61,7 +61,6 @@
 
         <!-- map activity -->
         <activity android:name=".activities.MapActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait" />
 
         <!-- directories activity -->
