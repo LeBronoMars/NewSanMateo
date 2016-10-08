@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.activities;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaPlayer;
@@ -87,12 +88,6 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
     private void initialize() {
         AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
         apiRequestHelper = new ApiRequestHelper(this);
-//        if (!DaoHelper.haCurrentUser()) {
-//            AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
-//            apiRequestHelper = new ApiRequestHelper(this);
-//        } else {
-//            moveToHome();
-//        }
     }
 
     @OnClick(R.id.btn_sign_in)
@@ -220,9 +215,9 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
     }
 
     private void moveToHome() {
-//        startActivity(new Intent(this, NewHomeActivity.class));
-//        animateToLeft(this);
-//        finish();
+        startActivity(new Intent(this, HomeActivity.class));
+        animateToLeft(this);
+        finish();
     }
 
     private void playVideo() {

@@ -172,10 +172,14 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
                 .positiveText(positiveText)
                 .negativeText(negativeText)
                 .onPositive((dialog, which) -> {
-                    onConfirmDialogListener.onConfirmed(action);
+                    if (onConfirmDialogListener != null) {
+                        onConfirmDialogListener.onConfirmed(action);
+                    }
                 })
                 .onNegative((dialog, which) -> {
-                    onConfirmDialogListener.onCancelled(action);
+                    if (onConfirmDialogListener != null) {
+                        onConfirmDialogListener.onCancelled(action);
+                    }
                 })
                 .show();
     }
