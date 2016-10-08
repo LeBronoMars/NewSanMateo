@@ -74,30 +74,18 @@ import sanmateo.com.profileapp.singletons.NewsSingleton;
  * Created by rsbulanon on 7/12/16.
  */
 public class HomeActivity extends BaseActivity implements OnApiRequestListener, OnS3UploadListener {
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.navigationView)
-    NavigationView navigationView;
-    @BindView(R.id.vp_banner)
-    ViewPager vp_banner;
-    @BindView(R.id.drawerLayout)
-    DrawerLayout drawerLayout;
-    @BindView(R.id.rvHomeMenu)
-    RecyclerView rvHomeMenu;
-    @BindView(R.id.appBarLayout)
-    AppBarLayout appBarLayout;
-    @BindView(R.id.tvNotification)
-    TextView tvNotification;
-    @BindView(R.id.llHeader)
-    LinearLayout llHeader;
-    @BindString(R.string.disaster_mgmt)
-    String headerDisasterManagement;
-    @BindString(R.string.message_alert_notifications)
-    String headerAlertNotifications;
-    @BindDimen(R.dimen._90sdp)
-    int profilePicSize;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.navigationView) NavigationView navigationView;
+    @BindView(R.id.vp_banner) ViewPager vp_banner;
+    @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
+    @BindView(R.id.rvHomeMenu) RecyclerView rvHomeMenu;
+    @BindView(R.id.appBarLayout) AppBarLayout appBarLayout;
+    @BindView(R.id.tvNotification) TextView tvNotification;
+    @BindView(R.id.llHeader) LinearLayout llHeader;
+    @BindString(R.string.disaster_mgmt) String headerDisasterManagement;
+    @BindString(R.string.message_alert_notifications) String headerAlertNotifications;
+    @BindDimen(R.dimen._90sdp) int profilePicSize;
     private ImageView iv_profile_image;
     private ProgressBar pb_load_image;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -259,7 +247,6 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                                 } else if (position == 8) {
                                     moveToOtherActivity(Disaster101Activity.class);
                                 }
-
                             }
 
                             @Override
@@ -490,7 +477,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         if (bucketName.equals(AppConstants.BUCKET_PROFILE_PIC)) {
             /** upload new pic url */
             apiRequestHelper.changeProfilePic(token, currentUserSingleton
-                    .getCurrentUser().getUserId(), imageUrl);
+                    .getCurrentUser().getId(), imageUrl);
         }
         uploadToBucket = "";
     }

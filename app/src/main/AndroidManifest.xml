@@ -94,6 +94,14 @@
         <activity android:name=".activities.HotlinesActivity"
             android:screenOrientation="portrait" />
 
+        <!-- emergency kit activity -->
+        <activity android:name=".activities.EmergencyKitActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- CPR activity -->
+        <activity android:name=".activities.CprActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".services.PusherService" />
 
         <meta-data
