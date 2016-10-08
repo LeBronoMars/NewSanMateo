@@ -7,14 +7,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/_200sdp"
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:src="@drawable/san_mateo_logo" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_san_mateo_logo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true" />
+
+            <ProgressBar
+                android:id="@+id/pb_load_image"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -22,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:text="@string/welcome_to"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_12sdp" />
 
         <TextView
             fontPath="fonts/Roboto-Medium.ttf"
@@ -30,14 +44,14 @@
             android:layout_height="wrap_content"
             android:text="@string/san_mateo"
             android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:textSize="@dimen/_15sdp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/official_mobile_app"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_12sdp" />
 
     </LinearLayout>
 

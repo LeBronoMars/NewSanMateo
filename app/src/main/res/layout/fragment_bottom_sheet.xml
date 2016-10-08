@@ -2,12 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/_5sdp"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textSize="@dimen/_30sdp"/>
+        android:text="@string/change_profile_pic"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:textSize="@dimen/_18sdp"/>
+
+    <TextView
+        android:id="@+id/tv_open_camera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        android:drawableLeft="@drawable/upload_via_camera"
+        android:text="@string/open_camera"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp" />
+
+    <TextView
+        android:id="@+id/tv_open_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        android:drawableLeft="@drawable/upload_via_gallery"
+        android:text="@string/open_gallery"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp" />
 
 </LinearLayout>

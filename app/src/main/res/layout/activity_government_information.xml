@@ -10,12 +10,12 @@
         android:orientation="vertical">
 
         <TextView
-            fontPath="fonts/Roboto-Thin.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/san_mateo_govt"
-            android:textSize="@dimen/_14sdp" />
+            android:textColor="@android:color/black"
+            fontPath="fonts/Roboto-Light.ttf" />
 
     </LinearLayout>
 

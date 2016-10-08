@@ -26,7 +26,7 @@ import sanmateo.com.profileapp.singletons.PicassoSingleton;
  * Created by ctmanalo on 8/12/16.
  */
 public class GalleryDetailFragment extends DialogFragment {
-    @BindView(R.id.iv_image) ImageView iv_image;
+    @BindView(R.id.iv_gallery) ImageView iv_gallery;
     @BindView(R.id.pb_load_image) ProgressBar pb_load_image;
     @BindView(R.id.tv_title) TextView tv_title;
     @BindView(R.id.tv_description) TextView tv_description;
@@ -73,7 +73,7 @@ public class GalleryDetailFragment extends DialogFragment {
         PicassoSingleton.getInstance().getPicasso().load(gallery.getImageUrl())
                 .placeholder(R.drawable.placeholder_image)
                 .fit()
-                .into(iv_image, new Callback() {
+                .into(iv_gallery, new Callback() {
                     @Override
                     public void onSuccess() {
                         pb_load_image.setVisibility(View.GONE);

@@ -66,6 +66,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/_20sdp"
                                 android:gravity="center_vertical"
+                                android:layout_centerVertical="true"
                                 android:orientation="horizontal">
 
                                 <de.hdodenhof.circleimageview.CircleImageView

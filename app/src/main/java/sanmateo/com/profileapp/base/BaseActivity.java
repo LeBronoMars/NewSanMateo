@@ -172,10 +172,14 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
                 .positiveText(positiveText)
                 .negativeText(negativeText)
                 .onPositive((dialog, which) -> {
-                    onConfirmDialogListener.onConfirmed(action);
+                    if (onConfirmDialogListener != null) {
+                        onConfirmDialogListener.onConfirmed(action);
+                    }
                 })
                 .onNegative((dialog, which) -> {
-                    onConfirmDialogListener.onCancelled(action);
+                    if (onConfirmDialogListener != null) {
+                        onConfirmDialogListener.onCancelled(action);
+                    }
                 })
                 .show();
     }
@@ -436,10 +440,12 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
     public void uploadImageToS3(final String bucketName, final File fileToUpload, final int current,
                                 final int total) {
         if (isNetworkAvailable()) {
+            LogHelper.log("s3", "bucket  name --> " + bucketName);
             showCustomProgressBar(0, current, total);
             amazonS3Helper.uploadImage(bucketName, fileToUpload).setTransferListener(new TransferListener() {
                 @Override
                 public void onStateChanged(int id, TransferState state) {
+                    LogHelper.log("s3", "state --> " + state.name());
                     if (state.name().equals("COMPLETED")) {
                         dismissCustomProgressBar();
                         final String url = amazonS3Helper.getResourceUrl(bucketName, fileToUpload.getName());
@@ -449,6 +455,8 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
 
                 @Override
                 public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+                    LogHelper.log("s3", "uploading progress --> " + (int) bytesCurrent
+                                    + " total ---> " + (int) bytesTotal);
                     updateCustomProgressBar((int) bytesCurrent, (int) bytesTotal);
                 }
 

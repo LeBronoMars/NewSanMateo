@@ -35,12 +35,9 @@ import sanmateo.com.profileapp.models.others.AppMarker;
  */
 public class AlertLevelActivity extends BaseActivity implements OnMapReadyCallback, OnMarkerClickListener {
 
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.appBarLayout)
-    AppBarLayout appBarLayout;
+    @BindView(R.id.viewPager) ViewPager viewPager;
+    @BindView(R.id.tabLayout) TabLayout tabLayout;
+    @BindView(R.id.appBarLayout) AppBarLayout appBarLayout;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private ArrayList<AppMarker> appMarkers = new ArrayList<>();
     private GoogleMap map;
@@ -55,6 +52,7 @@ public class AlertLevelActivity extends BaseActivity implements OnMapReadyCallba
         initTabs();
         initMap();
         seen();
+        setToolbarTitle("Water Level");
     }
 
     @Override
@@ -107,11 +105,6 @@ public class AlertLevelActivity extends BaseActivity implements OnMapReadyCallba
         final MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
-
-    @OnClick(R.id.llHeader)
-    public void goBack() {
-        onBackPressed();
     }
 
     @Override

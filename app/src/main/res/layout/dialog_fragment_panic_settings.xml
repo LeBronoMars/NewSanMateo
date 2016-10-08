@@ -28,27 +28,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn_select"
                 fontPath="fonts/Roboto-Light.ttf"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="50"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
                 style="@style/AppTheme.Button.Primary"
-                android:text="@string/close"
+                android:text="@string/select_contact"
                 android:textSize="@dimen/_14sdp" />
 
             <Button
                 android:id="@+id/btn_close"
                 fontPath="fonts/Roboto-Light.ttf"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="50"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
-                style="@style/AppTheme.Button.Primary"
+                style="@style/AppTheme.Button.PrimaryDark"
                 android:text="@string/close"
                 android:textSize="@dimen/_14sdp" />
         </LinearLayout>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:background="@color/dirty_white">
 
     <RelativeLayout
@@ -28,10 +29,11 @@
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/_12sdp"
+        android:textSize="@dimen/_15sdp"
         android:padding="@dimen/_5sdp"
         android:layout_marginLeft="@dimen/_4sdp"
         android:text="Title"
+        android:textColor="@color/colorPrimary"
         android:layout_below="@+id/rlPhotoContainer"/>
 
     <ScrollView
@@ -42,11 +44,11 @@
         android:padding="@dimen/_1sdp">
 
         <TextView
-            fontPath="fonts/Roboto-Light.ttf"
             android:id="@+id/tv_description"
-            android:textSize="@dimen/_11sdp"
+            android:textSize="@dimen/_12sdp"
             android:paddingLeft="@dimen/_8sdp"
             android:paddingRight="@dimen/_8sdp"
+            android:textColor="@android:color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -74,4 +76,4 @@
     </RelativeLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

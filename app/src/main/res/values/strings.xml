@@ -142,7 +142,7 @@
     <!-- panic settings dialog fragment -->
     <string name="panic_settings_header">Set emergency contacts</string>
     <string name="no_contacts">No contact/s found!</string>
-    <string name="select_contact">Select from Contacts</string>
+    <string name="select_contact">Select</string>
     <string name="close">Close</string>
 
     <!-- disaster management -->
@@ -222,4 +222,5 @@
     <string name="gallery_description">Gallery Description</string>
     <string name="enter_gallery_url">Enter image url</string>
 
+    <string name="change_profile_pic">Change profile pic</string>
 </resources>

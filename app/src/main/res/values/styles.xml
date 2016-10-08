@@ -14,6 +14,13 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <!-- color primary dark button -->
+    <style name="AppTheme.Button.PrimaryDark" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
     <!-- dialog animation -->
     <style name="dialog_animation">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>

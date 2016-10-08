@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.activities;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaPlayer;
@@ -29,6 +30,7 @@ import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.models.response.ApiError;
 import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 
 
 /**
@@ -87,12 +89,6 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
     private void initialize() {
         AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
         apiRequestHelper = new ApiRequestHelper(this);
-//        if (!DaoHelper.haCurrentUser()) {
-//            AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
-//            apiRequestHelper = new ApiRequestHelper(this);
-//        } else {
-//            moveToHome();
-//        }
     }
 
     @OnClick(R.id.btn_sign_in)
@@ -131,6 +127,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
                 showSnackbar(btnSignIn, AppConstants.WARN_INVALID_ACCOUNT);
             } else {
                 //DaoHelper.saveCurrentUser(authResponse);
+                CurrentUserSingleton.getInstance().setCurrentUser(authResponse);
                 moveToHome();
             }
         }
@@ -220,9 +217,9 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
     }
 
     private void moveToHome() {
-//        startActivity(new Intent(this, NewHomeActivity.class));
-//        animateToLeft(this);
-//        finish();
+        startActivity(new Intent(this, HomeActivity.class));
+        animateToLeft(this);
+        finish();
     }
 
     private void playVideo() {

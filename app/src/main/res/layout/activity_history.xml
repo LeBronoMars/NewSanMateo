@@ -15,7 +15,8 @@
             android:padding="@dimen/_10sdp"
             android:text="@string/history_sanmateo"
             android:textSize="@dimen/_14sdp"
-            fontPath="fonts/Roboto-Thin.ttf" />
+            android:textColor="@android:color/black"
+            fontPath="fonts/Roboto-Light.ttf" />
 
     </LinearLayout>
 
