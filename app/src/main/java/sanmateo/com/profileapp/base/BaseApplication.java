@@ -3,6 +3,7 @@ package sanmateo.com.profileapp.base;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.FacebookSdk;
 
 import java.io.File;
 
@@ -26,6 +27,9 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        /** initialize facebook sdk */
+        FacebookSdk.sdkInitialize(this);
+
         /** initialize fabric */
         Fabric.with(this, new Crashlytics());
 

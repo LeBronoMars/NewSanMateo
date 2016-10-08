@@ -23,8 +23,6 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civ_pic"
-                app:civ_border_color="@color/colorPrimary"
-                app:civ_border_width="@dimen/_1sdp"
                 android:src="@drawable/san_mateo_logo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
