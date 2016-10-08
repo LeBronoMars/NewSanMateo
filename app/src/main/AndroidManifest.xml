@@ -31,6 +31,7 @@
 
         <!-- home activity -->
         <activity android:name=".activities.HomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait" />
 
         <!-- registration activity -->
