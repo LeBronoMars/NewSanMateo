@@ -116,6 +116,14 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="c277574b48aa967c2623d91a564e6db73440d04a" />
+
+        <!-- google maps -->
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB2fMLz_9A6mL1uYMaCQbvUkZ_ADqPaL30"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
