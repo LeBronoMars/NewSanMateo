@@ -74,6 +74,18 @@
         <activity android:name=".activities.PublicAnnouncementsActivity"
             android:screenOrientation="portrait" />
 
+        <!-- typhoon watch activity -->
+        <activity android:name=".activities.TyphoonWatchActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- water level monitoring activity -->
+        <activity android:name=".activities.WaterLevelMonitoringActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- alert activity -->
+        <activity android:name=".activities.AlertLevelActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".services.PusherService" />
 
         <meta-data

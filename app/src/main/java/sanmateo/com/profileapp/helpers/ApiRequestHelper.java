@@ -17,6 +17,7 @@ import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.models.response.Official;
+import sanmateo.com.profileapp.models.response.WaterLevel;
 import sanmateo.com.profileapp.singletons.RetrofitSingleton;
 
 /**
@@ -129,6 +130,25 @@ public class ApiRequestHelper {
         onApiRequestListener.onApiRequestBegin(ApiAction.GET_LATEST_ANNOUNCEMENTS);
         final Observable<List<Announcement>> observable = apiInterface.getLatestAnnouncements(token,announcementId);
         handleObservableResult(ApiAction.GET_LATEST_ANNOUNCEMENTS, observable);
+    }
+
+    public void getWaterLevels(final String token, final int start, final int limit) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_WATER_LEVEL);
+        final Observable<List<WaterLevel>> observable = apiInterface.getWaterLevels(token,start,limit);
+        handleObservableResult(ApiAction.GET_WATER_LEVEL, observable);
+    }
+
+    public void getLatestWaterLevels(final String token, final int id, final String area) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_LATEST_WATER_LEVEL);
+        final Observable<List<WaterLevel>> observable = apiInterface.getLatestWaterLevels(token,id, area);
+        handleObservableResult(ApiAction.GET_LATEST_WATER_LEVEL, observable);
+    }
+
+    public void getWaterLevelByArea(final String token, final String area) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_WATER_LEVEL_BY_AREA);
+        final Observable<List<WaterLevel>> observable = apiInterface.getWaterLevelByArea(token,
+                area);
+        handleObservableResult(ApiAction.GET_WATER_LEVEL_BY_AREA, observable);
     }
 
     /**

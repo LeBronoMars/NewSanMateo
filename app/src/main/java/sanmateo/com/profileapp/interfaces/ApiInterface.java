@@ -20,6 +20,7 @@ import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.models.response.Official;
+import sanmateo.com.profileapp.models.response.WaterLevel;
 
 /**
  * Created by rsbulanon on 10/2/16.
@@ -220,4 +221,40 @@ public interface ApiInterface {
     @GET("/api/v1/announcements/latest/{id}")
     Observable<List<Announcement>> getLatestAnnouncements(@Header("Authorization") String token,
                                                           @Path("id") int announcementId);
+
+    /**
+     * get all water level by area
+     *
+     * @param token represents the user that trying to make the request
+     * @param area defines the area of the requested water level
+     * */
+    @GET("/api/v1/water_level/filter")
+    Observable<List<WaterLevel>> getWaterLevelByArea(@Header("Authorization") String token,
+                                                     @Query("area") String area);
+
+    /**
+     * get all water level notification
+     *
+     * @param token represents the user that trying to make the request
+     * @param start defines the offset of query (for pagination)
+     * @param limit size of expected result
+     * */
+    @GET("/api/v1/water_level")
+    Observable<List<WaterLevel>> getWaterLevels(@Header("Authorization") String token,
+                                                @Query("start") int start,
+                                                @Query("limit") int limit);
+
+    /**
+     * get latest water level notifications
+     *
+     * @param token represents the user that trying to make the request
+     * @param id latest record id
+     * @param area name of flood prone area in san mateo
+     *
+     * */
+    @GET("/api/v1/water_level/latest/{id}")
+    Observable<List<WaterLevel>> getLatestWaterLevels(@Header("Authorization") String token,
+                                                      @Path("id") int id,
+                                                      @Query("area") String area);
+
 }
