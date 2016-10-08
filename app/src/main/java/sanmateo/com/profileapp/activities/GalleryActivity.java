@@ -17,17 +17,17 @@ import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.Gallery;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
+import sanmateo.com.profileapp.singletons.GalleriesSingleton;
 
 /**
  * Created by rsbulanon on 6/27/16.
  */
 public class GalleryActivity extends BaseActivity implements OnApiRequestListener {
-
     @BindView(R.id.rv_photos) RecyclerView rv_photos;
     private CurrentUserSingleton currentUserSingleton;
+    private GalleriesSingleton galleriesSingleton;
     private ApiRequestHelper apiRequestHelper;
     private String token;
-    private ArrayList<Gallery> galleries;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,25 +37,24 @@ public class GalleryActivity extends BaseActivity implements OnApiRequestListene
         setToolbarTitle("Gallery");
         apiRequestHelper = new ApiRequestHelper(this);
         currentUserSingleton = CurrentUserSingleton.getInstance();
+        galleriesSingleton = GalleriesSingleton.getInstance();
         token = currentUserSingleton.getCurrentUser().getToken();
-        initPhotos();
-        apiRequestHelper.getGalleries(token);
+        initRecycler();
     }
 
 
     private void initRecycler() {
-        final GalleryAdapter adapter = new GalleryAdapter(this, galleries);
+        final GalleryAdapter adapter = new GalleryAdapter(this, galleriesSingleton.getGalleries());
         adapter.setOnGalleryClickListener(gallery -> {
             final GalleryDetailFragment fragment = GalleryDetailFragment.newInstance(gallery);
             fragment.show(getFragmentManager(), "Photo Details");
         });
         rv_photos.setAdapter(adapter);
         rv_photos.setLayoutManager(new LinearLayoutManager(this));
-    }
 
-    private void initPhotos() {
-
-        initRecycler();
+        if (galleriesSingleton.getGalleries().size() == 0) {
+            apiRequestHelper.getGalleries(token);
+        }
     }
 
     @Override
@@ -68,9 +67,11 @@ public class GalleryActivity extends BaseActivity implements OnApiRequestListene
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
         if (action.equals(ApiAction.GET_PHOTOS)) {
-            final ArrayList<Gallery> photoArrayList = (ArrayList<Gallery>) result;
-            rv_photos.getAdapter().notifyDataSetChanged();
+            final ArrayList<Gallery> galleries = (ArrayList<Gallery>) result;
+            galleriesSingleton.getGalleries().clear();
+            galleriesSingleton.getGalleries().addAll(galleries);
         }
+        rv_photos.getAdapter().notifyDataSetChanged();
         dismissCustomProgress();
     }
 
