@@ -20,6 +20,6 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/_15sdp"
         android:layout_marginLeft="@dimen/_10sdp"
-        fontPath="fonts/Roboto-Thin.ttf"/>
+        fontPath="fonts/Roboto-Light.ttf"/>
 
 </LinearLayout>
