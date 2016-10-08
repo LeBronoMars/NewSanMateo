@@ -119,7 +119,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         ButterKnife.bind(this);
         initPanicContact();
         initAmazonS3Helper(this);
-        currentUserSingleton = CurrentUserSingleton.newInstance();
+        currentUserSingleton = CurrentUserSingleton.getInstance();
         incidentsSingleton = IncidentsSingleton.getInstance();
         newsSingleton = NewsSingleton.getInstance();
         apiRequestHelper = new ApiRequestHelper(this);
