@@ -71,7 +71,7 @@ public class DisasterMgtMenuDialogFragment extends DialogFragment {
         return mDialog;
     }
 
-    @OnClick(R.id.btnClose)
+    @OnClick(R.id.btn_close)
     public void cancel() {
         if (onSelectDisasterMenuListener != null) {
             onSelectDisasterMenuListener.onClose();

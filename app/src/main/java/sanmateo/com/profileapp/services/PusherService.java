@@ -8,6 +8,12 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.pusher.client.Pusher;
+import com.pusher.client.PusherOptions;
+import com.pusher.client.channel.Channel;
+import com.pusher.client.connection.ConnectionEventListener;
+import com.pusher.client.connection.ConnectionStateChange;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,8 +21,14 @@ import java.util.HashMap;
 
 import sanmateo.com.profileapp.BuildConfig;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.activities.AlertLevelActivity;
 import sanmateo.com.profileapp.activities.HomeActivity;
+import sanmateo.com.profileapp.activities.PublicAnnouncementsActivity;
 import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.helpers.NotificationHelper;
+import sanmateo.com.profileapp.helpers.PrefsHelper;
+import sanmateo.com.profileapp.models.response.Incident;
+import sanmateo.com.profileapp.singletons.BusSingleton;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 
@@ -36,7 +48,7 @@ public class PusherService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        currentUserSingleton = CurrentUserSingleton.newInstance();
+        currentUserSingleton = CurrentUserSingleton.getInstance();
         incidentsSingleton = IncidentsSingleton.getInstance();
         /** start fore ground */
         final Intent notificationIntent = new Intent(this, HomeActivity.class);
@@ -78,7 +90,7 @@ public class PusherService extends Service {
                         /** new incident notification */
                         LogHelper.log("pusher","must delete incident report --> " + json.toString());
                         final int reportedBy = Integer.valueOf(json.getString("reported_by"));
-                        if (currentUserSingleton.getCurrentUser().getUserId() == reportedBy) {
+                        if (currentUserSingleton.getCurrentUser().getId() == reportedBy) {
                             LogHelper.log("pusher","Show notification for blocked report");
                             NotificationHelper.displayNotification(id,PusherService.this,
                                     "Your report was blocked by the admin",json.getString("remarks"),null);

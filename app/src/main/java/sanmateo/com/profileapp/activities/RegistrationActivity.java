@@ -118,7 +118,7 @@ public class RegistrationActivity extends BaseActivity implements OnApiRequestLi
         if (action.equals(ApiAction.POST_REGISTER)) {
             showToast("Congratulation! You have successfully created your account!");
             final AuthResponse authResponse = (AuthResponse) result;
-            CurrentUserSingleton.newInstance().setCurrentUser(authResponse);
+            CurrentUserSingleton.getInstance().setCurrentUser(authResponse);
             startActivity(new Intent(this, HomeActivity.class));
             animateToLeft(RegistrationActivity.this);
             finish();

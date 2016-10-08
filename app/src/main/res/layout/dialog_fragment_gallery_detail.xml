@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:background="@drawable/button_white_clickable"
-        android:layout_below="@id/scDescription">
+        android:layout_below="@id/sc_description">
 
         <TextView
             fontPath="fonts/Roboto-Medium.ttf"

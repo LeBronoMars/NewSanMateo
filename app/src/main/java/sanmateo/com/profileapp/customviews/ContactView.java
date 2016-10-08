@@ -9,7 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import sanmateo.avinnovz.com.sanmateoprofile.R;
+import sanmateo.com.profileapp.R;
+
 
 /**
  * Created by rsbulanon on 7/14/16.
@@ -34,15 +35,12 @@ public class ContactView extends LinearLayout {
         super(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.contact_no_layout, null);
-        tvContact = (TextView) view.findViewById(R.id.tvContact);
+        tvContact = (TextView) view.findViewById(R.id.tv_contact);
         tvContact.setText(no);
-        tvContact.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + tvContact.getText().toString()));
-                context.startActivity(intent);
-            }
+        tvContact.setOnClickListener(view1 -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + tvContact.getText().toString()));
+            context.startActivity(intent);
         });
         addView(view);
     }
