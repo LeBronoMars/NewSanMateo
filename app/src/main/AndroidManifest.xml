@@ -50,6 +50,22 @@
         <activity android:name=".activities.GovernmentInformationActivity"
             android:screenOrientation="portrait"/>
 
+        <!-- incidents activity -->
+        <activity android:name=".activities.IncidentsActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- map activity -->
+        <activity android:name=".activities.MapActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- directories activity -->
+        <activity android:name=".activities.DirectoriesActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- gallery activity -->
+        <activity android:name=".activities.GalleryActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".services.PusherService" />
 
         <meta-data

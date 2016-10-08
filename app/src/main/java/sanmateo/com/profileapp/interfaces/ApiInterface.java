@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -13,6 +14,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.models.response.Gallery;
 import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
@@ -186,4 +188,13 @@ public interface ApiInterface {
      * */
     @GET("/api/v1/officials")
     Observable<List<Official>> getOfficials(@Header("Authorization") String token);
+
+    /**
+     * get all gallery photos
+     *
+     * @param token represents the user that trying to make the request
+     *
+     * */
+    @GET("/api/v1/galleries")
+    Observable<ArrayList<Gallery>> getGalleries(@Header("Authorization") String token);
 }

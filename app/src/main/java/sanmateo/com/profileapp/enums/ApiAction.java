@@ -26,5 +26,7 @@ public enum  ApiAction {
 
     POST_MALICIOUS_REPORT,
 
-    GET_OFFICIALS
+    GET_OFFICIALS,
+
+    GET_PHOTOS
 }

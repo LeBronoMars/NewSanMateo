@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.helpers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -10,6 +11,7 @@ import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.interfaces.ApiInterface;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.models.response.Gallery;
 import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
@@ -108,6 +110,12 @@ public class ApiRequestHelper {
         onApiRequestListener.onApiRequestBegin(ApiAction.GET_OFFICIALS);
         final Observable<List<Official>> observable = apiInterface.getOfficials(token);
         handleObservableResult(ApiAction.GET_OFFICIALS, observable);
+    }
+
+    public void getGalleries(final String token) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_PHOTOS);
+        final Observable<ArrayList<Gallery>> observable = apiInterface.getGalleries(token);
+        handleObservableResult(ApiAction.GET_PHOTOS, observable);
     }
 
     /**

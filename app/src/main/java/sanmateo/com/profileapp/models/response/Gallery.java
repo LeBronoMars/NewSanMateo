@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by ctmanalo on 8/15/16.
  */
-public class Photo {
+public class Gallery {
 
     @SerializedName("id") private int id;
     @SerializedName("created_at") private String createdAt;

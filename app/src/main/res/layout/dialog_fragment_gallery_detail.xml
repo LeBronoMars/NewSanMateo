@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dirty_white">
+
+    <RelativeLayout
+        android:id="@+id/rl_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_margin="@dimen/_5sdp">
+
+        <ImageView
+            android:id="@+id/iv_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ProgressBar
+            android:id="@+id/pb_load_image"
+            android:indeterminate="true"
+            android:layout_centerInParent="true"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"/>
+    </RelativeLayout>
+
+    <TextView
+        fontPath="fonts/Roboto-Medium.ttf"
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_12sdp"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_4sdp"
+        android:text="Title"
+        android:layout_below="@+id/rlPhotoContainer"/>
+
+    <ScrollView
+        android:id="@+id/sc_description"
+        android:layout_below="@id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_150sdp"
+        android:padding="@dimen/_1sdp">
+
+        <TextView
+            fontPath="fonts/Roboto-Light.ttf"
+            android:id="@+id/tv_description"
+            android:textSize="@dimen/_11sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:paddingRight="@dimen/_8sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rlClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:background="@drawable/button_white_clickable"
+        android:layout_below="@id/scDescription">
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:text="CLOSE"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/_12sdp"
+            android:padding="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_5sdp"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
