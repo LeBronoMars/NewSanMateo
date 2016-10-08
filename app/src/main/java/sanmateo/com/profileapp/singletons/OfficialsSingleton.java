@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.singletons;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import sanmateo.com.profileapp.models.response.Official;
@@ -9,9 +10,8 @@ import sanmateo.com.profileapp.models.response.Official;
  */
 
 public class OfficialsSingleton {
-
     private static OfficialsSingleton OFFICIALS = new OfficialsSingleton();
-    private List<Official> listOfficials;
+    private ArrayList<Official> listOfficials = new ArrayList<>();
 
     private OfficialsSingleton() {}
 
@@ -21,5 +21,10 @@ public class OfficialsSingleton {
 
     public List<Official> getListOfficials() {
         return listOfficials;
+    }
+
+    public void setListOfficials(ArrayList<Official> listOfficials) {
+        this.listOfficials.clear();
+        this.listOfficials = listOfficials;
     }
 }

@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.models.response.Official;
@@ -27,7 +29,7 @@ import sanmateo.com.profileapp.singletons.OfficialsSingleton;
 
 public class OfficialsActivity extends BaseActivity implements OnApiRequestListener{
 
-    @BindView(R.id.rv_officials) RecyclerView rvOfficials;
+    @BindView(R.id.rv_officials) RecyclerView rv_officials;
     private CurrentUserSingleton currentUserSingleton;
     private String token;
     private ApiRequestHelper apiRequestHelper;
@@ -40,13 +42,22 @@ public class OfficialsActivity extends BaseActivity implements OnApiRequestListe
         ButterKnife.bind(this);
         setToolbarTitle("Officials");
         initResources();
-        initOfficialListing();
     }
 
     private void initResources() {
         currentUserSingleton = CurrentUserSingleton.getInstance();
         officialsSingleton = OfficialsSingleton.getInstance();
         token = currentUserSingleton.getCurrentUser().getToken();
+        final OfficialsAdapter adapter = new OfficialsAdapter(officialsSingleton.getListOfficials());
+        adapter.setOnSelectOfficialListener((position, official) -> {
+            final Intent intent = new Intent(OfficialsActivity.this, OfficialFullInfoActivity.class);
+            intent.putExtra("official", official);
+            startActivity(intent);
+            animateToLeft(this);
+        });
+        rv_officials.setAdapter(adapter);
+        rv_officials.setLayoutManager(new LinearLayoutManager(this));
+        rv_officials.getAdapter().notifyDataSetChanged();
         apiRequestHelper = new ApiRequestHelper(this);
         if (officialsSingleton.getListOfficials().isEmpty()) {
             if (isNetworkAvailable()) {
@@ -68,12 +79,6 @@ public class OfficialsActivity extends BaseActivity implements OnApiRequestListe
         }
     }
 
-    private void initOfficialListing() {
-        rvOfficials.setAdapter(new OfficialsAdapter(officialsSingleton.getListOfficials()));
-        rvOfficials.setLayoutManager(new LinearLayoutManager(this));
-        rvOfficials.getAdapter().notifyDataSetChanged();
-    }
-
     @Override
     public void onApiRequestBegin(ApiAction action) {
         if (action.equals(ApiAction.GET_OFFICIALS)) {
@@ -85,11 +90,12 @@ public class OfficialsActivity extends BaseActivity implements OnApiRequestListe
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
         if (action.equals(ApiAction.GET_OFFICIALS)) {
-            final List<Official> officials = (List<Official>)result;
+            final ArrayList<Official> officials = (ArrayList<Official>)result;
+            LogHelper.log("officials", "officials size --> " + officials.size());
             officialsSingleton.getListOfficials().clear();
             officialsSingleton.getListOfficials().addAll(officials);
         }
-        rvOfficials.getAdapter().notifyDataSetChanged();
+        rv_officials.getAdapter().notifyDataSetChanged();
     }
 
     @Override

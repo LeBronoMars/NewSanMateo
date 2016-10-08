@@ -51,6 +51,10 @@
         <activity android:name=".activities.OfficialsActivity"
             android:screenOrientation="portrait"/>
 
+        <!-- official full info activity -->
+        <activity android:name=".activities.OfficialFullInfoActivity"
+            android:screenOrientation="portrait" />
+
         <!-- government information activity -->
         <activity android:name=".activities.GovernmentInformationActivity"
             android:screenOrientation="portrait"/>
