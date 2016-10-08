@@ -86,6 +86,10 @@
         <activity android:name=".activities.AlertLevelActivity"
             android:screenOrientation="portrait" />
 
+        <!-- global disaster activity -->
+        <activity android:name=".activities.GlobalDisasterActivity"
+            android:screenOrientation="portrait" />
+
         <service android:name=".services.PusherService" />
 
         <meta-data
