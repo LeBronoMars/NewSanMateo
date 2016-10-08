@@ -30,6 +30,7 @@ import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.models.response.ApiError;
 import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 
 
 /**
@@ -126,6 +127,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
                 showSnackbar(btnSignIn, AppConstants.WARN_INVALID_ACCOUNT);
             } else {
                 //DaoHelper.saveCurrentUser(authResponse);
+                CurrentUserSingleton.getInstance().setCurrentUser(authResponse);
                 moveToHome();
             }
         }
