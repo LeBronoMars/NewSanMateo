@@ -582,6 +582,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
 
     @Override
     public void hearShake() {
+        LogHelper.log("shake", "na shake");
         final RealmHelper<PanicContact> realmHelper = new RealmHelper<>();
         for (PanicContact panicContact : realmHelper.findAll(PanicContact.class)) {
             showToast("Sending SOS to all contacts in your panic phone book...");
@@ -593,6 +594,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         if (sensorManager == null) {
             sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
             shakeDetector = new ShakeDetector(this);
+            shakeDetector.setSensitivity(12);
             shakeDetector.start(sensorManager);
             LogHelper.log("shake", "on shake initialized!");
         }
