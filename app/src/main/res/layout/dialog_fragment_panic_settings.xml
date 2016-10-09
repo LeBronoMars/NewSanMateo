@@ -14,10 +14,20 @@
         android:paddingLeft="@dimen/_10sdp"
         android:paddingTop="@dimen/_10sdp"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:text="@string/panic_settings_header"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/_20sdp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingRight="@dimen/_10sdp"
+        android:textSize="@dimen/_11sdp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:text="@string/instructions"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

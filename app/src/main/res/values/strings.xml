@@ -146,6 +146,13 @@
     <string name="panic_settings_header">Set emergency contacts</string>
     <string name="no_contacts">No contact/s found!</string>
     <string name="select_contact">Select</string>
+    <string name="instructions">
+        <b>Instructions:</b>\n
+            1.) Choose a contact person/s to your phone directory\n
+            2.) Shake your phone sideways several times and it will send sms message to signal that you are currently in need of assistance
+        \n\n
+        <b>Disclaimer:</b>\nSending emergency message to your assigned contact/s will incur regular sms load to your network credit.\n\n
+    </string>
     <string name="close">Close</string>
 
     <!-- disaster management -->
