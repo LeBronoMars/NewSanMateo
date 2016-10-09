@@ -22,6 +22,12 @@ public class RealmHelper<T extends RealmObject> {
         return query.findAll();
     }
 
+    /** get current user */
+    public T findOne(final Class<T> tClass) {
+        final RealmQuery<T> query = realm.where(tClass);
+        return query.findFirst();
+    }
+
     /** add record */
     public void createRecord(final T tClass) {
         realm.beginTransaction();

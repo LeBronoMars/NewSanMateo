@@ -2,10 +2,12 @@ package sanmateo.com.profileapp.models.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+
 /**
  * Created by rsbulanon on 6/23/16.
  */
-public class AuthResponse {
+public class AuthResponse extends RealmObject {
 
     private int id;
     @SerializedName("created_at") private String createdAt;

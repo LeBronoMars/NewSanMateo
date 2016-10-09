@@ -27,6 +27,7 @@ import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.models.response.ApiError;
@@ -48,6 +49,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
     private static final int REQUEST_PERMISSIONS = 1;
     private SurfaceHolder surfaceHolder;
     private MediaPlayer mp;
+    private RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,14 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
 
     private void initialize() {
         AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
-        apiRequestHelper = new ApiRequestHelper(this);
+        final AuthResponse authResponse = realmHelper.findOne(AuthResponse.class);
+
+        if (authResponse != null) {
+            CurrentUserSingleton.getInstance().setCurrentUser(authResponse);
+            moveToHome();
+        } else {
+            apiRequestHelper = new ApiRequestHelper(this);
+        }
     }
 
     @OnClick(R.id.btn_sign_in)
@@ -146,6 +155,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
                 showSnackbar(btnSignIn, AppConstants.WARN_INVALID_ACCOUNT);
             } else {
                 //DaoHelper.saveCurrentUser(authResponse);
+                realmHelper.createRecord(authResponse);
                 CurrentUserSingleton.getInstance().setCurrentUser(authResponse);
                 moveToHome();
             }
