@@ -47,6 +47,7 @@ public class RegistrationActivity extends BaseActivity implements OnApiRequestLi
         ButterKnife.bind(this);
         apiRequestHelper = new ApiRequestHelper(this);
         initGenderSpinner();
+        setToolbarTitle("Registration");
     }
 
     @Override
@@ -56,21 +57,8 @@ public class RegistrationActivity extends BaseActivity implements OnApiRequestLi
         animateToRight(this);
     }
 
-    @OnClick({R.id.ivBack, R.id.btn_create_account})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ivBack:
-                LogHelper.log("reg", "on back pressed");
-                onBackPressed();
-                break;
-            case R.id.btn_create_account:
-                LogHelper.log("reg", "must create account");
-                createAccount();
-                break;
-        }
-    }
-
-    private void createAccount() {
+    @OnClick(R.id.btn_create_account)
+    public void createNewAccount() {
         if (!isNetworkAvailable()) {
             showToast(AppConstants.WARN_CONNECTION);
         } else if (et_first_name.getText().toString().isEmpty()) {
