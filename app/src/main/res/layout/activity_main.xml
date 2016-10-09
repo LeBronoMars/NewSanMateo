@@ -38,11 +38,23 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp" />
 
-                        <ImageView
-                            android:id="@+id/ivMayorImage"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="250dp"
-                            android:scaleType="fitXY" />
+                            android:layout_height="@dimen/_250sdp">
+
+                            <ImageView
+                                android:id="@+id/iv_mayor_message"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY" />
+
+                            <ProgressBar
+                                android:id="@+id/pb_load_mayor_image"
+                                android:layout_width="@dimen/_50sdp"
+                                android:layout_height="@dimen/_50sdp"
+                                android:layout_centerInParent="true"
+                                android:indeterminate="true"/>
+                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -64,9 +76,9 @@
                                 android:id="@+id/llHeader"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
                                 android:layout_marginLeft="@dimen/_20sdp"
                                 android:gravity="center_vertical"
-                                android:layout_centerVertical="true"
                                 android:orientation="horizontal">
 
                                 <de.hdodenhof.circleimageview.CircleImageView

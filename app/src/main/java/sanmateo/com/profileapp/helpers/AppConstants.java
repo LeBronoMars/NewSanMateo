@@ -50,6 +50,8 @@ public class AppConstants {
     public static final String IMAGE_URL_MARKER_MARKET_3 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/PublicMarket_pic3.png";
 
     public static String SAN_MATEO_LOGO = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/banners/san_mateo_logo.png";
+    public static String MESSAGE_FROM_THE_MAYOR = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/gallery/main_news_mayor_msg2.png";
+
 
     /** categories */
     public static final String CATEGORY_PEACE_AND_SECURITY = "Peace & Security";

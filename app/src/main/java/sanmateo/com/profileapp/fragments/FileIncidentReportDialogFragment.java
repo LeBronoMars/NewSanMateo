@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,11 +37,16 @@ import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
  */
 public class FileIncidentReportDialogFragment extends DialogFragment {
 
-    @BindView(R.id.et_incident_description) EditText et_incident_description;
-    @BindView(R.id.et_incident_location) EditText et_incident_location;
-    @BindView(R.id.spnr_incident_type) Spinner spnr_incident_type;
-    @BindView(R.id.rv_images) RecyclerView rv_images;
-    @BindView(R.id.ll_add_photo) LinearLayout ll_add_photo;
+    @BindView(R.id.et_incident_description)
+    EditText et_incident_description;
+    @BindView(R.id.et_incident_location)
+    EditText et_incident_location;
+    @BindView(R.id.spnr_incident_type)
+    Spinner spnr_incident_type;
+    @BindView(R.id.rv_images)
+    RecyclerView rv_images;
+    @BindView(R.id.ll_add_photo)
+    LinearLayout ll_add_photo;
     private View view;
     private Dialog mDialog;
     private BaseActivity activity;
@@ -60,7 +64,7 @@ public class FileIncidentReportDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
-        Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         getDialog().getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -104,33 +108,37 @@ public class FileIncidentReportDialogFragment extends DialogFragment {
     @OnClick(R.id.ll_add_photo)
     public void addPhoto() {
         if (filesToUpload.size() < 3) {
-//            new BottomSheet.Builder(getActivity())
-//                    .title("Upload Photo").sheet(R.menu.menu_upload_image)
-//                    .listener((dialog, which) -> {
-//                        switch (which) {
-//                            case R.id.open_gallery:
-//                                final Intent intent = new Intent();
-//                                intent.setType("image/*");
-//                                intent.setAction(Intent.ACTION_GET_CONTENT);//
-//                                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
-//                                break;
-//                            case R.id.open_camera:
-//                                final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                                try {
-//                                    fileToUpload = activity.createImageFile();
-//                                    fileUri = Uri.fromFile(fileToUpload);
-//                                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-//                                    startActivityForResult(cameraIntent, CAPTURE_IMAGE);
-//                                } catch (Exception ex) {
-//                                    activity.showConfirmDialog("","Capture Image",
-//                                            "We can't get your image. Please try again.","Close","",null);
-//                                }
-//                                break;
-//                        }
-//                    }).show();
+            final CustomBottomSheetDialogFragment bottomSheetDialogFragment = CustomBottomSheetDialogFragment.newInstance();
+            bottomSheetDialogFragment.setOnChangeProfilePicListener(new CustomBottomSheetDialogFragment.OnChangeProfilePicListener() {
+                @Override
+                public void onSelectPictureVia(String action) {
+                    bottomSheetDialogFragment.dismiss();
+                    switch (action) {
+                        case "via gallery":
+                            final Intent intent = new Intent();
+                            intent.setType("image/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);//
+                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
+                            break;
+                        case "via camera":
+                            final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            try {
+                                fileToUpload = activity.createImageFile();
+                                fileUri = Uri.fromFile(fileToUpload);
+                                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                                startActivityForResult(cameraIntent, CAPTURE_IMAGE);
+                            } catch (Exception ex) {
+                                activity.showConfirmDialog("", "Capture Image",
+                                        "We can't get your image. Please try again.", "Close", "", null);
+                            }
+                            break;
+                    }
+                }
+            });
+            bottomSheetDialogFragment.show(activity.getSupportFragmentManager(), "incident report");
         } else {
-            activity.showConfirmDialog("","Upload Photo","Sorry, but you have already reached the maximum " +
-                    " no of photos for upload.","Close","",null);
+            activity.showConfirmDialog("", "Upload Photo", "Sorry, but you have already reached the maximum " +
+                    " no of photos for upload.", "Close", "", null);
         }
     }
 
@@ -139,10 +147,10 @@ public class FileIncidentReportDialogFragment extends DialogFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == activity.RESULT_OK) {
             if (requestCode == SELECT_IMAGE) {
-                final String fileName = "incident_image_"+ activity.getSDF().format(Calendar.getInstance().getTime());
-                filesToUpload.add(activity.getFile(data.getData(),fileName+".jpg"));
+                final String fileName = "incident_image_" + activity.getSDF().format(Calendar.getInstance().getTime());
+                filesToUpload.add(activity.getFile(data.getData(), fileName + ".jpg"));
             } else {
-                LogHelper.log("s3","captured image absolute file --> " + fileToUpload.getAbsolutePath());
+                LogHelper.log("s3", "captured image absolute file --> " + fileToUpload.getAbsolutePath());
                 filesToUpload.add(activity.rotateBitmap(fileUri.getPath()));
             }
             rv_images.getAdapter().notifyDataSetChanged();
@@ -150,7 +158,7 @@ public class FileIncidentReportDialogFragment extends DialogFragment {
     }
 
     private void initRecyclerView() {
-        final FileToUploadAdapter adapter = new FileToUploadAdapter(getActivity(),filesToUpload);
+        final FileToUploadAdapter adapter = new FileToUploadAdapter(getActivity(), filesToUpload);
         adapter.setOnSelectImageListener(position -> {
             final File file = filesToUpload.get(position);
             file.delete();
@@ -171,8 +179,8 @@ public class FileIncidentReportDialogFragment extends DialogFragment {
             activity.setError(et_incident_location, AppConstants.WARN_FIELD_REQUIRED);
         } else {
             if (onFileIncidentReportListener != null) {
-                onFileIncidentReportListener.onFileReport(incidentDescription,incidentLocation,
-                        spnr_incident_type.getSelectedItem().toString(),filesToUpload);
+                onFileIncidentReportListener.onFileReport(incidentDescription, incidentLocation,
+                        spnr_incident_type.getSelectedItem().toString(), filesToUpload);
             }
         }
     }
@@ -205,6 +213,7 @@ public class FileIncidentReportDialogFragment extends DialogFragment {
     public interface OnFileIncidentReportListener {
         void onFileReport(final String incidentDescription, final String incidentLocation,
                           final String incidentType, final ArrayList<File> filesToUpload);
+
         void onCancelReport(final ArrayList<File> filesToUpload);
     }
 

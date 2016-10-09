@@ -78,7 +78,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by rsbulanon on 6/22/16.
  */
 public class BaseActivity extends AppCompatActivity implements ShakeDetector.Listener {
-
     private CustomProgressDialogFragment customProgressDialogFragment;
     private CustomProgressBarDialogFragment customProgressBarDialogFragment;
     private AmazonS3Helper amazonS3Helper;
@@ -98,7 +97,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     public void initAmazonS3Helper(final OnS3UploadListener onS3UploadListener) {
-        amazonS3Helper = new AmazonS3Helper(this);
+        this.amazonS3Helper = new AmazonS3Helper(this);
         this.onS3UploadListener = onS3UploadListener;
     }
 
@@ -462,6 +461,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
 
                 @Override
                 public void onError(int id, Exception ex) {
+                    LogHelper.log("s3", "error --> " + ex.getMessage());
                     dismissCustomProgressBar();
                 }
             });
