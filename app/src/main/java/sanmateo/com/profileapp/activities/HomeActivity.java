@@ -18,7 +18,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -540,7 +539,19 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
+        showConfirmDialog("", "Close App", "Are you sure you want to close the app?", "Yes", "No",
+                new OnConfirmDialogListener() {
+                    @Override
+                    public void onConfirmed(String action) {
+                        System.exit(0);
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(String action) {
+
+                    }
+                });
     }
 
     @Override

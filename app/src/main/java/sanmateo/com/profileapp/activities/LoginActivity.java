@@ -263,4 +263,21 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
         mp.start();
         mp.setLooping(true);
     }
+
+    @Override
+    public void onBackPressed() {
+        showConfirmDialog("", "Close App", "Are you sure you want to close the app?", "Yes", "No",
+                new OnConfirmDialogListener() {
+                    @Override
+                    public void onConfirmed(String action) {
+                        System.exit(0);
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(String action) {
+
+                    }
+                });
+    }
 }
