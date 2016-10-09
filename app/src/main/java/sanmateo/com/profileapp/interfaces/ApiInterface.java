@@ -43,6 +43,15 @@ public interface ApiInterface {
                                               @Field("password") String password);
 
     /**
+     * Change password
+     *
+     * @param email email where the new password will be sent
+     * */
+    @POST("/api/v1/forgot_password")
+    @FormUrlEncoded
+    Observable<GenericMessage> forgotPassword(@Field("email") String email);
+
+    /**
      * create user
      * */
     @POST("/api/v1/user")

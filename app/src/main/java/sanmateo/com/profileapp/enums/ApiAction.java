@@ -8,6 +8,8 @@ public enum  ApiAction {
 
     POST_AUTH,
 
+    POST_FORGOT_PASSWORD,
+
     POST_REGISTER,
 
     GET_NEWS,

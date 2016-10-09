@@ -21,6 +21,7 @@ import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.fragments.ForgotPasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.LoginDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
@@ -30,6 +31,7 @@ import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.models.response.ApiError;
 import sanmateo.com.profileapp.models.response.AuthResponse;
+import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 
 
@@ -110,10 +112,27 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
         moveToOtherActivity(RegistrationActivity.class);
     }
 
+    @OnClick(R.id.tv_forgot_password)
+    public void showForgotPassword() {
+        final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
+                ForgotPasswordDialogFragment.newInstance();
+        forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
+            forgotPasswordDialogFragment.dismiss();
+            if (isNetworkAvailable()) {
+                apiRequestHelper.forgotPassword(email);
+            } else {
+                showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close" , "", null);
+            }
+        });
+        forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
+    }
+
     @Override
     public void onApiRequestBegin(ApiAction action) {
         if (action.equals(ApiAction.POST_AUTH)) {
             showCustomProgress("Logging in, Please wait...");
+        } else {
+            showCustomProgress("Sending request, Please wait...");
         }
     }
 
@@ -130,6 +149,9 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
                 CurrentUserSingleton.getInstance().setCurrentUser(authResponse);
                 moveToHome();
             }
+        } else if (action.equals(ApiAction.POST_FORGOT_PASSWORD)) {
+            final GenericMessage genericMessage = (GenericMessage) result;
+            showConfirmDialog("", "Forgot Password", genericMessage.getMessage(), "Close", "", null);
         }
     }
 
@@ -139,7 +161,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
         handleApiException(t);
         LogHelper.log("err", "error in ---> " + action + " cause ---> " + t.getMessage());
         if (t instanceof HttpException) {
-            if (action.equals(ApiAction.POST_AUTH)) {
+            if (action.equals(ApiAction.POST_AUTH) || action.equals(ApiAction.POST_FORGOT_PASSWORD)) {
                 final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
                 showConfirmDialog("", "Login Failed", apiError.getMessage(), "Close", "", null);
             }

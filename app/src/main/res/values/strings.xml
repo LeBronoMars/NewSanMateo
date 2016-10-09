@@ -2,6 +2,9 @@
     <string name="app_name">San Mateo Profile App</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="forgot_password_header">Forgot Password</string>
+    <string name="hint_your_email">Please enter your email</string>
 
     <!-- login dialog fragment -->
     <string name="email">Email</string>

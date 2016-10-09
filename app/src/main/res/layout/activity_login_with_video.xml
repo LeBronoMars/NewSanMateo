@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/frameLayout"
-    android:clickable="true"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:clickable="true">
 
     <SurfaceView
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,25 +19,25 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_height="wrap_content">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvDate"
-                android:text="@string/app_name"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/_15sdp"
-                android:layout_height="wrap_content" />
+                android:textSize="@dimen/_15sdp" />
 
             <DigitalClock
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:textColor="@android:color/white"
                 fontPath="fonts/Roboto-Thin.ttf"
-                android:textSize="@dimen/_20sdp"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_20sdp" />
 
         </LinearLayout>
 
@@ -45,44 +45,61 @@
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:layout_centerInParent="true"
-            android:src="@drawable/san_mateo_logo"/>
+            android:src="@drawable/san_mateo_logo" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_sign_in"
-                android:layout_width="0dp"
-                android:layout_weight="50"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_white_clickable"
-                android:text="@string/login"
-                android:paddingLeft="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp"
-                fontPath="fonts/Roboto-Medium.ttf"
-                android:textSize="@dimen/_12sdp"
-                android:textColor="@android:color/black" />
+                android:orientation="horizontal">
 
-            <Space
-                android:layout_width="@dimen/_5sdp"
-                android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/btn_sign_in"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:background="@drawable/button_white_clickable"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:text="@string/login"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_12sdp" />
 
-            <Button
-                android:id="@+id/btn_create_account"
-                android:layout_width="0dp"
-                android:layout_weight="50"
+                <Space
+                    android:layout_width="@dimen/_5sdp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btn_create_account"
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="50"
+                    android:background="@drawable/button_clickable"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:text="@string/sign_up"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_12sdp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_forgot_password"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_clickable"
-                android:text="@string/sign_up"
-                android:paddingLeft="@dimen/_10sdp"
-                android:paddingRight="@dimen/_10sdp"
-                fontPath="fonts/Roboto-Medium.ttf"
-                android:textSize="@dimen/_12sdp"
-                android:textColor="@android:color/white" />
-
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/forgot_password"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/_14sdp" />
         </LinearLayout>
 
     </RelativeLayout>
