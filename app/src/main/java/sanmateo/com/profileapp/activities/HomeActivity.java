@@ -91,6 +91,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     @BindString(R.string.disaster_mgmt) String headerDisasterManagement;
     @BindString(R.string.message_alert_notifications) String headerAlertNotifications;
     @BindDimen(R.dimen._90sdp) int profilePicSize;
+    private ImageView ivBlurBackground;
     private ImageView iv_profile_image;
     private ProgressBar pb_load_image;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -183,6 +184,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
     private void initSideDrawerMenu() {
         final View view = getLayoutInflater().inflate(R.layout.navigation_header, null, false);
+        ivBlurBackground = (ImageView) view.findViewById(R.id.iv_blur_background);
         iv_profile_image = (ImageView) view.findViewById(R.id.iv_profile_image);
         pb_load_image = (ProgressBar) view.findViewById(R.id.pb_load_image);
         final TextView tv_profile_name = (TextView) view.findViewById(R.id.tv_profile_name);
@@ -196,6 +198,9 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         navigationView.addHeaderView(view);
         navigationView.inflateMenu(R.menu.menu_side_drawer);
         navigationView.getHeaderView(0).setLayoutParams(params);
+
+        PicassoHelper.loadBlurImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
+                R.drawable.placeholder_image, 20, ivBlurBackground);
 
         PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
                 profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
