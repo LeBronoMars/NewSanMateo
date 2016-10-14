@@ -567,6 +567,9 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 new OnConfirmDialogListener() {
                     @Override
                     public void onConfirmed(String action) {
+                        if (isMyServiceRunning(PusherService.class)) {
+                            stopService(new Intent(HomeActivity.this, PusherService.class));
+                        }
                         System.exit(0);
                         finish();
                     }
