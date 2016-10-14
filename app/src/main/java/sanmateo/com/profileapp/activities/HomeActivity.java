@@ -268,7 +268,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                             } else if (position == 7) {
                                 moveToOtherActivity(CprActivity.class);
                             } else if (position == 8) {
-                                //moveToOtherActivity(Disaster101Activity.class);
+                                moveToOtherActivity(Disaster101Activity.class);
                             }
                         }
 
