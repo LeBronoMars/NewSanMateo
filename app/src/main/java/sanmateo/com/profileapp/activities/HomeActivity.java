@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -105,6 +106,9 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     private Uri fileUri;
     private File fileToUpload;
     private String uploadToBucket;
+    private CountDownTimer countDownTimer;
+    private int ctr = 0;
+    private final ArrayList<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,10 +156,12 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 pb_load_mayor_image.setVisibility(View.GONE);
             }
         });
+
+        animateBanner();
     }
 
     private void animateBanners() {
-        final ArrayList<Fragment> fragments = new ArrayList<>();
+
         fragments.add(SanMateoBannerFragment.newInstance());
         fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this, R.drawable.image_1)));
         fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this, R.drawable.image_2)));
@@ -590,5 +596,24 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             tvNotification.setVisibility(View.INVISIBLE);
         }
         super.onResume();
+    }
+
+    private void animateBanner() {
+        countDownTimer = null;
+        countDownTimer = new CountDownTimer(5000, 1000) {
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                ctr += 1;
+                vp_banner.setCurrentItem(ctr % fragments.size());
+                countDownTimer.cancel();
+                animateBanner();
+            }
+        };
+        countDownTimer.start();
     }
 }
