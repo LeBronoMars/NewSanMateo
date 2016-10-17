@@ -5,6 +5,7 @@ import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import sanmateo.com.profileapp.models.realm.PanicContact;
+import sanmateo.com.profileapp.models.response.AuthResponse;
 
 /**
  * Created by rsbulanon on 10/2/16.
@@ -41,6 +42,14 @@ public class RealmHelper<T extends RealmObject> {
         final RealmQuery<PanicContact> query = realm.where(PanicContact.class);
         query.equalTo("contactNo", contactNo);
         query.findFirst().deleteFromRealm();
+        realm.commitTransaction();
+    }
+
+    /** delete current user */
+    public void deleteCurrentUser() {
+        realm.beginTransaction();
+        final RealmQuery<AuthResponse> query = realm.where(AuthResponse.class);
+        query.findAll().deleteAllFromRealm();
         realm.commitTransaction();
     }
 

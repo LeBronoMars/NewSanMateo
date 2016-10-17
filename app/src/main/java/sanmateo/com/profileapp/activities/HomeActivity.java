@@ -61,11 +61,13 @@ import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.helpers.PicassoHelper;
 import sanmateo.com.profileapp.helpers.PrefsHelper;
+import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.EndlessRecyclerViewScrollListener;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
 import sanmateo.com.profileapp.models.response.ApiError;
+import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.services.PusherService;
@@ -306,8 +308,13 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                                     newsSingleton.clearAll();
                                     incidentsSingleton.clearAll();
                                     currentUserSingleton.setCurrentUser(null);
+
+                                    final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
+                                    realmHelper.deleteCurrentUser();
+
                                     PrefsHelper.setString(HomeActivity.this,
                                             AppConstants.PREFS_LOCAL_EMERGENCY_KITS, "");
+
                                     startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                                     finish();
                                     animateToRight(HomeActivity.this);
