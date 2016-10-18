@@ -51,7 +51,6 @@ public class PicassoHelper {
     public static void loadImageFromDrawable(int drawable, ImageView imageView, int transformColor,
                                              int size) {
         PicassoSingleton.getInstance().getPicasso().load(drawable)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .resize(size,size)
                 .transform(new CircleTransform(transformColor, 1))
                 .placeholder(drawable)
@@ -60,7 +59,6 @@ public class PicassoHelper {
 
     public static void loadBlurImageFromURL(String url, int placeholder, int blurStrength, ImageView imageView) {
         PicassoSingleton.getInstance().getPicasso().load(url)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .placeholder(placeholder)
                 .transform(new StackBlurTransformation(blurStrength))
                 .into(imageView);
@@ -69,7 +67,6 @@ public class PicassoHelper {
     public static void loadBlurImageFromURL(String url, int placeholder, int size, int blurStrength, ImageView imageView) {
         PicassoSingleton.getInstance().getPicasso().load(url)
                 .resize(size,size)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .placeholder(placeholder)
                 .transform(new StackBlurTransformation(blurStrength))
                 .into(imageView);
@@ -78,7 +75,6 @@ public class PicassoHelper {
     public static void loadBlurImageFromDrawable(int drawable, int blurStrength, ImageView imageView) {
         PicassoSingleton.getInstance().getPicasso().load(drawable)
                 .fit()
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .placeholder(drawable)
                 .transform(new StackBlurTransformation(blurStrength))
                 .into(imageView);
@@ -90,7 +86,6 @@ public class PicassoHelper {
         }
         PicassoSingleton.getInstance().getPicasso().load(url)
                 .fit()
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.placeholder_image)
                 .into(imageView, new Callback() {
@@ -123,7 +118,6 @@ public class PicassoHelper {
         int width = point.x;
         PicassoSingleton.getInstance().getPicasso().load(url)
                 .resize(width, size)
-                .memoryPolicy(MemoryPolicy.NO_STORE, MemoryPolicy.NO_CACHE)
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.placeholder_image)
                 .into(imageView, new Callback() {

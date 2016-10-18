@@ -54,11 +54,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.activities.HomeActivity;
 import sanmateo.com.profileapp.activities.LoginActivity;
 import sanmateo.com.profileapp.fragments.CustomProgressBarDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomProgressDialogFragment;
@@ -71,7 +73,11 @@ import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
 import sanmateo.com.profileapp.models.realm.PanicContact;
+import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.singletons.BusSingleton;
+import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
+import sanmateo.com.profileapp.singletons.IncidentsSingleton;
+import sanmateo.com.profileapp.singletons.NewsSingleton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -510,16 +516,39 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
     }
 
     public void handleApiException(final Throwable t) {
-        final HttpException ex = (HttpException) t;
-        LogHelper.log("err", "CODE ---> " + ex.code() + " message --> " + ex.getMessage());
-        if (ex.code() == 401) {
-            showConfirmDialog("", "Session Expired", "Sorry, but your session has expired", "Close",
+        if (t instanceof HttpException) {
+            final HttpException ex = (HttpException) t;
+            LogHelper.log("err", "CODE ---> " + ex.code() + " message --> " + ex.getMessage());
+            if (ex.code() == 401) {
+                showConfirmDialog("", "Session Expired", "Sorry, but your session has expired", "Close",
+                        "", new OnConfirmDialogListener() {
+                            @Override
+                            public void onConfirmed(String action) {
+                                /** clear all singletons */
+                                NewsSingleton.getInstance().clearAll();
+                                IncidentsSingleton.getInstance().clearAll();
+                                CurrentUserSingleton.getInstance().setCurrentUser(null);
+
+                                final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
+                                realmHelper.deleteCurrentUser();
+
+                                final Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(String action) {
+
+                            }
+                        });
+            }
+        } else if (t instanceof SocketTimeoutException) {
+            showConfirmDialog("", "Time out", AppConstants.WARN_CONNECTION, "Close",
                     "", new OnConfirmDialogListener() {
                         @Override
                         public void onConfirmed(String action) {
-                            final Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+                            
                         }
 
                         @Override

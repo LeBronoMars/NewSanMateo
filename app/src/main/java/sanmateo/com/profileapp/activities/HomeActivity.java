@@ -146,7 +146,6 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
         /** load message from the mayor iamge */
         PicassoSingleton.getInstance().getPicasso().load(AppConstants.MESSAGE_FROM_THE_MAYOR)
-                .fit()
                 .into(iv_mayor_message, new Callback() {
             @Override
             public void onSuccess() {
