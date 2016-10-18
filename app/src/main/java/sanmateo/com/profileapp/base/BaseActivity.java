@@ -56,6 +56,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -548,7 +550,8 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
                     "", new OnConfirmDialogListener() {
                         @Override
                         public void onConfirmed(String action) {
-                            
+                            System.exit(0);
+                            finish();
                         }
 
                         @Override
