@@ -26,7 +26,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
-import com.squareup.picasso.Callback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,7 +73,6 @@ import sanmateo.com.profileapp.services.PusherService;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 import sanmateo.com.profileapp.singletons.NewsSingleton;
-import sanmateo.com.profileapp.singletons.PicassoSingleton;
 
 /**
  * Created by rsbulanon on 7/12/16.
@@ -89,8 +87,6 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     @BindView(R.id.appBarLayout) AppBarLayout appBarLayout;
     @BindView(R.id.tvNotification) TextView tvNotification;
     @BindView(R.id.llHeader) LinearLayout llHeader;
-    @BindView(R.id.iv_mayor_message) ImageView iv_mayor_message;
-    @BindView(R.id.pb_load_mayor_image) ProgressBar pb_load_mayor_image;
     @BindString(R.string.disaster_mgmt) String headerDisasterManagement;
     @BindString(R.string.message_alert_notifications) String headerAlertNotifications;
     @BindDimen(R.dimen._90sdp) int profilePicSize;
@@ -144,25 +140,10 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             tvNotification.setVisibility(View.VISIBLE);
         }
 
-        /** load message from the mayor iamge */
-        PicassoSingleton.getInstance().getPicasso().load(AppConstants.MESSAGE_FROM_THE_MAYOR)
-                .into(iv_mayor_message, new Callback() {
-            @Override
-            public void onSuccess() {
-                pb_load_mayor_image.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onError() {
-                pb_load_mayor_image.setVisibility(View.GONE);
-            }
-        });
-
         animateBanner();
     }
 
     private void animateBanners() {
-
         fragments.add(SanMateoBannerFragment.newInstance());
         fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this, R.drawable.image_1)));
         fragments.add(BannerFragment.newInstance(ContextCompat.getDrawable(this, R.drawable.image_2)));

@@ -41,7 +41,7 @@ public class IncidentImagesAdapter extends RecyclerView.Adapter<IncidentImagesAd
         if (!imageUrls.get(position).isEmpty()) {
             PicassoSingleton.getInstance().getPicasso().load(imageUrls.get(position))
                     .placeholder(R.drawable.placeholder_image)
-                    .fit().centerCrop().into(holder.iv_gallery);
+                    .fit().centerCrop().noFade().into(holder.iv_gallery);
             holder.iv_gallery.setOnClickListener(view -> {
                 if (onSelectImageListener != null) {
                     onSelectImageListener.onSelectedImage(position);

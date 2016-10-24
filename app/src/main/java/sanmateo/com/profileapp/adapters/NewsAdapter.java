@@ -84,6 +84,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 .placeholder(R.drawable.placeholder_image)
                 .centerCrop()
                 .fit()
+                .noFade()
                 .into(holder.iv_image_url);
 
         holder.ll_news.setOnClickListener(view -> {

@@ -74,6 +74,7 @@ public class OfficialsAdapter extends RecyclerView.Adapter<OfficialsAdapter.View
                     .placeholder(R.drawable.placeholder_image)
                     .centerCrop()
                     .fit()
+                    .noFade()
                     .into(holder.civ_pic, new Callback() {
                         @Override
                         public void onSuccess() {

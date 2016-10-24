@@ -52,6 +52,7 @@
                                 android:id="@+id/pb_load_mayor_image"
                                 android:layout_width="@dimen/_50sdp"
                                 android:layout_height="@dimen/_50sdp"
+                                android:visibility="gone"
                                 android:layout_centerInParent="true"
                                 android:indeterminate="true"/>
                         </RelativeLayout>

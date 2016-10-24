@@ -49,6 +49,7 @@ public class OfficialFullInfoActivity extends BaseActivity {
                     .placeholder(R.drawable.placeholder_image)
                     .centerCrop()
                     .fit()
+                    .noFade()
                     .into(civ_pic, new Callback() {
                         @Override
                         public void onSuccess() {

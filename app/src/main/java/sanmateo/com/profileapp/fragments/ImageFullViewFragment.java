@@ -31,7 +31,7 @@ public class ImageFullViewFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_image_full_view,container,false);
         ButterKnife.bind(this,view);
         PicassoSingleton.getInstance().getPicasso().load(url).placeholder(R.drawable.placeholder_image)
-                .centerCrop().fit().into(iv_full_image);
+                .centerCrop().fit().noFade().into(iv_full_image);
         return view;
     }
 }

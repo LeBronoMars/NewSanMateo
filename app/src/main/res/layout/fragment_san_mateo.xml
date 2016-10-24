@@ -19,6 +19,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civ_san_mateo_logo"
                 android:layout_width="match_parent"
+                android:src="@drawable/san_mateo_logo"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true" />
 
@@ -26,6 +27,7 @@
                 android:id="@+id/pb_load_image"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
+                android:visibility="gone"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
 

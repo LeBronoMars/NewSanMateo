@@ -77,6 +77,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         PicassoSingleton.getInstance().getPicasso().load(gallery.getImageUrl())
                 .placeholder(R.drawable.placeholder_image)
                 .fit()
+                .noFade()
                 .into(holder.iv_photo, new Callback() {
             @Override
             public void onSuccess() {

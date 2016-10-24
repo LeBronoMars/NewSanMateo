@@ -54,6 +54,7 @@ public class NewsFullPreviewActivity extends BaseActivity {
                 .placeholder(R.drawable.placeholder_image)
                 .centerCrop()
                 .fit()
+                .noFade()
                 .into(iv_image_banner);
     }
 }

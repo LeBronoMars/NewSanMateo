@@ -39,7 +39,8 @@ public class FileToUploadAdapter extends RecyclerView.Adapter<FileToUploadAdapte
 
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, final int position) {
-        PicassoSingleton.getInstance().getPicasso().load(files.get(position)).fit().centerCrop().into(holder.iv_image);
+        PicassoSingleton.getInstance().getPicasso().load(files.get(position)).fit()
+                .noFade().centerCrop().into(holder.iv_image);
         holder.iv_remove.setOnClickListener(view -> {
             if (onSelectImageListener != null) {
                 onSelectImageListener.onSelectedImage(position);
