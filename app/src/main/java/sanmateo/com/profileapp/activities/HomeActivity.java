@@ -121,9 +121,9 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             incidentsSingleton = IncidentsSingleton.getInstance();
             newsSingleton = NewsSingleton.getInstance();
             apiRequestHelper = new ApiRequestHelper(this);
-            token = currentUserSingleton.getCurrentUser().getToken();
 
-            if (token == null) {
+            if (currentUserSingleton.getCurrentUser() == null
+                    && currentUserSingleton.getCurrentUser().getToken() == null) {
                 showConfirmDialog("", "San Mateo Profile App", "Sorry, but your session has expired!",
                         "Re-login", "", new OnConfirmDialogListener() {
                             @Override
@@ -137,6 +137,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                             }
                         });
             } else {
+                token = currentUserSingleton.getCurrentUser().getToken();
                 animateBanners();
                 initNavigationDrawer();
                 initNews();
