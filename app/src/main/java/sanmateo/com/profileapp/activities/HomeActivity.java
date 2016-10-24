@@ -122,26 +122,42 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             newsSingleton = NewsSingleton.getInstance();
             apiRequestHelper = new ApiRequestHelper(this);
             token = currentUserSingleton.getCurrentUser().getToken();
-            animateBanners();
-            initNavigationDrawer();
-            initNews();
 
-            if (!isMyServiceRunning(PusherService.class)) {
-                startService(new Intent(this, PusherService.class));
+            if (token == null) {
+                showConfirmDialog("", "San Mateo Profile App", "Sorry, but your session has expired!",
+                        "Re-login", "", new OnConfirmDialogListener() {
+                            @Override
+                            public void onConfirmed(String action) {
+                                logout();
+                            }
+
+                            @Override
+                            public void onCancelled(String action) {
+
+                            }
+                        });
+            } else {
+                animateBanners();
+                initNavigationDrawer();
+                initNews();
+
+                if (!isMyServiceRunning(PusherService.class)) {
+                    startService(new Intent(this, PusherService.class));
+                }
+
+                if (newsSingleton.getNewsPrevious().size() == 0) {
+                    apiRequestHelper.getNews(token, 0, 10, "active", null);
+                }
+
+                initAppBarLayoutListener();
+
+                /** display notification if there are any */
+                if (PrefsHelper.getBoolean(this, "has_notifications")) {
+                    tvNotification.setVisibility(View.VISIBLE);
+                }
+
+                animateBanner();
             }
-
-            if (newsSingleton.getNewsPrevious().size() == 0) {
-                apiRequestHelper.getNews(token, 0, 10, "active", null);
-            }
-
-            initAppBarLayoutListener();
-
-            /** display notification if there are any */
-            if (PrefsHelper.getBoolean(this, "has_notifications")) {
-                tvNotification.setVisibility(View.VISIBLE);
-            }
-
-            animateBanner();
         } else {
             showConfirmDialog("", "San Mateo Profile App", AppConstants.WARN_CONNECTION, "Close", "",
                     new OnConfirmDialogListener() {
@@ -300,20 +316,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                             "Yes", "No", new OnConfirmDialogListener() {
                                 @Override
                                 public void onConfirmed(String action) {
-                                    /** clear all singletons */
-                                    newsSingleton.clearAll();
-                                    incidentsSingleton.clearAll();
-                                    currentUserSingleton.setCurrentUser(null);
-
-                                    final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
-                                    realmHelper.deleteCurrentUser();
-
-                                    PrefsHelper.setString(HomeActivity.this,
-                                            AppConstants.PREFS_LOCAL_EMERGENCY_KITS, "");
-
-                                    startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-                                    finish();
-                                    animateToRight(HomeActivity.this);
+                                    logout();
                                 }
 
                                 @Override
@@ -618,5 +621,24 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             }
         };
         countDownTimer.start();
+    }
+
+    private void logout() {
+        /** clear all singletons */
+        newsSingleton.clearAll();
+        incidentsSingleton.clearAll();
+        currentUserSingleton.setCurrentUser(null);
+
+        final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
+        realmHelper.deleteCurrentUser();
+
+        PrefsHelper.setString(HomeActivity.this,
+                AppConstants.PREFS_LOCAL_EMERGENCY_KITS, "");
+
+        final Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+        animateToRight(HomeActivity.this);
     }
 }
