@@ -152,7 +152,7 @@ public class PanicSettingsDialogFragment extends DialogFragment {
                             if (realmHelper.isExisting(phone)) {
                                 activity.showToast("Contact already in your list");
                             } else {
-                                realmHelper.createRecord(new PanicContact(name, phone));
+                                realmHelper.replaceInto(new PanicContact(id, name, phone));
                                 activity.showToast("Contact successfully added!");
                                 refreshList();
                             }

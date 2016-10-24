@@ -58,10 +58,13 @@ public class PicassoHelper {
                 .into(imageView);
     }
 
-    public static void loadBlurImageFromURL(String url, int placeholder, int blurStrength, ImageView imageView) {
+    public static void loadBlurImageFromURL(final Context context, String url,
+                                            final int placeholder,
+                                            final int blurStrength,
+                                            final ImageView imageView) {
         PicassoSingleton.getInstance().getPicasso().load(url)
-                .transform(new StackBlurTransformation(blurStrength))
-                .noFade()
+                .transform(new StackBlurTransformation(context, blurStrength, 1))
+                .fit()
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -73,22 +76,6 @@ public class PicassoHelper {
                         LogHelper.log("blur", "blurred background not loaded");
                     }
                 });
-    }
-
-    public static void loadBlurImageFromURL(String url, int placeholder, int size, int blurStrength, ImageView imageView) {
-        PicassoSingleton.getInstance().getPicasso().load(url)
-                .resize(size,size)
-                .placeholder(placeholder)
-                .transform(new StackBlurTransformation(blurStrength))
-                .into(imageView);
-    }
-
-    public static void loadBlurImageFromDrawable(int drawable, int blurStrength, ImageView imageView) {
-        PicassoSingleton.getInstance().getPicasso().load(drawable)
-                .fit()
-                .placeholder(drawable)
-                .transform(new StackBlurTransformation(blurStrength))
-                .into(imageView);
     }
 
     public static void loadImageFromURL(final String url, final ImageView imageView, final ProgressBar progressBar) {

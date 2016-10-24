@@ -30,10 +30,22 @@ public class RealmHelper<T extends RealmObject> {
     }
 
     /** add record */
-    public void createRecord(final T tClass) {
+    public void replaceInto(final T tClass) {
         realm.beginTransaction();
-        realm.copyToRealm(tClass);
+        realm.copyToRealmOrUpdate(tClass);
         realm.commitTransaction();
+    }
+
+    public void openRealm() {
+        realm.beginTransaction();
+    }
+
+    public void commitTransaction() {
+        realm.commitTransaction();
+    }
+
+    public void update(final T tClass) {
+        realm.copyToRealmOrUpdate(tClass);
     }
 
     /** delete contact by contact no */

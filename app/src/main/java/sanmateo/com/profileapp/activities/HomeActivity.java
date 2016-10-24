@@ -219,8 +219,8 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         navigationView.inflateMenu(R.menu.menu_side_drawer);
         navigationView.getHeaderView(0).setLayoutParams(params);
 
-        PicassoHelper.loadBlurImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
-                R.drawable.placeholder_image, 20, ivBlurBackground);
+        PicassoHelper.loadBlurImageFromURL(this, currentUserSingleton.getCurrentUser().getPicUrl(),
+                R.drawable.placeholder_image, 25, ivBlurBackground);
 
         PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
                 profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
@@ -384,11 +384,25 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         } else if (action.equals(ApiAction.PUT_CHANGE_PROFILE_PIC)) {
             final GenericMessage genericMessage = (GenericMessage) result;
             showToast("You have successfully changed your profile pic");
+
             /** save new profile pic url */
             fileToUpload = null;
             fileUri = null;
+
+            final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
+            realmHelper.openRealm();
+            currentUserSingleton.getCurrentUser().setPicUrl(genericMessage.getMessage());
+            realmHelper.update(currentUserSingleton.getCurrentUser());
+            realmHelper.commitTransaction();
+
+            LogHelper.log("changePic", "new pic url ---> " + currentUserSingleton.getCurrentUser().getPicUrl());
+
+            PicassoHelper.loadBlurImageFromURL(this, currentUserSingleton.getCurrentUser().getPicUrl(),
+                    R.drawable.placeholder_image, 25, ivBlurBackground);
+
             PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
                     profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
+
         }
 
         if (!action.equals(ApiAction.PUT_CHANGE_PW)) {

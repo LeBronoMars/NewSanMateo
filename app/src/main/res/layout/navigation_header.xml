@@ -10,10 +10,15 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/black_gradient_drawable_profile"/>
+
     <RelativeLayout
-        android:layout_width="@dimen/_90sdp"
+        android:layout_width="@dimen/_100sdp"
         android:layout_centerInParent="true"
-        android:layout_height="@dimen/_90sdp">
+        android:layout_height="@dimen/_100sdp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_profile_image"

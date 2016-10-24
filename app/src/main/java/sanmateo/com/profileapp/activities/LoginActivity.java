@@ -152,7 +152,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
                 showSnackbar(btnSignIn, AppConstants.WARN_INVALID_ACCOUNT);
             } else {
                 //DaoHelper.saveCurrentUser(authResponse);
-                realmHelper.createRecord(authResponse);
+                realmHelper.replaceInto(authResponse);
                 CurrentUserSingleton.getInstance().setCurrentUser(authResponse);
                 moveToHome();
             }
