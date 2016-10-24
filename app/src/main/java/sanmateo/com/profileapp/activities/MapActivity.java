@@ -179,7 +179,7 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
         locations.add(new Location("Barangay Sta. Ana", "San Mateo, Rizal", "n/a", "",
                 new LatLng(14.692236, 121.115358), AppConstants.CATEGORY_BARANGAY));
 
-        locations.add(new Location("Barangay Sta. Nino", "Sampaguita Street, San Mateo, Rizal",
+        locations.add(new Location("Barangay Sto. Niño", "Sampaguita Street, San Mateo, Rizal",
                 "n/a", "https://geo3.ggpht.com/cbk?panoid=FKfqmSQIB8tONj6x30YuLg&output=thumbnail" +
                 "&cb_client=search.TACTILE.gps&thumb=2&w=408&h=256&yaw=70.554657&pitch=0",
                 new LatLng(14.669146, 121.134612), AppConstants.CATEGORY_BARANGAY));
