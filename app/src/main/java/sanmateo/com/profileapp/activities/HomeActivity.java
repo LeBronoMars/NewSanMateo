@@ -122,8 +122,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             newsSingleton = NewsSingleton.getInstance();
             apiRequestHelper = new ApiRequestHelper(this);
 
-            if (currentUserSingleton.getCurrentUser() == null
-                    && currentUserSingleton.getCurrentUser().getToken() == null) {
+            if (currentUserSingleton.getCurrentUser() == null) {
                 showConfirmDialog("", "San Mateo Profile App", "Sorry, but your session has expired!",
                         "Re-login", "", new OnConfirmDialogListener() {
                             @Override

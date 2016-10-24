@@ -153,7 +153,7 @@ public class AlertLevelActivity extends BaseActivity implements OnMapReadyCallba
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        viewMarkerDetails(marker);
+        //viewMarkerDetails(marker);
         return false;
     }
 
