@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -16,14 +17,16 @@ import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.CprAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.fragments.CprFragment;
+import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.singletons.PicassoSingleton;
 
 /**
  * Created by ctmanalo on 8/16/16.
  */
 public class CprActivity extends BaseActivity {
-
     @BindView(R.id.viewPager) ViewPager viewPager;
     @BindView(R.id.tabLayout) TabLayout tabLayout;
+    @BindView(R.id.iv_footer) ImageView iv_footer;
 
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
@@ -34,11 +37,14 @@ public class CprActivity extends BaseActivity {
         ButterKnife.bind(this);
         setToolbarTitle("How to CPR");
         initViewPager();
+        PicassoSingleton.getInstance().getPicasso().load(AppConstants.IMAGE_URL_CPR_AMERICAN_HEART)
+                .noFade()
+                .into(iv_footer);
     }
 
     private void initViewPager() {
-        fragments.add(CprFragment.newInstance("Infant"));
-        fragments.add(CprFragment.newInstance("Adult"));
+        fragments.add(CprFragment.newInstance(AppConstants.IMAGE_URL_CPR_INFANT));
+        fragments.add(CprFragment.newInstance(AppConstants.IMAGE_URL_CPR_ADULT));
         viewPager.setAdapter(new CprAdapter(getSupportFragmentManager(), fragments));
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setOffscreenPageLimit(2);

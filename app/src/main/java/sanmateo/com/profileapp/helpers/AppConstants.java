@@ -23,35 +23,23 @@ public class AppConstants {
     public static final String BUCKET_ROOT = "sanmateoprofileapp";
     public static final String BUCKET_INCIDENTS = BUCKET_ROOT + "/incidents";
     public static final String BUCKET_PROFILE_PIC = BUCKET_ROOT + "/profilepics";
-    public static final String BUCKET_OFFICIALS_PIC = BUCKET_ROOT + "/officials";
-    public static final String BUCKET_GALLERY = BUCKET_ROOT + "/gallery";
-    public static final String BUCKET_NEWS = BUCKET_ROOT + "/news";
 
     /** prefs key */
     public static final String PREFS_LOCAL_EMERGENCY_KITS = "local emergency kits";
 
     /** image url */
-    public static final String IMAGE_URL_FLOOD_CAUSE = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/causes_flood.png";
-    public static final String IMAGE_URL_FLOOD_BEFORE = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/before_flood.png";
-    public static final String IMAGE_URL_FLOOD_DURING = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/during_flood.png";
-    public static final String IMAGE_URL_FLOOD_AFTER = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/after_flood.png";
-    public static final String IMAGE_URL_TIPS_EMERGENCY_KIT = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/emergencykit.png";
-    public static final String IMAGE_URL_TIPS_REMINDERS = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/Reminder.png";
-    public static final String IMAGE_URL_EQ_HAZARDS = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/HAZARDS_EQ.png";
-    public static final String IMAGE_URL_EQ_GRAPHIC_AID = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/Graphic_AID.png";
-    public static final String IMAGE_URL_EQ_BEFORE = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/BEFORE_EQ.png";
-    public static final String IMAGE_URL_EQ_DURING = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/DURING_EQ.png";
-    public static final String IMAGE_URL_EQ_AFTER = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/AFTER_EQ.png";
     public static final String IMAGE_URL_MARKER_BRIDGE_1 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/Batasan-SanMateoBridge1.png";
     public static final String IMAGE_URL_MARKER_BRIDGE_2 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/Batasan-SanMateoBridge2.png";
     public static final String IMAGE_URL_MARKER_BRIDGE_3 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/Batasan-SanMateoBridge3.png";
     public static final String IMAGE_URL_MARKER_MARKET_1 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/PublicMarket_pic1.png";
     public static final String IMAGE_URL_MARKER_MARKET_2 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/PublicMarket_pic2.png";
     public static final String IMAGE_URL_MARKER_MARKET_3 = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/alert_level/PublicMarket_pic3.png";
+    public static final String IMAGE_URL_CPR_ADULT = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/CPR/CPR_adult.png";
+    public static final String IMAGE_URL_CPR_INFANT = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/CPR/CPR_infant_small.png";
+    public static final String IMAGE_URL_CPR_AMERICAN_HEART = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/CPR/american_heart.png";
+    public static final String IMAGE_URL_ISANG_PAALALA = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/disaster_management/paalala_small.png";
 
     public static String SAN_MATEO_LOGO = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/banners/san_mateo_logo.png";
-    public static String MESSAGE_FROM_THE_MAYOR = "https://s3-us-west-1.amazonaws.com/sanmateoprofileapp/gallery/main_news_mayor_msg2.png";
-
 
     /** categories */
     public static final String CATEGORY_PEACE_AND_SECURITY = "Peace & Security";

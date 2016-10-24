@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+
+import com.squareup.picasso.Callback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,15 +20,18 @@ import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.TabPagerAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.fragments.DisasterFragment;
+import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.singletons.PicassoSingleton;
 
 /**
  * Created by ctmanalo on 10/8/16.
  */
 
 public class Disaster101Activity extends BaseActivity {
-
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.iv_reminder) ImageView iv_reminder;
+    @BindView(R.id.pb_load_image) ProgressBar pb_load_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,19 @@ public class Disaster101Activity extends BaseActivity {
         ButterKnife.bind(this);
         setToolbarTitle("Disaster 101");
         initTabs();
+        PicassoSingleton.getInstance().getPicasso().load(AppConstants.IMAGE_URL_ISANG_PAALALA)
+                .noFade().fit().placeholder(R.drawable.placeholder_image)
+                .into(iv_reminder, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        pb_load_image.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        pb_load_image.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private void initTabs() {

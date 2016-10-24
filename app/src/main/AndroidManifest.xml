@@ -118,6 +118,10 @@
         <!-- disaster 101 activity -->
         <activity android:name=".activities.Disaster101Activity"
             android:screenOrientation="portrait" />
+        
+        <!-- full image preview activity -->
+        <activity android:name=".activities.ImageFullViewActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".services.PusherService" />
 

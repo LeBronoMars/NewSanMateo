@@ -2,25 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <TextView
         fontPath="fonts/Roboto-Regular.ttf"
-        android:textSize="@dimen/_10sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/darker_gray"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:layout_margin="@dimen/_5sdp"
         android:text="@string/cpr_header"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"/>
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/_10sdp" />
 
-    <ImageView
-        android:id="@+id/iv_cpr"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/cpr_infant"/>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_cpr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ProgressBar
+            android:id="@+id/pb_load_image"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </LinearLayout>
