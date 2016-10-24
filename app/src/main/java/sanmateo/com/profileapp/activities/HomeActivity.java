@@ -113,34 +113,50 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initPanicContact();
-        initAmazonS3Helper(this);
-        currentUserSingleton = CurrentUserSingleton.getInstance();
-        incidentsSingleton = IncidentsSingleton.getInstance();
-        newsSingleton = NewsSingleton.getInstance();
-        apiRequestHelper = new ApiRequestHelper(this);
-        token = currentUserSingleton.getCurrentUser().getToken();
-        Log.d("token", token);
-        animateBanners();
-        initNavigationDrawer();
-        initNews();
 
-        if (!isMyServiceRunning(PusherService.class)) {
-            startService(new Intent(this, PusherService.class));
+        if (isNetworkAvailable()) {
+            initPanicContact();
+            initAmazonS3Helper(this);
+            currentUserSingleton = CurrentUserSingleton.getInstance();
+            incidentsSingleton = IncidentsSingleton.getInstance();
+            newsSingleton = NewsSingleton.getInstance();
+            apiRequestHelper = new ApiRequestHelper(this);
+            token = currentUserSingleton.getCurrentUser().getToken();
+            animateBanners();
+            initNavigationDrawer();
+            initNews();
+
+            if (!isMyServiceRunning(PusherService.class)) {
+                startService(new Intent(this, PusherService.class));
+            }
+
+            if (newsSingleton.getNewsPrevious().size() == 0) {
+                apiRequestHelper.getNews(token, 0, 10, "active", null);
+            }
+
+            initAppBarLayoutListener();
+
+            /** display notification if there are any */
+            if (PrefsHelper.getBoolean(this, "has_notifications")) {
+                tvNotification.setVisibility(View.VISIBLE);
+            }
+
+            animateBanner();
+        } else {
+            showConfirmDialog("", "San Mateo Profile App", AppConstants.WARN_CONNECTION, "Close", "",
+                    new OnConfirmDialogListener() {
+                        @Override
+                        public void onConfirmed(String action) {
+                            finish();
+                            System.exit(0);
+                        }
+
+                        @Override
+                        public void onCancelled(String action) {
+
+                        }
+                    });
         }
-
-        if (newsSingleton.getNewsPrevious().size() == 0) {
-            apiRequestHelper.getNews(token, 0, 10, "active", null);
-        }
-
-        initAppBarLayoutListener();
-
-        /** display notification if there are any */
-        if (PrefsHelper.getBoolean(this, "has_notifications")) {
-            tvNotification.setVisibility(View.VISIBLE);
-        }
-
-        animateBanner();
     }
 
     private void animateBanners() {

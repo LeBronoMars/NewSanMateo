@@ -40,11 +40,8 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
  * Created by rsbulanon on 10/2/16.
  */
 public class LoginActivity extends BaseActivity implements OnApiRequestListener, SurfaceHolder.Callback {
-
-    @BindView(R.id.btn_sign_in)
-    Button btnSignIn;
-    @BindView(R.id.surfaceView)
-    SurfaceView surfaceView;
+    @BindView(R.id.btn_sign_in) Button btnSignIn;
+    @BindView(R.id.surfaceView) SurfaceView surfaceView;
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
     private SurfaceHolder surfaceHolder;
@@ -57,8 +54,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
         setContentView(R.layout.activity_login_with_video);
         ButterKnife.bind(this);
 
-        if (!isNetworkAvailable()) {
-            showConfirmDialog("", "San Mateo Admin App", AppConstants.WARN_CONNECTION, "Close", "",
+        if (!isNetworkAvailable() && realmHelper.findOne(AuthResponse.class) == null) {
+            showConfirmDialog("", "San Mateo Profile App", AppConstants.WARN_CONNECTION, "Close", "",
                     new OnConfirmDialogListener() {
                         @Override
                         public void onConfirmed(String action) {
@@ -71,22 +68,22 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
 
                         }
                     });
-        }
-
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(this);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final String[] requiredPermission = new String[]{
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_CONTACTS,
-                    android.Manifest.permission.CAMERA,
-                    android.Manifest.permission.READ_SMS,
-                    android.Manifest.permission.SEND_SMS
-            };
-            requestPermissions(requiredPermission, REQUEST_PERMISSIONS);
         } else {
-            initialize();
+            surfaceHolder = surfaceView.getHolder();
+            surfaceHolder.addCallback(this);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                final String[] requiredPermission = new String[]{
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_CONTACTS,
+                        android.Manifest.permission.CAMERA,
+                        android.Manifest.permission.READ_SMS,
+                        android.Manifest.permission.SEND_SMS
+                };
+                requestPermissions(requiredPermission, REQUEST_PERMISSIONS);
+            } else {
+                initialize();
+            }
         }
     }
 
