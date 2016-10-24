@@ -22,7 +22,7 @@ import sanmateo.com.profileapp.models.others.FacebookFeeds;
 public class FacebookFeedsAdapter extends RecyclerView.Adapter<FacebookFeedsAdapter.ViewHolder> {
 
     private ArrayList<FacebookFeeds> feeds;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
     private SimpleDateFormat readableDate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");
 
     public FacebookFeedsAdapter(final ArrayList<FacebookFeeds> feeds) {

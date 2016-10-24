@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,6 @@ import sanmateo.com.profileapp.models.others.FacebookFeeds;
  * Created by rsbulanon on 8/29/16.
  */
 public class SocialMediaActivity extends BaseActivity implements GraphRequest.Callback {
-
     @BindView(R.id.rv_feeds) RecyclerView rv_feeds;
     private CallbackManager callbackManager;
     private ArrayList<FacebookFeeds> feeds = new ArrayList<>();
