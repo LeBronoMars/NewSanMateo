@@ -562,7 +562,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         }
     }
 
-    public void sendSMS(String phoneNumber, String message) {
+    public void sendSMS(String phoneNumber, String message, final boolean toMayor) {
         final String SENT = "SMS_SENT";
         final String DELIVERED = "SMS_DELIVERED";
         final PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent(SENT), 0);
@@ -575,7 +575,11 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
                         LogHelper.log("sms", "sms sent!");
-                        showToast("Your concern has been successfully sent to Mayor Tina!");
+                        if (toMayor) {
+                            showToast("Your concern has been successfully sent to Mayor Tina!");
+                        } else {
+                            showToast("SOS successfully sent to all of your emergency contacts!");
+                        }
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                         showToast("Unable to send your text concern, Please check your balance");
@@ -618,7 +622,7 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         final RealmHelper<PanicContact> realmHelper = new RealmHelper<>();
         for (PanicContact panicContact : realmHelper.findAll(PanicContact.class)) {
             showToast("Sending SOS to all contacts in your panic phone book...");
-            sendSMS(panicContact.getContactNo(), "Help me!");
+            sendSMS(panicContact.getContactNo(), "Help me!", false);
         }
     }
 
