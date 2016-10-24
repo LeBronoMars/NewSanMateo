@@ -163,10 +163,19 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
                             LogHelper.log("fb", "Unable to share with error --> " + error.getMessage());
                         }
                     });
+
+                    final String title = incident.getIncidentDescription();
+                    final String description = incident.getIncidentDescription();
+
+                    LogHelper.log("fb", "title ---> " + title);
+                    LogHelper.log("fb", "description --> " + description);
+                    LogHelper.log("fb", "image url --> " + imageUrl);
+
                     if (ShareDialog.canShow(ShareLinkContent.class)) {
                         final ShareLinkContent linkContent = new ShareLinkContent.Builder()
                                 .setContentTitle(incident.getIncidentDescription())
                                 .setImageUrl(Uri.parse(imageUrl.isEmpty() ? AppConstants.SAN_MATEO_LOGO : imageUrl))
+                                .setContentUrl(Uri.parse("www.google.com"))
                                 .setContentDescription(incident.getIncidentAddress())
                                 .build();
                         shareDialog.show(linkContent, AppConstants.IS_FACEBOOK_APP_INSTALLED
@@ -288,8 +297,8 @@ public class IncidentsActivity extends BaseActivity implements OnApiRequestListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        shareCallBackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+        shareCallBackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
