@@ -52,8 +52,8 @@ public class LoginDialogFragment extends DialogFragment {
         ButterKnife.bind(this, view);
         activity = (BaseActivity) getActivity();
 
-        et_email.setText("lebron@gmail.com");
-        et_password.setText("123");
+        //et_email.setText("lebron@gmail.com");
+        //et_password.setText("123");
 
         mDialog = new Dialog(getActivity());
         mDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
