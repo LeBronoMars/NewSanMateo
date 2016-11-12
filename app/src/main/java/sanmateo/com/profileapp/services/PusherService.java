@@ -67,7 +67,7 @@ public class PusherService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         final PusherOptions options = new PusherOptions();
         options.setCluster(BuildConfig.PUSHER_CLUSTER);
-        final Pusher pusher = new Pusher(BuildConfig.PUSHER_CLIENT_ID,options);
+        final Pusher pusher = new Pusher(BuildConfig.PUSHER_CLIENT_ID, options);
 
         /** listen to public channel */
         final Channel publicChannel = pusher.subscribe("clients");
