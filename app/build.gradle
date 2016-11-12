@@ -77,7 +77,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
-    compile "com.squareup:seismic:$rootProject.ext.seismicVersion"
     compile "com.amazonaws:aws-android-sdk-s3:$rootProject.ext.awsS3Version"
     compile "com.afollestad.material-dialogs:core:$rootProject.ext.materialDialogCoreVersion"
     compile "org.ocpsoft.prettytime:prettytime:$rootProject.ext.prettyTimeVersion"

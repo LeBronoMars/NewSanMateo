@@ -43,7 +43,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.seismic.ShakeDetector;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -56,13 +55,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.UUID;
 
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
-import sanmateo.com.profileapp.activities.HomeActivity;
 import sanmateo.com.profileapp.activities.LoginActivity;
 import sanmateo.com.profileapp.fragments.CustomProgressBarDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomProgressDialogFragment;
@@ -85,18 +81,16 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Created by rsbulanon on 6/22/16.
  */
-public class BaseActivity extends AppCompatActivity implements ShakeDetector.Listener {
+public class BaseActivity extends AppCompatActivity {
     private CustomProgressDialogFragment customProgressDialogFragment;
     private CustomProgressBarDialogFragment customProgressBarDialogFragment;
     private AmazonS3Helper amazonS3Helper;
     private OnS3UploadListener onS3UploadListener;
     private static SensorManager sensorManager;
-    private static ShakeDetector shakeDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initShakeDetector();
     }
 
     @Override
@@ -616,23 +610,11 @@ public class BaseActivity extends AppCompatActivity implements ShakeDetector.Lis
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
     }
 
-    @Override
-    public void hearShake() {
-        LogHelper.log("shake", "na shake");
+    public void sendSOS() {
         final RealmHelper<PanicContact> realmHelper = new RealmHelper<>();
         for (PanicContact panicContact : realmHelper.findAll(PanicContact.class)) {
             showToast("Sending SOS to all contacts in your panic phone book...");
             sendSMS(panicContact.getContactNo(), "Help me!", false);
-        }
-    }
-
-    private void initShakeDetector() {
-        if (sensorManager == null) {
-            sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-            shakeDetector = new ShakeDetector(this);
-            shakeDetector.setSensitivity(12);
-            shakeDetector.start(sensorManager);
-            LogHelper.log("shake", "on shake initialized!");
         }
     }
 
