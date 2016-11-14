@@ -14,7 +14,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.hardware.SensorManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -86,7 +85,6 @@ public class BaseActivity extends AppCompatActivity {
     private CustomProgressBarDialogFragment customProgressBarDialogFragment;
     private AmazonS3Helper amazonS3Helper;
     private OnS3UploadListener onS3UploadListener;
-    private static SensorManager sensorManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

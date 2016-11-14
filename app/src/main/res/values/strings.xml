@@ -120,7 +120,8 @@
     <string name="alarm_level">Alarm Level</string>
 
     <!-- menu items -->
-    <string name="menu_panic_emergency">Panic/Emergency</string>
+    <string name="menu_send_sos">Send SOS</string>
+    <string name="menu_panic_emergency">Set SOS/Emergency Contacts</string>
     <string name="menu_incident_report">Incident Report</string>
     <string name="menu_information">Information</string>
     <string name="menu_map">Map</string>

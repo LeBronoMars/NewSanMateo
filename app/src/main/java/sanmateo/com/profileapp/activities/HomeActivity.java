@@ -230,6 +230,9 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
+                case R.id.menu_send_sos:
+                    sendSOS();
+                    break;
                 case R.id.menu_panic_emergency:
                     setPanicContacts();
                     break;
@@ -576,7 +579,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 builder.append("Concern : " + message + "\n\n");
                 builder.append("Sent via San Mateo Profile App");
                 LogHelper.log("sms", "CONCERN ---> " + builder.toString());
-                sendSMS("09255804848", builder.toString(), true);
+                sendSMS("09778397506", builder.toString(), true);
             }
 
             @Override
