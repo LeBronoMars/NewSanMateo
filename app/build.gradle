@@ -67,6 +67,7 @@ dependencies {
     compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
     compile "uk.co.chrisjenx:calligraphy:$rootProject.ext.calligraphyVersion"
     compile "com.intuit.sdp:sdp-android:$rootProject.ext.sdpVersion"
+    compile "com.intuit.ssp:ssp-android:$rootProject.ext.sdpVersion"
     compile "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picassoVersion"
     compile "com.squareup:otto:$rootProject.ext.squareUpOttoVersion"
     compile "io.reactivex:rxjava:$rootProject.ext.rxJavaVersion"

@@ -38,7 +38,7 @@ ext {
     junitVersion = '4.12'
     butterKnifeVersion = '8.4.0'
     calligraphyVersion = '2.2.0'
-    sdpVersion = '1.0.3'
+    sdpVersion = '1.0.4'
     picassoVersion = '1.0.2'
     squareUpOttoVersion = '1.3.8'
     rxJavaVersion = '1.2.0'

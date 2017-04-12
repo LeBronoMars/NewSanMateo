@@ -14,7 +14,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal"
         android:text="@string/create_my_account"
-        android:textSize="@dimen/_14sdp" />
+        android:textSize="@dimen/_14ssp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/user_info"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/_18ssp" />
 
             <View
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                         android:paddingTop="@dimen/_10sdp"
                         android:singleLine="true"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_10ssp" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -91,7 +91,7 @@
                         android:hint="@string/last_name"
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
-                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10ssp"
                         android:singleLine="true"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_10sdp" />
@@ -113,7 +113,7 @@
                         android:hint="@string/contact_no"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10ssp"
                         android:singleLine="true"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_10sdp" />
@@ -138,7 +138,7 @@
                         android:paddingTop="@dimen/_10sdp"
                         android:singleLine="true"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_10ssp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <Spinner
@@ -160,7 +160,7 @@
                 android:layout_marginTop="@dimen/_20sdp"
                 android:text="@string/user_account"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/_18sdp" />
+                android:textSize="@dimen/_18ssp" />
 
             <View
                 android:layout_width="match_parent"
@@ -190,7 +190,7 @@
                         android:hint="@string/email"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
-                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10ssp"
                         android:singleLine="true"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_10sdp" />
@@ -212,7 +212,7 @@
                         android:hint="@string/password"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
-                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10ssp"
                         android:singleLine="true"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_10sdp" />
@@ -234,7 +234,7 @@
                         android:hint="@string/confirm_password"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
-                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingTop="@dimen/_10ssp"
                         android:singleLine="true"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_10sdp" />
