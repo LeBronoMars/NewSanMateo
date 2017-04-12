@@ -39,9 +39,9 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 /**
  * Created by rsbulanon on 10/2/16.
  */
-public class LoginActivity extends BaseActivity implements OnApiRequestListener, SurfaceHolder.Callback {
+public class LoginActivity extends BaseActivity implements OnApiRequestListener {
     @BindView(R.id.btn_sign_in) Button btnSignIn;
-    @BindView(R.id.surfaceView) SurfaceView surfaceView;
+//    @BindView(R.id.surfaceView) SurfaceView surfaceView;
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
     private SurfaceHolder surfaceHolder;
@@ -69,8 +69,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
                         }
                     });
         } else {
-            surfaceHolder = surfaceView.getHolder();
-            surfaceHolder.addCallback(this);
+//            surfaceHolder = surfaceView.getHolder();
+//            surfaceHolder.addCallback(this);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 final String[] requiredPermission = new String[]{
@@ -208,20 +208,20 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
         }
     }
 
-    @Override
-    public void surfaceCreated(final SurfaceHolder surfaceHolder) {
-        playVideo();
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
-    }
+//    @Override
+//    public void surfaceCreated(final SurfaceHolder surfaceHolder) {
+//        playVideo();
+//    }
+//
+//    @Override
+//    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+//
+//    }
+//
+//    @Override
+//    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+//
+//    }
 
     @Override
     protected void onDestroy() {
@@ -232,7 +232,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
     protected void onResume() {
         super.onResume();
         if (mp != null) {
-            playVideo();
+//            playVideo();
         }
     }
 
@@ -251,7 +251,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
         finish();
     }
 
-    private void playVideo() {
+    /*private void playVideo() {
         mp = null;
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
             mp = new MediaPlayer();
@@ -291,7 +291,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener,
         //Start video
         mp.start();
         mp.setLooping(true);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
