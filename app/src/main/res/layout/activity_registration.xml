@@ -69,9 +69,9 @@
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
                         android:paddingTop="@dimen/_10sdp"
-                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10ssp" />
+                        android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -92,9 +92,9 @@
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
                         android:paddingTop="@dimen/_10ssp"
-                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <!-- contact no -->
@@ -114,9 +114,9 @@
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:paddingTop="@dimen/_10ssp"
-                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <!-- address -->
@@ -136,9 +136,9 @@
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
                         android:paddingTop="@dimen/_10sdp"
-                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10ssp" />
+                        android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <Spinner
@@ -191,9 +191,9 @@
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:paddingTop="@dimen/_10ssp"
-                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <!-- password -->
@@ -213,9 +213,9 @@
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
                         android:paddingTop="@dimen/_10ssp"
-                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -235,9 +235,9 @@
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:paddingTop="@dimen/_10ssp"
-                        android:singleLine="true"
+                        android:maxLines="1"
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
