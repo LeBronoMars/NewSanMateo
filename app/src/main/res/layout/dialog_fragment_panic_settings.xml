@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:paddingLeft="@dimen/_10sdp"
-        android:paddingTop="@dimen/_10sdp"
         android:layout_centerVertical="true"
         android:layout_marginBottom="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
         android:text="@string/panic_settings_header"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/_20sdp" />
@@ -22,12 +22,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_10sdp"
         android:paddingLeft="@dimen/_10sdp"
         android:paddingRight="@dimen/_10sdp"
-        android:textSize="@dimen/_11sdp"
+        android:text="@string/instructions"
         android:textColor="@android:color/black"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:text="@string/instructions"/>
+        android:textSize="@dimen/_11sdp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,39 +38,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_select"
                 fontPath="fonts/Roboto-Light.ttf"
-                android:layout_width="0dp"
-                android:layout_weight="50"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
-                style="@style/AppTheme.Button.Primary"
+                android:background="@color/colorPrimary"
                 android:text="@string/select_contact"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/_14sdp" />
 
             <Button
                 android:id="@+id/btn_close"
                 fontPath="fonts/Roboto-Light.ttf"
-                android:layout_width="0dp"
-                android:layout_weight="50"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
-                style="@style/AppTheme.Button.PrimaryDark"
+                android:background="@color/colorPrimaryDark"
                 android:text="@string/close"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/_14sdp" />
+
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_no_contact"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_above="@id/ll_menu"
+            android:gravity="center"
             android:text="@string/no_contacts"
             android:textSize="@dimen/_20sdp" />
 

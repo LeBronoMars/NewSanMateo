@@ -144,7 +144,7 @@
     <string name="view_image">View Image</string>
 
     <!-- panic settings dialog fragment -->
-    <string name="panic_settings_header">Set emergency contacts</string>
+    <string name="panic_settings_header">Emergency contacts</string>
     <string name="no_contacts">No contact/s found!</string>
     <string name="select_contact">Select</string>
     <string name="instructions">
