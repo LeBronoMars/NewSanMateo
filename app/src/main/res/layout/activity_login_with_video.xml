@@ -3,13 +3,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/bg"
     android:clickable="true">
-
-    <!--<SurfaceView-->
-        <!--android:id="@+id/surfaceView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"
