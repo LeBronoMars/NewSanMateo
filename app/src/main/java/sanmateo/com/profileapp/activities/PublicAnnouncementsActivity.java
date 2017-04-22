@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 
@@ -40,8 +41,13 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
 
     @BindView(R.id.rv_announcements)
     RecyclerView rv_announcements;
+
+    @BindView(R.id.tv_no_record)
+    TextView tv_no_record;
+
     @BindView(R.id.btnAdd)
     FloatingActionButton btnAdd;
+
     private AnnouncementsSingleton announcementsSingleton;
     private CurrentUserSingleton currentUserSingleton;
     private ApiRequestHelper apiRequestHelper;
@@ -69,6 +75,7 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
             btnAdd.setVisibility(View.INVISIBLE);
         }
         seen();
+        toggleView();
     }
 
     @Override
@@ -106,6 +113,8 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
         if (action.equals(ApiAction.GET_ANNOUNCEMENTS)) {
             final ArrayList<Announcement> announcements = (ArrayList<Announcement>) result;
             announcementsSingleton.getAnnouncements().addAll(announcements);
+
+            toggleView();
         } else if (action.equals(ApiAction.GET_LATEST_ANNOUNCEMENTS)) {
             final ArrayList<Announcement> announcements = (ArrayList<Announcement>) result;
             announcementsSingleton.getAnnouncements().addAll(0, announcements);
@@ -158,5 +167,10 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
         if (PrefsHelper.getBoolean(this, "has_notifications")) {
             PrefsHelper.setBoolean(this, "has_notifications", false);
         }
+    }
+
+    private void toggleView() {
+        rv_announcements.setVisibility(announcementsSingleton.getAnnouncements().isEmpty() ? View.GONE : View.VISIBLE);
+        tv_no_record.setVisibility(announcementsSingleton.getAnnouncements().isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

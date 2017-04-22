@@ -234,4 +234,6 @@
     <string name="enter_gallery_url">Enter image url</string>
 
     <string name="change_profile_pic">Change profile pic</string>
+
+    <string name="public_announcements_no_data">There are no announcements received.</string>
 </resources>
