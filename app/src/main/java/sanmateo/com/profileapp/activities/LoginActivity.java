@@ -38,7 +38,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
-    private RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
+    private RealmHelper<AuthResponse> realmHelper = new RealmHelper<>(AuthResponse.class);
     private Unbinder unbinder;
 
     @Override
@@ -47,21 +47,9 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         setContentView(R.layout.activity_login_with_video);
         unbinder = ButterKnife.bind(this);
 
-        if (!isNetworkAvailable() && realmHelper.findOne(AuthResponse.class) == null) {
+        if (!isNetworkAvailable() && realmHelper.findOne() == null) {
             showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
-                            " no saved account. Please check your connection and try again.", "Close", "",
-                    new OnConfirmDialogListener() {
-                        @Override
-                        public void onConfirmed(String action) {
-                            finish();
-                            System.exit(0);
-                        }
-
-                        @Override
-                        public void onCancelled(String action) {
-
-                        }
-                    });
+                            " no saved account. Please check your connection and try again.", "Close", null, null);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 final String[] requiredPermission = new String[]{
@@ -80,7 +68,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     private void initialize() {
         AppConstants.IS_FACEBOOK_APP_INSTALLED = isFacebookInstalled();
-        final AuthResponse authResponse = realmHelper.findOne(AuthResponse.class);
+        final AuthResponse authResponse = realmHelper.findOne();
 
         if (authResponse != null) {
             CurrentUserSingleton.getInstance().setCurrentUser(authResponse);

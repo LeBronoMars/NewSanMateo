@@ -18,6 +18,8 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.AnnouncementsAdapter;
@@ -27,10 +29,12 @@ import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.helpers.PrefsHelper;
+import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.EndlessRecyclerViewScrollListener;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.Announcement;
 import sanmateo.com.profileapp.models.response.ApiError;
+import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.singletons.AnnouncementsSingleton;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 
@@ -52,6 +56,8 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
     private CurrentUserSingleton currentUserSingleton;
     private ApiRequestHelper apiRequestHelper;
     private String token;
+    private boolean loading = true;
+    private int pastVisibileItems, visibleItemCount, totalItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,16 +92,41 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
     }
 
     private void initAnnouncements() {
+        final RealmHelper<Announcement> realmHelper = new RealmHelper<>(Announcement.class);
+
+        if (!isNetworkAvailable() && realmHelper.count() > 0) {
+            LogHelper.log("count", "announcement count --> " + realmHelper.count());
+            final RealmResults<Announcement> cachedAnnouncements = realmHelper.findAll("createdAt", Sort.DESCENDING);
+            announcementsSingleton.getAnnouncements().clear();
+            for (Announcement a : cachedAnnouncements) {
+                announcementsSingleton.getAnnouncements().add(a);
+            }
+        }
+
         final AnnouncementsAdapter adapter = new AnnouncementsAdapter(this, announcementsSingleton.getAnnouncements());
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rv_announcements.setAdapter(adapter);
         rv_announcements.setLayoutManager(linearLayoutManager);
-        rv_announcements.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+
+        rv_announcements.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onLoadMore(int page, int totalItemsCount) {
-                apiRequestHelper.getAnnouncements(token, announcementsSingleton.getAnnouncements().size(), 10);
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisibileItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisibileItems) >= totalItemCount) {
+                            loading = false;
+                            LogHelper.log("page", "on load more called");
+                            apiRequestHelper.getAnnouncements(token, announcementsSingleton.getAnnouncements().size(), 10);
+                        }
+                    }
+                }
             }
         });
+
     }
 
     @Override
@@ -112,12 +143,32 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
         dismissCustomProgress();
         if (action.equals(ApiAction.GET_ANNOUNCEMENTS)) {
             final ArrayList<Announcement> announcements = (ArrayList<Announcement>) result;
-            announcementsSingleton.getAnnouncements().addAll(announcements);
+            announcementsSingleton.getAnnouncements().clear();
+            final RealmHelper<Announcement> realmHelper = new RealmHelper<>(Announcement.class);
 
+            if (!announcements.isEmpty()) {
+                for (Announcement a : announcements) {
+                    realmHelper.replaceInto(a);
+                }
+            }
+
+            if (realmHelper.count() > 0) {
+                final RealmResults<Announcement> cachedAnnouncements = realmHelper.findAll("createdAt", Sort.DESCENDING);
+                for (Announcement a : cachedAnnouncements) {
+                    announcementsSingleton.getAnnouncements().add(a);
+                }
+            }
+            announcementsSingleton.getAnnouncements().addAll(announcements);
             toggleView();
         } else if (action.equals(ApiAction.GET_LATEST_ANNOUNCEMENTS)) {
+            final RealmHelper<Announcement> realmHelper = new RealmHelper<>(Announcement.class);
             final ArrayList<Announcement> announcements = (ArrayList<Announcement>) result;
             announcementsSingleton.getAnnouncements().addAll(0, announcements);
+            if (!announcements.isEmpty()) {
+                for (Announcement a : announcements) {
+                    realmHelper.replaceInto(a);
+                }
+            }
             PrefsHelper.setBoolean(this, "refresh_announcements", false);
         }
         rv_announcements.getAdapter().notifyDataSetChanged();

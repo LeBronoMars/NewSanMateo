@@ -66,6 +66,7 @@ import sanmateo.com.profileapp.interfaces.EndlessRecyclerViewScrollListener;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
+import sanmateo.com.profileapp.models.response.Announcement;
 import sanmateo.com.profileapp.models.response.ApiError;
 import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
@@ -314,11 +315,10 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     }
 
     private void initNews() {
-        final RealmHelper<News> realmHelper = new RealmHelper<>();
+        final RealmHelper<News> realmHelper = new RealmHelper<>(News.class);
 
-        if (!isNetworkAvailable() && realmHelper.count(News.class) > 0) {
-            LogHelper.log("count", "news count --> " + realmHelper.count(News.class));
-            final RealmResults<News> cachedNews = realmHelper.findAll(News.class, "createdAt", Sort.DESCENDING);
+        if (!isNetworkAvailable() && realmHelper.count() > 0) {
+            final RealmResults<News> cachedNews = realmHelper.findAll("createdAt", Sort.DESCENDING);
             newsSingleton.getAllNews().clear();
             for (News n : cachedNews) {
                 newsSingleton.getNewsPrevious().add(n);
@@ -380,7 +380,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         if (action.equals(ApiAction.GET_NEWS)) {
             final ArrayList<News> news = (ArrayList<News>) result;
             newsSingleton.getAllNews().clear();
-            final RealmHelper<News> realmHelper = new RealmHelper<>();
+            final RealmHelper<News> realmHelper = new RealmHelper<>(News.class);
 
             if (!news.isEmpty()) {
                 for (News n : news) {
@@ -388,15 +388,15 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 }
             }
 
-            if (realmHelper.count(News.class) > 0) {
-                final RealmResults<News> cachedNews = realmHelper.findAll(News.class, "createdAt", Sort.DESCENDING);
+            if (realmHelper.count() > 0) {
+                final RealmResults<News> cachedNews = realmHelper.findAll("createdAt", Sort.DESCENDING);
                 for (News n : cachedNews) {
                     newsSingleton.getAllNews().add(n);
                 }
             }
             newsSingleton.getAllNews().addAll(news);
         } else if (action.equals(ApiAction.GET_NEWS_BY_ID)) {
-            final RealmHelper<News> realmHelper = new RealmHelper<>();
+            final RealmHelper<News> realmHelper = new RealmHelper<>(News.class);
             final News news = (News) result;
             realmHelper.replaceInto(news);
             newsSingleton.getAllNews().add(0, news);
@@ -411,7 +411,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             fileToUpload = null;
             fileUri = null;
 
-            final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
+            final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>(AuthResponse.class);
             realmHelper.openRealm();
             currentUserSingleton.getCurrentUser().setPicUrl(genericMessage.getMessage());
             realmHelper.update(currentUserSingleton.getCurrentUser());
@@ -665,8 +665,9 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         incidentsSingleton.clearAll();
         currentUserSingleton.setCurrentUser(null);
 
-        final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
-        realmHelper.deleteCurrentUser();
+        new RealmHelper<>(News.class).deleteRecords();
+        new RealmHelper<>(Announcement.class).deleteRecords();
+        new RealmHelper<>(AuthResponse.class).deleteRecords();
 
         PrefsHelper.setString(HomeActivity.this,
                 AppConstants.PREFS_LOCAL_EMERGENCY_KITS, "");

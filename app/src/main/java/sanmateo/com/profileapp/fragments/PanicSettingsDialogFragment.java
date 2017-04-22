@@ -45,7 +45,7 @@ public class PanicSettingsDialogFragment extends DialogFragment {
     @BindView(R.id.tv_no_contact) TextView tv_no_contact;
     private static final int READ_PHONE_BOOK = 1;
     private RealmList<PanicContact> contacts = new RealmList<>();
-    private RealmHelper<PanicContact> realmHelper = new RealmHelper<>();
+    private RealmHelper<PanicContact> realmHelper = new RealmHelper<>(PanicContact.class);
 
     public static PanicSettingsDialogFragment newInstance() {
         final PanicSettingsDialogFragment frag = new PanicSettingsDialogFragment();
@@ -64,7 +64,7 @@ public class PanicSettingsDialogFragment extends DialogFragment {
         view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_panic_settings,null);
         activity = (BaseActivity) getActivity();
         contacts.clear();
-        contacts.addAll(realmHelper.findAll(PanicContact.class));
+        contacts.addAll(realmHelper.findAll());
         ButterKnife.bind(this, view);
         final PanicContactsAdapter adapter = new PanicContactsAdapter(getActivity(), contacts);
         adapter.setOnDeleteContactListener(contact -> activity.showConfirmDialog("",
@@ -94,7 +94,7 @@ public class PanicSettingsDialogFragment extends DialogFragment {
 
     public void refreshList() {
         contacts.clear();
-        contacts.addAll(realmHelper.findAll(PanicContact.class));
+        contacts.addAll(realmHelper.findAll());
         ((BaseAdapter)lv_contacts.getAdapter()).notifyDataSetChanged();
         checkContactSize();
     }

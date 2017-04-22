@@ -523,8 +523,8 @@ public class BaseActivity extends AppCompatActivity {
                                 IncidentsSingleton.getInstance().clearAll();
                                 CurrentUserSingleton.getInstance().setCurrentUser(null);
 
-                                final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
-                                realmHelper.deleteCurrentUser();
+                                final RealmHelper<AuthResponse> realmHelper = new RealmHelper<>(AuthResponse.class);
+                                realmHelper.deleteRecords();
 
                                 final Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -609,8 +609,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void sendSOS() {
-        final RealmHelper<PanicContact> realmHelper = new RealmHelper<>();
-        for (PanicContact panicContact : realmHelper.findAll(PanicContact.class)) {
+        final RealmHelper<PanicContact> realmHelper = new RealmHelper<>(PanicContact.class);
+        for (PanicContact panicContact : realmHelper.findAll()) {
             showToast("Sending SOS to all contacts in your panic phone book...");
             sendSMS(panicContact.getContactNo(), "Help me!", false);
         }
