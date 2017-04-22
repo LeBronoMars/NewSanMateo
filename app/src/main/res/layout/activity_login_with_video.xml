@@ -17,30 +17,6 @@
         android:background="@drawable/black_gradient_drawable"
         android:padding="@dimen/_10sdp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_15ssp" />
-
-            <DigitalClock
-                fontPath="fonts/Roboto-Thin.ttf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_20ssp" />
-
-        </LinearLayout>
-
         <ImageView
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"

@@ -2,17 +2,9 @@ package sanmateo.com.profileapp.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Display;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.widget.Button;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,11 +33,8 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
  */
 public class LoginActivity extends BaseActivity implements OnApiRequestListener {
     @BindView(R.id.btn_sign_in) Button btnSignIn;
-//    @BindView(R.id.surfaceView) SurfaceView surfaceView;
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
-    private SurfaceHolder surfaceHolder;
-    private MediaPlayer mp;
     private RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
 
     @Override
@@ -55,7 +44,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         ButterKnife.bind(this);
 
         if (!isNetworkAvailable() && realmHelper.findOne(AuthResponse.class) == null) {
-            showConfirmDialog("", "San Mateo Profile App", AppConstants.WARN_CONNECTION, "Close", "",
+            showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
+                            " no saved account. Please check your connection and try again.", "Close", "",
                     new OnConfirmDialogListener() {
                         @Override
                         public void onConfirmed(String action) {
@@ -69,9 +59,6 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
                         }
                     });
         } else {
-//            surfaceHolder = surfaceView.getHolder();
-//            surfaceHolder.addCallback(this);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 final String[] requiredPermission = new String[]{
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -208,90 +195,11 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         }
     }
 
-//    @Override
-//    public void surfaceCreated(final SurfaceHolder surfaceHolder) {
-//        playVideo();
-//    }
-//
-//    @Override
-//    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-//
-//    }
-//
-//    @Override
-//    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-//
-//    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mp != null) {
-//            playVideo();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mp != null) {
-            mp.pause();
-            mp = null;
-        }
-    }
-
     private void moveToHome() {
         startActivity(new Intent(this, HomeActivity.class));
         animateToLeft(this);
         finish();
     }
-
-    /*private void playVideo() {
-        mp = null;
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-            mp = new MediaPlayer();
-            LogHelper.log("video", "play video");
-            final Uri video = Uri.parse("android.resource://" + getPackageName() + "/"
-                    + R.raw.san_mateo_avp);
-            try {
-                mp.setDataSource(LoginActivity.this, video);
-                mp.prepare();
-            } catch (IOException e) {
-                LogHelper.log("video", "error inflating video background --> " + e.getMessage());
-                e.printStackTrace();
-            }
-        } else {
-            mp = MediaPlayer.create(this, R.raw.san_mateo_avp);
-        }
-        mp.setDisplay(surfaceHolder);
-
-        final Display display = getWindowManager().getDefaultDisplay();
-        final Point size = new Point();
-        display.getSize(size);
-
-        //Get the SurfaceView layout parameters
-        final android.view.ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
-
-        //Set the width of the SurfaceView to the width of the screen
-        lp.width = size.x;
-
-        //Set the height of the SurfaceView to match the aspect ratio of the video
-        //be sure to cast these as floats otherwise the calculation will likely be 0
-        //lp.height = (int) (((float)videoHeight / (float)videoWidth) * (float)size.x);
-        lp.height = size.y;
-
-        //Commit the layout parameters
-        surfaceView.setLayoutParams(lp);
-
-        //Start video
-        mp.start();
-        mp.setLooping(true);
-    }*/
 
     @Override
     public void onBackPressed() {
