@@ -313,8 +313,11 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         final RealmHelper<News> realmHelper = new RealmHelper<>();
 
         if (!isNetworkAvailable() && realmHelper.count(News.class) > 0) {
+            LogHelper.log("count", "news count --> " + realmHelper.count(News.class));
             final RealmResults<News> cachedNews = realmHelper.findAll(News.class);
+            newsSingleton.getAllNews().clear();
             for (News n : cachedNews) {
+                newsSingleton.getNewsPrevious().add(n);
                 newsSingleton.getAllNews().add(n);
             }
         }
@@ -353,10 +356,20 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         dismissCustomProgress();
         if (action.equals(ApiAction.GET_NEWS)) {
             final ArrayList<News> news = (ArrayList<News>) result;
+            newsSingleton.getAllNews().clear();
             final RealmHelper<News> realmHelper = new RealmHelper<>();
 
-            for (News n : news) {
-                realmHelper.replaceInto(n);
+            if (!news.isEmpty()) {
+                for (News n : news) {
+                    realmHelper.replaceInto(n);
+                }
+            }
+
+            if (realmHelper.count(News.class) > 0) {
+                final RealmResults<News> cachedNews = realmHelper.findAll(News.class);
+                for (News n : cachedNews) {
+                    newsSingleton.getAllNews().add(n);
+                }
             }
             newsSingleton.getAllNews().addAll(news);
         } else if (action.equals(ApiAction.GET_NEWS_BY_ID)) {
