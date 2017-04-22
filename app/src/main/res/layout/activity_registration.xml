@@ -8,13 +8,15 @@
 
     <Button
         android:id="@+id/btn_create_account"
-        style="@style/AppTheme.Button.Primary"
+        fontPath="fonts/Roboto-Light.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimary"
         android:text="@string/create_my_account"
-        android:textSize="@dimen/_14ssp" />
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_14sdp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -68,8 +70,8 @@
                         android:hint="@string/first_name"
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
-                        android:paddingTop="@dimen/_10sdp"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_10sdp"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
@@ -91,8 +93,8 @@
                         android:hint="@string/last_name"
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
-                        android:paddingTop="@dimen/_10ssp"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_10ssp"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
@@ -113,8 +115,8 @@
                         android:hint="@string/contact_no"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:paddingTop="@dimen/_10ssp"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_10ssp"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
@@ -135,8 +137,8 @@
                         android:hint="@string/address"
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
-                        android:paddingTop="@dimen/_10sdp"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_10sdp"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
@@ -190,8 +192,8 @@
                         android:hint="@string/email"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
-                        android:paddingTop="@dimen/_10ssp"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_10ssp"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
@@ -212,8 +214,8 @@
                         android:hint="@string/password"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
-                        android:paddingTop="@dimen/_10ssp"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_10ssp"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
@@ -234,8 +236,8 @@
                         android:hint="@string/confirm_password"
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
-                        android:paddingTop="@dimen/_10ssp"
                         android:maxLines="1"
+                        android:paddingTop="@dimen/_10ssp"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_13ssp" />
                 </android.support.design.widget.TextInputLayout>
