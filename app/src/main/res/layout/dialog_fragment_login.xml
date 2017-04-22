@@ -51,6 +51,7 @@
         android:orientation="horizontal"
         android:theme="@style/FieldsStyle"
         android:layout_marginTop="@dimen/_10sdp"
+        app:passwordToggleEnabled="true"
         app:hintTextAppearance="@style/FloatingLabelStyle">
 
         <EditText

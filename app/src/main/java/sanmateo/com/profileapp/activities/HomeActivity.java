@@ -18,7 +18,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -78,18 +77,42 @@ import sanmateo.com.profileapp.singletons.NewsSingleton;
  * Created by rsbulanon on 7/12/16.
  */
 public class HomeActivity extends BaseActivity implements OnApiRequestListener, OnS3UploadListener {
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbarLayout;
-    @BindView(R.id.navigationView) NavigationView navigationView;
-    @BindView(R.id.vp_banner) ViewPager vp_banner;
-    @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
-    @BindView(R.id.rvHomeMenu) RecyclerView rvHomeMenu;
-    @BindView(R.id.appBarLayout) AppBarLayout appBarLayout;
-    @BindView(R.id.tvNotification) TextView tvNotification;
-    @BindView(R.id.llHeader) LinearLayout llHeader;
-    @BindString(R.string.disaster_mgmt) String headerDisasterManagement;
-    @BindString(R.string.message_alert_notifications) String headerAlertNotifications;
-    @BindDimen(R.dimen._90sdp) int profilePicSize;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindView(R.id.navigationView)
+    NavigationView navigationView;
+
+    @BindView(R.id.vp_banner)
+    ViewPager vp_banner;
+
+    @BindView(R.id.drawerLayout)
+    DrawerLayout drawerLayout;
+
+    @BindView(R.id.rvHomeMenu)
+    RecyclerView rvHomeMenu;
+
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
+
+    @BindView(R.id.tvNotification)
+    TextView tvNotification;
+
+    @BindView(R.id.llHeader)
+    LinearLayout llHeader;
+
+    @BindString(R.string.disaster_mgmt)
+    String headerDisasterManagement;
+
+    @BindString(R.string.message_alert_notifications)
+    String headerAlertNotifications;
+
+    @BindDimen(R.dimen._90sdp)
+    int profilePicSize;
+
     private ImageView ivBlurBackground;
     private ImageView iv_profile_image;
     private ProgressBar pb_load_image;
@@ -482,8 +505,8 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                             startActivityForResult(cameraIntent, CAPTURE_IMAGE);
                         } catch (Exception ex) {
-                            showConfirmDialog("","Capture Image",
-                                    "We can't get your image. Please try again.","Close","",null);
+                            showConfirmDialog("", "Capture Image",
+                                    "We can't get your image. Please try again.", "Close", "", null);
                         }
                         break;
                 }
@@ -612,7 +635,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                 AppConstants.PREFS_LOCAL_EMERGENCY_KITS, "");
 
         final Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
         animateToRight(HomeActivity.this);
