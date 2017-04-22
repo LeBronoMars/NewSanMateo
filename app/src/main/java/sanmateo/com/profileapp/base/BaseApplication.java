@@ -12,6 +12,7 @@ import io.realm.Realm;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import sanmateo.com.profileapp.BuildConfig;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.helpers.LogHelper;
@@ -43,6 +44,9 @@ public class BaseApplication extends Application {
         }
         final Cache cache = new Cache(cacheDir, 10 * 1024 * 1024);
 
+        final HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         /** initialize ok http client */
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(
@@ -51,6 +55,7 @@ public class BaseApplication extends Application {
                             LogHelper.log("api","performing url --> " + request.url());
                             return chain.proceed(request);
                         })
+                .addInterceptor(interceptor)
                 .cache(cache)
                 .build();
 
