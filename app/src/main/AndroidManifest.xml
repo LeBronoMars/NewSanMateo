@@ -123,6 +123,10 @@
         <activity android:name=".activities.ImageFullViewActivity"
             android:screenOrientation="portrait" />
 
+        <!-- disaster management activity -->
+        <activity android:name=".activities.DisasterManagementActivity"
+            android:screenOrientation="portrait"/>
+
         <service android:name=".services.PusherService" />
 
         <meta-data

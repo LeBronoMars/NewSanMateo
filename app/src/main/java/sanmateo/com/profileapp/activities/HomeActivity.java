@@ -259,48 +259,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                     }
                     break;
                 case R.id.menu_disaster_management:
-                    final ArrayList<String> menu = new ArrayList<>();
-                    menu.add("Public Announcements");
-                    menu.add("Typhoon Watch");
-                    menu.add("Water Level Monitoring");
-                    menu.add("Alert Level(Water Level)");
-                    menu.add("Global Disaster Monitoring");
-                    menu.add("Emergency Numbers");
-                    menu.add("Emergency Kit");
-                    menu.add("How to CPR");
-                    menu.add("Disaster 101");
-                    final DisasterMgtMenuDialogFragment fragment = DisasterMgtMenuDialogFragment
-                            .newInstance(headerDisasterManagement, menu);
-                    fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
-                        @Override
-                        public void onSelectedMenu(int position) {
-                            if (position == 0) {
-                                moveToOtherActivity(PublicAnnouncementsActivity.class);
-                            } else if (position == 1) {
-                                moveToOtherActivity(TyphoonWatchActivity.class);
-                            } else if (position == 2) {
-                                moveToOtherActivity(WaterLevelMonitoringActivity.class);
-                            } else if (position == 3) {
-                                moveToOtherActivity(AlertLevelActivity.class);
-                            } else if (position == 4) {
-                                moveToOtherActivity(GlobalDisasterActivity.class);
-                            } else if (position == 5) {
-                                moveToOtherActivity(HotlinesActivity.class);
-                            } else if (position == 6) {
-                                moveToOtherActivity(EmergencyKitActivity.class);
-                            } else if (position == 7) {
-                                moveToOtherActivity(CprActivity.class);
-                            } else if (position == 8) {
-                                moveToOtherActivity(Disaster101Activity.class);
-                            }
-                        }
-
-                        @Override
-                        public void onClose() {
-                            fragment.dismiss();
-                        }
-                    });
-                    fragment.show(getFragmentManager(), "disaster menu");
+                    moveToOtherActivity(DisasterManagementActivity.class);
                     break;
                 case R.id.menu_rate_us:
                     final Uri uri = Uri.parse("market://details?id=" + getPackageName());

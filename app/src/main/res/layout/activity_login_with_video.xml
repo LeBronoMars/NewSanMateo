@@ -6,10 +6,10 @@
     android:background="@android:color/white"
     android:clickable="true">
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <!--<SurfaceView-->
+        <!--android:id="@+id/surfaceView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,20 +28,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/_15sdp" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15ssp" />
 
             <DigitalClock
                 fontPath="fonts/Roboto-Thin.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/_20sdp" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_20ssp" />
 
         </LinearLayout>
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:layout_centerInParent="true"
@@ -69,7 +69,7 @@
                     android:paddingRight="@dimen/_10sdp"
                     android:text="@string/login"
                     android:textColor="@android:color/black"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <Space
                     android:layout_width="@dimen/_5sdp"
@@ -86,7 +86,7 @@
                     android:paddingRight="@dimen/_10sdp"
                     android:text="@string/sign_up"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_12ssp" />
 
             </LinearLayout>
 
@@ -99,7 +99,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/forgot_password"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/_14sdp" />
+                android:textSize="@dimen/_14ssp" />
         </LinearLayout>
 
     </RelativeLayout>

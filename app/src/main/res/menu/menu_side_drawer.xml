@@ -11,24 +11,29 @@
         android:icon="@drawable/menu_alarm"/>
 
     <item
-        android:id="@+id/menu_incident_report"
-        android:title="@string/menu_incident_report"
-        android:icon="@drawable/menu_ambulance"/>
-
-    <item
         android:id="@+id/menu_information"
         android:title="@string/menu_information"
         android:icon="@drawable/menu_info"/>
 
     <item
-        android:id="@+id/menu_map"
-        android:title="@string/menu_map"
-        android:icon="@drawable/menu_locations"/>
-
-    <item
         android:id="@+id/menu_directories"
         android:title="@string/menu_directories"
         android:icon="@drawable/menu_directories"/>
+
+    <item
+        android:id="@+id/menu_disaster_management"
+        android:title="@string/menu_disaster_management"
+        android:icon="@drawable/menu_announcement"/>
+
+    <item
+        android:id="@+id/menu_incident_report"
+        android:title="@string/menu_incident_report"
+        android:icon="@drawable/menu_ambulance"/>
+
+    <item
+        android:id="@+id/menu_map"
+        android:title="@string/menu_map"
+        android:icon="@drawable/menu_locations"/>
 
     <item
         android:id="@+id/menu_gallery"
@@ -44,11 +49,6 @@
         android:id="@+id/menu_social_media"
         android:title="@string/menu_social_media"
         android:icon="@drawable/menu_fb"/>
-
-    <item
-        android:id="@+id/menu_disaster_management"
-        android:title="@string/menu_disaster_management"
-        android:icon="@drawable/menu_announcement"/>
 
     <item
         android:id="@+id/menu_rate_us"
