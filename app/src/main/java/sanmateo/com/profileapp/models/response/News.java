@@ -5,12 +5,15 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by rsbulanon on 7/6/16.
  */
-public class News implements Parcelable {
+public class News extends RealmObject implements Parcelable {
 
-    private int id;
+    @PrimaryKey private int id;
     @SerializedName("created_at") private String createdAt;
     @SerializedName("updated_at") private String updatedAt;
     @SerializedName("deleted_at") private String deletedAt;
@@ -20,6 +23,9 @@ public class News implements Parcelable {
     @SerializedName("image_url") private String imageUrl;
     @SerializedName("reported_by") private String reportedBy;
     private String status;
+
+    public News() {
+    }
 
     public News(int id, String createdAt, String updatedAt, String deletedAt, String title,
                 String body, String sourceUrl, String imageUrl, String reportedBy, String status) {

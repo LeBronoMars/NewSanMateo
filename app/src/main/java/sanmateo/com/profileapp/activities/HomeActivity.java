@@ -39,6 +39,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.RealmResults;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.BannerAdapter;
@@ -137,57 +138,19 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        if (isNetworkAvailable()) {
-            initPanicContact();
-            initAmazonS3Helper(this);
-            currentUserSingleton = CurrentUserSingleton.getInstance();
-            incidentsSingleton = IncidentsSingleton.getInstance();
-            newsSingleton = NewsSingleton.getInstance();
-            apiRequestHelper = new ApiRequestHelper(this);
+        initPanicContact();
+        initAmazonS3Helper(this);
+        currentUserSingleton = CurrentUserSingleton.getInstance();
+        incidentsSingleton = IncidentsSingleton.getInstance();
+        newsSingleton = NewsSingleton.getInstance();
+        apiRequestHelper = new ApiRequestHelper(this);
 
-            if (currentUserSingleton.getCurrentUser() == null) {
-                showConfirmDialog("", "San Mateo Profile App", "Sorry, but your session has expired!",
-                        "Re-login", "", new OnConfirmDialogListener() {
-                            @Override
-                            public void onConfirmed(String action) {
-                                logout();
-                            }
-
-                            @Override
-                            public void onCancelled(String action) {
-
-                            }
-                        });
-            } else {
-                token = currentUserSingleton.getCurrentUser().getToken();
-                animateBanners();
-                initNavigationDrawer();
-                initNews();
-
-                if (!isMyServiceRunning(PusherService.class)) {
-                    startService(new Intent(this, PusherService.class));
-                }
-
-                if (newsSingleton.getNewsPrevious().size() == 0) {
-                    apiRequestHelper.getNews(token, 0, 10, "active", null);
-                }
-
-                initAppBarLayoutListener();
-
-                /** display notification if there are any */
-                if (PrefsHelper.getBoolean(this, "has_notifications")) {
-                    tvNotification.setVisibility(View.VISIBLE);
-                }
-
-                animateBanner();
-            }
-        } else {
-            showConfirmDialog("", "San Mateo Profile App", AppConstants.WARN_CONNECTION, "Close", "",
-                    new OnConfirmDialogListener() {
+        if (currentUserSingleton.getCurrentUser() == null) {
+            showConfirmDialog("", "San Mateo Profile App", "Sorry, but your session has expired!",
+                    "Re-login", "", new OnConfirmDialogListener() {
                         @Override
                         public void onConfirmed(String action) {
-                            finish();
-                            System.exit(0);
+                            logout();
                         }
 
                         @Override
@@ -195,6 +158,28 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
                         }
                     });
+        } else {
+            token = currentUserSingleton.getCurrentUser().getToken();
+            animateBanners();
+            initNavigationDrawer();
+            initNews();
+
+            if (!isMyServiceRunning(PusherService.class)) {
+                startService(new Intent(this, PusherService.class));
+            }
+
+            if (newsSingleton.getNewsPrevious().size() == 0) {
+                apiRequestHelper.getNews(token, 0, 10, "active", null);
+            }
+
+            initAppBarLayoutListener();
+
+            /** display notification if there are any */
+            if (PrefsHelper.getBoolean(this, "has_notifications")) {
+                tvNotification.setVisibility(View.VISIBLE);
+            }
+
+            animateBanner();
         }
     }
 
@@ -325,6 +310,15 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     }
 
     private void initNews() {
+        final RealmHelper<News> realmHelper = new RealmHelper<>();
+
+        if (!isNetworkAvailable() && realmHelper.count(News.class) > 0) {
+            final RealmResults<News> cachedNews = realmHelper.findAll(News.class);
+            for (News n : cachedNews) {
+                newsSingleton.getAllNews().add(n);
+            }
+        }
+
         final NewsAdapter newsAdapter = new NewsAdapter(this, newsSingleton.getAllNews());
         newsAdapter.setOnSelectNewsListener(n -> {
             final Intent intent = new Intent(HomeActivity.this, NewsFullPreviewActivity.class);
@@ -359,9 +353,16 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         dismissCustomProgress();
         if (action.equals(ApiAction.GET_NEWS)) {
             final ArrayList<News> news = (ArrayList<News>) result;
+            final RealmHelper<News> realmHelper = new RealmHelper<>();
+
+            for (News n : news) {
+                realmHelper.replaceInto(n);
+            }
             newsSingleton.getAllNews().addAll(news);
         } else if (action.equals(ApiAction.GET_NEWS_BY_ID)) {
+            final RealmHelper<News> realmHelper = new RealmHelper<>();
             final News news = (News) result;
+            realmHelper.replaceInto(news);
             newsSingleton.getAllNews().add(0, news);
         } else if (action.equals(ApiAction.PUT_CHANGE_PW)) {
             final GenericMessage genericMessage = (GenericMessage) result;
