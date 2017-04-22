@@ -4,6 +4,7 @@ import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import sanmateo.com.profileapp.models.realm.PanicContact;
 import sanmateo.com.profileapp.models.response.AuthResponse;
 
@@ -21,6 +22,11 @@ public class RealmHelper<T extends RealmObject> {
     public RealmResults<T> findAll(final Class<T> tClass) {
         final RealmQuery<T> query = realm.where(tClass);
         return query.findAll();
+    }
+
+    public RealmResults<T> findAll(final Class<T> tClass, final String field, final Sort sort) {
+        final RealmQuery<T> query = realm.where(tClass);
+        return query.findAllSorted(field, sort);
     }
 
     /** get current user */

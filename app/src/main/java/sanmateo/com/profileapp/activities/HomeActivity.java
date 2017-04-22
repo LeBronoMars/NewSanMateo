@@ -40,6 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.BannerAdapter;
@@ -131,6 +132,9 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     private CountDownTimer countDownTimer;
     private int ctr = 0;
     private final ArrayList<Fragment> fragments = new ArrayList<>();
+
+    private boolean loading = true;
+    private int pastVisibileItems, visibleItemCount, totalItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -314,7 +318,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
 
         if (!isNetworkAvailable() && realmHelper.count(News.class) > 0) {
             LogHelper.log("count", "news count --> " + realmHelper.count(News.class));
-            final RealmResults<News> cachedNews = realmHelper.findAll(News.class);
+            final RealmResults<News> cachedNews = realmHelper.findAll(News.class, "createdAt", Sort.DESCENDING);
             newsSingleton.getAllNews().clear();
             for (News n : cachedNews) {
                 newsSingleton.getNewsPrevious().add(n);
@@ -336,6 +340,25 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 apiRequestHelper.getNews(token, newsSingleton.getAllNews().size(), 10, "active", null);
+            }
+        });
+
+        rvHomeMenu.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    visibleItemCount = linearLayoutManager.getChildCount();
+                    totalItemCount = linearLayoutManager.getItemCount();
+                    pastVisibileItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if ((visibleItemCount + pastVisibileItems) >= totalItemCount) {
+                            loading = false;
+                            LogHelper.log("page", "on load more called");
+                            apiRequestHelper.getNews(token, newsSingleton.getAllNews().size(), 10, "active", null);
+                        }
+                    }
+                }
             }
         });
     }
@@ -366,7 +389,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             }
 
             if (realmHelper.count(News.class) > 0) {
-                final RealmResults<News> cachedNews = realmHelper.findAll(News.class);
+                final RealmResults<News> cachedNews = realmHelper.findAll(News.class, "createdAt", Sort.DESCENDING);
                 for (News n : cachedNews) {
                     newsSingleton.getAllNews().add(n);
                 }
