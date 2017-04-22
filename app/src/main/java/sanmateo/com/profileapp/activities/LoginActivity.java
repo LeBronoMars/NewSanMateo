@@ -9,6 +9,7 @@ import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
@@ -32,16 +33,19 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
  * Created by rsbulanon on 10/2/16.
  */
 public class LoginActivity extends BaseActivity implements OnApiRequestListener {
-    @BindView(R.id.btn_sign_in) Button btnSignIn;
+    @BindView(R.id.btn_sign_in)
+    Button btnSignIn;
+
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
     private RealmHelper<AuthResponse> realmHelper = new RealmHelper<>();
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_with_video);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         if (!isNetworkAvailable() && realmHelper.findOne(AuthResponse.class) == null) {
             showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
@@ -114,7 +118,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
             if (isNetworkAvailable()) {
                 apiRequestHelper.forgotPassword(email);
             } else {
-                showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close" , "", null);
+                showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
             }
         });
         forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
@@ -216,5 +220,13 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
     }
 }
