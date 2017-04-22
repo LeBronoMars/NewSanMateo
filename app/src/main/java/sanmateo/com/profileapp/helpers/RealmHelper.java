@@ -72,4 +72,10 @@ public class RealmHelper<T extends RealmObject> {
         return query.count() > 0;
     }
 
+    /** get count */
+    public long count(final Class<T> tClass) {
+        final RealmQuery<T> query = realm.where(tClass);
+        return query.count();
+    }
+
 }
