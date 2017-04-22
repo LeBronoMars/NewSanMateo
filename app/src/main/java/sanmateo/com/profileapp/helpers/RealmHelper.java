@@ -45,8 +45,10 @@ public class RealmHelper<T extends RealmObject> {
      * add record
      */
     public void replaceInto(final T tClass) {
-        realm.beginTransaction();
-        realm.copyToRealm(tClass);
+        if (!realm.isInTransaction()) {
+            realm.beginTransaction();
+        }
+        realm.copyToRealmOrUpdate(tClass);
         realm.commitTransaction();
     }
 

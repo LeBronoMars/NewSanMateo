@@ -30,11 +30,9 @@ import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.helpers.PrefsHelper;
 import sanmateo.com.profileapp.helpers.RealmHelper;
-import sanmateo.com.profileapp.interfaces.EndlessRecyclerViewScrollListener;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.Announcement;
 import sanmateo.com.profileapp.models.response.ApiError;
-import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.singletons.AnnouncementsSingleton;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 
@@ -72,8 +70,6 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
 
         if (PrefsHelper.getBoolean(this, "refresh_announcements") && announcementsSingleton.getAnnouncements().size() > 0) {
             apiRequestHelper.getLatestAnnouncements(token, announcementsSingleton.getAnnouncements().get(0).getId());
-        } else if (announcementsSingleton.getAnnouncements().size() == 0) {
-            apiRequestHelper.getAnnouncements(token, 0, 10);
         }
         initAnnouncements();
 
@@ -81,7 +77,6 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
             btnAdd.setVisibility(View.INVISIBLE);
         }
         seen();
-        toggleView();
     }
 
     @Override
@@ -95,9 +90,8 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
         final RealmHelper<Announcement> realmHelper = new RealmHelper<>(Announcement.class);
 
         if (!isNetworkAvailable() && realmHelper.count() > 0) {
-            LogHelper.log("count", "announcement count --> " + realmHelper.count());
-            final RealmResults<Announcement> cachedAnnouncements = realmHelper.findAll("createdAt", Sort.DESCENDING);
             announcementsSingleton.getAnnouncements().clear();
+            final RealmResults<Announcement> cachedAnnouncements = realmHelper.findAll("createdAt", Sort.DESCENDING);
             for (Announcement a : cachedAnnouncements) {
                 announcementsSingleton.getAnnouncements().add(a);
             }
@@ -127,6 +121,11 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
             }
         });
 
+        if (isNetworkAvailable())  {
+            apiRequestHelper.getAnnouncements(token, announcementsSingleton.getAnnouncements().size(), 10);
+        } else {
+            toggleView();
+        }
     }
 
     @Override
@@ -143,7 +142,6 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
         dismissCustomProgress();
         if (action.equals(ApiAction.GET_ANNOUNCEMENTS)) {
             final ArrayList<Announcement> announcements = (ArrayList<Announcement>) result;
-            announcementsSingleton.getAnnouncements().clear();
             final RealmHelper<Announcement> realmHelper = new RealmHelper<>(Announcement.class);
 
             if (!announcements.isEmpty()) {
@@ -151,14 +149,8 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
                     realmHelper.replaceInto(a);
                 }
             }
-
-            if (realmHelper.count() > 0) {
-                final RealmResults<Announcement> cachedAnnouncements = realmHelper.findAll("createdAt", Sort.DESCENDING);
-                for (Announcement a : cachedAnnouncements) {
-                    announcementsSingleton.getAnnouncements().add(a);
-                }
-            }
             announcementsSingleton.getAnnouncements().addAll(announcements);
+            LogHelper.log("count", "aaaaa size ---> " + announcementsSingleton.getAnnouncements().size());
             toggleView();
         } else if (action.equals(ApiAction.GET_LATEST_ANNOUNCEMENTS)) {
             final RealmHelper<Announcement> realmHelper = new RealmHelper<>(Announcement.class);
