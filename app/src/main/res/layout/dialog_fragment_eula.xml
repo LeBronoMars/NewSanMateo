@@ -12,24 +12,45 @@
         android:paddingLeft="@dimen/_10sdp"
         android:paddingTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
-        android:text="@string/terms_condition"
+        android:text="@string/eula"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/_20ssp" />
 
-    <Button
-        android:id="@+id/btn_close"
-        fontPath="fonts/Roboto-Light.ttf"
+    <LinearLayout
+        android:id="@+id/ll_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal"
-        style="@style/AppTheme.Button.PrimaryDark"
-        android:text="@string/close"
-        android:textSize="@dimen/_14ssp" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_accept"
+            fontPath="fonts/Roboto-Light.ttf"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            style="@style/AppTheme.Button.Primary"
+            android:text="@string/accept"
+            android:textSize="@dimen/_14ssp" />
+
+        <Button
+            android:id="@+id/btn_decline"
+            fontPath="fonts/Roboto-Light.ttf"
+            android:layout_width="0dp"
+            android:layout_weight="50"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            style="@style/AppTheme.Button.PrimaryDark"
+            android:text="@string/decline"
+            android:textSize="@dimen/_14ssp" />
+    </LinearLayout>
 
     <ScrollView
         android:layout_below="@id/tv_header"
-        android:layout_above="@id/btn_close"
+        android:layout_above="@id/ll_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -44,6 +65,5 @@
             android:text="@string/lorem_ipsum"/>
 
     </ScrollView>
-
 
 </RelativeLayout>

@@ -16,6 +16,7 @@ import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.fragments.EulaDialogFragment;
 import sanmateo.com.profileapp.fragments.TermsDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
@@ -88,8 +89,10 @@ public class RegistrationActivity extends BaseActivity implements OnApiRequestLi
             if (gender.equals("Select Gender")) {
                 showToast(AppConstants.WARN_SELECT_GENDER);
             } else {
-                apiRequestHelper.createUser(firstName, lastName, contactNo, gender, email, address,
-                        userLevel, password);
+                final EulaDialogFragment dialogFragment = EulaDialogFragment.newInstance();
+                dialogFragment.setEulaListener(() -> apiRequestHelper.createUser(firstName,
+                        lastName, contactNo, gender, email, address, userLevel, password));
+                dialogFragment.show(getSupportFragmentManager(), "EULA");
             }
         }
     }
