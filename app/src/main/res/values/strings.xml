@@ -234,4 +234,7 @@
     <string name="enter_gallery_url">Enter image url</string>
 
     <string name="change_profile_pic">Change profile pic</string>
+
+    <string name="terms_notice">By clicking Create My Account, you agree to our</string>
+    <string name="terms_condition">Terms &amp; Conditions</string>
 </resources>

@@ -118,10 +118,8 @@ public class RegistrationActivity extends BaseActivity implements OnApiRequestLi
         dismissCustomProgress();
         handleApiException(t);
         if (t instanceof HttpException) {
-            if (action.equals(ApiAction.POST_AUTH)) {
-                final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
-                showConfirmDialog("","Registration Failed", apiError.getMessage(),"Ok","",null);
-            }
+            final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
+            showConfirmDialog("","Registration Failed", apiError.getMessage(),"Ok","",null);
         }
     }
 
