@@ -16,6 +16,7 @@ import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.fragments.TermsDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
@@ -91,6 +92,12 @@ public class RegistrationActivity extends BaseActivity implements OnApiRequestLi
                         userLevel, password);
             }
         }
+    }
+
+    @OnClick({R.id.tv_terms_conditions, R.id.tv_terms_header})
+    public void showTerms() {
+        final TermsDialogFragment dialogFragment = TermsDialogFragment.newInstance();
+        dialogFragment.show(getSupportFragmentManager(), "Terms & Conditions");
     }
 
     @Override

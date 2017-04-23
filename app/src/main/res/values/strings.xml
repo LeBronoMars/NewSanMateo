@@ -237,4 +237,6 @@
 
     <string name="terms_notice">By clicking Create My Account, you agree to our</string>
     <string name="terms_condition">Terms &amp; Conditions</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin congue efficitur urna, sit amet euismod lacus cursus sed. Nullam nunc dui, lacinia id dignissim id, venenatis sit amet enim. Curabitur ultrices convallis maximus. Curabitur nec metus et mi faucibus molestie. Nulla placerat facilisis mi, a gravida ipsum sodales at. Phasellus ultricies arcu iaculis est sollicitudin egestas. Sed lacinia nisi felis, eu hendrerit sem varius ut. Maecenas luctus leo sapien, a laoreet dui dictum in. Donec id odio imperdiet, vestibulum felis vel, laoreet massa. Morbi efficitur sodales efficitur. Morbi luctus rutrum lacus sit amet sagittis. In vitae condimentum sem, sit amet dictum diam.
+        \n\nMorbi venenatis scelerisque odio a hendrerit. Donec sit amet est laoreet, facilisis neque et, dictum metus. In non scelerisque nisi, quis faucibus sem. In sed lectus aliquet est dapibus pretium. Etiam porta eros in nunc finibus, vitae pharetra est viverra. Etiam ullamcorper cursus ex et scelerisque. Mauris eros ipsum, vestibulum vitae ullamcorper sed, dignissim vel est.</string>
 </resources>
