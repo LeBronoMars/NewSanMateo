@@ -4,8 +4,8 @@ import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import sanmateo.com.profileapp.models.realm.PanicContact;
-import sanmateo.com.profileapp.models.response.AuthResponse;
 
 /**
  * Created by rsbulanon on 10/2/16.
@@ -13,25 +13,41 @@ import sanmateo.com.profileapp.models.response.AuthResponse;
 public class RealmHelper<T extends RealmObject> {
     private Realm realm;
 
-    public RealmHelper() {
+    private Class<T> type;
+
+    public RealmHelper(Class<T> type) {
         realm = Realm.getDefaultInstance();
+        this.type = type;
     }
 
-    /** get all */
-    public RealmResults<T> findAll(final Class<T> tClass) {
-        final RealmQuery<T> query = realm.where(tClass);
+    /**
+     * get all
+     */
+    public RealmResults<T> findAll() {
+        final RealmQuery<T> query = realm.where(this.type);
         return query.findAll();
     }
 
-    /** get current user */
-    public T findOne(final Class<T> tClass) {
-        final RealmQuery<T> query = realm.where(tClass);
+    public RealmResults<T> findAll(final String field, final Sort sort) {
+        final RealmQuery<T> query = realm.where(this.type);
+        return query.findAllSorted(field, sort);
+    }
+
+    /**
+     * get current user
+     */
+    public T findOne() {
+        final RealmQuery<T> query = realm.where(this.type);
         return query.findFirst();
     }
 
-    /** add record */
+    /**
+     * add record
+     */
     public void replaceInto(final T tClass) {
-        realm.beginTransaction();
+        if (!realm.isInTransaction()) {
+            realm.beginTransaction();
+        }
         realm.copyToRealmOrUpdate(tClass);
         realm.commitTransaction();
     }
@@ -48,7 +64,9 @@ public class RealmHelper<T extends RealmObject> {
         realm.copyToRealmOrUpdate(tClass);
     }
 
-    /** delete contact by contact no */
+    /**
+     * delete contact by contact no
+     */
     public void deleteContact(final String contactNo) {
         realm.beginTransaction();
         final RealmQuery<PanicContact> query = realm.where(PanicContact.class);
@@ -57,25 +75,31 @@ public class RealmHelper<T extends RealmObject> {
         realm.commitTransaction();
     }
 
-    /** delete current user */
-    public void deleteCurrentUser() {
-        realm.beginTransaction();
-        final RealmQuery<AuthResponse> query = realm.where(AuthResponse.class);
-        query.findAll().deleteAllFromRealm();
-        realm.commitTransaction();
-    }
-
-    /** check if contact is already existing */
+    /**
+     * check if contact is already existing
+     */
     public boolean isExisting(final String contactNo) {
         final RealmQuery<PanicContact> query = realm.where(PanicContact.class);
         query.equalTo("contactNo", contactNo);
         return query.count() > 0;
     }
 
-    /** get count */
-    public long count(final Class<T> tClass) {
-        final RealmQuery<T> query = realm.where(tClass);
+    /**
+     * get count
+     */
+    public long count() {
+        final RealmQuery<T> query = realm.where(this.type);
         return query.count();
     }
 
+    /**
+     * delete all records
+     */
+    public void deleteRecords() {
+        if (!realm.isInTransaction()) {
+            realm.beginTransaction();
+        }
+        realm.where(this.type).findAll().deleteAllFromRealm();
+        realm.commitTransaction();
+    }
 }
