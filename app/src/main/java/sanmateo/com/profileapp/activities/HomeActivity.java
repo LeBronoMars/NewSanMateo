@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ import io.realm.RealmResults;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.BannerAdapter;
+import sanmateo.com.profileapp.adapters.CustomNavMenuAdapter;
 import sanmateo.com.profileapp.adapters.NewsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
@@ -65,6 +67,7 @@ import sanmateo.com.profileapp.interfaces.EndlessRecyclerViewScrollListener;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
+import sanmateo.com.profileapp.models.others.CustomMenu;
 import sanmateo.com.profileapp.models.response.ApiError;
 import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
@@ -105,6 +108,22 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     @BindView(R.id.llHeader)
     LinearLayout llHeader;
 
+    @BindView(R.id.lv_menu)
+    ListView lv_menu;
+
+    @BindView(R.id.iv_blur_background)
+    ImageView iv_blur_background;
+
+    @BindView(R.id.iv_profile_image)
+    ImageView iv_profile_image;
+
+    @BindView(R.id.pb_load_image)
+    ProgressBar pb_load_image;
+
+    @BindView(R.id.tv_profile_name)
+    TextView tv_profile_name;
+
+
     @BindString(R.string.disaster_mgmt)
     String headerDisasterManagement;
 
@@ -114,9 +133,6 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     @BindDimen(R.dimen._90sdp)
     int profilePicSize;
 
-    private ImageView ivBlurBackground;
-    private ImageView iv_profile_image;
-    private ProgressBar pb_load_image;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private CurrentUserSingleton currentUserSingleton;
     private NewsSingleton newsSingleton;
@@ -211,24 +227,11 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
     }
 
     private void initSideDrawerMenu() {
-        final View view = getLayoutInflater().inflate(R.layout.navigation_header, null, false);
-        ivBlurBackground = (ImageView) view.findViewById(R.id.iv_blur_background);
-        iv_profile_image = (ImageView) view.findViewById(R.id.iv_profile_image);
-        pb_load_image = (ProgressBar) view.findViewById(R.id.pb_load_image);
-        final TextView tv_profile_name = (TextView) view.findViewById(R.id.tv_profile_name);
-
-        final int screenHeight = getScreenDimension("height");
-        final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                ((int) (screenHeight * .4)));
 
         iv_profile_image.setOnClickListener(view1 -> showChangeProfilePicMenu());
 
-        navigationView.addHeaderView(view);
-        navigationView.inflateMenu(R.menu.menu_side_drawer);
-        navigationView.getHeaderView(0).setLayoutParams(params);
-
         PicassoHelper.loadBlurImageFromURL(this, currentUserSingleton.getCurrentUser().getPicUrl(),
-                R.drawable.placeholder_image, 25, ivBlurBackground);
+                R.drawable.placeholder_image, 25, iv_blur_background);
 
         PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
                 profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
@@ -236,40 +239,53 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         tv_profile_name.setText(currentUserSingleton.getCurrentUser().getFirstName() + " " +
                 currentUserSingleton.getCurrentUser().getLastName());
 
-        navigationView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.menu_send_sos:
+        ArrayList<CustomMenu> menuList = new ArrayList<>();
+        menuList.add(new CustomMenu(R.drawable.menu_new_send_sos, "Send SOS", true));
+        menuList.add(new CustomMenu(R.drawable.menu_new_information, "Information", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_directories, "Directories", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_announcements, "Disaster Management", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_incidents, "Incident Report", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_map, "Map", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_gallery, "Gallery", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_fb, "Social Media", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_rate, "Rate Us", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_password, "Change Password", false));
+        menuList.add(new CustomMenu(R.drawable.menu_new_logout, "Logout", false));
+
+        final CustomNavMenuAdapter adapter = new CustomNavMenuAdapter(this, menuList);
+        adapter.setCustomMenuListener(() -> setPanicContacts());
+        lv_menu.setAdapter(adapter);
+        lv_menu.setOnItemClickListener((adapterView, view, i, l) -> {
+            switch (i) {
+                case 0:
                     sendSOS();
                     break;
-                case R.id.menu_panic_emergency:
-                    setPanicContacts();
-                    break;
-                case R.id.menu_incident_report:
-                    moveToOtherActivity(IncidentsActivity.class);
-                    break;
-                case R.id.menu_information:
+                case 1:
                     moveToOtherActivity(InformationActivity.class);
                     break;
-                case R.id.menu_map:
-                    moveToOtherActivity(MapActivity.class);
-                    break;
-                case R.id.menu_directories:
+                case 2:
                     moveToOtherActivity(DirectoriesActivity.class);
                     break;
-                case R.id.menu_gallery:
+                case 3:
+                    moveToOtherActivity(DisasterManagementActivity.class);
+                    break;
+                case 4:
+                    moveToOtherActivity(IncidentsActivity.class);
+                    break;
+                case 5:
+                    moveToOtherActivity(MapActivity.class);
+                    break;
+                case 6:
                     moveToOtherActivity(GalleryActivity.class);
                     break;
-                case R.id.menu_social_media:
+                case 7:
                     if (isNetworkAvailable()) {
                         moveToOtherActivity(SocialMediaActivity.class);
                     } else {
                         showToast(AppConstants.WARN_CONNECTION);
                     }
                     break;
-                case R.id.menu_disaster_management:
-                    moveToOtherActivity(DisasterManagementActivity.class);
-                    break;
-                case R.id.menu_rate_us:
+                case 8:
                     final Uri uri = Uri.parse("market://details?id=" + getPackageName());
                     final Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
                     try {
@@ -278,10 +294,10 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                         showToast(AppConstants.WARN_UNABLE_TO_FIND_APP);
                     }
                     break;
-                case R.id.menu_change_pass:
+                case 9:
                     changePassword();
                     break;
-                case R.id.menu_logout:
+                case 10:
                     showConfirmDialog("", "Logout", "Are you sure you want to logout from the app?",
                             "Yes", "No", new OnConfirmDialogListener() {
                                 @Override
@@ -296,8 +312,6 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
                             });
                     break;
             }
-            drawerLayout.closeDrawers();
-            return true;
         });
     }
 
@@ -397,7 +411,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
             LogHelper.log("changePic", "new pic url ---> " + currentUserSingleton.getCurrentUser().getPicUrl());
 
             PicassoHelper.loadBlurImageFromURL(this, currentUserSingleton.getCurrentUser().getPicUrl(),
-                    R.drawable.placeholder_image, 25, ivBlurBackground);
+                    R.drawable.placeholder_image, 25, iv_blur_background);
 
             PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
                     profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
