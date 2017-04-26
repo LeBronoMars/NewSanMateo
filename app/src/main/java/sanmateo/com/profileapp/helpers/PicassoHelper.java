@@ -1,10 +1,14 @@
 package sanmateo.com.profileapp.helpers;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Point;
+import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -76,6 +80,20 @@ public class PicassoHelper {
                         LogHelper.log("blur", "blurred background not loaded");
                     }
                 });
+    }
+
+    public static void loadBlurImageFromDrawable(final Context context, final int drawable,
+                                                 final int blurStrength, final ImageView imageView) {
+
+        PicassoSingleton.getInstance().getPicasso().load(drawable)
+                .transform(new StackBlurTransformation(context, blurStrength, 1))
+                .centerCrop()
+                .resize(getDisplayWidth(), getDisplayWidth())
+                .into(imageView);
+    }
+
+    private static int getDisplayWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
 
     public static void loadImageFromURL(final String url, final ImageView imageView, final ProgressBar progressBar) {

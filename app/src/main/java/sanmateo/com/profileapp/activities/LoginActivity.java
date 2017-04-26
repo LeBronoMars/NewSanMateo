@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +21,7 @@ import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.helpers.PicassoHelper;
 import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
@@ -33,6 +35,10 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
  * Created by rsbulanon on 10/2/16.
  */
 public class LoginActivity extends BaseActivity implements OnApiRequestListener {
+
+    @BindView(R.id.iv_bg)
+    ImageView ivBg;
+
     @BindView(R.id.btn_sign_in)
     Button btnSignIn;
 
@@ -46,6 +52,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_with_video);
         unbinder = ButterKnife.bind(this);
+        initBg();
 
         if (!isNetworkAvailable() && realmHelper.findOne() == null) {
             showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
@@ -64,6 +71,10 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
                 initialize();
             }
         }
+    }
+
+    private void initBg() {
+        PicassoHelper.loadBlurImageFromDrawable(this, R.drawable.san_mateo_logo, 25,ivBg);
     }
 
     private void initialize() {
