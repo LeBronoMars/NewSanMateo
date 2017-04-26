@@ -208,7 +208,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:background="@color/colorPrimary"
-                android:layout_height="@dimen/_200sdp">
+                android:layout_height="@dimen/_180sdp">
 
                 <ImageView
                     android:id="@+id/iv_blur_background"
@@ -252,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/welcome"
-                        android:textSize="@dimen/_14sdp"
+                        android:textSize="@dimen/_12ssp"
                         android:textColor="@android:color/white"/>
 
                     <TextView
@@ -260,7 +260,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/app_name"
-                        android:textSize="@dimen/_17sdp"
+                        android:textSize="@dimen/_15ssp"
                         android:textColor="@android:color/white"/>
                 </LinearLayout>
 
