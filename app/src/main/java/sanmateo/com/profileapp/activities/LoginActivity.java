@@ -2,8 +2,13 @@ package sanmateo.com.profileapp.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.ObservableBoolean;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
+import android.text.InputType;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -39,6 +44,14 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     @BindView(R.id.btn_sign_in)
     Button btnSignIn;
 
+    @BindView(R.id.iv_password_toggle)
+    ImageView ivPasswordToggle;
+
+    @BindView(R.id.et_password)
+    TextInputEditText etPassword;
+
+    boolean passwordToggle;
+
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
     private RealmHelper<AuthResponse> realmHelper = new RealmHelper<>(AuthResponse.class);
@@ -67,6 +80,18 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
                 initialize();
             }
         }
+    }
+
+    public void onPasswordVisibilityToggled(View view) {
+        passwordToggle = !passwordToggle;
+
+        ivPasswordToggle.setImageDrawable(ContextCompat.getDrawable(this, passwordToggle
+                ? R.drawable.ic_visibilityon_48dp : R.drawable.ic_visibilityoff_48dp));
+
+        etPassword.setInputType(passwordToggle? InputType.TYPE_CLASS_TEXT
+                :  InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        etPassword.setSelection(etPassword.getText().length());
     }
 
     private void initialize() {
