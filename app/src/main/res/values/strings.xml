@@ -11,6 +11,10 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
 
+    <!-- new login -->
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+
     <!-- user registration dialog fragment -->
     <string name="registration">Registration</string>
     <string name="user_info">Your Information</string>

@@ -36,9 +36,6 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
  */
 public class LoginActivity extends BaseActivity implements OnApiRequestListener {
 
-    @BindView(R.id.iv_bg)
-    ImageView ivBg;
-
     @BindView(R.id.btn_sign_in)
     Button btnSignIn;
 

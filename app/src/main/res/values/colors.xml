@@ -45,6 +45,8 @@
     <color name="metro_orange">#da532c</color>
     
     <!-- new colors -->
-    <color name="btn_sign_up">#549c39</color>
-    <color name="btn_sign_up_pressed">#447034</color>
+    <color name="btn_login">#00ADEF</color>
+    <color name="btn_login_pressed">#2489B5</color>
+    <color name="btn_sign_up">#549C39</color>
+    <color name="btn_sign_up_pressed">#428538</color>
 </resources>
