@@ -50,9 +50,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_with_video);
+        setContentView(R.layout.activity_new_login);
         unbinder = ButterKnife.bind(this);
-        initBg();
 
         if (!isNetworkAvailable() && realmHelper.findOne() == null) {
             showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
@@ -71,10 +70,6 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
                 initialize();
             }
         }
-    }
-
-    private void initBg() {
-        PicassoHelper.loadBlurImageFromDrawable(this, R.drawable.san_mateo_logo, 25,ivBg);
     }
 
     private void initialize() {

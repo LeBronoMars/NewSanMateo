@@ -43,4 +43,8 @@
 
     <color name="yellow">#FFCC00</color>
     <color name="metro_orange">#da532c</color>
+    
+    <!-- new colors -->
+    <color name="btn_sign_up">#549c39</color>
+    <color name="btn_sign_up_pressed">#447034</color>
 </resources>
