@@ -3,14 +3,18 @@ package sanmateo.com.profileapp.activities;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.ObservableBoolean;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,10 +51,14 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     @BindView(R.id.iv_password_toggle)
     ImageView ivPasswordToggle;
 
+    @BindView(R.id.et_username)
+    TextInputEditText etUsername;
+
     @BindView(R.id.et_password)
     TextInputEditText etPassword;
 
     boolean passwordToggle;
+    boolean isSignInValid;
 
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
@@ -80,6 +88,59 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
                 initialize();
             }
         }
+
+        addSignInValidation();
+    }
+
+    private void addSignInValidation() {
+        etUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void checkValidation() {
+        if (!etUsername.getText().toString().trim().isEmpty()
+                && !etPassword.getText().toString().trim().isEmpty()) {
+            isSignInValid = true;
+            btnSignIn.setTextColor(Color.WHITE);
+            btnSignIn.setBackground(ContextCompat.getDrawable(this, R.drawable.button_light_blue_clickable));
+            btnSignIn.setEnabled(true);
+        } else {
+            isSignInValid = false;
+            btnSignIn.setTextColor(ContextCompat.getColor(this, R.color.transparent_70));
+            btnSignIn.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_20));
+            btnSignIn.setEnabled(true);
+        }
     }
 
     public void onPasswordVisibilityToggled(View view) {
@@ -108,15 +169,17 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     @OnClick(R.id.btn_sign_in)
     public void showLoginDialogFragment() {
-        if (isNetworkAvailable()) {
-            final LoginDialogFragment loginDialogFragment = LoginDialogFragment.newInstance();
-            loginDialogFragment.setOnLoginListener((email, password) -> {
-                loginDialogFragment.dismiss();
-                apiRequestHelper.authenticateUser(email, password);
-            });
-            loginDialogFragment.show(getFragmentManager(), "login");
-        } else {
-            showSnackbar(btnSignIn, AppConstants.WARN_CONNECTION);
+        if (isSignInValid) {
+            if (isNetworkAvailable()) {
+                final LoginDialogFragment loginDialogFragment = LoginDialogFragment.newInstance();
+                loginDialogFragment.setOnLoginListener((email, password) -> {
+                    loginDialogFragment.dismiss();
+                    apiRequestHelper.authenticateUser(email, password);
+                });
+                loginDialogFragment.show(getFragmentManager(), "login");
+            } else {
+                showSnackbar(btnSignIn, AppConstants.WARN_CONNECTION);
+            }
         }
     }
 
