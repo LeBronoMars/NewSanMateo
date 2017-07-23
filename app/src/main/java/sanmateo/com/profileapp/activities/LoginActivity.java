@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.ObservableBoolean;
@@ -12,8 +13,10 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -44,6 +47,9 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
  * Created by rsbulanon on 10/2/16.
  */
 public class LoginActivity extends BaseActivity implements OnApiRequestListener {
+
+    @BindView(R.id.frameLayout)
+    RelativeLayout frameLayout;
 
     @BindView(R.id.btn_sign_in)
     Button btnSignIn;
@@ -170,6 +176,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     @OnClick(R.id.btn_sign_in)
     public void showLoginDialogFragment() {
         if (isSignInValid) {
+            hideSoftKeyboard();
             if (isNetworkAvailable()) {
                 final LoginDialogFragment loginDialogFragment = LoginDialogFragment.newInstance();
                 loginDialogFragment.setOnLoginListener((email, password) -> {
@@ -178,9 +185,14 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
                 });
                 loginDialogFragment.show(getFragmentManager(), "login");
             } else {
-                showSnackbar(btnSignIn, AppConstants.WARN_CONNECTION);
+                showSnackbar(btnSignIn, AppConstants.WARN_CONNECTION_NEW);
             }
         }
+    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(frameLayout.getWindowToken(), 0);
     }
 
     @OnClick(R.id.btn_create_account)
@@ -206,7 +218,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     @Override
     public void onApiRequestBegin(ApiAction action) {
         if (action.equals(ApiAction.POST_AUTH)) {
-            showCustomProgress("Logging in, Please wait...");
+            showCustomProgress("Logging in...");
         } else {
             showCustomProgress("Sending request, Please wait...");
         }
