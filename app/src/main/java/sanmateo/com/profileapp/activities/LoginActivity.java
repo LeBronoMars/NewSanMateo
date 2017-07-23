@@ -3,7 +3,6 @@ package sanmateo.com.profileapp.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.databinding.ObservableBoolean;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,12 +26,10 @@ import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.ForgotPasswordDialogFragment;
-import sanmateo.com.profileapp.fragments.LoginDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.LogHelper;
-import sanmateo.com.profileapp.helpers.PicassoHelper;
 import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
@@ -78,8 +74,9 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         unbinder = ButterKnife.bind(this);
 
         if (!isNetworkAvailable() && realmHelper.findOne() == null) {
-            showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
-                            " no saved account. Please check your connection and try again.", "Close", null, null);
+//            showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
+//                            " no saved account. Please check your connection and try again.", "Close", null, null);
+            showSnackbar(btnSignIn, AppConstants.WARN_OFFLINE);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 final String[] requiredPermission = new String[]{
@@ -178,12 +175,9 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         if (isSignInValid) {
             hideSoftKeyboard();
             if (isNetworkAvailable()) {
-                final LoginDialogFragment loginDialogFragment = LoginDialogFragment.newInstance();
-                loginDialogFragment.setOnLoginListener((email, password) -> {
-                    loginDialogFragment.dismiss();
-                    apiRequestHelper.authenticateUser(email, password);
-                });
-                loginDialogFragment.show(getFragmentManager(), "login");
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                apiRequestHelper.authenticateUser(username, password);
             } else {
                 showSnackbar(btnSignIn, AppConstants.WARN_CONNECTION_NEW);
             }
@@ -252,7 +246,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         if (t instanceof HttpException) {
             if (action.equals(ApiAction.POST_AUTH) || action.equals(ApiAction.POST_FORGOT_PASSWORD)) {
                 final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
-                showConfirmDialog("", "Login Failed", apiError.getMessage(), "Close", "", null);
+//                showConfirmDialog("", "Login Failed", apiError.getMessage(), "Close", "", null);
+                showSnackbar(btnSignIn, apiError.getMessage());
             }
         }
     }
