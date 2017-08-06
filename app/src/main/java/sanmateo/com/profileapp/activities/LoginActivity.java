@@ -1,7 +1,9 @@
 package sanmateo.com.profileapp.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -11,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -72,6 +75,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_login);
         unbinder = ButterKnife.bind(this);
+        Log.d("Kornek", "create");
 
         if (!isNetworkAvailable() && realmHelper.findOne() == null) {
 //            showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
@@ -93,6 +97,38 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         }
 
         addSignInValidation();
+    }
+
+    public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            Log.d("Kornek", "connection: " + isNetworkAvailable());
+            //todo
+            if (!isNetworkAvailable()) {
+                showSnackbar(btnSignIn, AppConstants.WARN_OFFLINE);
+            }
+        }
+    };
+
+    private void registerInternetCheckReceiver() {
+        Log.d("Kornek", "registering");
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.wifi.STATE_CHANGE");
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerInternetCheckReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void addSignInValidation() {
