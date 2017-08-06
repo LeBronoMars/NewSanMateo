@@ -94,6 +94,7 @@
                         android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:minLines="1"
+                        android:maxLength="12"
                         android:textColor="@android:color/white" />
 
                 </android.support.design.widget.TextInputLayout>
