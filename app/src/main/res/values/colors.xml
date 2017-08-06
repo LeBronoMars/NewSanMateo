@@ -52,5 +52,6 @@
     <color name="btn_sign_up">#549C39</color>
     <color name="btn_sign_up_pressed">#428538</color>
 
+    <color name="status_bar_bg">#27317C</color>
 
 </resources>
