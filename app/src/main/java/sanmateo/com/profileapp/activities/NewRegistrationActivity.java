@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,20 +24,6 @@ import sanmateo.com.profileapp.base.BaseActivity;
  */
 
 public class NewRegistrationActivity extends BaseActivity {
-
-    private Unbinder unbinder;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_signup);
-        unbinder = ButterKnife.bind(this);
-    }
-
-    @OnClick(R.id.iv_close)
-    public void cancelSignUp() {
-        onBackPressed();
-    }
 
     @BindView(R.id.ll_account_information)
     LinearLayout llAccountInformation;
@@ -49,6 +39,24 @@ public class NewRegistrationActivity extends BaseActivity {
 
     @BindView(R.id.tv_steps)
     TextView tvSteps;
+
+    @BindView(R.id.spnr_gender)
+    Spinner spnrGender;
+
+    private Unbinder unbinder;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_signup);
+        unbinder = ButterKnife.bind(this);
+        initGenderSpinner();
+    }
+
+    @OnClick(R.id.iv_close)
+    public void cancelSignUp() {
+        onBackPressed();
+    }
 
     @OnClick(R.id.iv_next)
     public void next() {
@@ -72,6 +80,20 @@ public class NewRegistrationActivity extends BaseActivity {
         llPersonalInformation.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_left));
         llPersonalInformation.setVisibility(View.VISIBLE);
         ivBack.setVisibility(View.GONE);
+    }
+
+    private void initGenderSpinner() {
+        ArrayList<String> genderList = new ArrayList<>();
+        genderList.add("Female");
+        genderList.add("Male");
+        initSpinner(spnrGender, genderList);
+    }
+
+    private void initSpinner(final Spinner spinner, final ArrayList<String> items) {
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(NewRegistrationActivity.this,
+                R.layout.row_spinner, items);
+        adapter.setDropDownViewResource(R.layout.row_spinner_dropdown);
+        spinner.setAdapter(adapter);
     }
 
     @Override
