@@ -76,6 +76,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     private RealmHelper<AuthResponse> realmHelper = new RealmHelper<>(AuthResponse.class);
     private Unbinder unbinder;
 
+    private final static int PASSWORD_MINIMUM_LENGTH = 8;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -192,7 +194,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     private void checkValidation() {
         if (!etUsername.getText().toString().trim().isEmpty()
-                && !etPassword.getText().toString().trim().isEmpty()) {
+                && !etPassword.getText().toString().trim().isEmpty()
+                && etPassword.getText().toString().trim().length() >= PASSWORD_MINIMUM_LENGTH) {
             if (isNetworkAvailable()) {
                 isSignInValid = true;
                 btnSignIn.setTextColor(Color.WHITE);
