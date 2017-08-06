@@ -13,12 +13,12 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +53,12 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     @BindView(R.id.btn_sign_in)
     Button btnSignIn;
 
+    @BindView(R.id.btn_create_account)
+    Button btnCreateAccount;
+
+    @BindView(R.id.tv_forgot_password)
+    TextView tvForgotPassword;
+
     @BindView(R.id.iv_password_toggle)
     ImageView ivPasswordToggle;
 
@@ -75,7 +81,6 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_login);
         unbinder = ButterKnife.bind(this);
-        Log.d("Kornek", "create");
 
         if (!isNetworkAvailable() && realmHelper.findOne() == null) {
 //            showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
@@ -103,16 +108,34 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            Log.d("Kornek", "connection: " + isNetworkAvailable());
-            //todo
             if (!isNetworkAvailable()) {
+                isSignInValid = false;
+                hideSoftKeyboard();
                 showSnackbar(btnSignIn, AppConstants.WARN_OFFLINE);
+                btnSignIn.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
+                btnSignIn.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_20));
+                btnSignIn.setEnabled(false);
+
+                btnCreateAccount.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
+                btnCreateAccount.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_20));
+                btnCreateAccount.setEnabled(false);
+
+                tvForgotPassword.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
+                tvForgotPassword.setEnabled(false);
+            } else {
+                checkValidation();
+
+                btnCreateAccount.setTextColor(Color.WHITE);
+                btnCreateAccount.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.button_moss_green_clickable));
+                btnCreateAccount.setEnabled(true);
+
+                tvForgotPassword.setTextColor(Color.WHITE);
+                tvForgotPassword.setEnabled(true);
             }
         }
     };
 
     private void registerInternetCheckReceiver() {
-        Log.d("Kornek", "registering");
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.wifi.STATE_CHANGE");
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -170,15 +193,20 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     private void checkValidation() {
         if (!etUsername.getText().toString().trim().isEmpty()
                 && !etPassword.getText().toString().trim().isEmpty()) {
-            isSignInValid = true;
-            btnSignIn.setTextColor(Color.WHITE);
-            btnSignIn.setBackground(ContextCompat.getDrawable(this, R.drawable.button_light_blue_clickable));
-            btnSignIn.setEnabled(true);
+            if (isNetworkAvailable()) {
+                isSignInValid = true;
+                btnSignIn.setTextColor(Color.WHITE);
+                btnSignIn.setBackground(ContextCompat.getDrawable(this, R.drawable.button_light_blue_clickable));
+                btnSignIn.setEnabled(true);
+            } else {
+                hideSoftKeyboard();
+                showSnackbar(btnSignIn, AppConstants.WARN_OFFLINE);
+            }
         } else {
             isSignInValid = false;
             btnSignIn.setTextColor(ContextCompat.getColor(this, R.color.transparent_70));
             btnSignIn.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_20));
-            btnSignIn.setEnabled(true);
+            btnSignIn.setEnabled(false);
         }
     }
 
@@ -232,17 +260,19 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     @OnClick(R.id.tv_forgot_password)
     public void showForgotPassword() {
-        final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
-                ForgotPasswordDialogFragment.newInstance();
-        forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
-            forgotPasswordDialogFragment.dismiss();
-            if (isNetworkAvailable()) {
-                apiRequestHelper.forgotPassword(email);
-            } else {
-                showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
-            }
-        });
-        forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
+        if (isNetworkAvailable()) {
+            final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
+                    ForgotPasswordDialogFragment.newInstance();
+            forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
+                forgotPasswordDialogFragment.dismiss();
+                if (isNetworkAvailable()) {
+                    apiRequestHelper.forgotPassword(email);
+                } else {
+                    showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
+                }
+            });
+            forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
+        }
     }
 
     @Override
