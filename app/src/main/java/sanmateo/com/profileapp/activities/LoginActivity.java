@@ -258,7 +258,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     @OnClick(R.id.btn_create_account)
     public void showRegistrationPage() {
-        moveToOtherActivity(RegistrationActivity.class);
+//        moveToOtherActivity(RegistrationActivity.class);
+        moveToOtherActivity(NewRegistrationActivity.class);
     }
 
     @OnClick(R.id.tv_forgot_password)
