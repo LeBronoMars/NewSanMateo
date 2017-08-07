@@ -26,6 +26,7 @@ import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.customviews.CustomSpinner;
+import sanmateo.com.profileapp.helpers.AppConstants;
 
 /**
  * Created by USER on 8/6/2017.
@@ -357,7 +358,11 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
             llAccountInformation.setVisibility(View.VISIBLE);
             ivNext.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_next_inactive_48dp));
         } else if (isAccountValid) {
-            showToast("send registration");
+            if (isNetworkAvailable()) {
+                showToast("send registration");
+            } else {
+                showSnackbar(ivNext, AppConstants.WARN_CONNECTION_NEW);
+            }
         }
     }
 
