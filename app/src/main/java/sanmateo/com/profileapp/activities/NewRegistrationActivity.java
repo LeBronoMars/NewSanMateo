@@ -53,7 +53,20 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     @BindView(R.id.spnr_gender)
     CustomSpinner spnrGender;
 
+    @BindView(R.id.et_first_name)
+    TextInputEditText etFirstName;
+
+    @BindView(R.id.et_last_name)
+    TextInputEditText etLastName;
+
+    @BindView(R.id.et_contact_no)
+    TextInputEditText etContactNo;
+
+    @BindView(R.id.et_address)
+    TextInputEditText etAddress;
+
     private Unbinder unbinder;
+    boolean isPersonalValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,22 +85,18 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
 
     @OnClick(R.id.iv_close)
     public void cancelSignUp() {
+        ivBack.setVisibility(View.GONE);
         onBackPressed();
     }
 
-    boolean isPersonalValid;
-
-    @BindView(R.id.et_first_name)
-    TextInputEditText etFirstName;
-
-    @BindView(R.id.et_last_name)
-    TextInputEditText etLastName;
-
-    @BindView(R.id.et_contact_no)
-    TextInputEditText etContactNo;
-
-    @BindView(R.id.et_address)
-    TextInputEditText etAddress;
+    @Override
+    public void onBackPressed() {
+        if (ivBack.getVisibility() == View.VISIBLE) {
+            back();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     private void addPersonalInfoValidation() {
         etFirstName.addTextChangedListener(new TextWatcher() {
