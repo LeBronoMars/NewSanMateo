@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -43,6 +44,12 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
+
+    @BindView(R.id.iv_password_toggle)
+    ImageView ivPasswordToggle;
+
+    @BindView(R.id.iv_confirm_password_toggle)
+    ImageView ivConfirmPasswordToggle;
 
     @BindView(R.id.tv_steps)
     TextView tvSteps;
@@ -90,10 +97,8 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     RelativeLayout rlPasswordValidation;
 
     private Unbinder unbinder;
-    boolean isPersonalValid;
-    boolean isEmailValid;
-    boolean isPasswordValid;
-    boolean isConfirmPasswordValid;
+    boolean isPersonalValid, isEmailValid, isPasswordValid, isConfirmPasswordValid;
+    boolean passwordToggle, confirmPasswordToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -364,6 +369,32 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
         adapter.setDropDownViewResource(R.layout.row_spinner_dropdown);
         spinner.setOnItemSelectedListener(this);
         spinner.setAdapter(adapter);
+    }
+
+    @OnClick(R.id.iv_password_toggle)
+    public void setPasswordToggle() {
+        passwordToggle = !passwordToggle;
+
+        ivPasswordToggle.setImageDrawable(ContextCompat.getDrawable(this, passwordToggle
+                ? R.drawable.ic_visibilityon_blue_48dp : R.drawable.ic_visibilityoff_blue_48dp));
+
+        etPassword.setInputType(passwordToggle? InputType.TYPE_CLASS_TEXT
+                :  InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        etPassword.setSelection(etPassword.getText().length());
+    }
+
+    @OnClick(R.id.iv_confirm_password_toggle)
+    public void setConfirmPasswordToggle() {
+        confirmPasswordToggle = !confirmPasswordToggle;
+
+        ivConfirmPasswordToggle.setImageDrawable(ContextCompat.getDrawable(this, confirmPasswordToggle
+                ? R.drawable.ic_visibilityon_blue_48dp : R.drawable.ic_visibilityoff_blue_48dp));
+
+        etConfirmPassword.setInputType(confirmPasswordToggle? InputType.TYPE_CLASS_TEXT
+                :  InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        etConfirmPassword.setSelection(etConfirmPassword.getText().length());
     }
 
     @Override
