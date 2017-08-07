@@ -1,7 +1,10 @@
 package sanmateo.com.profileapp.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -58,6 +61,8 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
         setContentView(R.layout.activity_new_signup);
         unbinder = ButterKnife.bind(this);
         initGenderSpinner();
+
+        addPersonalInfoValidation();
     }
 
     @OnClick(R.id.tv_spinner)
@@ -70,9 +75,104 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
         onBackPressed();
     }
 
+    boolean isPersonalValid;
+
+    @BindView(R.id.et_first_name)
+    TextInputEditText etFirstName;
+
+    @BindView(R.id.et_last_name)
+    TextInputEditText etLastName;
+
+    @BindView(R.id.et_contact_no)
+    TextInputEditText etContactNo;
+
+    @BindView(R.id.et_address)
+    TextInputEditText etAddress;
+
+    private void addPersonalInfoValidation() {
+        etFirstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                validatePersonalInformation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        etLastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                validatePersonalInformation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        etContactNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                validatePersonalInformation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        etAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                validatePersonalInformation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void validatePersonalInformation() {
+        if (!etFirstName.getText().toString().trim().isEmpty()
+                && !etLastName.getText().toString().trim().isEmpty()
+                && !etContactNo.getText().toString().trim().isEmpty()
+                && !etAddress.getText().toString().trim().isEmpty()
+                && !tvSpinner.getText().toString().equals("Gender")) {
+            isPersonalValid = true;
+            ivNext.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_next_active_48dp));
+        } else {
+            isPersonalValid = false;
+            ivNext.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_next_inactive_48dp));
+        }
+    }
+
     @OnClick(R.id.iv_next)
     public void next() {
-        if (ivBack.getVisibility() == View.GONE) {
+        if (ivBack.getVisibility() == View.GONE && isPersonalValid) {
             tvSteps.setText(R.string.registration_step_2);
             ivBack.setVisibility(View.VISIBLE);
             llPersonalInformation.startAnimation(AnimationUtils.loadAnimation(this, R.anim.out_to_left));
@@ -122,11 +222,10 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Log.d("spnr", "first selection : " + firstSelection);
-        Log.d("spnr", "selection: " + i);
         if (firstSelection) {
             tvSpinner.setText(genderList.get(i));
             tvSpinner.setTextColor(ContextCompat.getColor(this, R.color.status_bar_bg));
+            validatePersonalInformation();
         } else if (!firstSelection) {
             firstSelection = true;
         }
