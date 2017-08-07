@@ -30,6 +30,7 @@ import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
+import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 
 /**
  * Created by USER on 8/6/2017.
@@ -471,6 +472,19 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
+        showConfirmDialog("", getString(R.string.registration_success_title),
+                getString(R.string.registration_success_content),
+                getString(R.string.registration_success_confirm), null, new OnConfirmDialogListener() {
+                    @Override
+                    public void onConfirmed(String action) {
+                        cancelSignUp();
+                    }
+
+                    @Override
+                    public void onCancelled(String action) {
+
+                    }
+                });
     }
 
     @Override
