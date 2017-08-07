@@ -26,13 +26,17 @@ import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.customviews.CustomSpinner;
+import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 
 /**
  * Created by USER on 8/6/2017.
  */
 
-public class NewRegistrationActivity extends BaseActivity implements OnItemSelectedListener{
+public class NewRegistrationActivity extends BaseActivity implements OnItemSelectedListener,
+        OnApiRequestListener{
 
     @BindView(R.id.ll_account_information)
     LinearLayout llAccountInformation;
@@ -100,14 +104,16 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     private Unbinder unbinder;
     boolean isPersonalValid, isEmailValid, isPasswordValid, isConfirmPasswordValid, isAccountValid;
     boolean passwordToggle, confirmPasswordToggle;
+    private ApiRequestHelper apiRequestHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_signup);
         unbinder = ButterKnife.bind(this);
-        initGenderSpinner();
+        apiRequestHelper = new ApiRequestHelper(this);
 
+        initGenderSpinner();
         addPersonalInfoValidation();
         addAccountInfoValidation();
     }
@@ -359,11 +365,24 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
             ivNext.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_next_inactive_48dp));
         } else if (isAccountValid) {
             if (isNetworkAvailable()) {
-                showToast("send registration");
+                sendRegistration();
             } else {
                 showSnackbar(ivNext, AppConstants.WARN_CONNECTION_NEW);
             }
         }
+    }
+
+    private void sendRegistration() {
+        final String firstName = etFirstName.getText().toString();
+        final String lastName = etLastName.getText().toString();
+        final String contactNo = etContactNo.getText().toString();
+        final String address = etAddress.getText().toString();
+        final String email = etEmail.getText().toString();
+        final String password = etPassword.getText().toString();
+        final String gender = tvSpinner.getText().toString();
+        final String userLevel = "Regular User";
+        apiRequestHelper.createUser(firstName, lastName, contactNo, gender, email, address,
+                userLevel, password);
     }
 
     @OnClick(R.id.iv_back)
@@ -442,5 +461,21 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    @Override
+    public void onApiRequestBegin(ApiAction action) {
+        showCustomProgress("Submitting Information...");
+    }
+
+    @Override
+    public void onApiRequestSuccess(ApiAction action, Object result) {
+        dismissCustomProgress();
+    }
+
+    @Override
+    public void onApiRequestFailed(ApiAction action, Throwable t) {
+        dismissCustomProgress();
+        showSnackbar(ivNext, t.getMessage());
     }
 }
