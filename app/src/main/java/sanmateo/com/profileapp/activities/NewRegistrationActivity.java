@@ -93,6 +93,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     boolean isPersonalValid;
     boolean isEmailValid;
     boolean isPasswordValid;
+    boolean isConfirmPasswordValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,6 +241,23 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
 
             }
         });
+
+        etConfirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                confirmPasswordValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void emailValidation() {
@@ -261,7 +279,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
             rlPasswordValidation.setVisibility(View.GONE);
             tvPasswordDisclaimer.setVisibility(View.VISIBLE);
             tvPasswordDisclaimer.setText(R.string.password_disclaimer);
-        } else if (!password.isEmpty() && !password.matches("[a-zA-Z.? ]*")) {
+        } else if (!password.isEmpty() && !password.matches("[a-zA-Z0-9.? ]*")) {
             isPasswordValid = false;
             tvPasswordDisclaimer.setVisibility(View.GONE);
             rlPasswordValidation.setVisibility(View.VISIBLE);
@@ -278,11 +296,34 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
             tvPasswordValidation.setText(R.string.alert_password_long);
         } else {
             isPasswordValid = true;
+            if (confirmPassword.isEmpty()) {
+                rlPasswordValidation.setVisibility(View.GONE);
+                tvPasswordDisclaimer.setVisibility(View.VISIBLE);
+                tvPasswordDisclaimer.setText(R.string.password_confirm);
+            } else {
+                confirmPasswordValidation();
+            }
+        }
+    }
+
+    private void confirmPasswordValidation() {
+        String password = etPassword.getText().toString();
+        String confirmPassword = etConfirmPassword.getText().toString();
+        if (password.isEmpty() && confirmPassword.isEmpty()) {
+            isConfirmPasswordValid = false;
             rlPasswordValidation.setVisibility(View.GONE);
             tvPasswordDisclaimer.setVisibility(View.VISIBLE);
-            tvPasswordDisclaimer.setText(R.string.password_confirm);
+            tvPasswordDisclaimer.setText(R.string.password_disclaimer);
+        } else if (!password.equals(confirmPassword)) {
+            isConfirmPasswordValid = false;
+            tvPasswordDisclaimer.setVisibility(View.GONE);
+            rlPasswordValidation.setVisibility(View.VISIBLE);
+            tvPasswordValidation.setText(R.string.alert_password_not_match);
+        } else if (isPasswordValid && password.equals(confirmPassword)){
+            isConfirmPasswordValid = true;
+            rlPasswordValidation.setVisibility(View.GONE);
+            tvPasswordDisclaimer.setVisibility(View.GONE);
         }
-
     }
 
     @OnClick(R.id.iv_next)
