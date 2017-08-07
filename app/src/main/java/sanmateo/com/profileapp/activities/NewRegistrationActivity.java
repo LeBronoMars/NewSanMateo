@@ -23,14 +23,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.customviews.CustomSpinner;
 import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
+import sanmateo.com.profileapp.models.response.ApiError;
 
 /**
  * Created by USER on 8/6/2017.
@@ -487,9 +490,24 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
                 });
     }
 
+    private void emailTaken() {
+        isEmailValid = false;
+        tvEmailValidation.setText(R.string.alert_email_taken);
+        rlEmailValidation.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onApiRequestFailed(ApiAction action, Throwable t) {
         dismissCustomProgress();
-        showSnackbar(ivNext, t.getMessage());
+        if (t instanceof HttpException) {
+            final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
+            if (apiError.getMessage().equals(getString(R.string.email_taken_error))) {
+                emailTaken();
+            } else {
+                showSnackbar(ivNext, apiError.getMessage());
+            }
+        } else {
+            showSnackbar(ivNext, t.getMessage());
+        }
     }
 }

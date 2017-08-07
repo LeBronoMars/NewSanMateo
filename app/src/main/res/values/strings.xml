@@ -33,6 +33,8 @@
     <string name="email_address">Email Address</string>
 
     <string name="alert_email">Invalid email address.</string>
+    <string name="alert_email_taken">Email address is already taken.</string>
+    <string name="email_taken_error">Email already taken</string>
     <string name="alert_password_extra_char">Password contains invalid characters.</string>
     <string name="alert_password_short">Password is too short.</string>
     <string name="alert_password_long">Password is too long.</string>
