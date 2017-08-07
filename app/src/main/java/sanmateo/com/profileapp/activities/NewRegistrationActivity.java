@@ -68,15 +68,31 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     @BindView(R.id.et_email)
     TextInputEditText etEmail;
 
+    @BindView(R.id.et_password)
+    TextInputEditText etPassword;
+
+    @BindView(R.id.et_confirm_password)
+    TextInputEditText etConfirmPassword;
+
     @BindView(R.id.tv_email_validation)
     TextView tvEmailValidation;
+
+    @BindView(R.id.tv_password_disclaimer)
+    TextView tvPasswordDisclaimer;
+
+    @BindView(R.id.tv_password_validation)
+    TextView tvPasswordValidation;
 
     @BindView(R.id.rl_email_validation)
     RelativeLayout rlEmailValidation;
 
+    @BindView(R.id.rl_password_validation)
+    RelativeLayout rlPasswordValidation;
+
     private Unbinder unbinder;
     boolean isPersonalValid;
     boolean isEmailValid;
+    boolean isPasswordValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,6 +223,23 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
 
             }
         });
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                passwordValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void emailValidation() {
@@ -218,6 +251,38 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
             tvEmailValidation.setText(R.string.alert_email);
             rlEmailValidation.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void passwordValidation() {
+        String password = etPassword.getText().toString();
+        String confirmPassword = etConfirmPassword.getText().toString();
+        if (password.isEmpty() && confirmPassword.isEmpty()) {
+            isPasswordValid = false;
+            rlPasswordValidation.setVisibility(View.GONE);
+            tvPasswordDisclaimer.setVisibility(View.VISIBLE);
+            tvPasswordDisclaimer.setText(R.string.password_disclaimer);
+        } else if (!password.isEmpty() && !password.matches("[a-zA-Z.? ]*")) {
+            isPasswordValid = false;
+            tvPasswordDisclaimer.setVisibility(View.GONE);
+            rlPasswordValidation.setVisibility(View.VISIBLE);
+            tvPasswordValidation.setText(R.string.alert_password_extra_char);
+        } else if (password.length() < 8) {
+            isPasswordValid = false;
+            tvPasswordDisclaimer.setVisibility(View.GONE);
+            rlPasswordValidation.setVisibility(View.VISIBLE);
+            tvPasswordValidation.setText(R.string.alert_password_short);
+        } else if (password.length() > 12) {
+            isPasswordValid = false;
+            tvPasswordDisclaimer.setVisibility(View.GONE);
+            rlPasswordValidation.setVisibility(View.VISIBLE);
+            tvPasswordValidation.setText(R.string.alert_password_long);
+        } else {
+            isPasswordValid = true;
+            rlPasswordValidation.setVisibility(View.GONE);
+            tvPasswordDisclaimer.setVisibility(View.VISIBLE);
+            tvPasswordDisclaimer.setText(R.string.password_confirm);
+        }
+
     }
 
     @OnClick(R.id.iv_next)

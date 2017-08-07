@@ -133,18 +133,12 @@
 
     </RelativeLayout>
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/_16sdp"-->
-        <!--android:background="@android:color/holo_red_dark">-->
-
-    <!--</RelativeLayout>-->
-
     <RelativeLayout
-        android:id="@+id/rl_password_disclaimer"
+        android:id="@+id/rl_password_validation"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_32sdp"
-        android:layout_marginRight="@dimen/_23sdp">
+        android:layout_height="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_23sdp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_password_validation"
@@ -154,10 +148,31 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/_3sdp"
             android:gravity="center_vertical"
-            android:textColor="@color/btn_sign_up"
-            android:text="@string/password_disclaimer"
-            android:textSize="@dimen/_10ssp"/>
+            android:textColor="@color/alert_color"
+            android:text="@string/alert_email"
+            android:textSize="@dimen/_10ssp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_warning_16dp" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_password_disclaimer"
+        fontPath="fonts/Roboto-Regular.ttf"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_3sdp"
+        android:layout_marginRight="@dimen/_23sdp"
+        android:gravity="center_vertical"
+        android:textColor="@color/btn_sign_up"
+        android:text="@string/password_disclaimer"
+        android:textSize="@dimen/_10ssp"/>
 
 </LinearLayout>

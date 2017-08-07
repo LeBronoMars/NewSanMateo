@@ -33,7 +33,12 @@
     <string name="email_address">Email Address</string>
 
     <string name="alert_email">Invalid email address.</string>
+    <string name="alert_password_extra_char">Password contains invalid characters.</string>
+    <string name="alert_password_short">Password is too short.</string>
+    <string name="alert_password_long">Password is too long.</string>
+    <string name="alert_password_not_match">Password do not match.</string>
     <string name="password_disclaimer">Password must be 8-12 characters long and contains letters and numbers only.</string>
+    <string name="password_confirm">Confirm your password by entering it again.</string>
 
     <string name="registration_step_1">Step 1 of 2: Personal Information</string>
     <string name="registration_step_2">Step 2 of 2: Account Information</string>
