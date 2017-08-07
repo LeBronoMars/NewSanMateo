@@ -30,6 +30,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="create_my_account">Create my account</string>
     <string name="select_gender">Select Gender</string>
+    <string name="email_address">Email Address</string>
 
     <string name="registration_step_1">Step 1 of 2: Personal Information</string>
     <string name="registration_step_2">Step 2 of 2: Account Information</string>
