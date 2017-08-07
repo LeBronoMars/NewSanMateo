@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/_4sdp"
     android:paddingLeft="@dimen/_16sdp"
-    android:paddingRight="@dimen/_16sdp">
+    android:paddingRight="@dimen/_16sdp"
+    android:background="@android:color/white">
 
     <android.support.design.widget.TextInputLayout
         fontPath="fonts/Roboto-Medium.ttf"
@@ -18,8 +19,8 @@
         app:passwordToggleEnabled="false">
 
         <android.support.design.widget.TextInputEditText
-            fontPath="fonts/Roboto-Regular.ttf"
             android:id="@+id/et_email"
+            fontPath="fonts/Roboto-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email_address"
@@ -27,13 +28,35 @@
             android:inputType="textEmailAddress"
             android:minLines="1"
             android:textColor="@color/status_bar_bg"
-            android:textSize="@dimen/_13ssp"/>
+            android:textSize="@dimen/_13ssp" />
     </android.support.design.widget.TextInputLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_email_validation"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_16sdp"
-        android:background="@android:color/holo_red_dark">
+        android:layout_marginRight="@dimen/_23sdp"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/tv_email_validation"
+            fontPath="fonts/Roboto-Regular.ttf"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:gravity="center_vertical"
+            android:textColor="@color/alert_color"
+            android:text="@string/alert_email"
+            android:textSize="@dimen/_10ssp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_warning_16dp" />
 
     </RelativeLayout>
 

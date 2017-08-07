@@ -5,7 +5,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -13,6 +12,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -65,8 +65,18 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     @BindView(R.id.et_address)
     TextInputEditText etAddress;
 
+    @BindView(R.id.et_email)
+    TextInputEditText etEmail;
+
+    @BindView(R.id.tv_email_validation)
+    TextView tvEmailValidation;
+
+    @BindView(R.id.rl_email_validation)
+    RelativeLayout rlEmailValidation;
+
     private Unbinder unbinder;
     boolean isPersonalValid;
+    boolean isEmailValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +86,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
         initGenderSpinner();
 
         addPersonalInfoValidation();
+        addAccoountInfoValidation();
     }
 
     @OnClick(R.id.tv_spinner)
@@ -176,6 +187,36 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
         } else {
             isPersonalValid = false;
             ivNext.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_next_inactive_48dp));
+        }
+    }
+
+    private void addAccoountInfoValidation() {
+        etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                emailValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void emailValidation() {
+        if (isValidEmail(etEmail.getText().toString())) {
+            isEmailValid = true;
+            rlEmailValidation.setVisibility(View.INVISIBLE);
+        } else {
+            isEmailValid = false;
+            tvEmailValidation.setText(R.string.alert_email);
+            rlEmailValidation.setVisibility(View.VISIBLE);
         }
     }
 
