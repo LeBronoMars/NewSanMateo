@@ -97,7 +97,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     RelativeLayout rlPasswordValidation;
 
     private Unbinder unbinder;
-    boolean isPersonalValid, isEmailValid, isPasswordValid, isConfirmPasswordValid;
+    boolean isPersonalValid, isEmailValid, isPasswordValid, isConfirmPasswordValid, isAccountValid;
     boolean passwordToggle, confirmPasswordToggle;
 
     @Override
@@ -108,7 +108,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
         initGenderSpinner();
 
         addPersonalInfoValidation();
-        addAccoountInfoValidation();
+        addAccountInfoValidation();
     }
 
     @OnClick(R.id.tv_spinner)
@@ -212,7 +212,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
         }
     }
 
-    private void addAccoountInfoValidation() {
+    private void addAccountInfoValidation() {
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -274,6 +274,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
             tvEmailValidation.setText(R.string.alert_email);
             rlEmailValidation.setVisibility(View.VISIBLE);
         }
+        validateAccountInformation();
     }
 
     private void passwordValidation() {
@@ -309,12 +310,15 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
                 confirmPasswordValidation();
             }
         }
+        validateAccountInformation();
     }
 
     private void confirmPasswordValidation() {
         String password = etPassword.getText().toString();
         String confirmPassword = etConfirmPassword.getText().toString();
-        if (password.isEmpty() && confirmPassword.isEmpty()) {
+        if (!password.isEmpty() && confirmPassword.isEmpty()) {
+            passwordValidation();
+        } else if (password.isEmpty() && confirmPassword.isEmpty()) {
             isConfirmPasswordValid = false;
             rlPasswordValidation.setVisibility(View.GONE);
             tvPasswordDisclaimer.setVisibility(View.VISIBLE);
@@ -329,6 +333,17 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
             rlPasswordValidation.setVisibility(View.GONE);
             tvPasswordDisclaimer.setVisibility(View.GONE);
         }
+        validateAccountInformation();
+    }
+
+    private void validateAccountInformation() {
+        if (isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+            isAccountValid = true;
+            ivNext.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_next_active_48dp));
+        } else {
+            isAccountValid = false;
+            ivNext.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_next_inactive_48dp));
+        }
     }
 
     @OnClick(R.id.iv_next)
@@ -341,6 +356,8 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
             llAccountInformation.startAnimation(AnimationUtils.loadAnimation(this, R.anim.in_from_right));
             llAccountInformation.setVisibility(View.VISIBLE);
             ivNext.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.btn_next_inactive_48dp));
+        } else if (isAccountValid) {
+            showToast("send registration");
         }
     }
 
