@@ -2,8 +2,11 @@ package sanmateo.com.profileapp.activities;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,12 +21,13 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.customviews.CustomSpinner;
 
 /**
  * Created by USER on 8/6/2017.
  */
 
-public class NewRegistrationActivity extends BaseActivity {
+public class NewRegistrationActivity extends BaseActivity implements OnItemSelectedListener{
 
     @BindView(R.id.ll_account_information)
     LinearLayout llAccountInformation;
@@ -40,8 +44,11 @@ public class NewRegistrationActivity extends BaseActivity {
     @BindView(R.id.tv_steps)
     TextView tvSteps;
 
+    @BindView(R.id.tv_spinner)
+    TextView tvSpinner;
+
     @BindView(R.id.spnr_gender)
-    Spinner spnrGender;
+    CustomSpinner spnrGender;
 
     private Unbinder unbinder;
 
@@ -51,6 +58,11 @@ public class NewRegistrationActivity extends BaseActivity {
         setContentView(R.layout.activity_new_signup);
         unbinder = ButterKnife.bind(this);
         initGenderSpinner();
+    }
+
+    @OnClick(R.id.tv_spinner)
+    public void showSpinner() {
+        spnrGender.performClick();
     }
 
     @OnClick(R.id.iv_close)
@@ -82,8 +94,9 @@ public class NewRegistrationActivity extends BaseActivity {
         ivBack.setVisibility(View.GONE);
     }
 
+    ArrayList<String> genderList = new ArrayList<>();
+
     private void initGenderSpinner() {
-        ArrayList<String> genderList = new ArrayList<>();
         genderList.add("Female");
         genderList.add("Male");
         initSpinner(spnrGender, genderList);
@@ -93,6 +106,7 @@ public class NewRegistrationActivity extends BaseActivity {
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(NewRegistrationActivity.this,
                 R.layout.row_spinner, items);
         adapter.setDropDownViewResource(R.layout.row_spinner_dropdown);
+        spinner.setOnItemSelectedListener(this);
         spinner.setAdapter(adapter);
     }
 
@@ -102,5 +116,23 @@ public class NewRegistrationActivity extends BaseActivity {
         if (unbinder != null) {
             unbinder.unbind();
         }
+    }
+
+    boolean firstSelection;
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.d("spnr", "first selection : " + firstSelection);
+        Log.d("spnr", "selection: " + i);
+        if (firstSelection) {
+            tvSpinner.setText(genderList.get(i));
+            tvSpinner.setTextColor(ContextCompat.getColor(this, R.color.status_bar_bg));
+        } else if (!firstSelection) {
+            firstSelection = true;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 }

@@ -26,7 +26,8 @@
             android:imeOptions="actionNext"
             android:inputType="textCapWords"
             android:minLines="1"
-            android:textColor="@color/status_bar_bg" />
+            android:textColor="@color/status_bar_bg"
+            android:textSize="@dimen/_13ssp"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -45,7 +46,8 @@
             android:imeOptions="actionNext"
             android:inputType="textCapWords"
             android:minLines="1"
-            android:textColor="@color/status_bar_bg" />
+            android:textColor="@color/status_bar_bg"
+            android:textSize="@dimen/_13ssp"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -65,7 +67,8 @@
             android:inputType="number"
             android:minLines="1"
             android:maxLength="11"
-            android:textColor="@color/status_bar_bg" />
+            android:textColor="@color/status_bar_bg"
+            android:textSize="@dimen/_13ssp"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -84,13 +87,46 @@
             android:imeOptions="actionDone"
             android:inputType="textCapWords"
             android:minLines="1"
-            android:textColor="@color/status_bar_bg" />
+            android:textColor="@color/status_bar_bg"
+            android:textSize="@dimen/_13ssp"/>
     </android.support.design.widget.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/spnr_gender"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_48sdp"
-        android:dropDownWidth="match_parent" />
+    <RelativeLayout
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_48sdp">
+
+        <sanmateo.com.profileapp.customviews.CustomSpinner
+            android:id="@+id/spnr_gender"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dropDownWidth="match_parent"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/tv_spinner"
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:paddingLeft="@dimen/_5sdp"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/darker_gray"
+            android:text="@string/gender"
+            android:textSize="@dimen/_13ssp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:src="@drawable/ic_down_24dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+
+
+    </RelativeLayout>
 
 </LinearLayout>

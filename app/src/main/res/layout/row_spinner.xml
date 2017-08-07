@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    fontPath="fonts/Roboto-Medium.ttf"
     android:id="@+id/row_spn_tv"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_48sdp"
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:textSize="@dimen/_13ssp"
     android:textDirection="locale"
     android:textColor="@color/status_bar_bg"
     android:background="@android:color/white"/>
