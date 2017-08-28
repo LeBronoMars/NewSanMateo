@@ -5,8 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import butterknife.BindView;
@@ -26,8 +30,14 @@ public class PasswordResetActivity extends BaseActivity {
     @BindView(R.id.frameLayout)
     RelativeLayout frameLayout;
 
+    @BindView(R.id.rl_email_validation)
+    RelativeLayout rlEmailValidation;
+
     @BindView(R.id.btn_reset_password)
     Button btnResetPassword;
+
+    @BindView(R.id.et_email)
+    EditText etEmail;
 
     private Unbinder unbinder;
 
@@ -47,6 +57,7 @@ public class PasswordResetActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         registerInternetCheckReceiver();
+        addEmailValidation();
     }
 
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -56,6 +67,7 @@ public class PasswordResetActivity extends BaseActivity {
             if (!isNetworkAvailable()) {
                 hideSoftKeyboard();
                 showIndefiniteSnackbar(btnResetPassword, AppConstants.WARN_OFFLINE);
+
 //                btnSignIn.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
 //                btnSignIn.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_20));
 //                btnSignIn.setEnabled(false);
@@ -96,6 +108,35 @@ public class PasswordResetActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(broadcastReceiver);
+    }
+
+    private void addEmailValidation() {
+        etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                validateEmail();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void validateEmail() {
+        if (isValidEmail(etEmail.getText().toString())) {
+            rlEmailValidation.setVisibility(View.INVISIBLE);
+        } else if (etEmail.getText().toString().isEmpty()) {
+            rlEmailValidation.setVisibility(View.INVISIBLE);
+        } else {
+            rlEmailValidation.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
