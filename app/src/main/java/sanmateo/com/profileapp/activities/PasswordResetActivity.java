@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -19,15 +20,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.helpers.ApiErrorHelper;
+import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
+import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
+import sanmateo.com.profileapp.models.response.ApiError;
 
 /**
  * Created by USER on 8/28/2017.
  */
 
-public class PasswordResetActivity extends BaseActivity {
+public class PasswordResetActivity extends BaseActivity implements OnApiRequestListener {
 
     @BindView(R.id.frameLayout)
     RelativeLayout frameLayout;
@@ -43,12 +51,16 @@ public class PasswordResetActivity extends BaseActivity {
 
     private Unbinder unbinder;
     private boolean isEmailValid;
+    private ApiRequestHelper apiRequestHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_reset);
         unbinder = ButterKnife.bind(this);
+
+        apiRequestHelper = new ApiRequestHelper(this);
+        addEmailValidation();
     }
 
     @OnClick(R.id.iv_back)
@@ -60,7 +72,6 @@ public class PasswordResetActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         registerInternetCheckReceiver();
-        addEmailValidation();
     }
 
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -142,7 +153,8 @@ public class PasswordResetActivity extends BaseActivity {
     @OnClick(R.id.btn_reset_password)
     public void resetPassword() {
         if (isNetworkAvailable()) {
-
+            Log.d("err", "email: " + etEmail.getText().toString());
+            apiRequestHelper.forgotPassword(etEmail.getText().toString());
         } else {
             hideSoftKeyboard();
             showIndefiniteSnackbar(btnResetPassword, AppConstants.WARN_CONNECTION_NEW);
@@ -154,6 +166,43 @@ public class PasswordResetActivity extends BaseActivity {
         super.onDestroy();
         if (unbinder != null) {
             unbinder.unbind();
+        }
+    }
+
+    @Override
+    public void onApiRequestBegin(ApiAction action) {
+        showCustomProgress("Submitting information...");
+    }
+
+    @Override
+    public void onApiRequestSuccess(ApiAction action, Object result) {
+        dismissCustomProgress();
+        showConfirmDialog("", getString(R.string.reset_password_title),
+                getString(R.string.reset_password_content),
+                getString(R.string.reset_password_content), null, new OnConfirmDialogListener() {
+                    @Override
+                    public void onConfirmed(String action) {
+                        onBackPressed();
+                    }
+
+                    @Override
+                    public void onCancelled(String action) {
+
+                    }
+                });
+    }
+
+    @Override
+    public void onApiRequestFailed(ApiAction action, Throwable t) {
+        Log.d("err", "error: " + t.getMessage());
+        hideSoftKeyboard();
+        dismissCustomProgress();
+        if (t instanceof HttpException) {
+            final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
+            Log.d("err", "error: " + apiError.getMessage());
+            showSnackbar(btnResetPassword, apiError.getMessage());
+        } else {
+            showSnackbar(btnResetPassword, t.getMessage());
         }
     }
 }
