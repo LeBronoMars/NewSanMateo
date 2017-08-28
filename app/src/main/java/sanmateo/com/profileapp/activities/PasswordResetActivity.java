@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -40,6 +42,7 @@ public class PasswordResetActivity extends BaseActivity {
     EditText etEmail;
 
     private Unbinder unbinder;
+    private boolean isEmailValid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,30 +70,23 @@ public class PasswordResetActivity extends BaseActivity {
             if (!isNetworkAvailable()) {
                 hideSoftKeyboard();
                 showIndefiniteSnackbar(btnResetPassword, AppConstants.WARN_OFFLINE);
-
-//                btnSignIn.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
-//                btnSignIn.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_20));
-//                btnSignIn.setEnabled(false);
-//
-//                btnCreateAccount.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
-//                btnCreateAccount.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_20));
-//                btnCreateAccount.setEnabled(false);
-//
-//                tvForgotPassword.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
-//                tvForgotPassword.setEnabled(false);
             } else {
                 dismissSnackBar();
-//                checkValidation();
-//
-//                btnCreateAccount.setTextColor(Color.WHITE);
-//                btnCreateAccount.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.button_moss_green_clickable));
-//                btnCreateAccount.setEnabled(true);
-//
-//                tvForgotPassword.setTextColor(Color.WHITE);
-//                tvForgotPassword.setEnabled(true);
             }
         }
     };
+
+    private void validateForm() {
+        if (isEmailValid) {
+            btnResetPassword.setTextColor(Color.WHITE);
+            btnResetPassword.setBackground(ContextCompat.getDrawable(this, R.drawable.button_light_blue_clickable));
+            btnResetPassword.setEnabled(true);
+        } else {
+            btnResetPassword.setTextColor(ContextCompat.getColor(this, R.color.transparent_dark_70));
+            btnResetPassword.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_dark_20));
+            btnResetPassword.setEnabled(false);
+        }
+    }
 
     private void hideSoftKeyboard() {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -132,10 +128,24 @@ public class PasswordResetActivity extends BaseActivity {
     private void validateEmail() {
         if (isValidEmail(etEmail.getText().toString())) {
             rlEmailValidation.setVisibility(View.INVISIBLE);
+            isEmailValid = true;
         } else if (etEmail.getText().toString().isEmpty()) {
             rlEmailValidation.setVisibility(View.INVISIBLE);
+            isEmailValid = false;
         } else {
             rlEmailValidation.setVisibility(View.VISIBLE);
+            isEmailValid = false;
+        }
+        validateForm();
+    }
+
+    @OnClick(R.id.btn_reset_password)
+    public void resetPassword() {
+        if (isNetworkAvailable()) {
+
+        } else {
+            hideSoftKeyboard();
+            showIndefiniteSnackbar(btnResetPassword, AppConstants.WARN_CONNECTION_NEW);
         }
     }
 
