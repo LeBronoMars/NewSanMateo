@@ -13,8 +13,7 @@ import sanmateo.com.profileapp.base.BaseActivity;
  */
 
 public class PasswordResetActivity extends BaseActivity {
-
-
+    
     private Unbinder unbinder;
 
     @Override

@@ -21,6 +21,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,11 +43,13 @@
         <!-- new registration activity -->
         <activity android:name=".activities.NewRegistrationActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
         <!-- new password reset activity -->
         <activity android:name=".activities.PasswordResetActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
         <!-- information activity -->

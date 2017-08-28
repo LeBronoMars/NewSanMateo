@@ -35,7 +35,7 @@
         android:id="@+id/rl_email_validation"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_16sdp"
-        android:layout_marginRight="@dimen/_23sdp"
+        android:layout_marginRight="@dimen/_7sdp"
         android:visibility="invisible">
 
         <TextView
