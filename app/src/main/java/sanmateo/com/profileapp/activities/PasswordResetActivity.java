@@ -172,14 +172,16 @@ public class PasswordResetActivity extends BaseActivity implements OnApiRequestL
     @Override
     public void onApiRequestBegin(ApiAction action) {
         showCustomProgress("Submitting information...");
+        Log.d("err", "started");
     }
 
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
-        showConfirmDialog("", getString(R.string.reset_password_title),
+        Log.d("err", "success");
+        showNonCancelableConfirmDialog("", getString(R.string.reset_password_title),
                 getString(R.string.reset_password_content),
-                getString(R.string.reset_password_content), null, new OnConfirmDialogListener() {
+                getString(R.string.reset_password_confirm), null, new OnConfirmDialogListener() {
                     @Override
                     public void onConfirmed(String action) {
                         onBackPressed();
@@ -194,13 +196,16 @@ public class PasswordResetActivity extends BaseActivity implements OnApiRequestL
 
     @Override
     public void onApiRequestFailed(ApiAction action, Throwable t) {
-        Log.d("err", "error: " + t.getMessage());
+        Log.d("err", "failed: " + t.getMessage());
         hideSoftKeyboard();
         dismissCustomProgress();
         if (t instanceof HttpException) {
             final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
-            Log.d("err", "error: " + apiError.getMessage());
-            showSnackbar(btnResetPassword, apiError.getMessage());
+            if (apiError.getMessage().equals("User record not found!")) {
+                showSnackbar(btnResetPassword, getString(R.string.alert_no_such_email));
+            } else {
+                showSnackbar(btnResetPassword, apiError.getMessage());
+            }
         } else {
             showSnackbar(btnResetPassword, t.getMessage());
         }

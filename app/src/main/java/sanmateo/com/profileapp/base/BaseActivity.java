@@ -200,6 +200,28 @@ public class BaseActivity extends AppCompatActivity {
                 .show();
     }
 
+    public void showNonCancelableConfirmDialog(final String action, final String title, final String content,
+                                  final String positiveText, final String negativeText,
+                                  final OnConfirmDialogListener onConfirmDialogListener) {
+        new MaterialDialog.Builder(this)
+                .title(title)
+                .content(content)
+                .canceledOnTouchOutside(false)
+                .positiveText(positiveText)
+                .negativeText(negativeText)
+                .onPositive((dialog, which) -> {
+                    if (onConfirmDialogListener != null) {
+                        onConfirmDialogListener.onConfirmed(action);
+                    }
+                })
+                .onNegative((dialog, which) -> {
+                    if (onConfirmDialogListener != null) {
+                        onConfirmDialogListener.onCancelled(action);
+                    }
+                })
+                .show();
+    }
+
     public void showSnackbar(final View parent, final String message) {
         Snackbar.make(parent, message, Snackbar.LENGTH_LONG).show();
     }

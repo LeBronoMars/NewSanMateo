@@ -57,6 +57,8 @@
     <string name="reset_password_content">We have sent a password reset link to your inbox. Click this link to provide a new password for your account.</string>
     <string name="reset_password_confirm">BACK TO LOGIN</string>
 
+    <string name="alert_no_such_email">Email address is not a registered account.</string>
+
     <!-- san mateo fragment header -->
     <string name="welcome_to">Welcome to</string>
     <string name="san_mateo">San Mateo Rizal</string>
