@@ -39,6 +39,11 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
+        <!-- new registration activity -->
+        <activity android:name=".activities.NewRegistrationActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+
         <!-- information activity -->
         <activity android:name=".activities.InformationActivity"
             android:screenOrientation="portrait"/>
