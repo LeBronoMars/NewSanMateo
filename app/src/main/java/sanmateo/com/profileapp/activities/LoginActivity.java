@@ -265,17 +265,18 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     @OnClick(R.id.tv_forgot_password)
     public void showForgotPassword() {
         if (isNetworkAvailable()) {
-            final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
-                    ForgotPasswordDialogFragment.newInstance();
-            forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
-                forgotPasswordDialogFragment.dismiss();
-                if (isNetworkAvailable()) {
-                    apiRequestHelper.forgotPassword(email);
-                } else {
-                    showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
-                }
-            });
-            forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
+//            final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
+//                    ForgotPasswordDialogFragment.newInstance();
+//            forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
+//                forgotPasswordDialogFragment.dismiss();
+//                if (isNetworkAvailable()) {
+//                    apiRequestHelper.forgotPassword(email);
+//                } else {
+//                    showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
+//                }
+//            });
+//            forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
+            moveToOtherActivity(PasswordResetActivity.class);
         }
     }
 

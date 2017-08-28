@@ -2,6 +2,7 @@
     <string name="app_name">1SANMATEO</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
+    <string name="password_reset">Password Reset</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="forgot_password_caps">FORGOT YOUR PASSWORD?</string>
     <string name="forgot_password_header">Forgot Password</string>
@@ -48,6 +49,9 @@
     <string name="registration_success_title">Congratulations!</string>
     <string name="registration_success_content">Your account has been created. Click on the activation link which we have sent to your inbox to start using the app.</string>
     <string name="registration_success_confirm">BACK TO LOGIN</string>
+    
+    <!-- new password reset-->
+    <string name="password_reset_sub_header">Enter your email address</string>
     
     <!-- san mateo fragment header -->
     <string name="welcome_to">Welcome to</string>

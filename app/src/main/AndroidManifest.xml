@@ -44,6 +44,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait"/>
 
+        <!-- new password reset activity -->
+        <activity android:name=".activities.PasswordResetActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"/>
+
         <!-- information activity -->
         <activity android:name=".activities.InformationActivity"
             android:screenOrientation="portrait"/>
