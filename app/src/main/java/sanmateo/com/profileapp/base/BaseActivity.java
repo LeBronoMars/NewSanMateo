@@ -204,6 +204,19 @@ public class BaseActivity extends AppCompatActivity {
         Snackbar.make(parent, message, Snackbar.LENGTH_LONG).show();
     }
 
+    private Snackbar snackbar;
+
+    public void showIndefiniteSnackbar(final View parent, final String message) {
+        snackbar = Snackbar.make(parent, message, Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
+    }
+
+    public void dismissSnackBar() {
+        if (snackbar != null) {
+            snackbar.dismiss();
+        }
+    }
+
     /**
      * check network connection availability
      */
