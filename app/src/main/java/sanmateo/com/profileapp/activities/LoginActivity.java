@@ -1,11 +1,24 @@
 package sanmateo.com.profileapp.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,12 +29,10 @@ import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.ForgotPasswordDialogFragment;
-import sanmateo.com.profileapp.fragments.LoginDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.LogHelper;
-import sanmateo.com.profileapp.helpers.PicassoHelper;
 import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
@@ -36,27 +47,47 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
  */
 public class LoginActivity extends BaseActivity implements OnApiRequestListener {
 
-    @BindView(R.id.iv_bg)
-    ImageView ivBg;
+    @BindView(R.id.frameLayout)
+    RelativeLayout frameLayout;
 
     @BindView(R.id.btn_sign_in)
     Button btnSignIn;
+
+    @BindView(R.id.btn_create_account)
+    Button btnCreateAccount;
+
+    @BindView(R.id.tv_forgot_password)
+    TextView tvForgotPassword;
+
+    @BindView(R.id.iv_password_toggle)
+    ImageView ivPasswordToggle;
+
+    @BindView(R.id.et_username)
+    TextInputEditText etUsername;
+
+    @BindView(R.id.et_password)
+    TextInputEditText etPassword;
+
+    boolean passwordToggle;
+    boolean isSignInValid;
 
     private ApiRequestHelper apiRequestHelper;
     private static final int REQUEST_PERMISSIONS = 1;
     private RealmHelper<AuthResponse> realmHelper = new RealmHelper<>(AuthResponse.class);
     private Unbinder unbinder;
 
+    private final static int PASSWORD_MINIMUM_LENGTH = 8;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_with_video);
+        setContentView(R.layout.activity_new_login);
         unbinder = ButterKnife.bind(this);
-        initBg();
 
         if (!isNetworkAvailable() && realmHelper.findOne() == null) {
-            showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
-                            " no saved account. Please check your connection and try again.", "Close", null, null);
+//            showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
+//                            " no saved account. Please check your connection and try again.", "Close", null, null);
+            showSnackbar(btnSignIn, AppConstants.WARN_OFFLINE);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 final String[] requiredPermission = new String[]{
@@ -71,10 +102,127 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
                 initialize();
             }
         }
+
+        addSignInValidation();
     }
 
-    private void initBg() {
-        PicassoHelper.loadBlurImageFromDrawable(this, R.drawable.san_mateo_logo, 25,ivBg);
+    public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (!isNetworkAvailable()) {
+                isSignInValid = false;
+                hideSoftKeyboard();
+                showSnackbar(btnSignIn, AppConstants.WARN_OFFLINE);
+                btnSignIn.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
+                btnSignIn.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_20));
+                btnSignIn.setEnabled(false);
+
+                btnCreateAccount.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
+                btnCreateAccount.setBackgroundColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_20));
+                btnCreateAccount.setEnabled(false);
+
+                tvForgotPassword.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.transparent_70));
+                tvForgotPassword.setEnabled(false);
+            } else {
+                checkValidation();
+
+                btnCreateAccount.setTextColor(Color.WHITE);
+                btnCreateAccount.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.button_moss_green_clickable));
+                btnCreateAccount.setEnabled(true);
+
+                tvForgotPassword.setTextColor(Color.WHITE);
+                tvForgotPassword.setEnabled(true);
+            }
+        }
+    };
+
+    private void registerInternetCheckReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.wifi.STATE_CHANGE");
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerInternetCheckReceiver();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    private void addSignInValidation() {
+        etUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                checkValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void checkValidation() {
+        if (!etUsername.getText().toString().trim().isEmpty()
+                && !etPassword.getText().toString().trim().isEmpty()
+                && etPassword.getText().toString().trim().length() >= PASSWORD_MINIMUM_LENGTH) {
+            if (isNetworkAvailable()) {
+                isSignInValid = true;
+                btnSignIn.setTextColor(Color.WHITE);
+                btnSignIn.setBackground(ContextCompat.getDrawable(this, R.drawable.button_light_blue_clickable));
+                btnSignIn.setEnabled(true);
+            } else {
+                hideSoftKeyboard();
+                showSnackbar(btnSignIn, AppConstants.WARN_OFFLINE);
+            }
+        } else {
+            isSignInValid = false;
+            btnSignIn.setTextColor(ContextCompat.getColor(this, R.color.transparent_70));
+            btnSignIn.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent_20));
+            btnSignIn.setEnabled(false);
+        }
+    }
+
+    public void onPasswordVisibilityToggled(View view) {
+        passwordToggle = !passwordToggle;
+
+        ivPasswordToggle.setImageDrawable(ContextCompat.getDrawable(this, passwordToggle
+                ? R.drawable.ic_visibilityon_48dp : R.drawable.ic_visibilityoff_48dp));
+
+        etPassword.setInputType(passwordToggle? InputType.TYPE_CLASS_TEXT
+                :  InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        etPassword.setSelection(etPassword.getText().length());
     }
 
     private void initialize() {
@@ -91,42 +239,51 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     @OnClick(R.id.btn_sign_in)
     public void showLoginDialogFragment() {
-        if (isNetworkAvailable()) {
-            final LoginDialogFragment loginDialogFragment = LoginDialogFragment.newInstance();
-            loginDialogFragment.setOnLoginListener((email, password) -> {
-                loginDialogFragment.dismiss();
-                apiRequestHelper.authenticateUser(email, password);
-            });
-            loginDialogFragment.show(getFragmentManager(), "login");
-        } else {
-            showSnackbar(btnSignIn, AppConstants.WARN_CONNECTION);
+        if (isSignInValid) {
+            hideSoftKeyboard();
+            if (isNetworkAvailable()) {
+                String username = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
+                apiRequestHelper.authenticateUser(username, password);
+            } else {
+                showSnackbar(btnSignIn, AppConstants.WARN_CONNECTION_NEW);
+            }
         }
+    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(frameLayout.getWindowToken(), 0);
     }
 
     @OnClick(R.id.btn_create_account)
     public void showRegistrationPage() {
-        moveToOtherActivity(RegistrationActivity.class);
+//        moveToOtherActivity(RegistrationActivity.class);
+        moveToOtherActivity(NewRegistrationActivity.class);
     }
 
     @OnClick(R.id.tv_forgot_password)
     public void showForgotPassword() {
-        final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
-                ForgotPasswordDialogFragment.newInstance();
-        forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
-            forgotPasswordDialogFragment.dismiss();
-            if (isNetworkAvailable()) {
-                apiRequestHelper.forgotPassword(email);
-            } else {
-                showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
-            }
-        });
-        forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
+        if (isNetworkAvailable()) {
+//            final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
+//                    ForgotPasswordDialogFragment.newInstance();
+//            forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
+//                forgotPasswordDialogFragment.dismiss();
+//                if (isNetworkAvailable()) {
+//                    apiRequestHelper.forgotPassword(email);
+//                } else {
+//                    showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
+//                }
+//            });
+//            forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
+            moveToOtherActivity(PasswordResetActivity.class);
+        }
     }
 
     @Override
     public void onApiRequestBegin(ApiAction action) {
         if (action.equals(ApiAction.POST_AUTH)) {
-            showCustomProgress("Logging in, Please wait...");
+            showCustomProgress("Logging in...");
         } else {
             showCustomProgress("Sending request, Please wait...");
         }
@@ -160,7 +317,8 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         if (t instanceof HttpException) {
             if (action.equals(ApiAction.POST_AUTH) || action.equals(ApiAction.POST_FORGOT_PASSWORD)) {
                 final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
-                showConfirmDialog("", "Login Failed", apiError.getMessage(), "Close", "", null);
+//                showConfirmDialog("", "Login Failed", apiError.getMessage(), "Close", "", null);
+                showSnackbar(btnSignIn, apiError.getMessage());
             }
         }
     }

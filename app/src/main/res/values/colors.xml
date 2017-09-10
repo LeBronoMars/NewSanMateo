@@ -43,4 +43,18 @@
 
     <color name="yellow">#FFCC00</color>
     <color name="metro_orange">#da532c</color>
+    
+    <!-- new colors -->
+    <color name="transparent_20">#20FFFFFF</color>
+    <color name="transparent_70">#70FFFFFF</color>
+    <color name="transparent_dark_20">#20000000</color>
+    <color name="transparent_dark_70">#70000000</color>
+    <color name="btn_login">#00AEEF</color>
+    <color name="btn_login_pressed">#248AB5</color>
+    <color name="btn_sign_up">#549C39</color>
+    <color name="btn_sign_up_pressed">#428538</color>
+
+    <color name="status_bar_bg">#27317C</color>
+
+    <color name="alert_color">#F34235</color>
 </resources>

@@ -2,13 +2,19 @@
     <string name="app_name">1SANMATEO</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
+    <string name="password_reset">Password Reset</string>
     <string name="forgot_password">Forgot your password?</string>
+    <string name="forgot_password_caps">FORGOT YOUR PASSWORD?</string>
     <string name="forgot_password_header">Forgot Password</string>
     <string name="hint_your_email">Please enter your email</string>
 
     <!-- login dialog fragment -->
     <string name="email">Email</string>
     <string name="password">Password</string>
+
+    <!-- new login -->
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
 
     <!-- user registration dialog fragment -->
     <string name="registration">Registration</string>
@@ -25,6 +31,33 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="create_my_account">Create my account</string>
     <string name="select_gender">Select Gender</string>
+    <string name="email_address">Email Address</string>
+
+    <string name="alert_email">Invalid email address.</string>
+    <string name="alert_email_taken">Email address is already taken.</string>
+    <string name="email_taken_error">Email already taken</string>
+    <string name="alert_password_extra_char">Password contains invalid characters.</string>
+    <string name="alert_password_short">Password is too short.</string>
+    <string name="alert_password_long">Password is too long.</string>
+    <string name="alert_password_not_match">Password do not match.</string>
+    <string name="password_disclaimer">Password must be 8-12 characters long and contains letters and numbers only.</string>
+    <string name="password_confirm">Confirm your password by entering it again.</string>
+
+    <string name="registration_step_1">Step 1 of 2: Personal Information</string>
+    <string name="registration_step_2">Step 2 of 2: Account Information</string>
+    
+    <string name="registration_success_title">Congratulations!</string>
+    <string name="registration_success_content">Your account has been created. Click on the activation link which we have sent to your inbox to start using the app.</string>
+    <string name="registration_success_confirm">BACK TO LOGIN</string>
+    
+    <!-- new password reset-->
+    <string name="password_reset_sub_header">Enter your email address</string>
+    <string name="reset_password">reset password</string>
+    <string name="reset_password_title">Reset link sent</string>
+    <string name="reset_password_content">We have sent a password reset link to your inbox. Click this link to provide a new password for your account.</string>
+    <string name="reset_password_confirm">BACK TO LOGIN</string>
+
+    <string name="alert_no_such_email">Email address is not a registered account.</string>
 
     <!-- san mateo fragment header -->
     <string name="welcome_to">Welcome to</string>
