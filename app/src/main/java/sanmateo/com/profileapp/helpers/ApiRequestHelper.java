@@ -40,7 +40,7 @@ public class ApiRequestHelper {
 
     public void forgotPassword(final String email) {
         onApiRequestListener.onApiRequestBegin(ApiAction.POST_FORGOT_PASSWORD);
-        final Observable<GenericMessage> observable = apiInterface.forgotPassword(email);
+        final Observable<ResponseBody> observable = apiInterface.forgotPassword(email);
         handleObservableResult(ApiAction.POST_FORGOT_PASSWORD, observable);
     }
 

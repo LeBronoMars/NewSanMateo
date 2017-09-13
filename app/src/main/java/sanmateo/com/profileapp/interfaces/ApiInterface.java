@@ -49,7 +49,7 @@ public interface ApiInterface {
      * */
     @POST("/api/v1/forgot_password")
     @FormUrlEncoded
-    Observable<GenericMessage> forgotPassword(@Field("email") String email);
+    Observable<ResponseBody> forgotPassword(@Field("email") String email);
 
     /**
      * create user

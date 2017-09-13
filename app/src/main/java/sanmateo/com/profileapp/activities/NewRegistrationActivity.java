@@ -475,7 +475,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
-        showConfirmDialog("", getString(R.string.registration_success_title),
+        showNonCancelableConfirmDialog("", getString(R.string.registration_success_title),
                 getString(R.string.registration_success_content),
                 getString(R.string.registration_success_confirm), null, new OnConfirmDialogListener() {
                     @Override
