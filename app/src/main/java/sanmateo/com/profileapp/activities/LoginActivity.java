@@ -357,7 +357,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
     }
 
     private void moveToHome() {
-        startActivity(new Intent(this, HomeActivity.class));
+        startActivity(new Intent(this, NewHomeActivity.class));
         animateToLeft(this);
         finish();
     }
