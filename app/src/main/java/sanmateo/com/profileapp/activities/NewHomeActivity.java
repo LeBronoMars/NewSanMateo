@@ -36,6 +36,7 @@ import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.CustomNavMenuAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.fragments.ActionsDialogFragment;
 import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomBottomSheetDialogFragment;
 import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
@@ -168,7 +169,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @OnClick(R.id.fab_actions)
     public void showExtraActions() {
-        showToast("fab actions");
+        final ActionsDialogFragment fragment = ActionsDialogFragment.newInstance();
+        fragment.show(getFragmentManager(), "FAB ACTIONS");
     }
 
     @OnClick(R.id.iv_notify)

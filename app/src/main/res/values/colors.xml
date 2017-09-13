@@ -66,4 +66,7 @@
     <color name="alert_level_color">#FFEB3B</color>
     <color name="alarm_level_color">#FF4F00</color>
     <color name="critical_level_color">#CD2931</color>
+
+    <color name="text_action_blue">#2C378C</color>
+    <color name="text_action_red">#ff0000</color>
 </resources>

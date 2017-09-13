@@ -9,6 +9,15 @@
     <string name="forgot_password_header">Forgot Password</string>
     <string name="hint_your_email">Please enter your email</string>
     
+    <!-- actions label -->
+    <string name="action_message">I-text si Mayor</string>
+    <string name="action_file_incident">File Incident Report</string>
+    <string name="action_call_pnp">Call PNP</string>
+    <string name="action_call_fire_department">Call Fire Department</string>
+    <string name="action_call_icco">Call ICCO</string>
+    <string name="action_call_rescue">Call Rescue</string>
+    <string name="action_send_sos">Send SOS</string>
+
     <!-- login dialog fragment -->
     <string name="email">Email</string>
     <string name="password">Password</string>
