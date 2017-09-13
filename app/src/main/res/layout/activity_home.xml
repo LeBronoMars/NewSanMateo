@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/toolbar"
+            android:id="@+id/iv_toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_79sdp"
             android:src="@drawable/bg_appbar"
@@ -23,11 +23,18 @@
             android:layout_height="@dimen/status_bar_height"
             android:background="@color/transparent_dark_20"/>
 
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_56sdp"
-            android:layout_marginTop="@dimen/status_bar_height"
-            android:orientation="horizontal">
+            android:layout_below="@id/status_bar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"/>
 
             <ImageView
                 android:id="@+id/iv_burger"
@@ -76,7 +83,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:layout_marginTop="@dimen/status_bar_height">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -149,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@null"
-                android:dividerHeight="0dp"/>
+                android:dividerHeight="0dp" />
 
         </LinearLayout>
 
