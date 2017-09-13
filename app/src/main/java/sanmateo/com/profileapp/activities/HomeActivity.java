@@ -623,6 +623,7 @@ public class HomeActivity extends BaseActivity implements OnApiRequestListener, 
         fragment.show(getFragmentManager(), "sms");
     }
 
+
     @Override
     public void onBackPressed() {
         showConfirmDialog("", "Close App", "Are you sure you want to close the app?", "Yes", "No",

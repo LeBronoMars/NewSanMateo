@@ -24,8 +24,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import butterknife.BindDimen;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -36,6 +38,7 @@ import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomBottomSheetDialogFragment;
+import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
@@ -64,6 +67,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.iv_notify)
+    ImageView ivNotify;
 
     @BindView(R.id.navigationView)
     NavigationView navigationView;
@@ -107,6 +113,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @BindView(R.id.tv_water_level_reading_market)
     TextView tvWaterLevelReadingMarket;
+
+    @BindString(R.string.message_alert_notifications)
+    String headerAlertNotifications;
 
     @BindDimen(R.dimen._90sdp)
     int profilePicSize;
@@ -155,6 +164,41 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         tvWaterLevelStationBridge.setText("San Mateo Bridge");
         tvWaterLevelReadingMarket.setText("12 ft.");
         tvWaterLevelReadingBridge.setText("20 ft.");
+    }
+
+    @OnClick(R.id.fab_actions)
+    public void showExtraActions() {
+        showToast("fab actions");
+    }
+
+    @OnClick(R.id.iv_notify)
+    public void showNotifications() {
+        final ArrayList<String> menu = new ArrayList<>();
+        menu.add("Public Announcements");
+        menu.add("Water Level Monitoring");
+        final DisasterMgtMenuDialogFragment fragment = DisasterMgtMenuDialogFragment
+                .newInstance(headerAlertNotifications, menu);
+        fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
+            @Override
+            public void onSelectedMenu(int position) {
+//                if (tvNotification.isShown()) {
+//                    tvNotification.setVisibility(View.INVISIBLE);
+//                    PrefsHelper.setBoolean(HomeActivity.this, "has_notifications", false);
+//                }
+                fragment.dismiss();
+                if (position == 0) {
+                    moveToOtherActivity(PublicAnnouncementsActivity.class);
+                } else {
+                    moveToOtherActivity(WaterLevelMonitoringActivity.class);
+                }
+            }
+
+            @Override
+            public void onClose() {
+                fragment.dismiss();
+            }
+        });
+        fragment.show(getFragmentManager(), "show notifications");
     }
 
     public void initNavigationDrawer() {

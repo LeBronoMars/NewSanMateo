@@ -190,7 +190,7 @@
         </ScrollView>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btnSMS"
+            android:id="@+id/fab_actions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
