@@ -58,4 +58,12 @@
     <color name="fab_ripple">#3d49a5</color>
 
     <color name="alert_color">#F34235</color>
+    
+    <color name="dashboard_label_color">#A3A6c6</color>
+    
+    <!-- alert colors -->
+    <color name="below_level_color">#549C39</color>
+    <color name="alert_level_color">#FFEB3B</color>
+    <color name="alarm_level_color">#FF4F00</color>
+    <color name="critical_level_color">#CD2931</color>
 </resources>

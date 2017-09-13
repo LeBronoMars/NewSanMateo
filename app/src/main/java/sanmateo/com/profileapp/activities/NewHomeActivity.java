@@ -9,12 +9,15 @@ import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -83,6 +86,28 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.tv_profile_name)
     TextView tv_profile_name;
 
+    //water level
+    @BindView(R.id.tv_water_level_label)
+    TextView tvWaterLevelLabel;
+
+    @BindView(R.id.cv_water_level_bridge)
+    CardView cvWaterLevelBridge;
+
+    @BindView(R.id.tv_water_level_station_bridge)
+    TextView tvWaterLevelStationBridge;
+
+    @BindView(R.id.tv_water_level_reading_bridge)
+    TextView tvWaterLevelReadingBridge;
+
+    @BindView(R.id.cv_water_level_market)
+    CardView getCvWaterLevelMarket;
+
+    @BindView(R.id.tv_water_level_station_market)
+    TextView tvWaterLevelStationMarket;
+
+    @BindView(R.id.tv_water_level_reading_market)
+    TextView tvWaterLevelReadingMarket;
+
     @BindDimen(R.dimen._90sdp)
     int profilePicSize;
 
@@ -120,7 +145,16 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         } else {
             token = currentUserSingleton.getCurrentUser().getToken();
             initNavigationDrawer();
+            initDummyLabels(); //todo remove
         }
+    }
+
+    private void initDummyLabels() {
+        tvWaterLevelLabel.setText("Water Level as of 8:15pm, May 28, 2017");
+        tvWaterLevelStationMarket.setText("San Mateo Public Market");
+        tvWaterLevelStationBridge.setText("San Mateo Bridge");
+        tvWaterLevelReadingMarket.setText("12 ft.");
+        tvWaterLevelReadingBridge.setText("20 ft.");
     }
 
     public void initNavigationDrawer() {

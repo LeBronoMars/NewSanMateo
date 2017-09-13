@@ -4,5 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="status_bar_height">@dimen/_23sdp</dimen>
-    <dimen name="toolbar_title_size">@dimen/_20ssp</dimen>
+    <dimen name="toolbar_title_size">20sp</dimen>
 </resources>
