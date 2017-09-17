@@ -108,7 +108,7 @@
 
     <!-- call fire department -->
     <LinearLayout
-        android:id="@+id/ll_action_call_pnp"
+        android:id="@+id/ll_action_call_fire_department"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:orientation="horizontal"
@@ -141,7 +141,7 @@
 
     <!-- call icco -->
     <LinearLayout
-        android:id="@+id/ll_action_call_pnp"
+        android:id="@+id/ll_action_call_icco"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:orientation="horizontal"
@@ -174,7 +174,7 @@
 
     <!-- call rescue -->
     <LinearLayout
-        android:id="@+id/ll_action_call_pnp"
+        android:id="@+id/ll_action_call_rescue"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:orientation="horizontal"

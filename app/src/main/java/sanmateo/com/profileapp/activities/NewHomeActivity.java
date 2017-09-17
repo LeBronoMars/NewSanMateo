@@ -42,6 +42,7 @@ import sanmateo.com.profileapp.fragments.ActionsDialogFragment;
 import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomBottomSheetDialogFragment;
 import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
+import sanmateo.com.profileapp.fragments.ETextSiMayorDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
@@ -172,7 +173,58 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @OnClick(R.id.fab_actions)
     public void showExtraActions() {
         final ActionsDialogFragment fragment = ActionsDialogFragment.newInstance();
+        fragment.setOnActionSelectedListener(new ActionsDialogFragment.OnActionSelectedListener() {
+            @Override
+            public void onActionSelected(int position) {
+                switch (position) {
+                    case 0:
+                        textMayor();
+                        break;
+                    case 1:
+                        showToast("file incident");
+                        break;
+                    case 2:
+                        showToast("call PNP");
+                        break;
+                    case 3:
+                        showToast("call fire department");
+                        break;
+                    case 4:
+                        showToast("call ICCO");
+                        break;
+                    case 5:
+                        showToast("call rescue");
+                        break;
+                    case 6:
+                        showToast("send sos");
+                        break;
+                }
+            }
+        });
         fragment.show(getFragmentManager(), "FAB ACTIONS");
+    }
+
+    private void textMayor() {
+        final ETextSiMayorDialogFragment fragment = ETextSiMayorDialogFragment.newInstance();
+        fragment.setOnTextMayorListener(new ETextSiMayorDialogFragment.OnTextMayorListener() {
+            @Override
+            public void onSendText(String classification, String message) {
+                fragment.dismiss();
+                final StringBuilder builder = new StringBuilder();
+                builder.append("Citizen Concern\n\n");
+                builder.append("Classification : " + classification + "\n\n");
+                builder.append("Concern : " + message + "\n\n");
+                builder.append("Sent via San Mateo Profile App");
+                LogHelper.log("sms", "CONCERN ---> " + builder.toString());
+                sendSMS("09778397506", builder.toString(), true);
+            }
+
+            @Override
+            public void onCancel() {
+                fragment.dismiss();
+            }
+        });
+        fragment.show(getFragmentManager(), "sms");
     }
 
     @OnClick(R.id.iv_notify)
