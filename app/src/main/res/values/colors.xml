@@ -48,6 +48,7 @@
     <color name="transparent_20">#20FFFFFF</color>
     <color name="transparent_70">#70FFFFFF</color>
     <color name="transparent_dark_20">#20000000</color>
+    <color name="transparent_dark_25">#25000000</color>
     <color name="transparent_dark_70">#70000000</color>
     <color name="btn_login">#00AEEF</color>
     <color name="btn_login_pressed">#248AB5</color>
@@ -69,4 +70,6 @@
 
     <color name="text_action_blue">#2C378C</color>
     <color name="text_action_red">#ff0000</color>
+
+    <color name="read_more_color">#2C3786</color>
 </resources>

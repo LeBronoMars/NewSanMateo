@@ -118,6 +118,19 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.tv_water_level_reading_market)
     TextView tvWaterLevelReadingMarket;
 
+    //weather
+    @BindView(R.id.tv_weather_report_label)
+    TextView tvWeatherReportLabel;
+
+    @BindView(R.id.tv_weather_report_summary)
+    TextView tvWeatherReportSummary;
+
+    @BindView(R.id.tv_weather_title)
+    TextView tvWeatherTitle;
+
+    @BindView(R.id.tv_weather_temp)
+    TextView tvWeatherTemp;
+
     @BindString(R.string.message_alert_notifications)
     String headerAlertNotifications;
 
@@ -163,42 +176,46 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     }
 
     private void initDummyLabels() {
+        //water level
         tvWaterLevelLabel.setText("Water Level as of 8:15pm, May 28, 2017");
         tvWaterLevelStationMarket.setText("San Mateo Public Market");
         tvWaterLevelStationBridge.setText("San Mateo Bridge");
         tvWaterLevelReadingMarket.setText("12 ft.");
         tvWaterLevelReadingBridge.setText("20 ft.");
+
+        //incidents
+        tvWeatherReportLabel.setText("Weather Report");
+        tvWeatherReportSummary.setText("Partly cloudy to cloudy skies with rainshowers or thunderstorms will prevail over San Mateo bludasdasdasdasdasdasdasdsadsadasdsadas");
+        tvWeatherTitle.setText("Partly Cloudly");
+        tvWeatherTemp.setText("31" + "\u2103");
     }
 
     @OnClick(R.id.fab_actions)
     public void showExtraActions() {
         final ActionsDialogFragment fragment = ActionsDialogFragment.newInstance();
-        fragment.setOnActionSelectedListener(new ActionsDialogFragment.OnActionSelectedListener() {
-            @Override
-            public void onActionSelected(int position) {
-                switch (position) {
-                    case 0:
-                        textMayor();
-                        break;
-                    case 1:
-                        showToast("file incident");
-                        break;
-                    case 2:
-                        showToast("call PNP");
-                        break;
-                    case 3:
-                        showToast("call fire department");
-                        break;
-                    case 4:
-                        showToast("call ICCO");
-                        break;
-                    case 5:
-                        showToast("call rescue");
-                        break;
-                    case 6:
-                        showToast("send sos");
-                        break;
-                }
+        fragment.setOnActionSelectedListener(position -> {
+            switch (position) {
+                case 0:
+                    textMayor();
+                    break;
+                case 1:
+                    showToast("file incident");
+                    break;
+                case 2:
+                    showToast("call PNP");
+                    break;
+                case 3:
+                    showToast("call fire department");
+                    break;
+                case 4:
+                    showToast("call ICCO");
+                    break;
+                case 5:
+                    showToast("call rescue");
+                    break;
+                case 6:
+                    showToast("send sos");
+                    break;
             }
         });
         fragment.show(getFragmentManager(), "FAB ACTIONS");

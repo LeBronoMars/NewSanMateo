@@ -42,6 +42,7 @@
     <string name="create_my_account">Create my account</string>
     <string name="select_gender">Select Gender</string>
     <string name="email_address">Email Address</string>
+    <string name="read_more">READ MORE</string>
 
     <string name="alert_email">Invalid email address.</string>
     <string name="alert_email_taken">Email address is already taken.</string>
