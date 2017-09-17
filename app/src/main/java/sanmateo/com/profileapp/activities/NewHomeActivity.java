@@ -11,12 +11,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -36,6 +39,7 @@ import io.realm.Sort;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.CustomNavMenuAdapter;
+import sanmateo.com.profileapp.adapters.DashboardIncidentsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.ActionsDialogFragment;
@@ -96,6 +100,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.tv_profile_name)
     TextView tv_profile_name;
 
+    @BindView(R.id.sv_dashboard)
+    ScrollView svDashboard;
+
     //water level
     @BindView(R.id.tv_water_level_label)
     TextView tvWaterLevelLabel;
@@ -130,6 +137,13 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @BindView(R.id.tv_weather_temp)
     TextView tvWeatherTemp;
+
+    //incident
+    @BindView(R.id.tv_incident_label)
+    TextView tvIncidentLabel;
+
+    @BindView(R.id.rv_incidents)
+    RecyclerView rvIncidents;
 
     @BindString(R.string.message_alert_notifications)
     String headerAlertNotifications;
@@ -172,6 +186,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             token = currentUserSingleton.getCurrentUser().getToken();
             initNavigationDrawer();
             initDummyLabels(); //todo remove
+            svDashboard.scrollTo(0,0);
         }
     }
 
@@ -183,11 +198,19 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         tvWaterLevelReadingMarket.setText("12 ft.");
         tvWaterLevelReadingBridge.setText("20 ft.");
 
-        //incidents
+        //weather report
         tvWeatherReportLabel.setText("Weather Report");
         tvWeatherReportSummary.setText("Partly cloudy to cloudy skies with rainshowers or thunderstorms will prevail over San Mateo bludasdasdasdasdasdasdasdsadsadasdsadas");
         tvWeatherTitle.setText("Partly Cloudly");
         tvWeatherTemp.setText("31" + "\u2103");
+
+        //incident
+        tvIncidentLabel.setText("Incident Reports");
+
+        DashboardIncidentsAdapter adapter = new DashboardIncidentsAdapter(this);
+        rvIncidents.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvIncidents.setAdapter(adapter);
+        rvIncidents.scrollToPosition(0);
     }
 
     @OnClick(R.id.tv_read_more_weather)

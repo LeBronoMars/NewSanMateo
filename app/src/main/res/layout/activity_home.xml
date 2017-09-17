@@ -64,6 +64,7 @@
         </RelativeLayout>
 
         <ScrollView
+            android:id="@+id/sv_dashboard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/rl_custom_toolbar">
@@ -78,6 +79,9 @@
 
                 <include
                     layout="@layout/dashboard_weather_report"/>
+
+                <include
+                    layout="@layout/dashboard_incident" />
 
             </LinearLayout>
 
