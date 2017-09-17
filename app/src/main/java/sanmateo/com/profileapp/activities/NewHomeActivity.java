@@ -190,6 +190,11 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         tvWeatherTemp.setText("31" + "\u2103");
     }
 
+    @OnClick(R.id.tv_read_more_weather)
+    public void readMoreWeather() {
+        showToast("read more: weather report");
+    }
+
     @OnClick(R.id.fab_actions)
     public void showExtraActions() {
         final ActionsDialogFragment fragment = ActionsDialogFragment.newInstance();
