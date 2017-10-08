@@ -110,6 +110,18 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void setStatusBarColor(View statusBar) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+            resizeStatusBar(statusBar);
+        }
+    }
+
     private void resizeActionBar(LinearLayout actionBar, View statusBar) {
         int actionbarHeight = actionBar.getLayoutParams().height;
 
@@ -118,6 +130,12 @@ public class BaseActivity extends AppCompatActivity {
         actionBar.setPadding(0, getStatusBarHeight(), 0, 0);
         actionBar.invalidate();
 
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight());
+        statusBar.setLayoutParams(layoutParams);
+        statusBar.invalidate();
+    }
+
+    private void resizeStatusBar(View statusBar) {
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight());
         statusBar.setLayoutParams(layoutParams);
         statusBar.invalidate();

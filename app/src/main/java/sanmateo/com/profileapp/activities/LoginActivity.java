@@ -47,6 +47,9 @@ import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
  */
 public class LoginActivity extends BaseActivity implements OnApiRequestListener {
 
+    @BindView(R.id.status_bar)
+    View statusBar;
+
     @BindView(R.id.frameLayout)
     RelativeLayout frameLayout;
 
@@ -83,7 +86,7 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_login);
         unbinder = ButterKnife.bind(this);
-
+        setStatusBarColor(statusBar);
         if (!isNetworkAvailable() && realmHelper.findOne() == null) {
 //            showConfirmDialog("", "San Mateo Profile App", "Internet connection is required since there's " +
 //                            " no saved account. Please check your connection and try again.", "Close", null, null);
