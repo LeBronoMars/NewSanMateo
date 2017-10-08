@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -72,6 +73,12 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     private static final int SELECT_IMAGE = 1;
     private static final int CAPTURE_IMAGE = 2;
+
+    @BindView(R.id.rl_action_bar)
+    RelativeLayout rlActionBar;
+
+    @BindView(R.id.status_bar)
+    View statusBar;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -164,6 +171,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         unbinder = ButterKnife.bind(this);
+
+        setStatusBarColor(rlActionBar, statusBar);
 
         currentUserSingleton = CurrentUserSingleton.getInstance();
         apiRequestHelper = new ApiRequestHelper(this);

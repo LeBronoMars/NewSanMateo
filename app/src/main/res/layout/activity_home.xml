@@ -4,62 +4,62 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@android:color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_79sdp"
-            android:src="@drawable/bg_appbar"
-            android:scaleType="fitXY"/>
-
-        <View
-            android:id="@+id/status_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/status_bar_height"
-            android:background="@color/transparent_dark_20"/>
-
         <RelativeLayout
-            android:id="@+id/rl_custom_toolbar"
+            android:id="@+id/rl_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_56sdp"
-            android:layout_below="@id/status_bar">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+            <RelativeLayout
+                android:id="@+id/rl_action_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:visibility="invisible"/>
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/bg_appbar">
 
-            <ImageView
-                android:id="@+id/iv_burger"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_menu_48dp" />
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible"/>
 
-            <TextView
-                fontPath="fonts/Roboto-Medium.ttf"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/iv_burger"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:text="@string/home_dashboard"
-                android:gravity="center_vertical"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/toolbar_title_size" />
+                <ImageView
+                    android:id="@+id/iv_burger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_menu_48dp" />
 
-            <ImageView
-                android:id="@+id/iv_notify"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_notification_48dp"
-                android:layout_alignParentRight="true"/>
+                <TextView
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/iv_burger"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:text="@string/home_dashboard"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/toolbar_title_size" />
+
+                <ImageView
+                    android:id="@+id/iv_notify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_notification_48dp"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/transparent_dark_20"/>
 
         </RelativeLayout>
 
@@ -67,7 +67,7 @@
             android:id="@+id/sv_dashboard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/rl_custom_toolbar">
+            android:layout_below="@id/rl_toolbar">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,9 +107,7 @@
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:layout_marginTop="@dimen/status_bar_height">
+        android:layout_gravity="start">
 
         <LinearLayout
             android:layout_width="wrap_content"

@@ -98,7 +98,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    public void setStatusBarColor(LinearLayout actionBar, View statusBar) {
+    public void setStatusBarColor(ViewGroup actionBar, View statusBar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -122,7 +122,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    private void resizeActionBar(LinearLayout actionBar, View statusBar) {
+    private void resizeActionBar(ViewGroup actionBar, View statusBar) {
         int actionbarHeight = actionBar.getLayoutParams().height;
 
         RelativeLayout.LayoutParams actionBarParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, actionbarHeight + getStatusBarHeight());
