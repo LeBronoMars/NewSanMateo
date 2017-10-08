@@ -42,6 +42,12 @@ import sanmateo.com.profileapp.models.response.ApiError;
 public class NewRegistrationActivity extends BaseActivity implements OnItemSelectedListener,
         OnApiRequestListener{
 
+    @BindView(R.id.ll_action_bar)
+    LinearLayout llActionBar;
+
+    @BindView(R.id.status_bar)
+    View statusBar;
+
     @BindView(R.id.ll_account_information)
     LinearLayout llAccountInformation;
 
@@ -115,6 +121,7 @@ public class NewRegistrationActivity extends BaseActivity implements OnItemSelec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_signup);
         unbinder = ButterKnife.bind(this);
+        setStatusBarColor(llActionBar, statusBar);
         apiRequestHelper = new ApiRequestHelper(this);
 
         initGenderSpinner();
