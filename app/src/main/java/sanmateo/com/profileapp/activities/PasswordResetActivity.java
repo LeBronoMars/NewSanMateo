@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import butterknife.BindView;
@@ -37,6 +38,12 @@ import sanmateo.com.profileapp.models.response.ApiError;
 
 public class PasswordResetActivity extends BaseActivity implements OnApiRequestListener {
 
+    @BindView(R.id.ll_action_bar)
+    LinearLayout llActionBar;
+
+    @BindView(R.id.status_bar)
+    View statusBar;
+
     @BindView(R.id.frameLayout)
     RelativeLayout frameLayout;
 
@@ -59,6 +66,7 @@ public class PasswordResetActivity extends BaseActivity implements OnApiRequestL
         setContentView(R.layout.activity_password_reset);
         unbinder = ButterKnife.bind(this);
 
+        setStatusBarColor(llActionBar, statusBar);
         apiRequestHelper = new ApiRequestHelper(this);
         addEmailValidation();
     }
