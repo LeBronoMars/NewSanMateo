@@ -3,10 +3,20 @@
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="password_reset">Password Reset</string>
+    <string name="home_dashboard">Home: Dashboard</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="forgot_password_caps">FORGOT YOUR PASSWORD?</string>
     <string name="forgot_password_header">Forgot Password</string>
     <string name="hint_your_email">Please enter your email</string>
+    
+    <!-- actions label -->
+    <string name="action_message">I-text si Mayor</string>
+    <string name="action_file_incident">File Incident Report</string>
+    <string name="action_call_pnp">Call PNP</string>
+    <string name="action_call_fire_department">Call Fire Department</string>
+    <string name="action_call_icco">Call ICCO</string>
+    <string name="action_call_rescue">Call Rescue</string>
+    <string name="action_send_sos">Send SOS</string>
 
     <!-- login dialog fragment -->
     <string name="email">Email</string>
@@ -32,6 +42,7 @@
     <string name="create_my_account">Create my account</string>
     <string name="select_gender">Select Gender</string>
     <string name="email_address">Email Address</string>
+    <string name="read_more">READ MORE</string>
 
     <string name="alert_email">Invalid email address.</string>
     <string name="alert_email_taken">Email address is already taken.</string>

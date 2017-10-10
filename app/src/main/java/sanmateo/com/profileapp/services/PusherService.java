@@ -22,7 +22,7 @@ import java.util.HashMap;
 import sanmateo.com.profileapp.BuildConfig;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.activities.AlertLevelActivity;
-import sanmateo.com.profileapp.activities.HomeActivity;
+import sanmateo.com.profileapp.activities.NewHomeActivity;
 import sanmateo.com.profileapp.activities.PublicAnnouncementsActivity;
 import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.helpers.NotificationHelper;
@@ -51,7 +51,7 @@ public class PusherService extends Service {
         currentUserSingleton = CurrentUserSingleton.getInstance();
         incidentsSingleton = IncidentsSingleton.getInstance();
         /** start fore ground */
-        final Intent notificationIntent = new Intent(this, HomeActivity.class);
+        final Intent notificationIntent = new Intent(this, NewHomeActivity.class);
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

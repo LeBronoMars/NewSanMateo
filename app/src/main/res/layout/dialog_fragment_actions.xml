@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/_8sdp"
+    android:paddingBottom="@dimen/_8sdp"
+    android:gravity="left">
+
+    <!-- message si mayor -->
+    <LinearLayout
+        android:id="@+id/ll_action_message"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_message_24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_16sdp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_message"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_action_blue"/>
+
+    </LinearLayout>
+
+    <!-- file incident report -->
+    <LinearLayout
+        android:id="@+id/ll_action_file_incident"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_report_24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_16sdp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_file_incident"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_action_blue"/>
+
+    </LinearLayout>
+
+    <!-- call pnp -->
+    <LinearLayout
+        android:id="@+id/ll_action_call_pnp"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_call_24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_16sdp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_call_pnp"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_action_red"/>
+
+    </LinearLayout>
+
+    <!-- call fire department -->
+    <LinearLayout
+        android:id="@+id/ll_action_call_fire_department"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_call_24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_16sdp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_call_fire_department"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_action_red"/>
+
+    </LinearLayout>
+
+    <!-- call icco -->
+    <LinearLayout
+        android:id="@+id/ll_action_call_icco"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_call_24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_16sdp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_call_icco"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_action_red"/>
+
+    </LinearLayout>
+
+    <!-- call rescue -->
+    <LinearLayout
+        android:id="@+id/ll_action_call_rescue"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_call_24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_16sdp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_call_rescue"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_action_red"/>
+
+    </LinearLayout>
+
+    <!-- call rescue -->
+    <LinearLayout
+        android:id="@+id/ll_action_send_sos"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/_16sdp">
+
+        <RelativeLayout
+            android:layout_width="72dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_alert_24dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_16sdp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_send_sos"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_action_red"/>
+
+    </LinearLayout>
+    
+</LinearLayout>
