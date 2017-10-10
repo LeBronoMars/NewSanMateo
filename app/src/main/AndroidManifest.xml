@@ -144,6 +144,10 @@
         <activity android:name=".activities.DisasterManagementActivity"
             android:screenOrientation="portrait"/>
 
+        <!-- weather forecast -->
+        <activity android:name=".activities.WeatherForecastActivity"
+            android:screenOrientation="portrait"/>
+
         <service android:name=".services.PusherService" />
 
         <meta-data
