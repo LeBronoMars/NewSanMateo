@@ -224,6 +224,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @OnClick(R.id.tv_read_more_weather)
     public void readMoreWeather() {
+        startActivity(new Intent(this, WeatherForecastActivity.class));
+        animateToLeft(this);
         showToast("read more: weather report");
     }
 

@@ -1,10 +1,18 @@
 package sanmateo.com.profileapp.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.adapters.TabPagerAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 
 /**
@@ -13,6 +21,12 @@ import sanmateo.com.profileapp.base.BaseActivity;
 
 public class WeatherForecastActivity extends BaseActivity {
 
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
+
     private Unbinder unbinder;
 
     @Override
@@ -20,6 +34,22 @@ public class WeatherForecastActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_forecast);
         unbinder = ButterKnife.bind(this);
+
+        initTabs();
+    }
+
+    private void initTabs() {
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new Fragment());
+        fragments.add(new Fragment());
+        viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"TODAY'S WEATHER", "STORM WATCH"} ));
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(3);
+    }
+
+    @OnClick(R.id.iv_back)
+    public void goHome(){
+        onBackPressed();
     }
 
     @Override

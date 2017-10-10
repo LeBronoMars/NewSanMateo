@@ -146,6 +146,7 @@
 
         <!-- weather forecast -->
         <activity android:name=".activities.WeatherForecastActivity"
+            android:theme="@style/AppNoActionBar"
             android:screenOrientation="portrait"/>
 
         <service android:name=".services.PusherService" />
