@@ -229,6 +229,12 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         showToast("read more: weather report");
     }
 
+    @OnClick(R.id.tv_view_all_incidents)
+    public void viewAllIncidents() {
+        startActivity(new Intent(this, NewIncidentsActivity.class));
+        animateToLeft(this);
+    }
+
     @OnClick(R.id.fab_actions)
     public void showExtraActions() {
         final ActionsDialogFragment fragment = ActionsDialogFragment.newInstance();

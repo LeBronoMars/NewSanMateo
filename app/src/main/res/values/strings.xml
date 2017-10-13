@@ -9,7 +9,8 @@
     <string name="forgot_password_caps">FORGOT YOUR PASSWORD?</string>
     <string name="forgot_password_header">Forgot Password</string>
     <string name="hint_your_email">Please enter your email</string>
-    
+    <string name="view_all">VIEW ALL</string>
+
     <!-- actions label -->
     <string name="action_message">I-text si Mayor</string>
     <string name="action_file_incident">File Incident Report</string>

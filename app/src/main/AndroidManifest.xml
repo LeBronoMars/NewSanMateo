@@ -80,6 +80,10 @@
         <activity android:name=".activities.IncidentsActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activities.NewIncidentsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar"/>
+
         <!-- map activity -->
         <activity android:name=".activities.MapActivity"
             android:screenOrientation="portrait" />
