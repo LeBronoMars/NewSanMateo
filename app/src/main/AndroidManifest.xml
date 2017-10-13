@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppNoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -36,7 +36,7 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".activities.NewHomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppNoActionBar"
             android:screenOrientation="portrait" />
 
         <!-- registration activity -->
@@ -46,13 +46,13 @@
 
         <!-- new registration activity -->
         <activity android:name=".activities.NewRegistrationActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppNoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
         <!-- new password reset activity -->
         <activity android:name=".activities.PasswordResetActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:theme="@style/AppNoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
@@ -142,6 +142,11 @@
 
         <!-- disaster management activity -->
         <activity android:name=".activities.DisasterManagementActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- weather forecast -->
+        <activity android:name=".activities.WeatherForecastActivity"
+            android:theme="@style/AppNoActionBar"
             android:screenOrientation="portrait"/>
 
         <service android:name=".services.PusherService" />

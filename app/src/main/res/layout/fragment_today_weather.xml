@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_bg_weather"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_day3"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="136dp">
+
+            <ImageView
+                android:id="@+id/iv_weather_icon"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/day13"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@id/iv_weather_icon">
+
+                <TextView
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:id="@+id/tv_weather_report_summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    fontPath="fonts/Roboto-Regular.ttf"
+                    android:id="@+id/tv_heat_index"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:id="@+id/tv_temperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:textSize="44sp"
+                    android:textColor="@android:color/white"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Humidity"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_humidity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="UV Index"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_uv_index"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Wind Speed"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_wind_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Cloud Cover"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_cloud_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Winds Form"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_winds_form"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Wind Gusts"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_wind_gusts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Dew Point"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_dew_point"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Pressure"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_pressure"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        fontPath="fonts/Roboto-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:text="Visibility"
+                        android:textColor="@android:color/white"
+                        android:layout_marginTop="16dp"/>
+
+                    <TextView
+                        fontPath="fonts/Roboto-Bold.ttf"
+                        android:id="@+id/tv_visibility"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

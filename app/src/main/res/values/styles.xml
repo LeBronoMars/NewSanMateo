@@ -20,6 +20,10 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="AppNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/status_bar_bg_2</item>
+    </style>
+
 
     <!-- dialog animation -->
     <style name="dialog_animation">

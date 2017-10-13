@@ -56,6 +56,7 @@
     <color name="btn_sign_up_pressed">#428538</color>
 
     <color name="status_bar_bg">#27317C</color>
+    <color name="status_bar_bg_2">#212A6B</color>
     <color name="fab_ripple">#3d49a5</color>
 
     <color name="alert_color">#F34235</color>
@@ -72,4 +73,5 @@
     <color name="text_action_red">#ff0000</color>
 
     <color name="read_more_color">#2C3786</color>
+    <color name="white_70">#70FFFFFF</color>
 </resources>

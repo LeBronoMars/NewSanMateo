@@ -2,6 +2,7 @@
     <string name="app_name">1SANMATEO</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
+    <string name="weather_forecast">Weather Forecast</string>
     <string name="password_reset">Password Reset</string>
     <string name="home_dashboard">Home: Dashboard</string>
     <string name="forgot_password">Forgot your password?</string>
