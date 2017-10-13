@@ -236,7 +236,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     private void initIncidentsAdapter(ArrayList<Incident> incidents) {
         adapter = new DashboardIncidentsAdapter(this, incidents);
         adapter.setOnIncidentListener(incident -> {
-            startActivity(new Intent(NewHomeActivity.this, IncidentDetailActivity.class));
+            Intent intent = new Intent(NewHomeActivity.this, IncidentDetailActivity.class);
+            intent.putExtra("incident", incident);
+            startActivity(intent);
             animateToLeft(NewHomeActivity.this);
         });
         rvIncidents.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

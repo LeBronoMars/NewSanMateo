@@ -5,6 +5,7 @@
     <string name="weather_forecast">Weather Forecast</string>
     <string name="password_reset">Password Reset</string>
     <string name="home_dashboard">Home: Dashboard</string>
+    <string name="incident_report">Incident Report</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="forgot_password_caps">FORGOT YOUR PASSWORD?</string>
     <string name="forgot_password_header">Forgot Password</string>
