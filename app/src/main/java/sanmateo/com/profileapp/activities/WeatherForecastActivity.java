@@ -14,6 +14,7 @@ import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.TabPagerAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.fragments.TodayWeatherFragment;
 
 /**
  * Created by USER on 10/10/2017.
@@ -40,7 +41,7 @@ public class WeatherForecastActivity extends BaseActivity {
 
     private void initTabs() {
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new Fragment());
+        fragments.add(TodayWeatherFragment.newInstance());
         fragments.add(new Fragment());
         viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"TODAY'S WEATHER", "STORM WATCH"} ));
         tabLayout.setupWithViewPager(viewPager);
