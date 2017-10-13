@@ -14,6 +14,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -62,8 +63,10 @@ import sanmateo.com.profileapp.models.response.Announcement;
 import sanmateo.com.profileapp.models.response.ApiError;
 import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
+import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
+import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 
 /**
  * Created by USER on 9/13/2017.
@@ -166,6 +169,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     private ApiRequestHelper apiRequestHelper;
     private String token;
 
+    private ArrayList<Incident> incidents;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,8 +198,10 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
                     });
         } else {
             token = currentUserSingleton.getCurrentUser().getToken();
+
             initNavigationDrawer();
             initDummyLabels(); //todo remove
+            initIncidents();
             svDashboard.scrollTo(0,0);
         }
     }
@@ -216,7 +223,18 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         //incident
         tvIncidentLabel.setText("Incident Reports");
 
-        DashboardIncidentsAdapter adapter = new DashboardIncidentsAdapter(this);
+    }
+
+    private DashboardIncidentsAdapter adapter;
+
+    private void initIncidents() {
+        incidents = new ArrayList<>();
+        apiRequestHelper.getAllIncidents(token, 0, null, "active");
+        initIncidentsAdapter(incidents);
+    }
+
+    private void initIncidentsAdapter(ArrayList<Incident> incidents) {
+        adapter = new DashboardIncidentsAdapter(this, incidents);
         rvIncidents.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvIncidents.setAdapter(adapter);
         rvIncidents.scrollToPosition(0);
@@ -511,6 +529,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             showCustomProgress("Changing password, Please wait...");
         } else if (action.equals(ApiAction.PUT_CHANGE_PROFILE_PIC)) {
             showCustomProgress("Changing your profile pic, Please wait...");
+        } else if (action.equals(ApiAction.GET_INCIDENTS)) {
+            showCustomProgress("Fetching incidents, Please wait...");
         }
     }
 
@@ -564,6 +584,12 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
             PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
                     profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
+
+        } else if (action.equals(ApiAction.GET_INCIDENTS)) {
+            incidents = (ArrayList<Incident>) result;
+            initIncidentsAdapter(incidents);
+//            adapter.notifyDataSetChanged();
+//            Loini
 
         }
 

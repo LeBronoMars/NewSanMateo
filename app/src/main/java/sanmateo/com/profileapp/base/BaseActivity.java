@@ -361,6 +361,10 @@ public class BaseActivity extends AppCompatActivity {
         return new SimpleDateFormat("EEE, yyyy-MM-dd hh:mm a");
     }
 
+    public SimpleDateFormat getTime() {
+        return new SimpleDateFormat("hh:mm a");
+    }
+
     public PrettyTime getPrettyTime() {
         return new PrettyTime();
     }

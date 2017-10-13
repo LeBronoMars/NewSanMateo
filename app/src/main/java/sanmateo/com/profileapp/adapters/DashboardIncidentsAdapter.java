@@ -1,9 +1,8 @@
 package sanmateo.com.profileapp.adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +10,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.models.response.Incident;
+import sanmateo.com.profileapp.singletons.PicassoSingleton;
 
 /**
  * Created by USER on 9/17/2017.
@@ -26,9 +29,13 @@ import sanmateo.com.profileapp.base.BaseActivity;
 public class DashboardIncidentsAdapter extends RecyclerView.Adapter<DashboardIncidentsAdapter.ViewHolder>{
 
     private Context context;
+    private ArrayList<Incident> incidents;
+    private BaseActivity activity;
 
-    public DashboardIncidentsAdapter(Context context) {
+    public DashboardIncidentsAdapter(Context context, ArrayList<Incident> incidents) {
         this.context = context;
+        this.activity = (BaseActivity) context;
+        this.incidents = incidents;
     }
 
     @Override
@@ -40,22 +47,24 @@ public class DashboardIncidentsAdapter extends RecyclerView.Adapter<DashboardInc
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.tvIncidentTime.setText("9:45 am");
-        holder.tvIncidentTitle.setText("Traffic Report");
-        int imageDrawable = R.drawable.image_1;
-        switch (position) {
-            case 0:
-                imageDrawable = R.drawable.image_1;
-                break;
-            case 1:
-                imageDrawable = R.drawable.image_2;
-                break;
-            case 2:
-                imageDrawable = R.drawable.image_3;
-                break;
+        Incident incident = incidents.get(position);
+        try {
+            final Date dateReported = activity.getDateFormatter().parse(incident.getIncidentDateReported());
+            final Calendar calendar = Calendar.getInstance();
+            calendar.setTime(dateReported);
+            holder.tvIncidentTime.setText(activity.getTime().format(calendar.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        holder.ivIncident.setImageDrawable(ContextCompat.getDrawable(context, imageDrawable));
-        holder.tvIncidentSummray.setText("One lane along General Luna is closed due to an accident involving a UV Express anddsadsadsadsadsadsadsadasdsasadasdas");
+        holder.tvIncidentTitle.setText(incident.getIncidentType());
+        if (!incident.getImages().isEmpty()) {
+            PicassoSingleton.getInstance().getPicasso().load(incident.getImages())
+                    .placeholder(R.drawable.placeholder_image)
+                    .centerCrop()
+                    .fit()
+                    .into(holder.ivIncident);
+        }
+        holder.tvIncidentSummray.setText(incident.getIncidentDescription());
 
         holder.tvReadMoreIncident.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +76,7 @@ public class DashboardIncidentsAdapter extends RecyclerView.Adapter<DashboardInc
 
     @Override
     public int getItemCount() {
-        return 3;
+        return incidents.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
