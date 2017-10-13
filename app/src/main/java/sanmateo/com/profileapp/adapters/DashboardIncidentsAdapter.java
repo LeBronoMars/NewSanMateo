@@ -31,6 +31,7 @@ public class DashboardIncidentsAdapter extends RecyclerView.Adapter<DashboardInc
     private Context context;
     private ArrayList<Incident> incidents;
     private BaseActivity activity;
+    private OnIncidentListener onIncidentListener;
 
     public DashboardIncidentsAdapter(Context context, ArrayList<Incident> incidents) {
         this.context = context;
@@ -47,7 +48,7 @@ public class DashboardIncidentsAdapter extends RecyclerView.Adapter<DashboardInc
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Incident incident = incidents.get(position);
+        final Incident incident = incidents.get(position);
         try {
             final Date dateReported = activity.getDateFormatter().parse(incident.getIncidentDateReported());
             final Calendar calendar = Calendar.getInstance();
@@ -66,10 +67,9 @@ public class DashboardIncidentsAdapter extends RecyclerView.Adapter<DashboardInc
         }
         holder.tvIncidentSummray.setText(incident.getIncidentDescription());
 
-        holder.tvReadMoreIncident.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((BaseActivity) context).showToast("read more: " + holder.getAdapterPosition());
+        holder.tvReadMoreIncident.setOnClickListener(view -> {
+            if (onIncidentListener != null) {
+                onIncidentListener.onIncidentSelected(incident);
             }
         });
     }
@@ -103,5 +103,13 @@ public class DashboardIncidentsAdapter extends RecyclerView.Adapter<DashboardInc
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnIncidentListener {
+        void onIncidentSelected(final Incident incident);
+    }
+
+    public void setOnIncidentListener(OnIncidentListener onIncidentListener) {
+        this.onIncidentListener = onIncidentListener;
     }
 }

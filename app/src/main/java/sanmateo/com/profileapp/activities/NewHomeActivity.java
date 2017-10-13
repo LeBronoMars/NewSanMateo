@@ -235,6 +235,10 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     private void initIncidentsAdapter(ArrayList<Incident> incidents) {
         adapter = new DashboardIncidentsAdapter(this, incidents);
+        adapter.setOnIncidentListener(incident -> {
+            startActivity(new Intent(NewHomeActivity.this, IncidentDetailActivity.class));
+            animateToLeft(NewHomeActivity.this);
+        });
         rvIncidents.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvIncidents.setAdapter(adapter);
         rvIncidents.scrollToPosition(0);
@@ -588,15 +592,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         } else if (action.equals(ApiAction.GET_INCIDENTS)) {
             incidents = (ArrayList<Incident>) result;
             initIncidentsAdapter(incidents);
-//            adapter.notifyDataSetChanged();
-//            Loini
-
         }
-
-//        if (!action.equals(ApiAction.PUT_CHANGE_PW)) {
-//            rvHomeMenu.getAdapter().notifyDataSetChanged();
-//            rvHomeMenu.smoothScrollToPosition(0);
-//        }
     }
 
     @Override
