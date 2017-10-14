@@ -15,6 +15,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.fragments.IncidentAddImageFragment;
 import sanmateo.com.profileapp.fragments.IncidentFilingFragment;
 
 /**
@@ -60,6 +61,25 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @OnClick(R.id.iv_back)
     public void goBack() {
         onBackPressed();
+    }
+
+    @OnClick(R.id.iv_capture)
+    public void addImage() {
+        IncidentAddImageFragment incidentAddImageFragment = IncidentAddImageFragment.newInstance();
+        incidentAddImageFragment.setOnAddIncidentImageListener(new IncidentAddImageFragment.OnAddIncidentImageListener() {
+            @Override
+            public void captureImage() {
+                incidentAddImageFragment.dismiss();
+                showToast("capture image");
+            }
+
+            @Override
+            public void addImageFromGallery() {
+                incidentAddImageFragment.dismiss();
+                showToast("select image");
+            }
+        });
+        incidentAddImageFragment.show(getFragmentManager(), "ADD_IMAGE");
     }
 
     @Override
