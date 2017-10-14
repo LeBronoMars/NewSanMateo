@@ -268,7 +268,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
                     textMayor();
                     break;
                 case 1:
-                    showToast("file incident");
+                    startActivity(new Intent(this, FileIncidentActivity.class));
+                    animateToLeft(this);
                     break;
                 case 2:
                     showToast("call PNP");

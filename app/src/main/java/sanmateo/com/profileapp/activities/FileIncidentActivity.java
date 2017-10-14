@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,6 +15,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.fragments.IncidentFilingFragment;
 
 /**
  * Created by USER on 10/14/2017.
@@ -33,9 +32,6 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @BindView(R.id.status_bar)
     View statusBar;
 
-    @BindView(R.id.spinner_type)
-    Spinner spinnerType;
-
     @BindView(R.id.tv_filing_type)
     TextView tvFilingType;
 
@@ -45,23 +41,25 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         setContentView(R.layout.activity_file_incident);
         unbinder = ButterKnife.bind(this);
         setStatusBarColor(llActionBar, statusBar);
-
-        initFilingIncidentType();
-    }
-
-    private void initFilingIncidentType() {
-        incidentFilingList.add(getString(R.string.online_mode));
-        incidentFilingList.add(getString(R.string.sms_mode));
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.row_spinner,
-                incidentFilingList);
-        adapter.setDropDownViewResource(R.layout.row_spinner_dropdown);
-        spinnerType.setOnItemSelectedListener(this);
-        spinnerType.setAdapter(adapter);
     }
 
     @OnClick(R.id.rl_filing_type)
     public void clickSelection(){
-        spinnerType.performClick();
+        IncidentFilingFragment filingFragment = IncidentFilingFragment.newInstance();
+        filingFragment.setOnFilingTypeListener(type -> {
+            setFilingType(type);
+            filingFragment.dismiss();
+        });
+        filingFragment.show(getFragmentManager(), "FILE_INCIDENT");
+    }
+
+    private void setFilingType(final String type) {
+        tvFilingType.setText(type);
+    }
+
+    @OnClick(R.id.iv_back)
+    public void goBack() {
+        onBackPressed();
     }
 
     @Override

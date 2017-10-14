@@ -30,14 +30,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_20sdp">
 
-                <Spinner
-                    android:id="@+id/spinner_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:dropDownWidth="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:visibility="invisible"/>
-
                 <TextView
                     fontPath="fonts/Roboto-Medium.ttf"
                     android:id="@+id/tv_filing_type"
