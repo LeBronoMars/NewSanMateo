@@ -17,6 +17,7 @@ import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.fragments.IncidentAddImageFragment;
 import sanmateo.com.profileapp.fragments.IncidentFilingFragment;
+import sanmateo.com.profileapp.fragments.SelectIncidentFragment;
 
 /**
  * Created by USER on 10/14/2017.
@@ -35,6 +36,9 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     @BindView(R.id.tv_filing_type)
     TextView tvFilingType;
+
+    @BindView(R.id.tv_incident_type)
+    TextView tvIncidentType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,36 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
             }
         });
         incidentAddImageFragment.show(getFragmentManager(), "ADD_IMAGE");
+    }
+
+    @OnClick(R.id.iv_select_incident_type)
+    public void selectIncidentType() {
+        SelectIncidentFragment selectIncidentFragment = SelectIncidentFragment.newInstance();
+        selectIncidentFragment.setOnIncidentTypeListener(index -> {
+            selectIncidentFragment.dismiss();
+            setIncidentSelection(index);
+        });
+        selectIncidentFragment.show(getFragmentManager(), "SELECT_INCIDENT");
+    }
+
+    private void setIncidentSelection(final int index) {
+        switch (index) {
+            case 0:
+                tvIncidentType.setText(getString(R.string.traffic_road));
+                break;
+            case 1:
+                tvIncidentType.setText(getString(R.string.solid_waste));
+                break;
+            case 2:
+                tvIncidentType.setText(getString(R.string.flooding));
+                break;
+            case 3:
+                tvIncidentType.setText(getString(R.string.fire));
+                break;
+            case 4:
+                tvIncidentType.setText(getString(R.string.miscellaneous));
+                break;
+        }
     }
 
     @Override

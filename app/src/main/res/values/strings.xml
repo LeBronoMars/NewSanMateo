@@ -15,6 +15,13 @@
     <string name="forgot_password_header">Forgot Password</string>
     <string name="hint_your_email">Please enter your email</string>
     <string name="view_all">VIEW ALL</string>
+    
+    <!-- incident types -->
+    <string name="traffic_road">Traffic/Road</string>
+    <string name="solid_waste">Solid Waste</string>
+    <string name="flooding">Flooding</string>
+    <string name="fire">Fire</string>
+    <string name="miscellaneous">Miscellaneous</string>
 
     <!-- actions label -->
     <string name="action_message">I-text si Mayor</string>

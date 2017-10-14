@@ -71,4 +71,43 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv_incident_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_camera_24dp"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:id="@+id/tv_incident_type"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/traffic_road"
+            android:gravity="center_vertical"
+            android:textColor="@color/read_more_color"
+            android:textSize="14sp"
+            android:layout_marginLeft="24dp"/>
+
+        <ImageView
+            android:id="@+id/iv_select_incident_type"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_down_48dp"
+            android:layout_marginLeft="16dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
 </LinearLayout>
