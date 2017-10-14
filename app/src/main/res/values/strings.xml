@@ -4,6 +4,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="weather_forecast">Weather Forecast</string>
     <string name="password_reset">Password Reset</string>
+    <string name="online_mode">Online Mode</string>
+    <string name="sms_mode">SMS Mode</string>
     <string name="home_dashboard">Home: Dashboard</string>
     <string name="incident_report">Incident Report</string>
     <string name="forgot_password">Forgot your password?</string>

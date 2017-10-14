@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rl_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_appbar">
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_back" />
+
+            <RelativeLayout
+                android:id="@+id/rl_filing_type"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_20sdp">
+
+                <Spinner
+                    android:id="@+id/spinner_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:dropDownWidth="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible"/>
+
+                <TextView
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:id="@+id/tv_filing_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/online_mode"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/toolbar_title_size" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_filing_type"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/ic_arrow_down_5dp"/>
+
+            </RelativeLayout>
+
+
+
+            <ImageView
+                android:id="@+id/iv_capture"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_camera_48dp" />
+
+            <ImageView
+                android:id="@+id/iv_send"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_send_48dp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/status_bar"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/transparent_dark_20"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
