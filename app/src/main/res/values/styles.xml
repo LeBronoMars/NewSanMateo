@@ -22,6 +22,7 @@
 
     <style name="AppNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/status_bar_bg_2</item>
+        <item name="colorAccent">@color/status_bar_bg</item>
     </style>
 
 

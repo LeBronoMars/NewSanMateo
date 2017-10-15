@@ -84,6 +84,7 @@
             android:layout_height="25dp"
             android:src="@drawable/ic_camera_24dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
             android:visibility="gone"/>
 
         <TextView
@@ -96,7 +97,7 @@
             android:gravity="center_vertical"
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp"
-            android:layout_marginLeft="24dp"/>
+            android:layout_marginLeft="16dp"/>
 
         <ImageView
             android:id="@+id/iv_select_incident_type"
@@ -117,29 +118,30 @@
         android:layout_height="48dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_camera_24dp"
-            android:layout_marginLeft="16dp"/>
+        
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="16dp" />
 
         <TextView
             fontPath="fonts/Roboto-Medium.ttf"
+            android:id="@+id/tv_location"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="@string/traffic_road"
+            android:text="@string/detecting_location"
             android:gravity="center_vertical"
-            android:textColor="@color/read_more_color"
-            android:textSize="14sp"
-            android:layout_marginLeft="24dp"/>
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"/>
 
         <ImageView
-            android:id="@+id/iv_select_incident_type"
+            android:id="@+id/iv_locator"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_arrow_down_48dp"
+            android:src="@drawable/ic_location_48dp"
+            android:alpha=".5"
             android:layout_marginLeft="16dp"/>
 
     </LinearLayout>

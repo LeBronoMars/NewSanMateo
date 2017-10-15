@@ -15,7 +15,8 @@
     <string name="forgot_password_header">Forgot Password</string>
     <string name="hint_your_email">Please enter your email</string>
     <string name="view_all">VIEW ALL</string>
-    
+    <string name="detecting_location">Detecting your location...</string>
+
     <!-- incident types -->
     <string name="select_incident">Select an Incident Type</string>
     <string name="traffic_road">Traffic/Road</string>
