@@ -108,6 +108,7 @@ dependencies {
     compile "com.afollestad.material-dialogs:core:$rootProject.ext.materialDialogCoreVersion"
     compile "org.ocpsoft.prettytime:prettytime:$rootProject.ext.prettyTimeVersion"
     compile "com.google.android.gms:play-services-maps:$rootProject.ext.playServicesVersion"
+    compile "com.google.android.gms:play-services-location:$rootProject.ext.playServicesVersion"
     compile "de.hdodenhof:circleimageview:$rootProject.ext.circleImageViewVersion"
     compile "com.pusher:pusher-java-client:$rootProject.ext.pusherVersion"
     compile "com.facebook.android:facebook-android-sdk:$rootProject.ext.facebookVersion"

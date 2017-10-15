@@ -1,13 +1,30 @@
 package sanmateo.com.profileapp.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -25,7 +42,8 @@ import sanmateo.com.profileapp.fragments.SelectIncidentFragment;
  * Created by USER on 10/14/2017.
  */
 
-public class FileIncidentActivity extends BaseActivity implements OnItemSelectedListener{
+public class FileIncidentActivity extends BaseActivity implements OnItemSelectedListener,
+        OnConnectionFailedListener, ConnectionCallbacks, LocationListener{
 
     private Unbinder unbinder;
     private ArrayList<String> incidentFilingList = new ArrayList<>();
@@ -45,12 +63,46 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @BindView(R.id.iv_incident_icon)
     ImageView ivIncidentIcon;
 
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+
+    @BindView(R.id.tv_location)
+    TextView tvLocation;
+
+    @BindView(R.id.iv_locator)
+    ImageView ivLocator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_incident);
         unbinder = ButterKnife.bind(this);
         setStatusBarColor(llActionBar, statusBar);
+
+        ivLocator.getDrawable().setAlpha(128);
+
+        buildGoogleApiClient();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
+    }
+
+    private GoogleApiClient googleApiClient;
+
+    synchronized void buildGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
     }
 
     @OnClick(R.id.rl_filing_type)
@@ -133,6 +185,9 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         if (unbinder != null) {
             unbinder.unbind();
         }
+        if (googleApiClient != null) {
+            googleApiClient.disconnect();
+        }
     }
 
     @Override
@@ -143,5 +198,53 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(3000); // update location every 3 seconds
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+        Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        if (location != null) {
+            progressBar.setVisibility(View.GONE);
+            tvLocation.setTextColor(ContextCompat.getColor(this, R.color.read_more_color));
+            tvLocation.setText(location.getLatitude() + "," +location.getLongitude());
+            ivLocator.getDrawable().setAlpha(255);
+        }
+    }
+
+    @OnClick(R.id.iv_send)
+    public void reportIncident() {
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d("lokal", "location: " + location);
     }
 }
