@@ -21,6 +21,8 @@ import sanmateo.com.profileapp.fragments.IncidentReportFragment;
 import sanmateo.com.profileapp.fragments.TodayWeatherFragment;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
+import sanmateo.com.profileapp.models.response.Incident;
+import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 
 /**
  * Created by USER on 10/13/2017.
@@ -51,6 +53,7 @@ public class NewIncidentsActivity extends BaseActivity implements OnApiRequestLi
         unbinder = ButterKnife.bind(this);
 
         initTabs();
+        fetchIncidents();
     }
 
     private void initTabs() {
@@ -104,6 +107,12 @@ public class NewIncidentsActivity extends BaseActivity implements OnApiRequestLi
        tvTabName.setText(REPORT_PREFIX + tabLabels[position]);
     }
 
+    private void fetchIncidents() {
+        token = CurrentUserSingleton.getInstance().getCurrentUser().getToken();
+        apiRequestHelper = new ApiRequestHelper(this);
+        apiRequestHelper.getAllIncidents(token, 0, null, "active");
+    }
+
     @OnClick(R.id.iv_report)
     public void fileIncident() {
         startActivity(new Intent(this, FileIncidentActivity.class));
@@ -125,16 +134,18 @@ public class NewIncidentsActivity extends BaseActivity implements OnApiRequestLi
 
     @Override
     public void onApiRequestBegin(ApiAction action) {
-
+        showCustomProgress("Fetching incidents, Please wait...");
     }
 
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
-
+        dismissCustomProgress();
+        showToast("size: " + ((ArrayList<Incident>) result).size());
     }
 
     @Override
     public void onApiRequestFailed(ApiAction action, Throwable t) {
-
+        dismissCustomProgress();
+        showToast("failed: " + t.getMessage());
     }
 }
