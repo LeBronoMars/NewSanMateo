@@ -17,6 +17,7 @@
     <string name="view_all">VIEW ALL</string>
     
     <!-- incident types -->
+    <string name="select_incident">Select an Incident Type</string>
     <string name="traffic_road">Traffic/Road</string>
     <string name="solid_waste">Solid Waste</string>
     <string name="flooding">Flooding</string>

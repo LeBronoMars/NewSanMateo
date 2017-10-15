@@ -1,9 +1,11 @@
 package sanmateo.com.profileapp.activities;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,6 +41,9 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     @BindView(R.id.tv_incident_type)
     TextView tvIncidentType;
+
+    @BindView(R.id.iv_incident_icon)
+    ImageView ivIncidentIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +95,16 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     public void selectIncidentType() {
         SelectIncidentFragment selectIncidentFragment = SelectIncidentFragment.newInstance();
         selectIncidentFragment.setOnIncidentTypeListener(index -> {
+            activateIncidentType();
             selectIncidentFragment.dismiss();
             setIncidentSelection(index);
         });
         selectIncidentFragment.show(getFragmentManager(), "SELECT_INCIDENT");
+    }
+
+    private void activateIncidentType() {
+        ivIncidentIcon.setVisibility(View.VISIBLE);
+        tvIncidentType.setTextColor(ContextCompat.getColor(this, R.color.read_more_color));
     }
 
     private void setIncidentSelection(final int index) {
