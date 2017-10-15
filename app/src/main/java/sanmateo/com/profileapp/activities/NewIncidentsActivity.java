@@ -64,11 +64,13 @@ public class NewIncidentsActivity extends BaseActivity {
         for (int i = 0; i < fragments.size(); i++) {
             tabLayout.getTabAt(i).setIcon(iconList[i]);
         }
+        setHighlight(0);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 updateTabLabel(position);
+                setHighlight(position);
             }
 
             @Override
@@ -82,6 +84,13 @@ public class NewIncidentsActivity extends BaseActivity {
             }
         });
         viewPager.setOffscreenPageLimit(fragments.size());
+    }
+
+    private void setHighlight(int position) {
+        for (int i = 0; i < 5; i++) {
+            int alpha = i == position ? 255 : 128;
+            tabLayout.getTabAt(i).getIcon().setAlpha(alpha);
+        }
     }
 
     private void updateTabLabel(final int position) {
