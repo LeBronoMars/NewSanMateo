@@ -16,6 +16,7 @@
     <string name="hint_your_email">Please enter your email</string>
     <string name="view_all">VIEW ALL</string>
     <string name="detecting_location">Detecting your location...</string>
+    <string name="incident_offline">You are offline. Please connect to the internet to load content.</string>
 
     <!-- incident types -->
     <string name="select_incident">Select an Incident Type</string>

@@ -16,17 +16,24 @@ import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.TabPagerAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.fragments.IncidentReportFragment;
 import sanmateo.com.profileapp.fragments.TodayWeatherFragment;
+import sanmateo.com.profileapp.helpers.ApiRequestHelper;
+import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 
 /**
  * Created by USER on 10/13/2017.
  */
 
-public class NewIncidentsActivity extends BaseActivity {
+public class NewIncidentsActivity extends BaseActivity implements OnApiRequestListener{
 
     private Unbinder unbinder;
     private static final String REPORT_PREFIX = "Reports: ";
     private String[] tabLabels;
+
+    private ApiRequestHelper apiRequestHelper;
+    private String token;
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -52,11 +59,11 @@ public class NewIncidentsActivity extends BaseActivity {
                 getString(R.string.miscellaneous)};
         tvTabName.setText(REPORT_PREFIX + tabLabels[0]);
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
-        fragments.add(new Fragment());
+        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
+        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
+        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
+        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
+        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
         int[] iconList = new int[] {R.drawable.ic_road_24dp, R.drawable.ic_waste_24dp,
                 R.drawable.ic_floods_24dp, R.drawable.ic_fire_24dp, R.drawable.ic_misc_24dp};
         viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"", "", "", "", ""} ));
@@ -114,5 +121,20 @@ public class NewIncidentsActivity extends BaseActivity {
         if (unbinder != null) {
             unbinder.unbind();
         }
+    }
+
+    @Override
+    public void onApiRequestBegin(ApiAction action) {
+
+    }
+
+    @Override
+    public void onApiRequestSuccess(ApiAction action, Object result) {
+
+    }
+
+    @Override
+    public void onApiRequestFailed(ApiAction action, Throwable t) {
+
     }
 }
