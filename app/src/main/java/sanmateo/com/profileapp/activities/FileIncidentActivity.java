@@ -3,6 +3,7 @@ package sanmateo.com.profileapp.activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -47,6 +48,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     private Unbinder unbinder;
     private ArrayList<String> incidentFilingList = new ArrayList<>();
+    private boolean disabledCapture;
 
     @BindView(R.id.ll_action_bar)
     LinearLayout llActionBar;
@@ -71,6 +73,9 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     @BindView(R.id.iv_locator)
     ImageView ivLocator;
+
+    @BindView(R.id.iv_capture)
+    ImageView ivCapture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +121,8 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     }
 
     private void setFilingType(final String type) {
+        ivCapture.getDrawable().setAlpha(type.equals(getString(R.string.online_mode)) ? 255 : 128);
+        disabledCapture = type.equals(getString(R.string.sms_mode));
         tvFilingType.setText(type);
     }
 
@@ -126,21 +133,23 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     @OnClick(R.id.iv_capture)
     public void addImage() {
-        IncidentAddImageFragment incidentAddImageFragment = IncidentAddImageFragment.newInstance();
-        incidentAddImageFragment.setOnAddIncidentImageListener(new IncidentAddImageFragment.OnAddIncidentImageListener() {
-            @Override
-            public void captureImage() {
-                incidentAddImageFragment.dismiss();
-                showToast("capture image");
-            }
+        if (!disabledCapture) {
+            IncidentAddImageFragment incidentAddImageFragment = IncidentAddImageFragment.newInstance();
+            incidentAddImageFragment.setOnAddIncidentImageListener(new IncidentAddImageFragment.OnAddIncidentImageListener() {
+                @Override
+                public void captureImage() {
+                    incidentAddImageFragment.dismiss();
+                    showToast("capture image");
+                }
 
-            @Override
-            public void addImageFromGallery() {
-                incidentAddImageFragment.dismiss();
-                showToast("select image");
-            }
-        });
-        incidentAddImageFragment.show(getFragmentManager(), "ADD_IMAGE");
+                @Override
+                public void addImageFromGallery() {
+                    incidentAddImageFragment.dismiss();
+                    showToast("select image");
+                }
+            });
+            incidentAddImageFragment.show(getFragmentManager(), "ADD_IMAGE");
+        }
     }
 
     @OnClick(R.id.iv_select_incident_type)
