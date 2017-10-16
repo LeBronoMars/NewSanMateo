@@ -16,26 +16,21 @@ import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.TabPagerAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
-import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.IncidentReportFragment;
-import sanmateo.com.profileapp.fragments.TodayWeatherFragment;
-import sanmateo.com.profileapp.helpers.ApiRequestHelper;
-import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.Incident;
-import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
+import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 
 /**
  * Created by USER on 10/13/2017.
  */
 
-public class NewIncidentsActivity extends BaseActivity implements OnApiRequestListener{
+public class NewIncidentsActivity extends BaseActivity {
 
     private Unbinder unbinder;
     private static final String REPORT_PREFIX = "Reports: ";
     private String[] tabLabels;
 
-    private ApiRequestHelper apiRequestHelper;
-    private String token;
+    private ArrayList<Incident> incidents = new ArrayList<>();
 
     @BindView(R.id.viewPager)
     ViewPager viewPager;
@@ -52,21 +47,21 @@ public class NewIncidentsActivity extends BaseActivity implements OnApiRequestLi
         setContentView(R.layout.activity_new_incidents);
         unbinder = ButterKnife.bind(this);
 
+        incidents = IncidentsSingleton.getInstance().getIncidents("active");
         initTabs();
-        fetchIncidents();
     }
-
+    
     private void initTabs() {
         tabLabels = new String[] {getString(R.string.traffic_road),
                 getString(R.string.solid_waste), getString(R.string.flooding), getString(R.string.fire),
                 getString(R.string.miscellaneous)};
         tvTabName.setText(REPORT_PREFIX + tabLabels[0]);
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
-        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
-        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
-        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
-        fragments.add(IncidentReportFragment.newInstance("", new ArrayList<>()));
+        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
         int[] iconList = new int[] {R.drawable.ic_road_24dp, R.drawable.ic_waste_24dp,
                 R.drawable.ic_floods_24dp, R.drawable.ic_fire_24dp, R.drawable.ic_misc_24dp};
         viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"", "", "", "", ""} ));
@@ -107,12 +102,6 @@ public class NewIncidentsActivity extends BaseActivity implements OnApiRequestLi
        tvTabName.setText(REPORT_PREFIX + tabLabels[position]);
     }
 
-    private void fetchIncidents() {
-        token = CurrentUserSingleton.getInstance().getCurrentUser().getToken();
-        apiRequestHelper = new ApiRequestHelper(this);
-        apiRequestHelper.getAllIncidents(token, 0, null, "active");
-    }
-
     @OnClick(R.id.iv_report)
     public void fileIncident() {
         startActivity(new Intent(this, FileIncidentActivity.class));
@@ -130,22 +119,5 @@ public class NewIncidentsActivity extends BaseActivity implements OnApiRequestLi
         if (unbinder != null) {
             unbinder.unbind();
         }
-    }
-
-    @Override
-    public void onApiRequestBegin(ApiAction action) {
-        showCustomProgress("Fetching incidents, Please wait...");
-    }
-
-    @Override
-    public void onApiRequestSuccess(ApiAction action, Object result) {
-        dismissCustomProgress();
-        showToast("size: " + ((ArrayList<Incident>) result).size());
-    }
-
-    @Override
-    public void onApiRequestFailed(ApiAction action, Throwable t) {
-        dismissCustomProgress();
-        showToast("failed: " + t.getMessage());
     }
 }

@@ -171,6 +171,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     private ArrayList<Incident> incidents;
 
+    private CurrentUserSingleton currentUserSingleton;
+    private IncidentsSingleton incidentsSingleton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,6 +183,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         setStatusBarColor(rlActionBar, statusBar);
 
         currentUserSingleton = CurrentUserSingleton.getInstance();
+        incidentsSingleton = IncidentsSingleton.getInstance();
         apiRequestHelper = new ApiRequestHelper(this);
 
 
@@ -368,8 +372,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         actionBarDrawerToggle.syncState();
         initSideDrawerMenu();
     }
-
-    private CurrentUserSingleton currentUserSingleton;
 
     private void initSideDrawerMenu() {
 
@@ -595,6 +597,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         } else if (action.equals(ApiAction.GET_INCIDENTS)) {
             incidents = (ArrayList<Incident>) result;
             initIncidentsAdapter(incidents);
+            incidentsSingleton.getIncidents("active").clear();
+            incidentsSingleton.getIncidents("active").addAll(incidents);
         }
     }
 
