@@ -152,5 +152,55 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
+    
+    <RelativeLayout
+        android:id="@+id/rl_report_image"
+        android:layout_width="296dp"
+        android:layout_height="169dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp">
+
+        <ImageView
+            android:id="@+id/iv_report_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:alpha=".35"/>
+
+        <ImageView
+            android:id="@+id/iv_remove_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_close_48dp"/>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
+            android:id="@+id/tv_image_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_margin="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/iv_remove_image"/>
+
+    </RelativeLayout>
+    
+    <EditText
+        fontPath="fonts/Roboto-Regular.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="14sp"
+        android:background="@android:color/transparent"/>
 
 </LinearLayout>
