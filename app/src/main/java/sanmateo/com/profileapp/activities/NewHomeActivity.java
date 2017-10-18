@@ -237,6 +237,12 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         initIncidentsAdapter(incidents);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        apiRequestHelper.getAllIncidents(token, 0, null, "active");
+    }
+
     private void initIncidentsAdapter(ArrayList<Incident> incidents) {
         adapter = new DashboardIncidentsAdapter(this, incidents);
         adapter.setOnIncidentListener(incident -> {

@@ -54,22 +54,27 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.IncidentAddImageFragment;
 import sanmateo.com.profileapp.fragments.IncidentFilingFragment;
 import sanmateo.com.profileapp.fragments.SelectIncidentFragment;
 import sanmateo.com.profileapp.helpers.AmazonS3Helper;
+import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.PicassoHelper;
+import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
 import sanmateo.com.profileapp.models.response.Incident;
+import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 
 /**
  * Created by USER on 10/14/2017.
  */
 
 public class FileIncidentActivity extends BaseActivity implements OnItemSelectedListener,
-        OnConnectionFailedListener, ConnectionCallbacks, LocationListener, OnS3UploadListener{
+        OnConnectionFailedListener, ConnectionCallbacks, LocationListener, OnS3UploadListener,
+        OnApiRequestListener{
 
     private static final int SELECT_IMAGE = 1;
     private static final int CAPTURE_IMAGE = 2;
@@ -79,6 +84,13 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     private boolean disabledCapture, reportValid;
 
     private GoogleApiClient googleApiClient;
+    private ApiRequestHelper apiRequestHelper;
+
+    private CurrentUserSingleton currentUserSingleton;
+    private String token;
+
+    private double lati;
+    private double longi;
 
     @BindView(R.id.ll_action_bar)
     LinearLayout llActionBar;
@@ -152,6 +164,10 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
         ivLocator.getDrawable().setAlpha(128);
         initAmazonS3Helper(this);
+        apiRequestHelper = new ApiRequestHelper(this);
+
+        currentUserSingleton = CurrentUserSingleton.getInstance();
+        token = currentUserSingleton.getCurrentUser().getToken();
 
         initReports();
         initLocation();
@@ -576,8 +592,10 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (location != null) {
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            String ll = location.getLatitude() + "," +location.getLongitude();
+            lati = location.getLatitude();
+            longi = location.getLongitude();
+            LatLng latLng = new LatLng(lati, longi);
+            String ll = lati + "," + longi;
             String address = getAddress(latLng);
             String locationAddress = address.isEmpty() ? ll : address;
             progressBar.setVisibility(View.GONE);
@@ -605,13 +623,33 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         if (reportValid) {
             if (disabledCapture) {
                 sendSMS();
-            }
-            if (fileToUpload != null) {
-                showToast("has image");
-                uploadImageToS3(AppConstants.BUCKET_INCIDENTS, fileToUpload, 1, 1);
             } else {
-                showToast("no image");
+                if (fileToUpload != null) {
+                    uploadImageToS3(AppConstants.BUCKET_INCIDENTS, fileToUpload, 1, 1);
+                } else {
+                    sendOnline();
+                }
             }
+        }
+    }
+
+    private void sendOnline() {
+        double latitude = 1;
+        double longitude = 1;
+        String address = etLocation.getText().toString();
+        String description = etReportOnline.getText().toString();
+        if (isGpsConnected()) {
+            latitude = lati;
+            longitude = longi;
+            address = tvLocation.getText().toString();
+        }
+        if (fileToUpload != null) {
+            showToast("has image");
+            uploadImageToS3(AppConstants.BUCKET_INCIDENTS, fileToUpload, 1, 1);
+        } else {
+            apiRequestHelper.fileIncidentReport(token, address,
+                    description, incidentType, latitude, longitude,
+                    currentUserSingleton.getCurrentUser().getId(), "");
         }
     }
 
@@ -658,6 +696,36 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     @Override
     public void onUploadFinished(String bucketName, String imageUrl) {
-        showToast("upload finished: " + imageUrl);
+        double latitude = 1;
+        double longitude = 1;
+        String address = etLocation.getText().toString();
+        String description = etReportOnline.getText().toString();
+        if (isGpsConnected()) {
+            latitude = lati;
+            longitude = longi;
+            address = tvLocation.getText().toString();
+        }
+        deleteReport(fileToUpload);
+        apiRequestHelper.fileIncidentReport(token, address, description, incidentType, latitude,
+                longitude, currentUserSingleton.getCurrentUser().getId(), imageUrl);
+    }
+
+    @Override
+    public void onApiRequestBegin(ApiAction action) {
+        if (action.equals(ApiAction.POST_INCIDENT_REPORT)) {
+            showCustomProgress("Filing your incident report, Please wait...");
+        }
+    }
+
+    @Override
+    public void onApiRequestSuccess(ApiAction action, Object result) {
+        dismissCustomProgress();
+        showSuccessDialog();
+    }
+
+    @Override
+    public void onApiRequestFailed(ApiAction action, Throwable t) {
+        dismissCustomProgress();
+        showSnackbar(llContainer, t.getMessage());
     }
 }
