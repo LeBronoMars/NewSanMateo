@@ -3,6 +3,7 @@ package sanmateo.com.profileapp.helpers;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -121,6 +122,33 @@ public class PicassoHelper {
                         Log.d("pic", "Image loading failed");
                     }
                 });
+    }
+
+    public static void loadImageFromUri(final Uri uri, final ImageView imageView,
+                                        final ProgressBar progressBar) {
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        PicassoSingleton.getInstance().getPicasso()
+                .load(uri)
+                .fit()
+                .error(R.drawable.placeholder_image)
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
     }
 
     public static void loadImageFromURL(final String url, final int size, final ImageView imageView,

@@ -1,10 +1,13 @@
 package sanmateo.com.profileapp.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -19,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -29,8 +33,11 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.squareup.picasso.Callback;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +48,9 @@ import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.fragments.IncidentAddImageFragment;
 import sanmateo.com.profileapp.fragments.IncidentFilingFragment;
 import sanmateo.com.profileapp.fragments.SelectIncidentFragment;
+import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.helpers.PicassoHelper;
+import sanmateo.com.profileapp.singletons.PicassoSingleton;
 
 /**
  * Created by USER on 10/14/2017.
@@ -49,9 +59,14 @@ import sanmateo.com.profileapp.fragments.SelectIncidentFragment;
 public class FileIncidentActivity extends BaseActivity implements OnItemSelectedListener,
         OnConnectionFailedListener, ConnectionCallbacks, LocationListener{
 
+    private static final int SELECT_IMAGE = 1;
+    private static final int CAPTURE_IMAGE = 2;
+
     private Unbinder unbinder;
     private ArrayList<String> incidentFilingList = new ArrayList<>();
     private boolean disabledCapture;
+
+    private GoogleApiClient googleApiClient;
 
     @BindView(R.id.ll_action_bar)
     LinearLayout llActionBar;
@@ -88,6 +103,18 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     @BindView(R.id.tv_sms_counter)
     TextView tvSmsCounter;
+
+    @BindView(R.id.iv_report_image)
+    ImageView ivReportImage;
+
+    @BindView(R.id.pb_report_image)
+    ProgressBar pbReportImage;
+
+    @BindView(R.id.rl_report_image)
+    RelativeLayout rlReportImage;
+
+    @BindView(R.id.tv_image_name)
+    TextView tvImageName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,8 +171,6 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         }
     }
 
-    private GoogleApiClient googleApiClient;
-
     synchronized void buildGoogleApiClient() {
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -187,17 +212,68 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
                 @Override
                 public void captureImage() {
                     incidentAddImageFragment.dismiss();
-                    showToast("capture image");
+                    useCamera();
                 }
 
                 @Override
                 public void addImageFromGallery() {
                     incidentAddImageFragment.dismiss();
-                    showToast("select image");
+                    checkGallery();
                 }
             });
             incidentAddImageFragment.show(getFragmentManager(), "ADD_IMAGE");
         }
+    }
+
+    private void checkGallery() {
+        final Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_IMAGE);
+    }
+
+    private File fileToUpload;
+    private Uri fileUri;
+
+    private void useCamera() {
+        final Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            fileToUpload = createImageFile();
+            fileUri = Uri.fromFile(fileToUpload);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+            startActivityForResult(cameraIntent, CAPTURE_IMAGE);
+        } catch (Exception ex) {
+            showConfirmDialog("", "Capture Image", "We can't get your image. Please try again.",
+                    "Close", "", null);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_IMAGE) {
+                rlReportImage.setVisibility(View.VISIBLE);
+                final String fileName = "incident_image_" + getSDF().format(Calendar.getInstance().getTime());
+//                getFile(data.getData(), fileName + ".jpg");
+                tvImageName.setText(fileName + ".jpg");
+                PicassoHelper.loadImageFromUri(data.getData(), ivReportImage, pbReportImage);
+            } else {
+                rlReportImage.setVisibility(View.VISIBLE);
+                PicassoHelper.loadImageFromUri(fileUri, ivReportImage, pbReportImage);
+                tvImageName.setText(fileToUpload.getName());
+//                filesToUpload.add(activity.rotateBitmap(fileUri.getPath()));
+            }
+        }
+    }
+
+    @OnClick(R.id.iv_remove_image)
+    public void removeImage() {
+        rlReportImage.setVisibility(View.GONE);
+    }
+
+    private void deleteReport(File f) {
+//        f.delete();
     }
 
     @OnClick(R.id.iv_select_incident_type)
