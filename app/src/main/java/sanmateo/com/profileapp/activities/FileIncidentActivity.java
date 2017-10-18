@@ -18,6 +18,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -59,6 +60,7 @@ import sanmateo.com.profileapp.fragments.SelectIncidentFragment;
 import sanmateo.com.profileapp.helpers.AmazonS3Helper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.PicassoHelper;
+import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
 import sanmateo.com.profileapp.models.response.Incident;
 
@@ -601,6 +603,9 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @OnClick(R.id.iv_send)
     public void reportIncident() {
         if (reportValid) {
+            if (disabledCapture) {
+                sendSMS();
+            }
             if (fileToUpload != null) {
                 showToast("has image");
                 uploadImageToS3(AppConstants.BUCKET_INCIDENTS, fileToUpload, 1, 1);
@@ -608,6 +613,37 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
                 showToast("no image");
             }
         }
+    }
+
+    private void sendSMS() {
+        String phoneNo = "0995081597";
+        String report = etReportSms.getText().toString();
+        String address = etLocation.getText().toString();
+        String msgBody = "incident_type: " + incidentType + "\nincident_address: " + address +
+                "\nincident_description: " + report;
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, msgBody, null, null);
+            showSuccessDialog();
+        } catch (Exception ex) {
+            showSnackbar(llContainer, ex.getMessage());
+        }
+    }
+
+    private void showSuccessDialog() {
+        showNonCancelableConfirmDialog("", getString(R.string.report_sent),
+                getString(R.string.report_sent_content),
+                getString(R.string.report_sent_confirm), null, new OnConfirmDialogListener() {
+                    @Override
+                    public void onConfirmed(String action) {
+                        onBackPressed();
+                    }
+
+                    @Override
+                    public void onCancelled(String action) {
+
+                    }
+                });
     }
 
     @Override

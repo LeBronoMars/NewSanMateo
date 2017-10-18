@@ -79,7 +79,11 @@
     <string name="registration_success_title">Congratulations!</string>
     <string name="registration_success_content">Your account has been created. Click on the activation link which we have sent to your inbox to start using the app.</string>
     <string name="registration_success_confirm">BACK TO LOGIN</string>
-    
+
+    <string name="report_sent">Report sent</string>
+    <string name="report_sent_content">Thank you for submitting your report. The San Mateo ICCO will investigate the matter.</string>
+    <string name="report_sent_confirm">BACK TO INCIDENTS NEWSFEED</string>
+
     <!-- new password reset-->
     <string name="password_reset_sub_header">Enter your email address</string>
     <string name="reset_password">reset password</string>
