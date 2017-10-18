@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -33,8 +32,6 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.squareup.picasso.Callback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,16 +46,17 @@ import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.fragments.IncidentAddImageFragment;
 import sanmateo.com.profileapp.fragments.IncidentFilingFragment;
 import sanmateo.com.profileapp.fragments.SelectIncidentFragment;
-import sanmateo.com.profileapp.helpers.LogHelper;
+import sanmateo.com.profileapp.helpers.AmazonS3Helper;
+import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.PicassoHelper;
-import sanmateo.com.profileapp.singletons.PicassoSingleton;
+import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
 
 /**
  * Created by USER on 10/14/2017.
  */
 
 public class FileIncidentActivity extends BaseActivity implements OnItemSelectedListener,
-        OnConnectionFailedListener, ConnectionCallbacks, LocationListener{
+        OnConnectionFailedListener, ConnectionCallbacks, LocationListener, OnS3UploadListener{
 
     private static final int SELECT_IMAGE = 1;
     private static final int CAPTURE_IMAGE = 2;
@@ -134,6 +132,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         setStatusBarColor(llActionBar, statusBar);
 
         ivLocator.getDrawable().setAlpha(128);
+        initAmazonS3Helper(this);
 
         initReports();
         initLocation();
@@ -302,15 +301,15 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
             if (requestCode == SELECT_IMAGE) {
                 rlReportImage.setVisibility(View.VISIBLE);
                 final String fileName = "incident_image_" + getSDF().format(Calendar.getInstance().getTime());
-//                getFile(data.getData(), fileName + ".jpg");
-                tvImageName.setText(fileName + ".jpg");
                 fileUri = data.getData();
-                PicassoHelper.loadImageFromUri(data.getData(), ivReportImage, pbReportImage);
+                fileToUpload = getFile(fileUri, fileName + ".jpg");
+                tvImageName.setText(fileName + ".jpg");
+                PicassoHelper.loadImageFromUri(fileUri, ivReportImage, pbReportImage);
             } else {
                 rlReportImage.setVisibility(View.VISIBLE);
                 PicassoHelper.loadImageFromUri(fileUri, ivReportImage, pbReportImage);
                 tvImageName.setText(fileToUpload.getName());
-//                filesToUpload.add(activity.rotateBitmap(fileUri.getPath()));
+                fileToUpload = rotateBitmap(fileUri.getPath());
             }
         }
     }
@@ -318,10 +317,13 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @OnClick(R.id.iv_remove_image)
     public void removeImage() {
         rlReportImage.setVisibility(View.GONE);
+        deleteReport(fileToUpload);
+        fileToUpload = null;
+        fileUri = null;
     }
 
     private void deleteReport(File f) {
-//        f.delete();
+        f.delete();
     }
 
     @OnClick(R.id.iv_select_incident_type)
@@ -410,7 +412,12 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     @OnClick(R.id.iv_send)
     public void reportIncident() {
-        showToast("send");
+        if (fileToUpload != null) {
+            showToast("has image");
+            uploadImageToS3(AppConstants.BUCKET_INCIDENTS, fileToUpload, 1, 1);
+        } else {
+            showToast("no image");
+        }
     }
 
     @Override
@@ -421,5 +428,10 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @Override
     public void onLocationChanged(Location location) {
         Log.d("lokal", "location: " + location);
+    }
+
+    @Override
+    public void onUploadFinished(String bucketName, String imageUrl) {
+        showToast("upload finished: " + imageUrl);
     }
 }
