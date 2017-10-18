@@ -72,7 +72,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     private Unbinder unbinder;
     private ArrayList<String> incidentFilingList = new ArrayList<>();
-    private boolean disabledCapture;
+    private boolean disabledCapture, reportValid;
 
     private GoogleApiClient googleApiClient;
 
@@ -136,6 +136,9 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @BindView(R.id.ll_container)
     LinearLayout llContainer;
 
+    @BindView(R.id.iv_send)
+    ImageView ivSend;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +151,17 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
         initReports();
         initLocation();
+        invalidateReport();
+    }
+
+    private void invalidateReport() {
+        ivSend.getDrawable().setAlpha(128);
+        reportValid = false;
+    }
+
+    private void validateReport() {
+        ivSend.getDrawable().setAlpha(255);
+        reportValid = true;
     }
 
     @Override
@@ -485,11 +499,13 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     @OnClick(R.id.iv_send)
     public void reportIncident() {
-        if (fileToUpload != null) {
-            showToast("has image");
-            uploadImageToS3(AppConstants.BUCKET_INCIDENTS, fileToUpload, 1, 1);
-        } else {
-            showToast("no image");
+        if (reportValid) {
+            if (fileToUpload != null) {
+                showToast("has image");
+                uploadImageToS3(AppConstants.BUCKET_INCIDENTS, fileToUpload, 1, 1);
+            } else {
+                showToast("no image");
+            }
         }
     }
 
