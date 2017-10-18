@@ -57,11 +57,11 @@ public class NewIncidentsActivity extends BaseActivity {
                 getString(R.string.miscellaneous)};
         tvTabName.setText(REPORT_PREFIX + tabLabels[0]);
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
-        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
-        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
-        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
-        fragments.add(IncidentReportFragment.newInstance(this, "", incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, Incident.TRAFFIC_ROAD, incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, Incident.SOLID_WASTE, incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, Incident.FLOODING, incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, Incident.FIRE, incidents));
+        fragments.add(IncidentReportFragment.newInstance(this, Incident.MISCELLANEOUS, incidents));
         int[] iconList = new int[] {R.drawable.ic_road_24dp, R.drawable.ic_waste_24dp,
                 R.drawable.ic_floods_24dp, R.drawable.ic_fire_24dp, R.drawable.ic_misc_24dp};
         viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"", "", "", "", ""} ));

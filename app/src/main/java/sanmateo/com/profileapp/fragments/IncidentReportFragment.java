@@ -54,7 +54,7 @@ public class IncidentReportFragment extends Fragment {
                 tempIncidents.add(incidents.get(i));
             }
         }
-        return incidents;
+        return tempIncidents;
     }
 
     @Nullable
