@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="64dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+    <TextView
+        fontPath="fonts/Roboto-Medium.ttf"
+        android:id="@+id/tv_online_mode"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/online_mode"
+        android:textSize="14sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_action_blue"/>
+
+    <TextView
+        fontPath="fonts/Roboto-Medium.ttf"
+        android:id="@+id/tv_sms_mode"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/sms_mode"
+        android:textSize="14sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_action_blue"/>
+
+    </LinearLayout>
+</LinearLayout>

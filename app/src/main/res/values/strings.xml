@@ -4,12 +4,30 @@
     <string name="sign_up">Sign Up</string>
     <string name="weather_forecast">Weather Forecast</string>
     <string name="password_reset">Password Reset</string>
+    <string name="online_mode">Online Mode</string>
+    <string name="sms_mode">SMS Mode</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="select_from_gallery_incidents">Select From Gallery</string>
     <string name="home_dashboard">Home: Dashboard</string>
+    <string name="incident_report">Incident Report</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="forgot_password_caps">FORGOT YOUR PASSWORD?</string>
     <string name="forgot_password_header">Forgot Password</string>
     <string name="hint_your_email">Please enter your email</string>
-    
+    <string name="view_all">VIEW ALL</string>
+    <string name="detecting_location">Detecting your location...</string>
+    <string name="incident_offline">You are offline. Please connect to the internet to load content.</string>
+    <string name="image_disabled">IMAGE ATTACHMENT FEATURE NOT AVAILABLE IN SMS MODE</string>
+    <string name="hint_location">Type your current location</string>
+
+    <!-- incident types -->
+    <string name="select_incident">Select an Incident Type</string>
+    <string name="traffic_road">Traffic/Road</string>
+    <string name="solid_waste">Solid Waste</string>
+    <string name="flooding">Flooding</string>
+    <string name="fire">Fire</string>
+    <string name="miscellaneous">Miscellaneous</string>
+
     <!-- actions label -->
     <string name="action_message">I-text si Mayor</string>
     <string name="action_file_incident">File Incident Report</string>
@@ -61,7 +79,11 @@
     <string name="registration_success_title">Congratulations!</string>
     <string name="registration_success_content">Your account has been created. Click on the activation link which we have sent to your inbox to start using the app.</string>
     <string name="registration_success_confirm">BACK TO LOGIN</string>
-    
+
+    <string name="report_sent">Report sent</string>
+    <string name="report_sent_content">Thank you for submitting your report. The San Mateo ICCO will investigate the matter.</string>
+    <string name="report_sent_confirm">BACK TO INCIDENTS NEWSFEED</string>
+
     <!-- new password reset-->
     <string name="password_reset_sub_header">Enter your email address</string>
     <string name="reset_password">reset password</string>

@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -33,10 +34,7 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -361,6 +359,10 @@ public class BaseActivity extends AppCompatActivity {
         return new SimpleDateFormat("EEE, yyyy-MM-dd hh:mm a");
     }
 
+    public SimpleDateFormat getTime() {
+        return new SimpleDateFormat("hh:mm a");
+    }
+
     public PrettyTime getPrettyTime() {
         return new PrettyTime();
     }
@@ -440,6 +442,12 @@ public class BaseActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         return file;
+    }
+
+    /** check gps availability */
+    public boolean isGpsConnected() {
+        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private void resizeImage(final File file, final Matrix matrix) {

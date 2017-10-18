@@ -4,11 +4,11 @@
     fontPath="fonts/Roboto-Regular.ttf"
     android:id="@+id/row_spn_tv"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_48sdp"
+    android:layout_height="48dp"
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@android:color/white"
     android:textColor="@color/status_bar_bg"
-    android:textSize="@dimen/_13ssp"
+    android:textSize="16sp"
     android:textDirection="locale" />

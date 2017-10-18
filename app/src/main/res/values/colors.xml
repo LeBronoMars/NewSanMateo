@@ -74,4 +74,7 @@
 
     <color name="read_more_color">#2C3786</color>
     <color name="white_70">#70FFFFFF</color>
+
+    <color name="incident_details">#000000</color>
+    <color name="time_location">#CCCCCC</color>
 </resources>

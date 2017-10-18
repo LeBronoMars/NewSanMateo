@@ -10,6 +10,12 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Incident implements Parcelable {
 
+    public static final String TRAFFIC_ROAD = "traffic";
+    public static final String SOLID_WASTE = "waste";
+    public static final String FLOODING = "flood";
+    public static final String FIRE = "fire";
+    public static final String MISCELLANEOUS = "misc";
+
     @SerializedName("reporter_id") private int reporterId;
     @SerializedName("reporter_name") private String reporterName;
     @SerializedName("reporter_contact_no") private String reporterContactNo;
