@@ -197,10 +197,33 @@
     
     <EditText
         fontPath="fonts/Roboto-Regular.ttf"
+        android:id="@+id/et_report_online"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:textSize="14sp"
         android:background="@android:color/transparent"/>
+
+    <EditText
+        fontPath="fonts/Roboto-Regular.ttf"
+        android:id="@+id/et_report_sms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:maxLength="120"
+        android:textSize="14sp"/>
+
+    <TextView
+        fontPath="fonts/Roboto-Regular.ttf"
+        android:id="@+id/tv_sms_counter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="0/120"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:textColor="@color/status_bar_bg"
+        android:gravity="right"/>
 
 </LinearLayout>

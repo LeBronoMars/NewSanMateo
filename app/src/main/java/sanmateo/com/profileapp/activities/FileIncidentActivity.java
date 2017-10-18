@@ -9,10 +9,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -77,6 +80,15 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @BindView(R.id.iv_capture)
     ImageView ivCapture;
 
+    @BindView(R.id.et_report_sms)
+    EditText etReportSms;
+
+    @BindView(R.id.et_report_online)
+    EditText etReportOnline;
+
+    @BindView(R.id.tv_sms_counter)
+    TextView tvSmsCounter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +98,42 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
         ivLocator.getDrawable().setAlpha(128);
 
+        initReports();
         buildGoogleApiClient();
+
+    }
+
+    private void initReports() {
+        etReportOnline.setVisibility(disabledCapture ? View.GONE : View.VISIBLE);
+        etReportSms.setVisibility(disabledCapture ? View.VISIBLE : View.GONE);
+        tvSmsCounter.setVisibility(disabledCapture ? View.VISIBLE : View.GONE);
+        if (disabledCapture) {
+            addReportValidation();
+        }
+    }
+
+    private void addReportValidation() {
+        etReportSms.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                countCharacters();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void countCharacters() {
+        int reportLength =  etReportSms.getText().toString().length();
+        tvSmsCounter.setText(reportLength + "/120");
     }
 
     @Override
@@ -124,6 +171,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         ivCapture.getDrawable().setAlpha(type.equals(getString(R.string.online_mode)) ? 255 : 128);
         disabledCapture = type.equals(getString(R.string.sms_mode));
         tvFilingType.setText(type);
+        initReports();
     }
 
     @OnClick(R.id.iv_back)
