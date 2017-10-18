@@ -22,6 +22,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
@@ -59,6 +60,7 @@ import sanmateo.com.profileapp.helpers.AmazonS3Helper;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.helpers.PicassoHelper;
 import sanmateo.com.profileapp.interfaces.OnS3UploadListener;
+import sanmateo.com.profileapp.models.response.Incident;
 
 /**
  * Created by USER on 10/14/2017.
@@ -151,12 +153,55 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
         initReports();
         initLocation();
+        textInputValidation();
         invalidateReport();
     }
 
     private void invalidateReport() {
         ivSend.getDrawable().setAlpha(128);
         reportValid = false;
+    }
+
+    private void checkValidation() {
+        if (!incidentType.isEmpty()) {
+            if (!isGpsConnected()) {
+                if (!disabledCapture) {
+                    if (!etReportOnline.getText().toString().isEmpty() && !etLocation.getText().toString().isEmpty() && isNetworkAvailable()) {
+                        validateReport();
+                    } else {
+                        invalidateReport();
+                    }
+                } else {
+                    if (!etReportSms.getText().toString().isEmpty() && !etLocation.getText().toString().isEmpty()) {
+                        validateReport();
+                    } else {
+                        invalidateReport();
+                    }
+                }
+            } else {
+                if (!disabledCapture) {
+                    if (!etReportOnline.getText().toString().isEmpty() && isNetworkAvailable()) {
+                        validateReport();
+                    } else {
+                        invalidateReport();
+                    }
+                } else {
+                    if (!etReportSms.getText().toString().isEmpty() && !etLocation.getText().toString().isEmpty()) {
+                        validateReport();
+                    } else {
+                        invalidateReport();
+                    }
+                }
+            }
+        } else {
+            invalidateReport();
+        }
+        Log.d("valido", "---------------validation: " + reportValid);
+        Log.d("valido", "sms report empty: "  + etReportSms.getText().toString().isEmpty());
+        Log.d("valido", "online report empty: "  + etReportOnline.getText().toString().isEmpty());
+        Log.d("valido", "location empty: "  + etLocation.getText().toString().isEmpty());
+        Log.d("valido", "network: "  + isNetworkAvailable());
+        Log.d("valido", "gps: "  + isGpsConnected());
     }
 
     private void validateReport() {
@@ -187,12 +232,15 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     private Snackbar snackbar;
 
     private void alertSnackBar() {
+        hideSoftKeyboard();
+        checkValidation();
         if (!isNetworkAvailable()) {
             if (!disabledCapture) {
                 snackbar = Snackbar.make(llContainer, "You are offline.", Snackbar.LENGTH_INDEFINITE);
                 snackbar.setAction("SWITCH TO SMS MODE", v -> {
                     setFilingType(getString(R.string.sms_mode));
                     setLocator(getString(R.string.sms_mode));
+                    initReports();
                 });
                 snackbar.setActionTextColor(Color.YELLOW);
                 snackbar.show();
@@ -206,6 +254,11 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
                 snackbar.dismiss();
             }
         }
+    }
+
+    private void hideSoftKeyboard() {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(llContainer.getWindowToken(), 0);
     }
 
     @Override
@@ -227,12 +280,9 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         etReportOnline.setVisibility(disabledCapture ? View.GONE : View.VISIBLE);
         etReportSms.setVisibility(disabledCapture ? View.VISIBLE : View.GONE);
         tvSmsCounter.setVisibility(disabledCapture ? View.VISIBLE : View.GONE);
-        if (disabledCapture) {
-            addReportValidation();
-        }
     }
 
-    private void addReportValidation() {
+    private void textInputValidation() {
         etReportSms.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -249,10 +299,45 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
             }
         });
+
+        etReportOnline.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etLocation.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkValidation();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void countCharacters() {
         int reportLength =  etReportSms.getText().toString().length();
+        checkValidation();
         tvSmsCounter.setText(reportLength + "/120");
     }
 
@@ -279,9 +364,11 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     public void clickSelection(){
         IncidentFilingFragment filingFragment = IncidentFilingFragment.newInstance();
         filingFragment.setOnFilingTypeListener(type -> {
-            setLocator(type);
             setFilingType(type);
+            initReports();
+            setLocator(type);
             alertSnackBar();
+            checkValidation();
             filingFragment.dismiss();
         });
         filingFragment.show(getFragmentManager(), "FILE_INCIDENT");
@@ -300,6 +387,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         } else {
             etReportSms.setText(etReportOnline.getText().toString());
             etLocation.setVisibility(View.VISIBLE);
+            tvSmsCounter.setText(etReportSms.getText().toString().length()+ "/120");
             llGpsLocator.setVisibility(View.GONE);
             ivLocator.getDrawable().setAlpha(128);
         }
@@ -318,7 +406,6 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
             }
         }
         tvFilingType.setText(type);
-        initReports();
     }
 
     @OnClick(R.id.iv_back)
@@ -418,24 +505,32 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         tvIncidentType.setTextColor(ContextCompat.getColor(this, R.color.read_more_color));
     }
 
+    private String incidentType = "";
+
     private void setIncidentSelection(final int index) {
         switch (index) {
             case 0:
+                incidentType = Incident.TRAFFIC_ROAD;
                 tvIncidentType.setText(getString(R.string.traffic_road));
                 break;
             case 1:
+                incidentType = Incident.SOLID_WASTE;
                 tvIncidentType.setText(getString(R.string.solid_waste));
                 break;
             case 2:
+                incidentType = Incident.FLOODING;
                 tvIncidentType.setText(getString(R.string.flooding));
                 break;
             case 3:
+                incidentType = Incident.FIRE;
                 tvIncidentType.setText(getString(R.string.fire));
                 break;
             case 4:
+                incidentType = Incident.MISCELLANEOUS;
                 tvIncidentType.setText(getString(R.string.miscellaneous));
                 break;
         }
+        checkValidation();
     }
 
     @Override
