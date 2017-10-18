@@ -143,6 +143,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         if (isGpsConnected()) {
             buildGoogleApiClient();
         }
+        etReportOnline.requestFocus();
         llGpsLocator.setVisibility(isGpsConnected() ? View.VISIBLE : View.GONE);
         etLocation.setVisibility(isGpsConnected() ? View.GONE : View.VISIBLE);
     }
@@ -212,16 +213,19 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
 
     private void setLocator(final String type) {
         boolean isOnlineMode = type.equals(getString(R.string.online_mode));
+        String tempString = "";
         if (isGpsConnected() && isOnlineMode) {
+            etReportOnline.setText(etReportSms.getText().toString());
+            etLocation.setText("");
             etLocation.setVisibility(View.GONE);
             llGpsLocator.setVisibility(View.VISIBLE);
             tvLocation.setTextColor(Color.DKGRAY);
             tvLocation.setText(getString(R.string.detecting_location));
             buildGoogleApiClient();
         } else {
+            etReportSms.setText(etReportOnline.getText().toString());
             etLocation.setVisibility(View.VISIBLE);
             llGpsLocator.setVisibility(View.GONE);
-            etLocation.setText("");
             ivLocator.getDrawable().setAlpha(128);
         }
     }

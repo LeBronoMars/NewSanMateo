@@ -165,8 +165,6 @@
             android:layout_marginLeft="16dp"
             android:textSize="14sp"
             android:inputType="textCapWords"
-            android:maxLines="1"
-            android:singleLine="true"
             android:hint="@string/hint_location"
             android:textColor="@color/read_more_color"
             android:textColorHint="@android:color/darker_gray"
@@ -251,7 +249,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/read_more_color"
-        android:inputType="text"
         android:layout_margin="16dp"
         android:textSize="14sp"
         android:background="@android:color/transparent"/>
@@ -263,7 +260,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:textColor="@color/read_more_color"
-        android:inputType="text"
         android:layout_marginRight="16dp"
         android:maxLength="120"
         android:textSize="14sp"/>
