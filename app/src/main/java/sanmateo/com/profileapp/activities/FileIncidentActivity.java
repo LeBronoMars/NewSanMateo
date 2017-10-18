@@ -116,6 +116,9 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @BindView(R.id.tv_image_name)
     TextView tvImageName;
 
+    @BindView(R.id.tv_image_disabled)
+    TextView tvImageDisabled;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,6 +198,15 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     private void setFilingType(final String type) {
         ivCapture.getDrawable().setAlpha(type.equals(getString(R.string.online_mode)) ? 255 : 128);
         disabledCapture = type.equals(getString(R.string.sms_mode));
+        if (rlReportImage.getVisibility() == View.VISIBLE) {
+            if (type.equals(getString(R.string.online_mode))) {
+                PicassoHelper.loadImageFromUri(fileUri, ivReportImage, pbReportImage);
+                tvImageDisabled.setVisibility(View.GONE);
+            } else {
+                PicassoHelper.loadImageFromUriGrayscale(fileUri, ivReportImage, pbReportImage);
+                tvImageDisabled.setVisibility(View.VISIBLE);
+            }
+        }
         tvFilingType.setText(type);
         initReports();
     }
@@ -257,6 +269,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
                 final String fileName = "incident_image_" + getSDF().format(Calendar.getInstance().getTime());
 //                getFile(data.getData(), fileName + ".jpg");
                 tvImageName.setText(fileName + ".jpg");
+                fileUri = data.getData();
                 PicassoHelper.loadImageFromUri(data.getData(), ivReportImage, pbReportImage);
             } else {
                 rlReportImage.setVisibility(View.VISIBLE);

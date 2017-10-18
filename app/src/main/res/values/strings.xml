@@ -17,6 +17,7 @@
     <string name="view_all">VIEW ALL</string>
     <string name="detecting_location">Detecting your location...</string>
     <string name="incident_offline">You are offline. Please connect to the internet to load content.</string>
+    <string name="image_disabled">IMAGE ATTACHMENT FEATURE NOT AVAILABLE IN SMS MODE</string>
 
     <!-- incident types -->
     <string name="select_incident">Select an Incident Type</string>

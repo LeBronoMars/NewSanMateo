@@ -183,6 +183,19 @@
 
         <TextView
             fontPath="fonts/Roboto-Medium.ttf"
+            android:id="@+id/tv_image_disabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="@string/image_disabled"
+            android:layout_margin="50dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+        <TextView
+            fontPath="fonts/Roboto-Medium.ttf"
             android:id="@+id/tv_image_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
