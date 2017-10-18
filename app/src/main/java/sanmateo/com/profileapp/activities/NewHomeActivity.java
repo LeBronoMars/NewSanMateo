@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -154,6 +155,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @BindView(R.id.rv_incidents)
     RecyclerView rvIncidents;
+
+    @BindView(R.id.ll_incident_reports)
+    LinearLayout llIncidentReports;
 
     @BindString(R.string.message_alert_notifications)
     String headerAlertNotifications;
@@ -602,6 +606,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
         } else if (action.equals(ApiAction.GET_INCIDENTS)) {
             incidents = (ArrayList<Incident>) result;
+            llIncidentReports.setVisibility(incidents.size() > 0 ? View.VISIBLE : View.GONE);
             initIncidentsAdapter(incidents);
             incidentsSingleton.getIncidents("active").clear();
             incidentsSingleton.getIncidents("active").addAll(incidents);
