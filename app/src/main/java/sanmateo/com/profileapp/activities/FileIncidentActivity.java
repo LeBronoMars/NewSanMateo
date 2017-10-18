@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,10 +34,13 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -392,7 +397,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     public void onConnected(@Nullable Bundle bundle) {
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(3000); // update location every 3 seconds
+        locationRequest.setInterval(60000); // update location every 3 seconds
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED &&
@@ -403,10 +408,27 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
         Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (location != null) {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            String ll = location.getLatitude() + "," +location.getLongitude();
+            String address = getAddress(latLng);
+            String locationAddress = address.isEmpty() ? ll : address;
             progressBar.setVisibility(View.GONE);
             tvLocation.setTextColor(ContextCompat.getColor(this, R.color.read_more_color));
-            tvLocation.setText(location.getLatitude() + "," +location.getLongitude());
+            tvLocation.setText(locationAddress);
             ivLocator.getDrawable().setAlpha(255);
+        }
+    }
+
+    private String getAddress(LatLng latLng) {
+        Geocoder geocoder = new Geocoder(this);
+        try {
+            List<Address> matches = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            Address bestMatch = (matches.isEmpty() ? null : matches.get(0));
+            return bestMatch.getAddressLine(0);
+        } catch (IOException e) {
+            return "";
+        } catch (NullPointerException e) {
+            return "";
         }
     }
 

@@ -151,6 +151,8 @@
                 android:layout_height="match_parent"
                 android:text="@string/detecting_location"
                 android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp"
                 android:layout_marginLeft="16dp"/>
