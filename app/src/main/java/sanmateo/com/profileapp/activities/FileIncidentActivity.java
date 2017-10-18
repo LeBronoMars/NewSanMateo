@@ -187,15 +187,21 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     private Snackbar snackbar;
 
     private void alertSnackBar() {
-        if (!disabledCapture && !isNetworkAvailable()) {
-            snackbar = Snackbar.make(llContainer, "You are offline.", Snackbar.LENGTH_INDEFINITE);
-            snackbar.setAction("SWITCH TO SMS MODE", v -> {
-                setFilingType(getString(R.string.sms_mode));
-                setLocator(getString(R.string.sms_mode));
-            });
-            snackbar.setActionTextColor(Color.YELLOW);
-            snackbar.show();
-        } else if (disabledCapture) {
+        if (!isNetworkAvailable()) {
+            if (!disabledCapture) {
+                snackbar = Snackbar.make(llContainer, "You are offline.", Snackbar.LENGTH_INDEFINITE);
+                snackbar.setAction("SWITCH TO SMS MODE", v -> {
+                    setFilingType(getString(R.string.sms_mode));
+                    setLocator(getString(R.string.sms_mode));
+                });
+                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.show();
+            } else if (disabledCapture) {
+                if (snackbar != null) {
+                    snackbar.dismiss();
+                }
+            }
+        } else {
             if (snackbar != null) {
                 snackbar.dismiss();
             }
