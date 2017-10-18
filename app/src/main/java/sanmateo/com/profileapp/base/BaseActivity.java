@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -444,6 +445,12 @@ public class BaseActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         return file;
+    }
+
+    /** check gps availability */
+    public boolean isGpsConnected() {
+        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private void resizeImage(final File file, final Matrix matrix) {

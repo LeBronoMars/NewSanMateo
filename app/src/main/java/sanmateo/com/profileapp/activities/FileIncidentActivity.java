@@ -3,6 +3,7 @@ package sanmateo.com.profileapp.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.media.Image;
 import android.net.Uri;
@@ -119,6 +120,12 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     @BindView(R.id.tv_image_disabled)
     TextView tvImageDisabled;
 
+    @BindView(R.id.ll_gps_locator)
+    LinearLayout llGpsLocator;
+
+    @BindView(R.id.et_location)
+    EditText etLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,8 +136,15 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
         ivLocator.getDrawable().setAlpha(128);
 
         initReports();
-        buildGoogleApiClient();
+        initLocation();
+    }
 
+    private void initLocation() {
+        if (isGpsConnected()) {
+            buildGoogleApiClient();
+        }
+        llGpsLocator.setVisibility(isGpsConnected() ? View.VISIBLE : View.GONE);
+        etLocation.setVisibility(isGpsConnected() ? View.GONE : View.VISIBLE);
     }
 
     private void initReports() {
@@ -189,10 +203,27 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     public void clickSelection(){
         IncidentFilingFragment filingFragment = IncidentFilingFragment.newInstance();
         filingFragment.setOnFilingTypeListener(type -> {
+            setLocator(type);
             setFilingType(type);
             filingFragment.dismiss();
         });
         filingFragment.show(getFragmentManager(), "FILE_INCIDENT");
+    }
+
+    private void setLocator(final String type) {
+        boolean isOnlineMode = type.equals(getString(R.string.online_mode));
+        if (isGpsConnected() && isOnlineMode) {
+            etLocation.setVisibility(View.GONE);
+            llGpsLocator.setVisibility(View.VISIBLE);
+            tvLocation.setTextColor(Color.DKGRAY);
+            tvLocation.setText(getString(R.string.detecting_location));
+            buildGoogleApiClient();
+        } else {
+            etLocation.setVisibility(View.VISIBLE);
+            llGpsLocator.setVisibility(View.GONE);
+            etLocation.setText("");
+            ivLocator.getDrawable().setAlpha(128);
+        }
     }
 
     private void setFilingType(final String type) {

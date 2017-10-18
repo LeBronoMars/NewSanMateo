@@ -113,40 +113,69 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-        
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp" />
-
-        <TextView
-            fontPath="fonts/Roboto-Medium.ttf"
-            android:id="@+id/tv_location"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="@string/detecting_location"
-            android:gravity="center_vertical"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
-            android:layout_marginLeft="16dp"/>
 
         <ImageView
             android:id="@+id/iv_locator"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_location_48dp"
+            android:layout_alignParentRight="true"
             android:layout_marginLeft="16dp"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_gps_locator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@id/iv_locator">
+        
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp" />
+
+            <TextView
+                fontPath="fonts/Roboto-Medium.ttf"
+                android:id="@+id/tv_location"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/detecting_location"
+                android:gravity="center_vertical"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="14sp"
+                android:layout_marginLeft="16dp"/>
+
+        </LinearLayout>
+
+        <EditText
+            fontPath="fonts/Roboto-Regular.ttf"
+            android:id="@+id/et_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textSize="14sp"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:hint="@string/hint_location"
+            android:textColor="@color/read_more_color"
+            android:textColorHint="@android:color/darker_gray"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv_locator"/>
+
+
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -221,6 +250,8 @@
         android:id="@+id/et_report_online"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/read_more_color"
+        android:inputType="text"
         android:layout_margin="16dp"
         android:textSize="14sp"
         android:background="@android:color/transparent"/>
@@ -231,6 +262,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:textColor="@color/read_more_color"
+        android:inputType="text"
         android:layout_marginRight="16dp"
         android:maxLength="120"
         android:textSize="14sp"/>
