@@ -95,10 +95,13 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 final String[] requiredPermission = new String[]{
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
                         android.Manifest.permission.READ_CONTACTS,
                         android.Manifest.permission.CAMERA,
                         android.Manifest.permission.READ_SMS,
-                        android.Manifest.permission.SEND_SMS
+                        android.Manifest.permission.SEND_SMS,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION
                 };
                 requestPermissions(requiredPermission, REQUEST_PERMISSIONS);
             } else {
