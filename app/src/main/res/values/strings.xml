@@ -44,6 +44,7 @@
     <!-- new login -->
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
+    <string name="hint_email">Email Address</string>
 
     <!-- user registration dialog fragment -->
     <string name="registration">Registration</string>
