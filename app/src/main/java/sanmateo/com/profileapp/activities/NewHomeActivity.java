@@ -90,26 +90,26 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.iv_notify)
     ImageView ivNotify;
 
-    @BindView(R.id.navigationView)
+    @BindView(R.id.navigation_view)
     NavigationView navigationView;
 
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
 
-    @BindView(R.id.iv_profile_image)
-    ImageView iv_profile_image;
-
-    @BindView(R.id.lv_menu)
-    ListView lv_menu;
-
-    @BindView(R.id.iv_blur_background)
-    ImageView iv_blur_background;
-
-    @BindView(R.id.pb_load_image)
-    ProgressBar pb_load_image;
-
-    @BindView(R.id.tv_profile_name)
-    TextView tv_profile_name;
+//    @BindView(R.id.iv_profile_image)
+//    ImageView iv_profile_image;
+//
+//    @BindView(R.id.lv_menu)
+//    ListView lv_menu;
+//
+//    @BindView(R.id.iv_blur_background)
+//    ImageView iv_blur_background;
+//
+//    @BindView(R.id.pb_load_image)
+//    ProgressBar pb_load_image;
+//
+//    @BindView(R.id.tv_profile_name)
+//    TextView tv_profile_name;
 
     @BindView(R.id.sv_dashboard)
     ScrollView svDashboard;
@@ -159,11 +159,20 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.ll_incident_reports)
     LinearLayout llIncidentReports;
 
+    @BindView(R.id.rl_nav_header)
+    RelativeLayout rlNavHeader;
+
     @BindString(R.string.message_alert_notifications)
     String headerAlertNotifications;
 
     @BindDimen(R.dimen._90sdp)
     int profilePicSize;
+
+    @BindView(R.id.tv_profile_name)
+    TextView tvProfileName;
+
+    @BindView(R.id.tv_profile_email)
+    TextView tvProfileEmail;
 
     private Unbinder unbinder;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -184,7 +193,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         setContentView(R.layout.activity_home);
         unbinder = ButterKnife.bind(this);
 
-        setStatusBarColor(rlActionBar, statusBar);
+        setStatusBarColor(rlActionBar, navigationView, statusBar);
 
         currentUserSingleton = CurrentUserSingleton.getInstance();
         incidentsSingleton = IncidentsSingleton.getInstance();
@@ -355,8 +364,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         fragment.show(getFragmentManager(), "show notifications");
     }
 
-    private boolean drawerState;
-
     @OnClick(R.id.iv_burger)
     public void toggleDrawer() {
         drawerLayout.openDrawer(GravityCompat.START);  // OPEN DRAWER
@@ -381,92 +388,57 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     }
 
     private void initSideDrawerMenu() {
+        tvProfileName.setText(currentUserSingleton.getCurrentUser().getFirstName() + " "
+                + currentUserSingleton.getCurrentUser().getLastName());
+        tvProfileEmail.setText(currentUserSingleton.getCurrentUser().getEmail());
+    }
 
-        iv_profile_image.setOnClickListener(view1 -> showChangeProfilePicMenu());
+    @OnClick(R.id.ll_home_dashboard)
+    public void goDashboard() {
+        closeDrawer();
+    }
 
-        PicassoHelper.loadBlurImageFromURL(this, currentUserSingleton.getCurrentUser().getPicUrl(),
-                R.drawable.placeholder_image, 25, iv_blur_background);
+    @OnClick(R.id.ll_incidents)
+    public void goIncidents() {
+        viewAllIncidents();
+    }
 
-        PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
-                profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
+    @OnClick(R.id.ll_emergency_contact_details)
+    public void goEmergency() {
+        showToast("Emergency");
+    }
 
-        tv_profile_name.setText(currentUserSingleton.getCurrentUser().getFirstName() + " " +
-                currentUserSingleton.getCurrentUser().getLastName());
+    @OnClick(R.id.ll_directory)
+    public void goDirectory() {
+        startActivity(new Intent(this, DirectoriesActivity.class));
+        animateToLeft(this);
+    }
 
-        ArrayList<CustomMenu> menuList = new ArrayList<>();
-        menuList.add(new CustomMenu(R.drawable.menu_new_send_sos, "Send SOS", true));
-        menuList.add(new CustomMenu(R.drawable.menu_new_information, "Information", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_directories, "Directories", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_announcements, "Disaster Management", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_incidents, "Incident Report", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_map, "Map", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_gallery, "Gallery", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_fb, "Social Media", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_rate, "Rate Us", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_password, "Change Password", false));
-        menuList.add(new CustomMenu(R.drawable.menu_new_logout, "Logout", false));
+    @OnClick(R.id.ll_map)
+    public void goMap() {
+        startActivity(new Intent(this, MapActivity.class));
+        animateToLeft(this);
+    }
 
-        final CustomNavMenuAdapter adapter = new CustomNavMenuAdapter(this, menuList);
-        adapter.setCustomMenuListener(() -> setPanicContacts());
-        lv_menu.setAdapter(adapter);
-        lv_menu.setOnItemClickListener((adapterView, view, i, l) -> {
-            switch (i) {
-                case 0:
-                    sendSOS();
-                    break;
-                case 1:
-                    moveToOtherActivity(InformationActivity.class);
-                    break;
-                case 2:
-                    moveToOtherActivity(DirectoriesActivity.class);
-                    break;
-                case 3:
-                    moveToOtherActivity(DisasterManagementActivity.class);
-                    break;
-                case 4:
-                    moveToOtherActivity(IncidentsActivity.class);
-                    break;
-                case 5:
-                    moveToOtherActivity(MapActivity.class);
-                    break;
-                case 6:
-                    moveToOtherActivity(GalleryActivity.class);
-                    break;
-                case 7:
-                    if (isNetworkAvailable()) {
-                        moveToOtherActivity(SocialMediaActivity.class);
-                    } else {
-                        showToast(AppConstants.WARN_CONNECTION);
+    private void closeDrawer() {
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @OnClick(R.id.iv_logout)
+    public void exitApp() {
+        closeDrawer();
+        showConfirmDialog("", "Logout", "Are you sure you want to logout from the app?",
+                "Yes", "No", new OnConfirmDialogListener() {
+                    @Override
+                    public void onConfirmed(String action) {
+                        logout();
                     }
-                    break;
-                case 8:
-                    final Uri uri = Uri.parse("market://details?id=" + getPackageName());
-                    final Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                    try {
-                        startActivity(myAppLinkToMarket);
-                    } catch (ActivityNotFoundException e) {
-                        showToast(AppConstants.WARN_UNABLE_TO_FIND_APP);
+
+                    @Override
+                    public void onCancelled(String action) {
+
                     }
-                    break;
-                case 9:
-                    changePassword();
-                    break;
-                case 10:
-                    showConfirmDialog("", "Logout", "Are you sure you want to logout from the app?",
-                            "Yes", "No", new OnConfirmDialogListener() {
-                                @Override
-                                public void onConfirmed(String action) {
-                                    logout();
-                                }
-
-                                @Override
-                                public void onCancelled(String action) {
-
-                                }
-                            });
-                    break;
-            }
-        });
+                });
     }
 
     private void changePassword() {
@@ -595,11 +567,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
             LogHelper.log("changePic", "new pic url ---> " + currentUserSingleton.getCurrentUser().getPicUrl());
 
-            PicassoHelper.loadBlurImageFromURL(this, currentUserSingleton.getCurrentUser().getPicUrl(),
-                    R.drawable.placeholder_image, 25, iv_blur_background);
-
-            PicassoHelper.loadImageFromURL(currentUserSingleton.getCurrentUser().getPicUrl(),
-                    profilePicSize, Color.TRANSPARENT, iv_profile_image, pb_load_image);
+//            PicassoHelper.loadBlurImageFromURL(this, currentUserSingleton.getCurrentUsernavi
 
         } else if (action.equals(ApiAction.GET_INCIDENTS)) {
             incidents = (ArrayList<Incident>) result;
