@@ -50,6 +50,7 @@ import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomBottomSheetDialogFragment;
 import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
 import sanmateo.com.profileapp.fragments.ETextSiMayorDialogFragment;
+import sanmateo.com.profileapp.fragments.PanicSettingsDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
@@ -404,7 +405,12 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @OnClick(R.id.ll_emergency_contact_details)
     public void goEmergency() {
-        showToast("Emergency");
+        final PanicSettingsDialogFragment panicSettingsFragment = PanicSettingsDialogFragment.newInstance();
+        panicSettingsFragment.setOnPanicContactListener(() -> {
+            panicSettingsFragment.dismiss();
+            initPanicContact();
+        });
+        panicSettingsFragment.show(getSupportFragmentManager(), "panic");
     }
 
     @OnClick(R.id.ll_directory)
@@ -415,7 +421,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @OnClick(R.id.ll_map)
     public void goMap() {
-        startActivity(new Intent(this, MapActivity.class));
+        startActivity(new Intent(this, NewMapActivity.class));
         animateToLeft(this);
     }
 
