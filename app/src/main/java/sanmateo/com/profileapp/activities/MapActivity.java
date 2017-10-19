@@ -25,10 +25,6 @@ import sanmateo.com.profileapp.fragments.MapLocationsFragment;
 import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.models.others.Location;
 
-
-/**
- * Created by ctmanalo on 7/6/16.
- */
 public class MapActivity extends BaseActivity implements OnMapReadyCallback {
 
     @BindView(R.id.viewPager) ViewPager viewPager;
