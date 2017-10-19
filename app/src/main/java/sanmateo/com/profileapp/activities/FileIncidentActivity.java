@@ -654,7 +654,7 @@ public class FileIncidentActivity extends BaseActivity implements OnItemSelected
     }
 
     private void sendSMS() {
-        String phoneNo = "0995081597";
+        String phoneNo = "09062008844";
         String report = etReportSms.getText().toString();
         String address = etLocation.getText().toString();
         String msgBody = "incident_type: " + incidentType + "\nincident_address: " + address +
