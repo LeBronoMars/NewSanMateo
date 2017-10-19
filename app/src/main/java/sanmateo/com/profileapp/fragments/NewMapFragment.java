@@ -162,7 +162,7 @@ public class NewMapFragment extends Fragment implements OnMapReadyCallback {
             }
         }
         locations.clear();
-        
+
         if (filtered.isEmpty()) {
             locations.addAll(duplicate);
         } else {

@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -108,6 +109,18 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void setStatusBarColor(ViewGroup actionBar, NavigationView navView, View statusBar) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+            resizeActionBar(actionBar, navView, statusBar);
+        }
+    }
+
     public void setStatusBarColor(View statusBar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
@@ -127,6 +140,22 @@ public class BaseActivity extends AppCompatActivity {
         actionBar.setLayoutParams(actionBarParams);
         actionBar.setPadding(0, getStatusBarHeight(), 0, 0);
         actionBar.invalidate();
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight());
+        statusBar.setLayoutParams(layoutParams);
+        statusBar.invalidate();
+    }
+
+    private void resizeActionBar(ViewGroup actionBar, ViewGroup navView, View statusBar) {
+        int actionbarHeight = actionBar.getLayoutParams().height;
+
+        RelativeLayout.LayoutParams actionBarParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, actionbarHeight + getStatusBarHeight());
+        actionBar.setLayoutParams(actionBarParams);
+        actionBar.setPadding(0, getStatusBarHeight(), 0, 0);
+        actionBar.invalidate();
+
+        navView.setPadding(0, getStatusBarHeight(), 0, 0);
+        navView.invalidate();
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight());
         statusBar.setLayoutParams(layoutParams);

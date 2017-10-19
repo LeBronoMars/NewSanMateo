@@ -82,22 +82,22 @@ public class TodayWeatherFragment extends Fragment {
 
     private void initViews() {
         tvWeatherReportSummary.setText("PARTLY CLOUDY W/ THUNDERSTORMS");
-        tvHeatIndex.setText("Heat Index: 32\u00B0");
+        tvHeatIndex.setText("Heat Index: 36\u00B0");
         ivBgWeather.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bg_day3));
-        ivWeatherIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.day13));
-        tvTemperature.setText("29\u00B0");
+        ivWeatherIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.day06));
+        tvTemperature.setText("30\u00B0");
 
-        tvHumidity.setText("100%");
-        tvUVIndex.setText("Moderate");
-        tvWindSpeed.setText("20 KPH");
+        tvHumidity.setText("61%");
+        tvUVIndex.setText("5");
+        tvWindSpeed.setText("11 KPH");
 
-        tvCloudCover.setText("72%");
-        tvWindsForm.setText("SW");
-        tvWindGusts.setText("20 KPH");
+        tvCloudCover.setText("100%");
+        tvWindsForm.setText("NW");
+        tvWindGusts.setText("11 KPH");
 
-        tvDewPoint.setText("26\u00B0");
-        tvPressure.setText("1,008.0 MB");
-        tvVisibility.setText("8 KM");
+        tvDewPoint.setText("22\u00B0");
+        tvPressure.setText("1,003.0 MB");
+        tvVisibility.setText("16 KM");
     }
 
     @Override
