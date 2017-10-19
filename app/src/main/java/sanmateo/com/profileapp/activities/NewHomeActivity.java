@@ -225,15 +225,15 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     private void initDummyLabels() {
         //water level
-        tvWaterLevelLabel.setText("Water Level as of 8:15pm, May 28, 2017");
+        tvWaterLevelLabel.setText("Water Level as of 2:52am, October 20, 2017");
         tvWaterLevelStationMarket.setText("San Mateo Bridge");
         tvWaterLevelStationBridge.setText("Montalban");
-        tvWaterLevelReadingMarket.setText("12 ft.");
-        tvWaterLevelReadingBridge.setText("20 ft.");
+        tvWaterLevelReadingMarket.setText("16 ft.");
+        tvWaterLevelReadingBridge.setText("18 ft.");
 
         //weather report
         tvWeatherReportLabel.setText("Weather Report");
-        tvWeatherReportSummary.setText("Partly cloudy to cloudy skies with rainshowers or thunderstorms will prevail over San Mateo bludasdasdasdasdasdasdasdsadsadasdsadas");
+        tvWeatherReportSummary.setText("Partly cloudy to cloudy skies with rainshowers or thunderstorms will prevail over San Mateo");
         tvWeatherTitle.setText("Partly Cloudly");
         tvWeatherTemp.setText("31" + "\u2103");
 
@@ -273,7 +273,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     public void readMoreWeather() {
         startActivity(new Intent(this, WeatherForecastActivity.class));
         animateToLeft(this);
-        showToast("read more: weather report");
     }
 
     @OnClick(R.id.tv_view_all_incidents)
