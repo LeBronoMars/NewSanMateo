@@ -427,7 +427,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
                     moveToOtherActivity(IncidentsActivity.class);
                     break;
                 case 5:
-                    moveToOtherActivity(MapActivity.class);
+                    moveToOtherActivity(NewMapActivity.class);
                     break;
                 case 6:
                     moveToOtherActivity(GalleryActivity.class);

@@ -264,24 +264,12 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     @OnClick(R.id.btn_create_account)
     public void showRegistrationPage() {
-//        moveToOtherActivity(RegistrationActivity.class);
         moveToOtherActivity(NewRegistrationActivity.class);
     }
 
     @OnClick(R.id.tv_forgot_password)
     public void showForgotPassword() {
         if (isNetworkAvailable()) {
-//            final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
-//                    ForgotPasswordDialogFragment.newInstance();
-//            forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
-//                forgotPasswordDialogFragment.dismiss();
-//                if (isNetworkAvailable()) {
-//                    apiRequestHelper.forgotPassword(email);
-//                } else {
-//                    showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
-//                }
-//            });
-//            forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
             moveToOtherActivity(PasswordResetActivity.class);
         }
     }

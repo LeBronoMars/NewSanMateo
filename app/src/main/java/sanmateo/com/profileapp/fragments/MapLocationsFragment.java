@@ -49,6 +49,4 @@ public class MapLocationsFragment extends Fragment {
         rv_location.setAdapter(adapter);
         rv_location.setLayoutManager(new LinearLayoutManager(activity));
     }
-
-
 }
