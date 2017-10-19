@@ -295,9 +295,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
                     showToast("call ICCO");
                     break;
                 case 5:
-                    showToast("call rescue");
-                    break;
-                case 6:
                     showToast("send sos");
                     break;
             }
