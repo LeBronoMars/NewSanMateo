@@ -226,8 +226,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     private void initDummyLabels() {
         //water level
         tvWaterLevelLabel.setText("Water Level as of 8:15pm, May 28, 2017");
-        tvWaterLevelStationMarket.setText("San Mateo Public Market");
-        tvWaterLevelStationBridge.setText("San Mateo Bridge");
+        tvWaterLevelStationMarket.setText("San Mateo Bridge");
+        tvWaterLevelStationBridge.setText("Montalban");
         tvWaterLevelReadingMarket.setText("12 ft.");
         tvWaterLevelReadingBridge.setText("20 ft.");
 
