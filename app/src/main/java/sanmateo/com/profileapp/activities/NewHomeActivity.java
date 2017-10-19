@@ -90,8 +90,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.iv_notify)
     ImageView ivNotify;
 
-//    @BindView(R.id.navigationView)
-//    NavigationView navigationView;
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
 
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
@@ -187,7 +187,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         setContentView(R.layout.activity_home);
         unbinder = ButterKnife.bind(this);
 
-        setStatusBarColor(rlActionBar, statusBar);
+        setStatusBarColor(rlActionBar, navigationView, statusBar);
 
         currentUserSingleton = CurrentUserSingleton.getInstance();
         incidentsSingleton = IncidentsSingleton.getInstance();
