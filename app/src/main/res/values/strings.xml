@@ -46,6 +46,13 @@
     <string name="hint_password">Password</string>
     <string name="hint_email">Email Address</string>
 
+    <!-- nav items -->
+    <string name="nav_home">Home: Dashboard</string>
+    <string name="nav_incidents">Incident Reports</string>
+    <string name="nav_emergency">Emergency Contact Details</string>
+    <string name="nav_directory">Directory</string>
+    <string name="nav_map">Map</string>
+
     <!-- user registration dialog fragment -->
     <string name="registration">Registration</string>
     <string name="user_info">Your Information</string>
