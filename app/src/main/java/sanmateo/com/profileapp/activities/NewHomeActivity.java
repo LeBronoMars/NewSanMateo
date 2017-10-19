@@ -398,9 +398,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         closeDrawer();
     }
 
-    @OnClick(R.id.ll_incident_reports)
+    @OnClick(R.id.ll_incidents)
     public void goIncidents() {
-        showToast("incidents");
         viewAllIncidents();
     }
 

@@ -166,17 +166,13 @@
 
             </RelativeLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:background="@android:color/white"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:background="@android:color/white">
+                android:background="@android:color/white"
+                android:paddingTop="8dp">
 
                 <LinearLayout
                     android:id="@+id/ll_home_dashboard"
@@ -203,11 +199,11 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_incident_reports"
+                    android:id="@+id/ll_incidents"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:orientation="horizontal"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:paddingLeft="16dp">
 
                     <ImageView
