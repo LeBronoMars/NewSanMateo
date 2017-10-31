@@ -90,15 +90,9 @@ public class ActionsDialogFragment extends DialogFragment{
         getDialog().dismiss();
     }
 
-    @OnClick(R.id.ll_action_call_rescue)
-    public void callRescue() {
-        onActionSelectedListener.onActionSelected(5);
-        getDialog().dismiss();
-    }
-
     @OnClick(R.id.ll_action_send_sos)
     public void sendSos() {
-        onActionSelectedListener.onActionSelected(6);
+        onActionSelectedListener.onActionSelected(5);
         getDialog().dismiss();
     }
 

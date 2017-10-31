@@ -4,12 +4,30 @@
     <string name="sign_up">Sign Up</string>
     <string name="weather_forecast">Weather Forecast</string>
     <string name="password_reset">Password Reset</string>
+    <string name="online_mode">Online Mode</string>
+    <string name="sms_mode">SMS Mode</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="select_from_gallery_incidents">Select From Gallery</string>
     <string name="home_dashboard">Home: Dashboard</string>
+    <string name="incident_report">Incident Report</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="forgot_password_caps">FORGOT YOUR PASSWORD?</string>
     <string name="forgot_password_header">Forgot Password</string>
     <string name="hint_your_email">Please enter your email</string>
-    
+    <string name="view_all">VIEW ALL</string>
+    <string name="detecting_location">Detecting your location...</string>
+    <string name="incident_offline">You are offline. Please connect to the internet to load content.</string>
+    <string name="image_disabled">IMAGE ATTACHMENT FEATURE NOT AVAILABLE IN SMS MODE</string>
+    <string name="hint_location">Type your current location</string>
+
+    <!-- incident types -->
+    <string name="select_incident">Select an Incident Type</string>
+    <string name="traffic_road">Traffic/Road</string>
+    <string name="solid_waste">Solid Waste</string>
+    <string name="flooding">Flooding</string>
+    <string name="fire">Fire</string>
+    <string name="miscellaneous">Miscellaneous</string>
+
     <!-- actions label -->
     <string name="action_message">I-text si Mayor</string>
     <string name="action_file_incident">File Incident Report</string>
@@ -26,6 +44,14 @@
     <!-- new login -->
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
+    <string name="hint_email">Email Address</string>
+
+    <!-- nav items -->
+    <string name="nav_home">Home: Dashboard</string>
+    <string name="nav_incidents">Incident Reports</string>
+    <string name="nav_emergency">Emergency Contact Details</string>
+    <string name="nav_directory">Directory</string>
+    <string name="nav_map">Map</string>
 
     <!-- user registration dialog fragment -->
     <string name="registration">Registration</string>
@@ -61,7 +87,11 @@
     <string name="registration_success_title">Congratulations!</string>
     <string name="registration_success_content">Your account has been created. Click on the activation link which we have sent to your inbox to start using the app.</string>
     <string name="registration_success_confirm">BACK TO LOGIN</string>
-    
+
+    <string name="report_sent">Report sent</string>
+    <string name="report_sent_content">Thank you for submitting your report. The San Mateo ICCO will investigate the matter.</string>
+    <string name="report_sent_confirm">BACK TO INCIDENTS NEWSFEED</string>
+
     <!-- new password reset-->
     <string name="password_reset_sub_header">Enter your email address</string>
     <string name="reset_password">reset password</string>
@@ -279,10 +309,11 @@
     <string name="terms_notice">By clicking Create My Account, you agree to our</string>
     <string name="terms_condition">Terms &amp; Conditions</string>
     <string name="accept">Accept</string>
+    <string name="no_results_found">No results found.</string>
     <string name="decline">Decline</string>
     <string name="edit">Edit</string>
     <string name="eula">End User License Agreement</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin congue efficitur urna, sit amet euismod lacus cursus sed. Nullam nunc dui, lacinia id dignissim id, venenatis sit amet enim. Curabitur ultrices convallis maximus. Curabitur nec metus et mi faucibus molestie. Nulla placerat facilisis mi, a gravida ipsum sodales at. Phasellus ultricies arcu iaculis est sollicitudin egestas. Sed lacinia nisi felis, eu hendrerit sem varius ut. Maecenas luctus leo sapien, a laoreet dui dictum in. Donec id odio imperdiet, vestibulum felis vel, laoreet massa. Morbi efficitur sodales efficitur. Morbi luctus rutrum lacus sit amet sagittis. In vitae condimentum sem, sit amet dictum diam.
         \n\nMorbi venenatis scelerisque odio a hendrerit. Donec sit amet est laoreet, facilisis neque et, dictum metus. In non scelerisque nisi, quis faucibus sem. In sed lectus aliquet est dapibus pretium. Etiam porta eros in nunc finibus, vitae pharetra est viverra. Etiam ullamcorper cursus ex et scelerisque. Mauris eros ipsum, vestibulum vitae ullamcorper sed, dignissim vel est.</string>
-    <string name="public_announcements_no_data">There are no announcements received.</string>
+    <string name="public_announcements_no_data">There are no locations received.</string>
 </resources>

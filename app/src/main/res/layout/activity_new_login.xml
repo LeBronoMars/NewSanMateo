@@ -61,7 +61,7 @@
                         android:id="@+id/et_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_username"
+                        android:hint="@string/hint_email"
                         android:imeOptions="actionNext"
                         android:inputType="textEmailAddress"
                         android:minLines="1"

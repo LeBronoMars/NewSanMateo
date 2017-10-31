@@ -6,18 +6,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by ctmanalo on 7/6/16.
- */
 public class MapPagerAdapter extends FragmentPagerAdapter {
 
-    private String tabTitles[] = new String[] {"Local Government Office", "National Government Office",
-            "Tourist & Leisure Place" };
     private ArrayList<Fragment> fragments;
+    private ArrayList<String> tabTitles;
 
-    public MapPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
+    public MapPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments,
+                           ArrayList<String> tabTitles) {
         super(fm);
         this.fragments = fragments;
+        this.tabTitles = tabTitles;
     }
 
     @Override
@@ -27,11 +25,11 @@ public class MapPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return tabTitles.length;
+        return tabTitles.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabTitles[position];
+        return tabTitles.get(position);
     }
 }

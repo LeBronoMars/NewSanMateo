@@ -95,10 +95,13 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 final String[] requiredPermission = new String[]{
                         android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE,
                         android.Manifest.permission.READ_CONTACTS,
                         android.Manifest.permission.CAMERA,
                         android.Manifest.permission.READ_SMS,
-                        android.Manifest.permission.SEND_SMS
+                        android.Manifest.permission.SEND_SMS,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION
                 };
                 requestPermissions(requiredPermission, REQUEST_PERMISSIONS);
             } else {
@@ -261,24 +264,12 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
 
     @OnClick(R.id.btn_create_account)
     public void showRegistrationPage() {
-//        moveToOtherActivity(RegistrationActivity.class);
         moveToOtherActivity(NewRegistrationActivity.class);
     }
 
     @OnClick(R.id.tv_forgot_password)
     public void showForgotPassword() {
         if (isNetworkAvailable()) {
-//            final ForgotPasswordDialogFragment forgotPasswordDialogFragment =
-//                    ForgotPasswordDialogFragment.newInstance();
-//            forgotPasswordDialogFragment.setOnForgotPasswordListener(email -> {
-//                forgotPasswordDialogFragment.dismiss();
-//                if (isNetworkAvailable()) {
-//                    apiRequestHelper.forgotPassword(email);
-//                } else {
-//                    showConfirmDialog("", "Connection Error", AppConstants.WARN_CONNECTION, "Close", "", null);
-//                }
-//            });
-//            forgotPasswordDialogFragment.show(getFragmentManager(), "forgot");
             moveToOtherActivity(PasswordResetActivity.class);
         }
     }

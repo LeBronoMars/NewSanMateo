@@ -2,9 +2,18 @@ package sanmateo.com.profileapp.models.others;
 
 import com.google.android.gms.maps.model.LatLng;
 
-/**
- * Created by ctmanalo on 7/19/16.
- */
+import sanmateo.com.profileapp.R;
+
+
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_AUTHENTIC_RESTAURANT;
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_BARANGAY;
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_HEALTH;
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_HERITAGE_SITE;
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_MUNICIPAL;
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_RESORT;
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_SHOPPING_MALL;
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_SOCIAL_AND_DEVELOPMENT;
+
 public class Location {
 
     private String locationName;
@@ -13,6 +22,7 @@ public class Location {
     private String imageUrl;
     private LatLng latLng;
     private String category;
+    private int marker;
 
     public Location(String locationName, String locationAddress, String contactNo, String imageUrl,
                     LatLng latLng, String category) {
@@ -70,5 +80,26 @@ public class Location {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getMarker() {
+        if (category.equals(CATEGORY_BARANGAY) || category.equals(CATEGORY_MUNICIPAL) ||
+            category.equals(CATEGORY_SOCIAL_AND_DEVELOPMENT)) {
+            return R.drawable.ic_map_gov_29dp;
+        } else if (category.equals(CATEGORY_HEALTH)) {
+            return R.drawable.ic_map_hospital_29dp;
+        } else if (category.equals(CATEGORY_RESORT) || category.equals(CATEGORY_HERITAGE_SITE)) {
+            return R.drawable.ic_map_tourist_29dp;
+        } else if (category.equals(CATEGORY_SHOPPING_MALL)) {
+            return R.drawable.ic_map_shop_29dp;
+        } else if (category.equals(CATEGORY_AUTHENTIC_RESTAURANT)) {
+            return R.drawable.ic_map_food_29dp;
+        } else  {
+            return R.drawable.ic_map_police_29dp;
+        }
+    }
+
+    public void setMarker(int marker) {
+        this.marker = marker;
     }
 }

@@ -26,9 +26,9 @@ import sanmateo.com.profileapp.helpers.AppConstants;
 import sanmateo.com.profileapp.models.others.Location;
 
 
-/**
- * Created by ctmanalo on 7/6/16.
- */
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_BARANGAY;
+import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_MUNICIPAL;
+
 public class MapActivity extends BaseActivity implements OnMapReadyCallback {
 
     @BindView(R.id.viewPager) ViewPager viewPager;
@@ -48,10 +48,16 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
     }
 
     private void initTabs() {
+        ArrayList<String> tabTitles = new ArrayList<>();
+        tabTitles.add("LOCAL GOVT");
+        tabTitles.add("NATIONAL GOVT");
+        tabTitles.add("TOURIST");
+
+
         fragments.add(MapLocationsFragment.newInstance(getLocalGovernmentOffice()));
         fragments.add(MapLocationsFragment.newInstance(getNationalGovernmentOffice()));
         fragments.add(MapLocationsFragment.newInstance(getTouristAndLeisurePlaces()));
-        viewPager.setAdapter(new MapPagerAdapter(getSupportFragmentManager(), fragments));
+        viewPager.setAdapter(new MapPagerAdapter(getSupportFragmentManager(), fragments, tabTitles));
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setOffscreenPageLimit(3);
     }
@@ -120,69 +126,69 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback {
         locations.add(new Location("San Mateo Municipal Hall", "General Luna St., Guitnangbayan" +
                 " I San Mateo, Rizal Philippines", "+6327067920", "http://2.bp.blogspot.com/-FB1" +
                 "vuzJ97l8/UQU-uUzSk3I/AAAAAAAABFs/vxK_9Y3fftA/s1600/rr+%252844%2529.JPG",
-                new LatLng(14.695081, 121.117839), AppConstants.CATEGORY_MUNICIPAL));
+                new LatLng(14.695081, 121.117839), CATEGORY_MUNICIPAL));
 
         locations.add(new Location("Barangay Ampid I", "E Delos Santos Rd, Ampid-1, San" +
                 " Mateo, 1830 Rizal", "+6327067920", "https://lh6.googleusercontent.com/proxy/li" +
                 "JgfvGIXWj49cNThzgbJiklXqNuywCCt028xoHIpFUIIa3RKaQPVJl7UUKgl5NxkpiHa3gf7cALoUWD7" +
                 "nLGxI9YBO33K1sr1FUC6SbMPwMmoV2ZOImAU6GEJj12alvD6Try9vioaFyDMlp1CzDF37SI3w=w455-" +
-                "h256", new LatLng(14.681163, 121.119176), AppConstants.CATEGORY_BARANGAY));
+                "h256", new LatLng(14.681163, 121.119176), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Ampid II", "San Mateo, Rizal", "n/a", "", new
-                LatLng(14.686072, 121.119706), AppConstants.CATEGORY_BARANGAY));
+                LatLng(14.686072, 121.119706), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Banaba", "San Mateo, Rizal", "n/a", "", new
-                LatLng(14.676173, 121.109715), AppConstants.CATEGORY_BARANGAY));
+                LatLng(14.676173, 121.109715), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Dulong I", "San Mateo, Rizal", "n/a", "",
-                new LatLng(14.700409, 121.122562), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.700409, 121.122562), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Dulong II", "San Mateo, Rizal", "n/a", "",
-                new LatLng(14.700552, 121.126224), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.700552, 121.126224), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Guitnang Bayan I", "San Mateo, Rizal", "n/a",
                 "https://geo2.ggpht.com/cbk?panoid=XNQVyRqna3i94wRCM3kUhw&output=thumbnail&cb_cli" +
                         "ent=search.TACTILE.gps&thumb=2&w=408&h=256&yaw=110.2782&pitch=0",
-                new LatLng(14.695488, 121.121603), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.695488, 121.121603), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Guitnang Bayan II", "E Florencio St, Gutinang Bayan" +
                 " 2, San Mateo, 1850 Rizal", "+6329974910", "", new LatLng(14.697433, 121.123536),
-                AppConstants.CATEGORY_BARANGAY));
+                CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Guinayang", "Patiis Rd, San Mateo, Rizal", "n/a", "",
-                new LatLng(14.707090, 121.131560), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.707090, 121.131560), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Gulod Malaya", "San Mateo, Rizal", "n/a", "",
-                new LatLng(14.673623, 121.133290), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.673623, 121.133290), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Malanday", "Tubo Kanan Cor Patiis Road, San Mateo, 1" +
                 "850 Rizal", "+6326317662", "https://lh6.googleusercontent.com/proxy/InPFwYg2Nc35" +
                 "lcbwl8YQSpxaOwXs3IMqS7XiQbg6TVBsXjTumhZ1BE9lpVAYzY8Uc8wuu2KdZVNma_SjGxy0lt2jDFI2" +
                 "-qQom4sKpInlhzov_nUwyq97OfOCFP7XvHOwDCrj59eNBUCV0yW9Ivy9OQpM0w=w408-h725",
-                new LatLng(14.701601, 121.131403), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.701601, 121.131403), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Maly", "GSIS Street, Maly, San Mateo, 1850 Rizal",
                 "n/a", "https://lh3.googleusercontent.com/proxy/bfMNreae3Q0hv6AqE5aoWmyWdB4-1ELcs" +
                 "1vq5iX50Bs99sSwyjIHCgzytTY8lJDdr8YuYLB2iZhVd4-KE9NsSbUhmI_uQuCPy3e75SVz4iMCIFlPH" +
                 "WaQE4e4zXKWQ70KMDN1mew34qsHcR50_6l40DM_ZA=w455-h256",
-                new LatLng(14.709491, 121.134087), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.709491, 121.134087), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Pintong Bukawe", "San Mateo, Rizal", "n/a", "",
-                new LatLng(14.675370, 121.208110), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.675370, 121.208110), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Silangan", "Old Army Rd., Silangan, San Mateo, 1850 " +
                 "Rizal", "+6329974704", "https://lh6.googleusercontent.com/proxy/toAMieO2pLtfWV_e" +
                 "isR4JK9EjFXAOb-kvnTkD0gEnwn2tkK1VyDGXvYJJeTQIEFd0gOPZ0XfpK76orX1RrOuxnUw8Bm6UGUc" +
                 "tU6lMfFWt8dEtHcwfXzPpmNeEEDz4F8sP-_sLfU78Fy7F4EpI844zldbiw=w408-h725",
-                new LatLng(14.656925, 121.152168), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.656925, 121.152168), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Sta. Ana", "San Mateo, Rizal", "n/a", "",
-                new LatLng(14.692236, 121.115358), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.692236, 121.115358), CATEGORY_BARANGAY));
 
         locations.add(new Location("Barangay Sto. Niño", "Sampaguita Street, San Mateo, Rizal",
                 "n/a", "https://geo3.ggpht.com/cbk?panoid=FKfqmSQIB8tONj6x30YuLg&output=thumbnail" +
                 "&cb_client=search.TACTILE.gps&thumb=2&w=408&h=256&yaw=70.554657&pitch=0",
-                new LatLng(14.669146, 121.134612), AppConstants.CATEGORY_BARANGAY));
+                new LatLng(14.669146, 121.134612), CATEGORY_BARANGAY));
 
         return locations;
     }

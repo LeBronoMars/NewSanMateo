@@ -1,186 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="sanmateo.com.profileapp">
+<manifest package="sanmateo.com.profileapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:name=".base.BaseApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_san_mateo"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity"
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <!-- home activity -->
-        <activity android:name=".activities.HomeActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <activity android:name=".activities.NewHomeActivity"
-            android:theme="@style/AppNoActionBar"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.NewHomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar"/>
 
         <!-- registration activity -->
-        <activity android:name=".activities.RegistrationActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"/>
 
         <!-- new registration activity -->
-        <activity android:name=".activities.NewRegistrationActivity"
+        <activity
+            android:name=".activities.NewRegistrationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustPan"/>
 
         <!-- new password reset activity -->
-        <activity android:name=".activities.PasswordResetActivity"
+        <activity
+            android:name=".activities.PasswordResetActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustPan"/>
 
         <!-- information activity -->
-        <activity android:name=".activities.InformationActivity"
+        <activity
+            android:name=".activities.InformationActivity"
             android:screenOrientation="portrait"/>
 
         <!-- history activity -->
-        <activity android:name=".activities.HistoryActivity"
+        <activity
+            android:name=".activities.HistoryActivity"
             android:screenOrientation="portrait"/>
 
         <!-- officials activity -->
-        <activity android:name=".activities.OfficialsActivity"
+        <activity
+            android:name=".activities.OfficialsActivity"
             android:screenOrientation="portrait"/>
 
         <!-- official full info activity -->
-        <activity android:name=".activities.OfficialFullInfoActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.OfficialFullInfoActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- government information activity -->
-        <activity android:name=".activities.GovernmentInformationActivity"
+        <activity
+            android:name=".activities.GovernmentInformationActivity"
             android:screenOrientation="portrait"/>
 
         <!-- incidents activity -->
-        <activity android:name=".activities.IncidentsActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.IncidentsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activities.NewIncidentsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar"/>
+
+        <activity
+            android:name=".activities.IncidentDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar"/>
+
+        <activity
+            android:name=".activities.FileIncidentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar"/>
 
         <!-- map activity -->
-        <activity android:name=".activities.MapActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MapActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- directories activity -->
-        <activity android:name=".activities.DirectoriesActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DirectoriesActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- gallery activity -->
-        <activity android:name=".activities.GalleryActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.GalleryActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- social media activity -->
-        <activity android:name=".activities.SocialMediaActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SocialMediaActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- public announcement activity -->
-        <activity android:name=".activities.PublicAnnouncementsActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.PublicAnnouncementsActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- typhoon watch activity -->
-        <activity android:name=".activities.TyphoonWatchActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.TyphoonWatchActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- water level monitoring activity -->
-        <activity android:name=".activities.WaterLevelMonitoringActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.WaterLevelMonitoringActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- alert activity -->
-        <activity android:name=".activities.AlertLevelActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AlertLevelActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- global disaster activity -->
-        <activity android:name=".activities.GlobalDisasterActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.GlobalDisasterActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- hot lines activity -->
-        <activity android:name=".activities.HotlinesActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.HotlinesActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- emergency kit activity -->
-        <activity android:name=".activities.EmergencyKitActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EmergencyKitActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- CPR activity -->
-        <activity android:name=".activities.CprActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CprActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- new full preview activity -->
-        <activity android:name=".activities.NewsFullPreviewActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.NewsFullPreviewActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- disaster 101 activity -->
-        <activity android:name=".activities.Disaster101Activity"
-            android:screenOrientation="portrait" />
-        
+        <activity
+            android:name=".activities.Disaster101Activity"
+            android:screenOrientation="portrait"/>
+
         <!-- full image preview activity -->
-        <activity android:name=".activities.ImageFullViewActivity"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ImageFullViewActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- disaster management activity -->
-        <activity android:name=".activities.DisasterManagementActivity"
+        <activity
+            android:name=".activities.DisasterManagementActivity"
             android:screenOrientation="portrait"/>
 
         <!-- weather forecast -->
-        <activity android:name=".activities.WeatherForecastActivity"
-            android:theme="@style/AppNoActionBar"
+        <activity
+            android:name=".activities.WeatherForecastActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar"/>
+
+        <activity
+            android:name=".activities.NewMapActivity"
             android:screenOrientation="portrait"/>
 
-        <service android:name=".services.PusherService" />
+        <service android:name=".services.PusherService"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="c277574b48aa967c2623d91a564e6db73440d04a" />
+            android:value="c277574b48aa967c2623d91a564e6db73440d04a"/>
 
         <!-- google maps -->
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
 
         <!-- facebook config -->
-        <provider android:authorities="com.facebook.app.FacebookContentProvider1183940438317855"
+        <provider
             android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1183940438317855"
             android:exported="true"/>
 
-        <activity android:name="com.facebook.FacebookActivity"
+        <activity
+            android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/fb_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/fb_app_id"/>
         <!-- end of facebook configs -->
 
         <!-- amazon s3 config -->
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
-            android:enabled="true" />
+            android:enabled="true"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB2fMLz_9A6mL1uYMaCQbvUkZ_ADqPaL30"/>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

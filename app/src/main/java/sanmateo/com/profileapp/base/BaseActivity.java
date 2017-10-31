@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,10 +35,7 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -110,6 +109,18 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void setStatusBarColor(ViewGroup actionBar, NavigationView navView, View statusBar) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+
+            resizeActionBar(actionBar, navView, statusBar);
+        }
+    }
+
     public void setStatusBarColor(View statusBar) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
@@ -129,6 +140,22 @@ public class BaseActivity extends AppCompatActivity {
         actionBar.setLayoutParams(actionBarParams);
         actionBar.setPadding(0, getStatusBarHeight(), 0, 0);
         actionBar.invalidate();
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight());
+        statusBar.setLayoutParams(layoutParams);
+        statusBar.invalidate();
+    }
+
+    private void resizeActionBar(ViewGroup actionBar, ViewGroup navView, View statusBar) {
+        int actionbarHeight = actionBar.getLayoutParams().height;
+
+        RelativeLayout.LayoutParams actionBarParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, actionbarHeight + getStatusBarHeight());
+        actionBar.setLayoutParams(actionBarParams);
+        actionBar.setPadding(0, getStatusBarHeight(), 0, 0);
+        actionBar.invalidate();
+
+        navView.setPadding(0, getStatusBarHeight(), 0, 0);
+        navView.invalidate();
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight());
         statusBar.setLayoutParams(layoutParams);
@@ -361,6 +388,10 @@ public class BaseActivity extends AppCompatActivity {
         return new SimpleDateFormat("EEE, yyyy-MM-dd hh:mm a");
     }
 
+    public SimpleDateFormat getTime() {
+        return new SimpleDateFormat("hh:mm a");
+    }
+
     public PrettyTime getPrettyTime() {
         return new PrettyTime();
     }
@@ -440,6 +471,12 @@ public class BaseActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         return file;
+    }
+
+    /** check gps availability */
+    public boolean isGpsConnected() {
+        final LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private void resizeImage(final File file, final Matrix matrix) {
