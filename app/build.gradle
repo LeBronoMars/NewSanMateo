@@ -38,13 +38,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'HOST_NAME', '\"http://54.255.149.40:7070\"'
+            buildConfigField 'String', 'HOST_NAME', project.host
             buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
             buildConfigField 'String', 'PUSHER_CLIENT_ID', '\"d37253507ae4d71dee6b\"'
             buildConfigField 'String', 'PUSHER_CLUSTER', '\"ap1\"'
         }
+
         debug {
-            buildConfigField 'String', 'HOST_NAME', '\"http://54.255.149.40:7070\"'
+            buildConfigField 'String', 'HOST_NAME', project.host
             //buildConfigField 'String', 'HOST_NAME', '\"http://192.168.254.100:7000\"'
             buildConfigField 'String', 'AWS_POOL_ID', '\"us-east-1:66c534a3-218e-4cfc-934c-c5f24b53a88a\"'
             buildConfigField 'String', 'PUSHER_CLIENT_ID', '\""d37253507ae4d71dee6b"\"'
@@ -89,11 +90,8 @@ android {
     }
 
     sourceSets {
-        test.java.srcDir 'src/tests/api/java'
-        test.java.srcDir 'src/tests/commons/java'
         test.java.srcDir 'src/tests/unit/java'
         androidTest.java.srcDir 'src/tests/android/java'
-        androidTest.java.srcDir 'src/tests/commons/java'
     }
 
     testOptions.unitTests.all {
