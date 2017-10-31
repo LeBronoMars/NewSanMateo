@@ -106,7 +106,7 @@ public class NewMapFragment extends Fragment implements OnMapReadyCallback {
 
     private void initMap() {
         if (map == null) {
-            map = mapFragment.getMap();
+            mapFragment.getMapAsync(this);
             map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             map.getUiSettings()
                .setScrollGesturesEnabled(true);

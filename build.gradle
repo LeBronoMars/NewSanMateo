@@ -1,23 +1,32 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: 'config/dependencies.gradle'
 
 buildscript {
+    apply from: 'config/dependencies.gradle'
+
     repositories {
         jcenter()
+        mavenCentral()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-        classpath "io.realm:realm-gradle-plugin:3.1.3"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath gradlePlugins.android
+        classpath gradlePlugins.dexcount
+        classpath gradlePlugins.jacoco
+        classpath gradlePlugins.realmAndroid
+        classpath gradlePlugins.retrolambda
+        classpath gradlePlugins.retrolambdaLombok
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        maven { url 'http://clojars.org/repo' }
+        maven {
+            url 'http://clojars.org/repo'
+        }
+        maven {
+            url 'https://maven.google.com'
+        }
     }
 }
 

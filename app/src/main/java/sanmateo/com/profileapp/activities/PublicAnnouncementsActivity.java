@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -20,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.AnnouncementsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;

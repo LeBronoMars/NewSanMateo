@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -42,7 +43,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.BannerAdapter;
 import sanmateo.com.profileapp.adapters.CustomNavMenuAdapter;

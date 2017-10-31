@@ -3,6 +3,7 @@ package sanmateo.com.profileapp.interfaces;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -12,7 +13,6 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import rx.Observable;
 import sanmateo.com.profileapp.models.response.Announcement;
 import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.Gallery;

@@ -29,6 +29,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.Display;
@@ -41,13 +42,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -62,7 +63,6 @@ import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.activities.LoginActivity;
 import sanmateo.com.profileapp.fragments.CustomProgressBarDialogFragment;
@@ -248,47 +248,50 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void showConfirmDialog(final String action, final String title, final String content,
+    public void showConfirmDialog(final String action, final String title, final String message,
                                   final String positiveText, final String negativeText,
                                   final OnConfirmDialogListener onConfirmDialogListener) {
-        new MaterialDialog.Builder(this)
-                .title(title)
-                .content(content)
-                .positiveText(positiveText)
-                .negativeText(negativeText)
-                .onPositive((dialog, which) -> {
-                    if (onConfirmDialogListener != null) {
-                        onConfirmDialogListener.onConfirmed(action);
-                    }
-                })
-                .onNegative((dialog, which) -> {
-                    if (onConfirmDialogListener != null) {
-                        onConfirmDialogListener.onCancelled(action);
-                    }
-                })
-                .show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(positiveText, (dialogInterface, i) -> {
+            if (onConfirmDialogListener != null) {
+                onConfirmDialogListener.onConfirmed(action);
+            }
+        });
+
+        if (negativeText != null) {
+            builder.setNegativeButton(negativeText, (dialogInterface, i) -> {
+                if (onConfirmDialogListener != null) {
+                    onConfirmDialogListener.onCancelled(action);
+                }
+            });
+        }
+        builder.create().show();
     }
 
-    public void showNonCancelableConfirmDialog(final String action, final String title, final String content,
+    public void showNonCancelableConfirmDialog(final String action, final String title,
+                                               final String message,
                                   final String positiveText, final String negativeText,
                                   final OnConfirmDialogListener onConfirmDialogListener) {
-        new MaterialDialog.Builder(this)
-                .title(title)
-                .content(content)
-                .canceledOnTouchOutside(false)
-                .positiveText(positiveText)
-                .negativeText(negativeText)
-                .onPositive((dialog, which) -> {
-                    if (onConfirmDialogListener != null) {
-                        onConfirmDialogListener.onConfirmed(action);
-                    }
-                })
-                .onNegative((dialog, which) -> {
-                    if (onConfirmDialogListener != null) {
-                        onConfirmDialogListener.onCancelled(action);
-                    }
-                })
-                .show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(positiveText, (dialogInterface, i) -> {
+            if (onConfirmDialogListener != null) {
+                onConfirmDialogListener.onConfirmed(action);
+            }
+        });
+
+        if (negativeText != null) {
+            builder.setNegativeButton(negativeText, (dialogInterface, i) -> {
+                if (onConfirmDialogListener != null) {
+                    onConfirmDialogListener.onCancelled(action);
+                }
+            });
+        }
+        builder.setCancelable(false);
+        builder.create().show();
     }
 
     public void showSnackbar(final View parent, final String message) {

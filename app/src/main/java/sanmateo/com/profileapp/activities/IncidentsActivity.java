@@ -13,6 +13,7 @@ import com.facebook.FacebookException;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONException;
@@ -25,7 +26,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.IncidentsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
