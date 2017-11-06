@@ -4,7 +4,7 @@ package sanmateo.com.profileapp.user.login.model.remote.mapper;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import sanmateo.com.profileapp.api.user.UserDto;
-import sanmateo.com.profileapp.user.login.model.local.User;
+import sanmateo.com.profileapp.user.login.model.User;
 
 /**
  * Created by rsbulanon on 31/10/2017.

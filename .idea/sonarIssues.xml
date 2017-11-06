@@ -13,6 +13,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/activities/HomeActivity.java">
           <value>
             <set />
@@ -138,7 +143,72 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/UserModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/LoginModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/LoginSubComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/LoginSubcomponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/DefaultUserLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/LoginModelModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/User.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/UserAuthenticator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/local/DefaultLocalUserLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/local/LocalUserLoaderModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/local/User.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/remote/DefaultLoginRemoteAuthenticator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/remote/LoginRemoteAuthenticator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/remote/LoginRemoteModule.java">
           <value>
             <set />
           </value>
@@ -153,12 +223,67 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/presenter/DefaultLoginPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/presenter/DefaultLoginPresenterModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/presenter/LoginPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/presenter/LoginPresenterModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/view/LoginActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/view/LoginView.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/model/remote/mapper/LoginRemoteAuthenticator.java">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/model/remote/mapper/LoginRemoteMapper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/DefaultRxSchedulerUtils.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/RxSchedulerModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/RxSchedulerUtils.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/RxUtilityModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/user/login/model/remote/DefaultLoginRemoteAuthenticatorTest.java">
           <value>
             <set />
           </value>
@@ -183,7 +308,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/java/com/solutio/framework/DefaultSolutioMvpPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/java/com/solutio/framework/SolutioApplication.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/java/com/solutio/framework/SolutioMvpPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/java/com/solutio/util/prefs/PrefsModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/tests/android/java/com/solutio/timesheet/approval/view/details/TimesheetApprovalDetailsActivityTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/tests/unit/java/com/solutio/util/SharedPrefsTenantLoaderTest.java">
           <value>
             <set />
           </value>

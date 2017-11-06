@@ -1,4 +1,4 @@
-package sanmateo.com.profileapp.user.login.model.local;
+package sanmateo.com.profileapp.user.login.model;
 
 import io.realm.annotations.PrimaryKey;
 

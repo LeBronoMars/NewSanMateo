@@ -40,9 +40,7 @@ public class ProfileApplication extends Application implements HasActivityInject
     }
 
     ProfileComponent initializeComponent() {
-        return DaggerProfileComponent.builder()
-                                     .application(this)
-                                     .build();
+        return DaggerProfileComponent.builder().application(this).build();
     }
 
     @Override
