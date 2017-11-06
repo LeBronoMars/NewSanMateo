@@ -17,17 +17,52 @@ import sanmateo.com.profileapp.user.login.presenter.LoginPresenter;
 public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
 
     @Inject
-    LoginPresenter loginPresenter;
+    LoginPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
+
+        // TODO move to Login button click event later
+        presenter.login();
     }
 
     @NonNull
     @Override
     public LoginPresenter createPresenter() {
-        return loginPresenter;
+        return presenter;
+    }
+
+    @Override
+    public String getEmail() {
+        // TODO replace with EditText.getText().toString() later
+        return "ned@flanders.com";
+    }
+
+    @Override
+    public String getPassword() {
+        // TODO replace with EditText.getText().toString() later
+        return "P@ssw0rd";
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showLoginFailed() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void showLoginSuccess() {
+        // TODO redirect to home screen
     }
 }

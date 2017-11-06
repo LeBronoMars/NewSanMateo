@@ -8,5 +8,5 @@ import io.reactivex.Single;
 
 public interface UserLoader {
 
-    Single<User> login(String emal, String password);
+    Single<User> login(String email, String password);
 }

@@ -7,4 +7,16 @@ import com.hannesdorfmann.mosby3.mvp.MvpView;
  */
 
 public interface LoginView extends MvpView {
+
+    String getEmail();
+
+    String getPassword();
+
+    void hideProgress();
+
+    void showLoginFailed();
+
+    void showProgress();
+
+    void showLoginSuccess();
 }
