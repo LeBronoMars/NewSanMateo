@@ -303,6 +303,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/user/login/model/DefaultUserLoaderTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/user/login/model/remote/DefaultLoginRemoteAuthenticatorTest.java">
           <value>
             <set />
@@ -349,6 +354,11 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/tests/android/java/com/solutio/timesheet/approval/view/details/TimesheetApprovalDetailsActivityTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/tests/unit/java/com/solutio/timesheet/usecase/DefaultTimesheetsLoaderTest.java">
           <value>
             <set />
           </value>
