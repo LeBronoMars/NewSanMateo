@@ -10,7 +10,7 @@ import sanmateo.com.profileapp.user.login.model.User;
  * Created by rsbulanon on 31/10/2017.
  */
 
-public class LoginRemoteMapper implements Function<UserDto, Single<User>> {
+public class UserDtoToUserMapper implements Function<UserDto, Single<User>> {
 
     @Override
     public Single<User> apply(UserDto userDto) {

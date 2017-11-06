@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Created by rsbulanon on 31/10/2017.
  */
-public class LoginRemoteMapperTest {
+public class UserDtoToUserMapperTest {
 
     @Test
     public void apply() {
@@ -21,7 +21,7 @@ public class LoginRemoteMapperTest {
 
         UserDto expected = UserFactory.userDto();
 
-        new LoginRemoteMapper()
+        new UserDtoToUserMapper()
                           .apply(expected)
                           .subscribe(testObserver);
 
