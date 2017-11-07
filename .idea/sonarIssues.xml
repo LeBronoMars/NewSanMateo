@@ -333,6 +333,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/realm/RealmProviderModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/realm/RealmUtil.java">
           <value>
             <set />
@@ -384,6 +389,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/user/login/util/TestableRxSchedulerUtil.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/util/realm/DefaultRealmUtilTest.java">
           <value>
             <set />
           </value>

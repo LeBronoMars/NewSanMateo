@@ -1,12 +1,13 @@
 package sanmateo.com.profileapp.user.login.model;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by rsbulanon on 31/10/2017.
  */
 
-public class User {
+public class User extends RealmObject {
 
     public String address;
 

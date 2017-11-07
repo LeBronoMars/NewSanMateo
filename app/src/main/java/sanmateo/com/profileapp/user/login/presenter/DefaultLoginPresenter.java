@@ -10,6 +10,7 @@ import io.reactivex.disposables.Disposable;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.UserLoader;
 import sanmateo.com.profileapp.user.login.view.LoginView;
+import sanmateo.com.profileapp.util.realm.RealmUtil;
 import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 
 /**
@@ -17,6 +18,8 @@ import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
  */
 
 class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements LoginPresenter {
+
+    private RealmUtil<User> realmUtil;
 
     private RxSchedulerUtils rxSchedulerUtils;
 
@@ -27,7 +30,10 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
     LoginView view;
 
     @Inject
-    public DefaultLoginPresenter(RxSchedulerUtils rxSchedulerUtils, UserLoader userLoader) {
+    public DefaultLoginPresenter(RealmUtil<User> realmUtil,
+                                 RxSchedulerUtils rxSchedulerUtils,
+                                 UserLoader userLoader) {
+        this.realmUtil = realmUtil;
         this.rxSchedulerUtils = rxSchedulerUtils;
         this.userLoader = userLoader;
     }

@@ -8,6 +8,7 @@ import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import sanmateo.com.profileapp.api.RemoteServiceModule;
 import sanmateo.com.profileapp.user.UserModule;
+import sanmateo.com.profileapp.util.realm.RealmProviderModule;
 import sanmateo.com.profileapp.util.rx.RxSchedulerModule;
 
 /**
@@ -16,6 +17,7 @@ import sanmateo.com.profileapp.util.rx.RxSchedulerModule;
 @Component(modules = {
                          AndroidInjectionModule.class,
                          AppModule.class,
+                         RealmProviderModule.class,
                          RemoteServiceModule.class,
                          RxSchedulerModule.class,
                          UserModule.class

@@ -20,6 +20,7 @@ import sanmateo.com.profileapp.user.login.model.UserLoader;
 import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMapper;
 import sanmateo.com.profileapp.user.login.util.TestableRxSchedulerUtil;
 import sanmateo.com.profileapp.user.login.view.LoginView;
+import sanmateo.com.profileapp.util.realm.RealmUtil;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,6 +29,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 /**
  * Created by rsbulanon on 07/11/2017.
@@ -37,6 +39,9 @@ public class DefaultLoginPresenterTest {
 
     @Mock
     LoginView view;
+
+    @Mock
+    RealmUtil<User> realmUtil;
 
     @Spy
     TestableRxSchedulerUtil rxSchedulerUtil;
@@ -48,7 +53,7 @@ public class DefaultLoginPresenterTest {
 
     @Before
     public void setUp() {
-        classUnderTest = new DefaultLoginPresenter(rxSchedulerUtil, userLoader);
+        classUnderTest = new DefaultLoginPresenter(realmUtil, rxSchedulerUtil, userLoader);
     }
 
     @After
@@ -182,5 +187,13 @@ public class DefaultLoginPresenterTest {
         // since we are done with our Login Request. This is to verify that we dont have
         // any interactions with any objects related to login.
         verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
+
+        // verify that we don't performed any interaction with realmUtil object
+         verifyZeroInteractions(realmUtil);
+    }
+
+    @Test
+    public void realmUtilIsNotNull() {
+        assertThat(realmUtil).isNotNull();
     }
 }
