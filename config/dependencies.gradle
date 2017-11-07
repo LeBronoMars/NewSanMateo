@@ -37,7 +37,7 @@ ext.versions = [
         prettyTime           : '4.0.1.Final',
         retrofit             : '2.1.0',
         retrofitRxJavaAdapter: '1.0.0',
-        room                 : '1.0.0-rc1',
+        room                 : '1.0.0',
         rxAndroid            : '2.0.1',
         rxJava               : '2.1.5',
         supportLibs          : '25.3.1',

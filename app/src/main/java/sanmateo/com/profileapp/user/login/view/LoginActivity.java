@@ -7,6 +7,8 @@ import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import dagger.android.AndroidInjection;
 import sanmateo.com.profileapp.user.login.presenter.LoginPresenter;
 
@@ -19,10 +21,13 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     @Inject
     LoginPresenter presenter;
 
+    private Unbinder unbinder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
+        unbinder = ButterKnife.bind(this);
 
         // TODO move to Login button click event later
         presenter.login();
@@ -64,5 +69,13 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     @Override
     public void showLoginSuccess() {
         // TODO redirect to home screen
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
     }
 }

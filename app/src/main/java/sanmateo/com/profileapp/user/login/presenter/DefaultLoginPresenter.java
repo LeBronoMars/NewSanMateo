@@ -10,7 +10,7 @@ import io.reactivex.disposables.Disposable;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.UserLoader;
 import sanmateo.com.profileapp.user.login.view.LoginView;
-import sanmateo.com.profileapp.util.RxSchedulerUtils;
+import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 
 /**
  * Created by rsbulanon on 06/11/2017.

@@ -2,7 +2,7 @@ package sanmateo.com.profileapp.user.login.model;
 
 import dagger.Binds;
 import dagger.Module;
-import sanmateo.com.profileapp.user.login.model.local.LocalUserLoaderModule;
+import sanmateo.com.profileapp.user.login.model.local.LocalUserModule;
 import sanmateo.com.profileapp.user.login.model.remote.LoginRemoteModule;
 
 /**
@@ -10,7 +10,7 @@ import sanmateo.com.profileapp.user.login.model.remote.LoginRemoteModule;
  */
 
 @Module(includes = {
-                       LocalUserLoaderModule.class,
+                       LocalUserModule.class,
                        LoginRemoteModule.class
 })
 public abstract class LoginModelModule {

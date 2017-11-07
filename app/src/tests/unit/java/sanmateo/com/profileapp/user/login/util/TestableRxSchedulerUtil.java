@@ -4,7 +4,7 @@ package sanmateo.com.profileapp.user.login.util;
 import io.reactivex.CompletableTransformer;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.SingleTransformer;
-import sanmateo.com.profileapp.util.RxSchedulerUtils;
+import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 
 public class TestableRxSchedulerUtil implements RxSchedulerUtils {
 

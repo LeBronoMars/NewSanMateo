@@ -8,8 +8,7 @@ import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import sanmateo.com.profileapp.api.RemoteServiceModule;
 import sanmateo.com.profileapp.user.UserModule;
-import sanmateo.com.profileapp.user.login.LoginModule;
-import sanmateo.com.profileapp.util.RxSchedulerModule;
+import sanmateo.com.profileapp.util.rx.RxSchedulerModule;
 
 /**
  * Created by rsbulanon on 31/10/2017.

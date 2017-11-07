@@ -1,4 +1,4 @@
-package sanmateo.com.profileapp.util;
+package sanmateo.com.profileapp.util.rx;
 
 import javax.inject.Singleton;
 
