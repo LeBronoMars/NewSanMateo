@@ -1,7 +1,9 @@
 package sanmateo.com.profileapp.util;
 
-import dagger.Binds;
+import javax.inject.Singleton;
+
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * Created by rsbulanon on 31/10/2017.
@@ -9,6 +11,9 @@ import dagger.Module;
 @Module
 public abstract class RxSchedulerModule {
 
-    @Binds
-    abstract RxSchedulerUtils bindSchedulerUtil(DefaultRxSchedulerUtils defaultRxSchedulerUtils);
+    @Provides
+    @Singleton
+    static RxSchedulerUtils provideRxSchedulerUtils() {
+        return new DefaultRxSchedulerUtils();
+    }
 }
