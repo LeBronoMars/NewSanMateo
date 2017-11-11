@@ -2,15 +2,18 @@ package sanmateo.com.profileapp.user.login.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.AndroidInjection;
+import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.presenter.LoginPresenter;
 
@@ -23,6 +26,9 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
 
+    @BindView(R.id.login_textview)
+    TextView loginTextView;
+
     @Inject
     LoginPresenter presenter;
 
@@ -31,6 +37,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
+        setContentView(R.layout.activity_login);
         super.onCreate(savedInstanceState);
         unbinder = ButterKnife.bind(this);
 
@@ -68,7 +75,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
 
     @Override
     public void noLocalUser() {
-        Toast.makeText(this, "No local user", LENGTH_SHORT).show();
+
     }
 
     @Override
