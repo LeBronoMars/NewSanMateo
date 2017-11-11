@@ -5,13 +5,14 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
+import io.realm.RealmModel;
 import io.realm.RealmObject;
 
 /**
  * Created by rsbulanon on 07/11/2017.
  */
 
-public interface RealmUtil<T extends RealmObject> {
+public interface RealmUtil<T extends RealmModel> {
 
     Single<Long> count();
 

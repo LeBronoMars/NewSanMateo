@@ -1,6 +1,5 @@
 package sanmateo.com.profileapp.util.realm;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,24 +8,22 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.realm.Realm;
-import io.realm.RealmObject;
+import io.realm.RealmModel;
 
 /**
  * Created by rsbulanon on 07/11/2017.
  */
 
-public class DefaultRealmUtil<T extends RealmObject> implements RealmUtil<T> {
+public class DefaultRealmUtil<T extends RealmModel> implements RealmUtil<T> {
 
     private Realm realm;
 
     private Class<T> typeParameterClass;
 
     @Inject
-    public DefaultRealmUtil(Realm realm) {
+    public DefaultRealmUtil(Realm realm, Class<T> tClass) {
         this.realm = realm;
-        this.typeParameterClass = (Class<T>) ((ParameterizedType) getClass()
-                                                                      .getGenericSuperclass())
-                                                                      .getActualTypeArguments()[0];
+        this.typeParameterClass = tClass;
     }
 
     @Override

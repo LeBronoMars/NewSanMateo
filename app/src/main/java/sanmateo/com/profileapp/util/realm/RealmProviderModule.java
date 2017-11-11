@@ -25,6 +25,6 @@ public class RealmProviderModule {
     @Provides
     @Singleton
     RealmUtil<User> provideUserRealm(Realm realm) {
-        return new DefaultRealmUtil<>(realm);
+        return new DefaultRealmUtil<>(realm, User.class);
     }
 }
