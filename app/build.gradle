@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 apply plugin: 'io.fabric'
 apply from: '../config/dexcount.gradle'
@@ -144,6 +143,7 @@ dependencies {
     }
     annotationProcessor libraries.daggerCompiler
     annotationProcessor libraries.daggerProcessor
+    annotationProcessor libraries.roomCompiler
 
     compile(libraries.butterknife) {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -183,6 +183,9 @@ dependencies {
 
     debugCompile debugTools.leakCanary
     debugCompile debugTools.tinyDancer
+
+    implementation libraries.roomRuntime
+    implementation libraries.roomRxJava2
 
     testCompile testLibraries.assertJ
     testCompile testLibraries.junit

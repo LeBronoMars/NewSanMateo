@@ -13,7 +13,6 @@ buildscript {
         classpath gradlePlugins.dexcount
         classpath gradlePlugins.jacoco
         classpath gradlePlugins.realmAndroid
-        classpath gradlePlugins.retrolambda
         classpath gradlePlugins.retrolambdaLombok
     }
 }
