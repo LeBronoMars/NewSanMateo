@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import io.realm.Realm;
+import io.realm.RealmObject;
 import sanmateo.com.profileapp.user.login.model.User;
 
 /**
@@ -21,7 +22,7 @@ public abstract class RealmProviderModule {
 
     @Provides
     @Singleton
-    RealmUtil<User> provideUserRealmUtil(Realm realm) {
+    RealmUtil<User> provideUserRealm(Realm realm) {
         return new DefaultRealmUtil<>(realm);
     }
 }

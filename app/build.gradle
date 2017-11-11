@@ -30,7 +30,7 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode versions.code
         versionName versions.name
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "sanmateo.com.profileapp.MockTestRunner"
         multiDexEnabled true
     }
 

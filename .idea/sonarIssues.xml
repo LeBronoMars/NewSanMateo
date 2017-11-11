@@ -13,6 +13,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/androidTest/java/sanmateo/com/profileapp/user/login/view/LoginActivityTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <value>
             <set />
@@ -228,6 +233,16 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/local/loader/DefaultLocalUserLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/local/loader/LocalUserLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/login/model/local/saver/DefaultLocalUserSaver.java">
           <value>
             <set />
@@ -358,6 +373,36 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/android/java/sanmateo/com/profileapp/MockTestRunner.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/android/java/sanmateo/com/profileapp/framework/MockAppModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/android/java/sanmateo/com/profileapp/framework/MockProfileApplication.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/android/java/sanmateo/com/profileapp/framework/MockProfileComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/android/java/sanmateo/com/profileapp/user/login/view/LoginActivityTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/android/java/sanmateo/com/profileapp/util/rx/MockRxSchedulerModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/user/login/model/DefaultUserLoaderTest.java">
           <value>
             <set />
@@ -393,6 +438,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/user/login/view/LoginActivityTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/util/realm/DefaultRealmUtilTest.java">
           <value>
             <set />
@@ -409,6 +459,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/gradle.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/build/intermediates/manifest/androidTest/debug/AndroidManifest.xml">
           <value>
             <set />
           </value>
