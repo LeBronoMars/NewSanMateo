@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
+import sanmateo.com.profileapp.user.login.view.LoginActivityTest;
 import sanmateo.com.profileapp.util.realm.RealmProviderModule;
 import sanmateo.com.profileapp.util.rx.MockRxSchedulerModule;
 
@@ -21,7 +22,7 @@ import sanmateo.com.profileapp.util.rx.MockRxSchedulerModule;
                   RealmProviderModule.class
     })
 @Singleton
-public interface MockProfileComponent {
+public interface MockProfileComponent extends ProfileComponent {
 
     @Component.Builder
     interface Builder {
@@ -29,4 +30,6 @@ public interface MockProfileComponent {
         MockProfileComponent.Builder application(MockProfileApplication application);
         MockProfileComponent build();
     }
+
+    void inject(LoginActivityTest loginActivityTest);
 }

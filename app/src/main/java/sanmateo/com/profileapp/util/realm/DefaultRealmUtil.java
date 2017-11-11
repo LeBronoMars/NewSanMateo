@@ -35,6 +35,17 @@ public class DefaultRealmUtil<T extends RealmObject> implements RealmUtil<T> {
     }
 
     @Override
+    public Maybe<T> first() {
+        T t = realm.where(typeParameterClass).findFirst();
+
+        if (t == null) {
+            return Maybe.empty();
+        } else {
+            return Maybe.just(t);
+        }
+    }
+
+    @Override
     public Maybe<List<T>> loadAll() {
         return Maybe.just(realm.where(typeParameterClass).findAll());
     }

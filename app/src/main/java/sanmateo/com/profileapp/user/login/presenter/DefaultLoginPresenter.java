@@ -4,13 +4,14 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
 
+import io.reactivex.MaybeObserver;
 import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.UserLoader;
+import sanmateo.com.profileapp.user.login.model.local.loader.LocalUserLoader;
 import sanmateo.com.profileapp.user.login.view.LoginView;
-import sanmateo.com.profileapp.util.realm.RealmUtil;
 import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 
 /**
@@ -19,7 +20,7 @@ import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 
 class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements LoginPresenter {
 
-    private RealmUtil<User> realmUtil;
+    private LocalUserLoader localUserLoader;
 
     private RxSchedulerUtils rxSchedulerUtils;
 
@@ -30,10 +31,10 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
     LoginView view;
 
     @Inject
-    public DefaultLoginPresenter(RealmUtil<User> realmUtil,
+    public DefaultLoginPresenter(LocalUserLoader localUserLoader,
                                  RxSchedulerUtils rxSchedulerUtils,
                                  UserLoader userLoader) {
-        this.realmUtil = realmUtil;
+        this.localUserLoader = localUserLoader;
         this.rxSchedulerUtils = rxSchedulerUtils;
         this.userLoader = userLoader;
     }
@@ -42,6 +43,34 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
     public void attachView(LoginView view) {
         super.attachView(view);
         this.view = view;
+    }
+
+    @Override
+    public void checkForLocalUser() {
+        localUserLoader.loadLocalUser()
+                       .compose(rxSchedulerUtils.mayBeAsyncSchedulerTransformer())
+                       .subscribe(new MaybeObserver<User>() {
+                           @Override
+                           public void onSubscribe(Disposable d) {
+                                disposable = d;
+                           }
+
+                           @Override
+                           public void onSuccess(User user) {
+                                view.loadLocalUser(user);
+                           }
+
+                           @Override
+                           public void onError(Throwable e) {
+                                dispose();
+                           }
+
+                           @Override
+                           public void onComplete() {
+                               view.noLocalUser();
+                               dispose();
+                           }
+                       });
     }
 
     @Override

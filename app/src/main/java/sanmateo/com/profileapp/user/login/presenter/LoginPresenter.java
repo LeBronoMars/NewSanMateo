@@ -10,5 +10,7 @@ import sanmateo.com.profileapp.user.login.view.LoginView;
 
 public interface LoginPresenter extends MvpPresenter<LoginView> {
 
+    void checkForLocalUser();
+
     void login();
 }

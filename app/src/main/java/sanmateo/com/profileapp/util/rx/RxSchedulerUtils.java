@@ -1,6 +1,7 @@
 package sanmateo.com.profileapp.util.rx;
 
 import io.reactivex.CompletableTransformer;
+import io.reactivex.MaybeTransformer;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.SingleTransformer;
 
@@ -11,6 +12,8 @@ import io.reactivex.SingleTransformer;
 public interface RxSchedulerUtils {
 
     CompletableTransformer completableAsychSchedulerTransformer();
+
+    <T> MaybeTransformer<T, T> mayBeAsyncSchedulerTransformer();
 
     <T> ObservableTransformer<T, T> observableAsyncSchedulerTransformer();
 

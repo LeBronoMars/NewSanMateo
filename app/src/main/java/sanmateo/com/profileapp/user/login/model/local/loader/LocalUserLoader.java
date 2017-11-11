@@ -1,6 +1,6 @@
 package sanmateo.com.profileapp.user.login.model.local.loader;
 
-import io.reactivex.Single;
+import io.reactivex.Maybe;
 import sanmateo.com.profileapp.user.login.model.User;
 
 /**
@@ -9,5 +9,5 @@ import sanmateo.com.profileapp.user.login.model.User;
 
 public interface LocalUserLoader {
 
-    Single<User> loadLocalUser();
+    Maybe<User> loadLocalUser();
 }

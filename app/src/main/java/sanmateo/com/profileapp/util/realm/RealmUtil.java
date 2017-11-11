@@ -15,6 +15,8 @@ public interface RealmUtil<T extends RealmObject> {
 
     Single<Long> count();
 
+    Maybe<T> first();
+
     Maybe<List<T>> loadAll();
 
     Maybe<T> loadById(String id);
