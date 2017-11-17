@@ -3,8 +3,8 @@ package sanmateo.com.profileapp.user.login.model.local.loader;
 import javax.inject.Inject;
 
 import io.reactivex.Maybe;
+import sanmateo.com.profileapp.user.local.RoomUserLoader;
 import sanmateo.com.profileapp.user.login.model.User;
-import sanmateo.com.profileapp.util.realm.RealmUtil;
 
 /**
  * Created by rsbulanon on 07/11/2017.
@@ -12,15 +12,15 @@ import sanmateo.com.profileapp.util.realm.RealmUtil;
 
 public class DefaultLocalUserLoader implements LocalUserLoader {
 
-    private RealmUtil<User> userRealmUtil;
+    RoomUserLoader roomUserLoader;
 
     @Inject
-    public DefaultLocalUserLoader(RealmUtil<User> userRealmUtil) {
-        this.userRealmUtil = userRealmUtil;
+    public DefaultLocalUserLoader(RoomUserLoader roomUserLoader) {
+        this.roomUserLoader = roomUserLoader;
     }
 
     @Override
     public Maybe<User> loadLocalUser() {
-        return userRealmUtil.first();
+        return roomUserLoader.loadCurrentUser();
     }
 }

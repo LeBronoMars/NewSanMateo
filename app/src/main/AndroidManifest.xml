@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".framework.ProfileApplication"
@@ -38,7 +39,6 @@
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-
         <activity
             android:name=".activities.NewHomeActivity"
             android:screenOrientation="portrait"
@@ -93,17 +93,14 @@
         <activity
             android:name=".activities.IncidentsActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activities.NewIncidentsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"/>
-
         <activity
             android:name=".activities.IncidentDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"/>
-
         <activity
             android:name=".activities.FileIncidentActivity"
             android:screenOrientation="portrait"
@@ -194,7 +191,6 @@
             android:name=".activities.WeatherForecastActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"/>
-
         <activity
             android:name=".activities.NewMapActivity"
             android:screenOrientation="portrait"/>
@@ -227,6 +223,7 @@
             android:value="@string/fb_app_id"/>
         <!-- end of facebook configs -->
 
+
         <!-- amazon s3 config -->
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
@@ -235,7 +232,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB2fMLz_9A6mL1uYMaCQbvUkZ_ADqPaL30"/>
+
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

@@ -15,9 +15,11 @@ import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
 import sanmateo.com.profileapp.api.user.InvalidAccountException;
+import sanmateo.com.profileapp.factory.user.UserFactory;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.UserLoader;
 import sanmateo.com.profileapp.user.login.model.local.loader.LocalUserLoader;
+import sanmateo.com.profileapp.user.login.model.local.saver.LocalUserSaver;
 import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMapper;
 import sanmateo.com.profileapp.user.login.view.LoginView;
 import sanmateo.com.profileapp.util.TestableRxSchedulerUtil;
@@ -56,7 +58,8 @@ public class DefaultLoginPresenterTest {
 
     @Before
     public void setUp() {
-        classUnderTest = new DefaultLoginPresenter(localUserLoader, rxSchedulerUtil, userLoader);
+        classUnderTest = new DefaultLoginPresenter(localUserLoader,
+                                                   rxSchedulerUtil, userLoader);
     }
 
     @After
@@ -72,12 +75,12 @@ public class DefaultLoginPresenterTest {
 
     @Test
     public void detachView() {
-        classUnderTest.disposable = Completable.complete()
+        classUnderTest.compositeDisposable.add(Completable.complete()
                                                .delay(2, TimeUnit.SECONDS)
-                                               .subscribe();
-        assertThat(classUnderTest.disposable.isDisposed()).isFalse();
+                                               .subscribe());
+        assertThat(classUnderTest.compositeDisposable.isDisposed()).isFalse();
         classUnderTest.detachView(true);
-        assertThat(classUnderTest.disposable.isDisposed()).isTrue();
+        assertThat(classUnderTest.compositeDisposable.isDisposed()).isTrue();
     }
 
     @Test
@@ -121,6 +124,9 @@ public class DefaultLoginPresenterTest {
         // since we are done with our Login Request. This is to verify that we dont have
         // any interactions with any objects related to login.
         verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
+
+        // verify that we dont have any interactions with localUserSaver
+        //verifyZeroInteractions(localUserSaver);
     }
 
     @Test
@@ -142,6 +148,9 @@ public class DefaultLoginPresenterTest {
         // since we are done with our Login Request. This is to verify that we dont have
         // any interactions with any objects related to login.
         verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
+
+        // verify that we dont have any interactions with localUserSaver
+        //verifyZeroInteractions(localUserSaver);
     }
 
     @Test
@@ -200,6 +209,9 @@ public class DefaultLoginPresenterTest {
         // since we are done with our Login Request. This is to verify that we dont have
         // any interactions with any objects related to login.
         verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
+
+        // verify that we dont have any interactions with localUserSaver
+        //verifyZeroInteractions(localUserSaver);
     }
 
     @Test
@@ -257,5 +269,33 @@ public class DefaultLoginPresenterTest {
 
         // verify that we don't performed any interaction with realmUtil object
          verifyZeroInteractions(localUserLoader);
+    }
+
+    @Test
+    public void saveUserToLocalWillSucceed() {
+        attachView();
+
+        User expected = new UserDtoToUserMapper().apply(UserFactory.userDto()).blockingGet();
+
+        //given(localUserSaver.saveUser(expected)).willReturn(Completable.complete());
+
+        classUnderTest.saveUserToLocal(expected);
+
+        verify(rxSchedulerUtil).completableAsychSchedulerTransformer();
+
+        ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+
+        verify(view).loadLocalUser(userArgumentCaptor.capture());
+
+        assertThat(userArgumentCaptor.getValue())
+            .isEqualToComparingFieldByFieldRecursively(expected);
+
+        // since we are done with our Login Request. This is to verify that we dont have
+        // any interactions with any objects related to login.
+        verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
+
+        // verify that we don't performed any interaction with realmUtil object
+        verifyZeroInteractions(localUserLoader);
+
     }
 }

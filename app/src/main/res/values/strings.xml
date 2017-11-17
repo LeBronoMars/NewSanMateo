@@ -83,7 +83,7 @@
 
     <string name="registration_step_1">Step 1 of 2: Personal Information</string>
     <string name="registration_step_2">Step 2 of 2: Account Information</string>
-    
+
     <string name="registration_success_title">Congratulations!</string>
     <string name="registration_success_content">Your account has been created. Click on the activation link which we have sent to your inbox to start using the app.</string>
     <string name="registration_success_confirm">BACK TO LOGIN</string>

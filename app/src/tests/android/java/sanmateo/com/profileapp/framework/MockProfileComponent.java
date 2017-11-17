@@ -7,7 +7,6 @@ import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import sanmateo.com.profileapp.user.login.model.MockLocalUserModule;
 import sanmateo.com.profileapp.user.login.view.LoginActivityTest;
-import sanmateo.com.profileapp.util.realm.RealmProviderModule;
 import sanmateo.com.profileapp.util.rx.MockRxSchedulerModule;
 
 /**

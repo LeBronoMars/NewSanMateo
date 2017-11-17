@@ -16,6 +16,6 @@ public interface LocalUserModule {
     @Binds
     abstract LocalUserLoader bindsLocalUserLoader(DefaultLocalUserLoader defaultLocalUserLoader);
 
-    @Binds
-    abstract LocalUserSaver bindsLocalUserSaver(DefaultLocalUserSaver defaultLocalUserSaver);
+    //@Binds
+    //abstract LocalUserSaver bindsLocalUserSaver(DefaultLocalUserSaver defaultLocalUserSaver);
 }

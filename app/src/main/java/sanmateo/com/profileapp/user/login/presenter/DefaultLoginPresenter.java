@@ -1,5 +1,7 @@
 package sanmateo.com.profileapp.user.login.presenter;
 
+import android.util.Log;
+
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
@@ -7,6 +9,7 @@ import javax.inject.Inject;
 import io.reactivex.MaybeObserver;
 import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.UserLoader;
@@ -20,13 +23,13 @@ import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 
 class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements LoginPresenter {
 
+    CompositeDisposable compositeDisposable;
+
     private LocalUserLoader localUserLoader;
 
     private RxSchedulerUtils rxSchedulerUtils;
 
     private UserLoader userLoader;
-
-    Disposable disposable;
 
     LoginView view;
 
@@ -34,6 +37,7 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
     public DefaultLoginPresenter(LocalUserLoader localUserLoader,
                                  RxSchedulerUtils rxSchedulerUtils,
                                  UserLoader userLoader) {
+        this.compositeDisposable = new CompositeDisposable();
         this.localUserLoader = localUserLoader;
         this.rxSchedulerUtils = rxSchedulerUtils;
         this.userLoader = userLoader;
@@ -52,7 +56,7 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
                        .subscribe(new MaybeObserver<User>() {
                            @Override
                            public void onSubscribe(Disposable d) {
-                                disposable = d;
+                                compositeDisposable.add(d);
                            }
 
                            @Override
@@ -62,13 +66,12 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
 
                            @Override
                            public void onError(Throwable e) {
-                                dispose();
+                               view.noLocalUser();
                            }
 
                            @Override
                            public void onComplete() {
-                               view.noLocalUser();
-                               dispose();
+                               // do nothing here
                            }
                        });
     }
@@ -80,7 +83,10 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
     }
 
     private void dispose() {
-        if (disposable != null && !disposable.isDisposed()) disposable.dispose();
+        Log.d("app", "dispose subscription");
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+        }
     }
 
     @Override
@@ -91,22 +97,25 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
                   .subscribe(new SingleObserver<User>() {
                       @Override
                       public void onSubscribe(@NonNull Disposable d) {
-                          disposable = d;
+                          compositeDisposable.add(d);
                       }
 
                       @Override
                       public void onSuccess(@NonNull User user) {
                           view.hideProgress();
                           view.showLoginSuccess();
-                          dispose();
                       }
 
                       @Override
                       public void onError(@NonNull Throwable e) {
                           view.hideProgress();
                           view.showLoginFailed();
-                          dispose();
                       }
                   });
+    }
+
+    @Override
+    public void saveUserToLocal(User user) {
+
     }
 }

@@ -2,6 +2,7 @@ package sanmateo.com.profileapp.user.login.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,11 +15,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.AndroidInjection;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.factory.user.UserFactory;
 import sanmateo.com.profileapp.user.login.model.User;
+import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMapper;
 import sanmateo.com.profileapp.user.login.presenter.LoginPresenter;
 
 
 import static android.widget.Toast.LENGTH_SHORT;
+import static sanmateo.com.profileapp.factory.user.UserFactory.userDto;
 
 /**
  * Created by rsbulanon on 06/11/2017.
@@ -65,7 +69,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
 
     @Override
     public void loadLocalUser(User user) {
-        Toast.makeText(this, user.firstName, LENGTH_SHORT).show();
+        loginTextView.setText(user.firstName);
     }
 
     @Override
@@ -75,7 +79,9 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
 
     @Override
     public void noLocalUser() {
-
+        Log.d("app", "no local user");
+        User user = new UserDtoToUserMapper().apply(userDto()).blockingGet();
+        presenter.saveUserToLocal(user);
     }
 
     @Override
