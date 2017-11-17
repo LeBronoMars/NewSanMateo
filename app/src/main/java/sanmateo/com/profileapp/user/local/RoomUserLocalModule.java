@@ -12,4 +12,7 @@ public abstract class RoomUserLocalModule {
 
     @Binds
     abstract RoomUserLoader provideRoomUserLoader(DefaultRoomUserLoader defaultRoomUserLoader);
+
+    @Binds
+    abstract RoomUserSaver provideRoomUserSaver(DefaultRoomUserSaver defaultRoomUserSaver);
 }
