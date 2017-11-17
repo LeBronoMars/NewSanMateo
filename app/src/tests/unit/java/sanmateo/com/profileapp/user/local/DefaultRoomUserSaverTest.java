@@ -45,8 +45,6 @@ public class DefaultRoomUserSaverTest {
 
     @Test
     public void savingOfUserToLocalWillFail() {
-
-
         User expected = new UserDtoToUserMapper()
                             .apply(userDto())
                             .blockingGet();
