@@ -11,6 +11,9 @@ import dagger.Module;
 public abstract class RoomUserLocalModule {
 
     @Binds
+    abstract RoomUserDeleter provideRoomUserDeleter(DefaultRoomUserDeleter defaultRoomUserDeleter);
+
+    @Binds
     abstract RoomUserLoader provideRoomUserLoader(DefaultRoomUserLoader defaultRoomUserLoader);
 
     @Binds
