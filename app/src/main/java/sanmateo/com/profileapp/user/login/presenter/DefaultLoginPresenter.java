@@ -13,7 +13,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.UserLoader;
-import sanmateo.com.profileapp.user.login.model.local.loader.LocalUserLoader;
 import sanmateo.com.profileapp.user.login.view.LoginView;
 import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 
@@ -25,8 +24,6 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
 
     CompositeDisposable compositeDisposable;
 
-    private LocalUserLoader localUserLoader;
-
     private RxSchedulerUtils rxSchedulerUtils;
 
     private UserLoader userLoader;
@@ -34,11 +31,9 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
     LoginView view;
 
     @Inject
-    public DefaultLoginPresenter(LocalUserLoader localUserLoader,
-                                 RxSchedulerUtils rxSchedulerUtils,
+    public DefaultLoginPresenter(RxSchedulerUtils rxSchedulerUtils,
                                  UserLoader userLoader) {
         this.compositeDisposable = new CompositeDisposable();
-        this.localUserLoader = localUserLoader;
         this.rxSchedulerUtils = rxSchedulerUtils;
         this.userLoader = userLoader;
     }
@@ -51,29 +46,7 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
 
     @Override
     public void checkForLocalUser() {
-        localUserLoader.loadLocalUser()
-                       .compose(rxSchedulerUtils.mayBeAsyncSchedulerTransformer())
-                       .subscribe(new MaybeObserver<User>() {
-                           @Override
-                           public void onSubscribe(Disposable d) {
-                                compositeDisposable.add(d);
-                           }
 
-                           @Override
-                           public void onSuccess(User user) {
-                                view.loadLocalUser(user);
-                           }
-
-                           @Override
-                           public void onError(Throwable e) {
-                               view.noLocalUser();
-                           }
-
-                           @Override
-                           public void onComplete() {
-                               // do nothing here
-                           }
-                       });
     }
 
     @Override

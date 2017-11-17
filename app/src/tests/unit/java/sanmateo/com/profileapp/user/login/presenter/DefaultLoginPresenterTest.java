@@ -12,14 +12,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
 import io.reactivex.Single;
 import sanmateo.com.profileapp.api.user.InvalidAccountException;
 import sanmateo.com.profileapp.factory.user.UserFactory;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.UserLoader;
-import sanmateo.com.profileapp.user.login.model.local.loader.LocalUserLoader;
-import sanmateo.com.profileapp.user.login.model.local.saver.LocalUserSaver;
 import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMapper;
 import sanmateo.com.profileapp.user.login.view.LoginView;
 import sanmateo.com.profileapp.util.TestableRxSchedulerUtil;
@@ -33,7 +30,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static sanmateo.com.profileapp.factory.user.UserFactory.userDto;
 
 /**
@@ -45,8 +41,6 @@ public class DefaultLoginPresenterTest {
     @Mock
     LoginView view;
 
-    @Mock
-    LocalUserLoader localUserLoader;
 
     @Spy
     TestableRxSchedulerUtil rxSchedulerUtil;
@@ -58,8 +52,7 @@ public class DefaultLoginPresenterTest {
 
     @Before
     public void setUp() {
-        classUnderTest = new DefaultLoginPresenter(localUserLoader,
-                                                   rxSchedulerUtil, userLoader);
+        classUnderTest = new DefaultLoginPresenter(rxSchedulerUtil, userLoader);
     }
 
     @After
@@ -92,7 +85,7 @@ public class DefaultLoginPresenterTest {
                             .blockingGet();
 
         // when localUserLoader#loadLocalUser is invoke return our expected User object
-        given(localUserLoader.loadLocalUser()).willReturn(Maybe.just(expected));
+        //given(localUserLoader.loadLocalUser()).willReturn(Maybe.just(expected));
 
         // trigger checking and loading of existing user
         classUnderTest.checkForLocalUser();
@@ -133,7 +126,6 @@ public class DefaultLoginPresenterTest {
     public void loadingOfLocalUserWillFail() {
         attachView();
 
-        given(localUserLoader.loadLocalUser()).willReturn(Maybe.empty());
 
         classUnderTest.checkForLocalUser();
 
@@ -268,7 +260,7 @@ public class DefaultLoginPresenterTest {
         verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
 
         // verify that we don't performed any interaction with realmUtil object
-         verifyZeroInteractions(localUserLoader);
+
     }
 
     @Test
@@ -295,7 +287,7 @@ public class DefaultLoginPresenterTest {
         verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
 
         // verify that we don't performed any interaction with realmUtil object
-        verifyZeroInteractions(localUserLoader);
+
 
     }
 }
