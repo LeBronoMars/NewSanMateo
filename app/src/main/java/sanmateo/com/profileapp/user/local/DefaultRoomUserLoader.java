@@ -11,7 +11,7 @@ import sanmateo.com.profileapp.user.login.model.User;
 
 public class DefaultRoomUserLoader implements RoomUserLoader {
 
-    UserDao userDao;
+    private UserDao userDao;
 
     @Inject
     public DefaultRoomUserLoader(UserDao userDao) {

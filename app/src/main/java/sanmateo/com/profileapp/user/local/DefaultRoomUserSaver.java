@@ -11,7 +11,7 @@ import sanmateo.com.profileapp.user.login.model.User;
 
 public class DefaultRoomUserSaver implements RoomUserSaver {
 
-    UserDao userDao;
+    private UserDao userDao;
 
     @Inject
     public DefaultRoomUserSaver(UserDao userDao) {
