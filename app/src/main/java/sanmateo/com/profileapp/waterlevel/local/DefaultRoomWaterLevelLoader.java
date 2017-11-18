@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Single;
+import io.reactivex.Maybe;
+import sanmateo.com.profileapp.user.local.NoQueryResultException;
 import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
 
 public class DefaultRoomWaterLevelLoader implements RoomWaterLevelLoader {
@@ -17,7 +18,8 @@ public class DefaultRoomWaterLevelLoader implements RoomWaterLevelLoader {
     }
 
     @Override
-    public Single<List<WaterLevel>> loadWaterLevel(String area) {
-        return waterLevelDao.findByArea(area);
+    public Maybe<List<WaterLevel>> loadWaterLevel(String area) {
+        return waterLevelDao.findByArea(area)
+                            .switchIfEmpty(Maybe.error(NoQueryResultException::new));
     }
 }

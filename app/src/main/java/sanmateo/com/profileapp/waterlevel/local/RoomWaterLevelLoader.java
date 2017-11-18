@@ -2,7 +2,7 @@ package sanmateo.com.profileapp.waterlevel.local;
 
 import java.util.List;
 
-import io.reactivex.Single;
+import io.reactivex.Maybe;
 import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
 
 /**
@@ -11,5 +11,5 @@ import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
 
 public interface RoomWaterLevelLoader {
 
-    Single<List<WaterLevel>> loadWaterLevel(String area);
+    Maybe<List<WaterLevel>> loadWaterLevel(String area);
 }
