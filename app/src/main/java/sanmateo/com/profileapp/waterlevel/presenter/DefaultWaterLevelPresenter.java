@@ -5,6 +5,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import java.util.List;
 
 import io.reactivex.MaybeObserver;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
@@ -18,7 +19,7 @@ import sanmateo.com.profileapp.waterlevel.view.WaterLevelView;
 public class DefaultWaterLevelPresenter extends MvpBasePresenter<WaterLevelView>
     implements WaterLevelPresenter {
 
-    private Disposable disposable;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private RxSchedulerUtils rxSchedulerUtils;
 
@@ -45,30 +46,32 @@ public class DefaultWaterLevelPresenter extends MvpBasePresenter<WaterLevelView>
     }
 
     private void dispose() {
-        if (null != disposable && !disposable.isDisposed()) disposable.dispose();
+        if (null != compositeDisposable && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+        }
     }
 
     @Override
     public void loadWaterLevel(String area) {
-        view.showProgress();
+        view.showProgress(area);
         waterLevelLoader.loadWaterLevels(area)
                         .compose(rxSchedulerUtils.mayBeAsyncSchedulerTransformer())
                         .subscribe(new MaybeObserver<List<WaterLevel>>() {
                             @Override
                             public void onSubscribe(Disposable d) {
-                                disposable = d;
+                                compositeDisposable.add(d);
                             }
 
                             @Override
                             public void onSuccess(List<WaterLevel> waterLevels) {
-                                view.hideProgress();
+                                view.hideProgress(area);
                                 view.showWaterLevels(area, waterLevels);
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                view.hideProgress();
-                                view.showError();
+                                view.hideProgress(area);
+                                view.showError(area);
                                 dispose();
                             }
 
