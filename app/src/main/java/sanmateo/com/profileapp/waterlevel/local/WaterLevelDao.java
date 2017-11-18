@@ -9,10 +9,17 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
 
 @Dao
 public interface WaterLevelDao {
+
+    @Query("SELECT COUNT(*) FROM WaterLevel")
+    Single<Long> count();
+
+    @Delete
+    void delete(WaterLevel waterLevel);
 
     @Query("SELECT * FROM WaterLevel")
     Maybe<List<WaterLevel>> findAll();
@@ -25,7 +32,4 @@ public interface WaterLevelDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<WaterLevel> waterLevels);
-
-    @Delete
-    void delete(WaterLevel waterLevel);
 }
