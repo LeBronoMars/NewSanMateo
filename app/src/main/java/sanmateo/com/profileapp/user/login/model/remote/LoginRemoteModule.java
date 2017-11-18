@@ -1,5 +1,7 @@
 package sanmateo.com.profileapp.user.login.model.remote;
 
+import javax.inject.Singleton;
+
 import dagger.Binds;
 import dagger.Module;
 
@@ -10,6 +12,6 @@ import dagger.Module;
 public interface LoginRemoteModule {
 
     @Binds
-    abstract LoginRemoteAuthenticator bindsLoginRemoteAuthenticator(
+    LoginRemoteAuthenticator bindsLoginRemoteAuthenticator(
         DefaultLoginRemoteAuthenticator defaultLoginRemoteAuthenticator);
 }

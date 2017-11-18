@@ -11,6 +11,7 @@ import sanmateo.com.profileapp.database.DatabaseModule;
 import sanmateo.com.profileapp.splash.SplashModule;
 import sanmateo.com.profileapp.user.UserModule;
 import sanmateo.com.profileapp.util.rx.RxSchedulerModule;
+import sanmateo.com.profileapp.waterlevel.WaterLevelModule;
 
 /**
  * Created by rsbulanon on 31/10/2017.
@@ -22,7 +23,8 @@ import sanmateo.com.profileapp.util.rx.RxSchedulerModule;
                          RemoteServiceModule.class,
                          RxSchedulerModule.class,
                          SplashModule.class,
-                         UserModule.class
+                         UserModule.class,
+                         WaterLevelModule.class
     })
 @Singleton
 public interface ProfileComponent {
