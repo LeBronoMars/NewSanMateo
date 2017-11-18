@@ -12,11 +12,11 @@ import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
 
 public interface WaterLevelView extends MvpView {
 
-    void hideProgress();
+    void hideProgress(String area);
 
-    void showError();
+    void showError(String area);
 
-    void showProgress();
+    void showProgress(String area);
 
     void showWaterLevels(String area, List<WaterLevel> waterLevelList);
 }

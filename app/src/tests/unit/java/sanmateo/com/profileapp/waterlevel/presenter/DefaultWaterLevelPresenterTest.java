@@ -68,7 +68,7 @@ public class DefaultWaterLevelPresenterTest {
 
         classUnderTest.loadWaterLevel(expectedArea);
 
-        verify(view).showProgress();
+        verify(view).showProgress(expectedArea);
 
         ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<List> listArgumentCaptor = ArgumentCaptor.forClass(List.class);
@@ -81,7 +81,7 @@ public class DefaultWaterLevelPresenterTest {
         assertThat(stringArgumentCaptor.getValue()).isEqualTo(expectedArea);
         assertThat(listArgumentCaptor.getValue().size()).isEqualTo(expected.size());
 
-        verify(view).hideProgress();
+        verify(view).hideProgress(expectedArea);
 
         verify(rxSchedulerUtil).mayBeAsyncSchedulerTransformer();
 
@@ -97,15 +97,15 @@ public class DefaultWaterLevelPresenterTest {
 
         classUnderTest.loadWaterLevel("");
 
-        verify(view).showProgress();
+        verify(view).showProgress("");
 
         verify(waterLevelLoader).loadWaterLevels("");
 
-        verify(view).hideProgress();
+        verify(view).hideProgress("");
 
         verify(rxSchedulerUtil).mayBeAsyncSchedulerTransformer();
 
-        verify(view).showError();
+        verify(view).showError("");
 
         verifyNoMoreInteractions(rxSchedulerUtil, waterLevelLoader, view);
     }
