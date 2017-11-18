@@ -26,7 +26,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static sanmateo.com.profileapp.factory.user.UserFactory.userDto;
+import static sanmateo.com.profileapp.factory.UserFactory.userDto;
 
 /**
  * Created by rsbulanon on 07/11/2017.

@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import io.reactivex.observers.TestObserver;
 import sanmateo.com.profileapp.api.user.UserDto;
-import sanmateo.com.profileapp.factory.user.UserFactory;
+import sanmateo.com.profileapp.factory.UserFactory;
 import sanmateo.com.profileapp.user.login.model.User;
 
 

@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.Maybe;
-import sanmateo.com.profileapp.factory.user.UserFactory;
+import sanmateo.com.profileapp.factory.UserFactory;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMapper;
 

@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Maybe;
 import sanmateo.com.profileapp.R;
-import sanmateo.com.profileapp.factory.user.UserFactory;
+import sanmateo.com.profileapp.factory.UserFactory;
 import sanmateo.com.profileapp.framework.MockProfileApplication;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.local.loader.LocalUserLoader;

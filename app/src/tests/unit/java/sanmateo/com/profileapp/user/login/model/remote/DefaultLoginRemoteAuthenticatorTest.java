@@ -13,13 +13,12 @@ import io.reactivex.observers.TestObserver;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sanmateo.com.profileapp.api.user.InvalidAccountException;
 import sanmateo.com.profileapp.api.user.UserDto;
 import sanmateo.com.profileapp.api.user.UserRemoteService;
-import sanmateo.com.profileapp.factory.user.UserFactory;
+import sanmateo.com.profileapp.factory.UserFactory;
 
 
 import static java.net.HttpURLConnection.HTTP_OK;

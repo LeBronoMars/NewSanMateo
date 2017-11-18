@@ -8,7 +8,7 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.Maybe;
-import sanmateo.com.profileapp.factory.user.UserFactory;
+import sanmateo.com.profileapp.factory.UserFactory;
 import sanmateo.com.profileapp.splash.view.SplashView;
 import sanmateo.com.profileapp.user.local.NoQueryResultException;
 import sanmateo.com.profileapp.user.local.RoomUserLoader;

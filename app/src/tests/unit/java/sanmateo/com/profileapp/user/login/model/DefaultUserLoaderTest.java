@@ -4,16 +4,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import sanmateo.com.profileapp.api.user.UserDto;
-import sanmateo.com.profileapp.factory.user.UserFactory;
+import sanmateo.com.profileapp.factory.UserFactory;
 import sanmateo.com.profileapp.user.local.RoomUserDeleter;
 import sanmateo.com.profileapp.user.local.RoomUserLoader;
 import sanmateo.com.profileapp.user.local.RoomUserSaver;

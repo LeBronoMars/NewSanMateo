@@ -13,7 +13,7 @@ import sanmateo.com.profileapp.util.RoomTestRule;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static sanmateo.com.profileapp.factory.user.UserFactory.userDto;
+import static sanmateo.com.profileapp.factory.UserFactory.userDto;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
