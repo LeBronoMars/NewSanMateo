@@ -14,11 +14,7 @@ public interface LoginView extends MvpView {
 
     String getPassword();
 
-    void loadLocalUser(User user);
-
     void hideProgress();
-
-    void noLocalUser();
 
     void showLoginFailed();
 

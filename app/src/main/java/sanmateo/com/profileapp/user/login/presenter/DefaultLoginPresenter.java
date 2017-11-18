@@ -6,7 +6,6 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
 
-import io.reactivex.MaybeObserver;
 import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
@@ -45,11 +44,6 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
     }
 
     @Override
-    public void checkForLocalUser() {
-
-    }
-
-    @Override
     public void detachView(boolean retainInstance) {
         super.detachView(retainInstance);
         dispose();
@@ -85,10 +79,5 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
                           view.showLoginFailed();
                       }
                   });
-    }
-
-    @Override
-    public void saveUserToLocal(User user) {
-
     }
 }

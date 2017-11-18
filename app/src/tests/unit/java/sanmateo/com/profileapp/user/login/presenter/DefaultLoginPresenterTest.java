@@ -1,20 +1,19 @@
 package sanmateo.com.profileapp.user.login.presenter;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.security.auth.login.LoginException;
+
 import io.reactivex.Completable;
 import io.reactivex.Single;
-import sanmateo.com.profileapp.api.user.InvalidAccountException;
-import sanmateo.com.profileapp.factory.user.UserFactory;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.UserLoader;
 import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMapper;
@@ -24,10 +23,7 @@ import sanmateo.com.profileapp.util.TestableRxSchedulerUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static sanmateo.com.profileapp.factory.user.UserFactory.userDto;
@@ -41,24 +37,15 @@ public class DefaultLoginPresenterTest {
     @Mock
     LoginView view;
 
-
     @Spy
     TestableRxSchedulerUtil rxSchedulerUtil;
 
     @Mock
     UserLoader userLoader;
 
+    @InjectMocks
     private DefaultLoginPresenter classUnderTest;
 
-    @Before
-    public void setUp() {
-        classUnderTest = new DefaultLoginPresenter(rxSchedulerUtil, userLoader);
-    }
-
-    @After
-    public void tearDown() {
-
-    }
 
     @Test
     public void attachView() {
@@ -77,217 +64,85 @@ public class DefaultLoginPresenterTest {
     }
 
     @Test
-    public void loadingOfLocalUserWillSucceed() {
+    public void loadingOfUserWillSucceed() {
         attachView();
 
         User expected = new UserDtoToUserMapper()
                             .apply(userDto())
                             .blockingGet();
 
-        // when localUserLoader#loadLocalUser is invoke return our expected User object
-        //given(localUserLoader.loadLocalUser()).willReturn(Maybe.just(expected));
+        String expectedEmail = expected.email;
+        String expectedPassword = "Passw0rd";
 
-        // trigger checking and loading of existing user
-        classUnderTest.checkForLocalUser();
+        given(userLoader.login(anyString(), anyString())).willReturn(Single.just(expected));
 
-        // This is to capture the User produced when loading of local succeeds
-        ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        given(view.getEmail()).willReturn(expectedEmail);
 
-        // capture produced User object received by this LoginView#loadLocalUser
-        verify(view).loadLocalUser(userArgumentCaptor.capture());
+        given(view.getPassword()).willReturn(expectedPassword);
 
-        User actual = userArgumentCaptor.getValue();
+        classUnderTest.login();
 
-        assertThat(actual).isNotNull();
+        ArgumentCaptor<String> emailArgumentCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> passwordArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        // verify that captured User object is equal to our expected User object
-        assertThat(actual.id).isEqualTo(expected.id);
-        assertThat(actual.firstName).isEqualTo(expected.firstName);
-        assertThat(actual.lastName).isEqualTo(expected.lastName);
-        assertThat(actual.email).isEqualTo(expected.email);
-        assertThat(actual.picUrl).isEqualTo(expected.picUrl);
+        verify(view).getEmail();
+        verify(view).getPassword();
+
+        verify(userLoader).login(emailArgumentCaptor.capture(), passwordArgumentCaptor.capture());
+
+        assertThat(emailArgumentCaptor.getValue()).isEqualTo(expectedEmail);
+        assertThat(passwordArgumentCaptor.getValue()).isEqualTo(expectedPassword);
 
         // verify that our request runs on the background thread and broadcasted the
         // result to the main thread after the request.
-        verify(rxSchedulerUtil).mayBeAsyncSchedulerTransformer();
+        verify(rxSchedulerUtil).singleAsyncSchedulerTransformer();
 
-        // verify that LoginView#noLocalUser callback was never called.
-        verify(view, never()).noLocalUser();
-
-        // since we are done with our Login Request. This is to verify that we dont have
-        // any interactions with any objects related to login.
-        verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
-
-        // verify that we dont have any interactions with localUserSaver
-        //verifyZeroInteractions(localUserSaver);
-    }
-
-    @Test
-    public void loadingOfLocalUserWillFail() {
-        attachView();
-
-
-        classUnderTest.checkForLocalUser();
-
-        // verify that this callback was never called, since we have not loaded any user from realm.
-        verify(view, never()).loadLocalUser(any(User.class));
-
-        // verify that this callback was called instead.
-        verify(view).noLocalUser();
-
-        verify(rxSchedulerUtil).mayBeAsyncSchedulerTransformer();
-
-        // since we are done with our Login Request. This is to verify that we dont have
-        // any interactions with any objects related to login.
-        verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
-
-        // verify that we dont have any interactions with localUserSaver
-        //verifyZeroInteractions(localUserSaver);
-    }
-
-    @Test
-    public void loginSuccessful() {
-        // attach our view
-        attachView();
-
-        // set expected User response. We use the Mapper to convert the UserDto to User
-        User expected = new UserDtoToUserMapper()
-                            .apply(userDto())
-                            .blockingGet();
-
-        String expectedEmail = "ned@fanders.com";
-        String expectedPassword = "P@ssw0rd";
-
-        // when LoginView#getEmail is called, it will return ned@flanders.com
-        given(view.getEmail()).willReturn(expectedEmail);
-
-        // when LoginView#getPassword is called, it will return P@ssw0rd
-        given(view.getPassword()).willReturn(expectedPassword);
-
-        // given when userLoader#login with any string value passed on its parameter, it will
-        // return our expected response set above.
-        given(userLoader.login(anyString(), anyString())).willReturn(Single.just(expected));
-
-        // perform actual login call
-        classUnderTest.login();
-
-        // verify that show progress was called.
         verify(view).showProgress();
-
-        // verify that UserLoader#login was called only once and to verify if the parameters received
-        // by this method is equal to our given expected email & password using ArgumentCaptor.
-        ArgumentCaptor<String> argumentCaptorEmail = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> argumentCaptorPassword = ArgumentCaptor.forClass(String.class);
-
-        verify(userLoader, times(1)).login(argumentCaptorEmail.capture(),
-                                           argumentCaptorPassword.capture());
-
-        assertThat(argumentCaptorEmail.getValue()).isEqualTo(expectedEmail);
-        assertThat(argumentCaptorPassword.getValue()).isEqualTo(expectedPassword);
-
-        verify(view).getEmail();
-
-        verify(view).getPassword();
-
-        // verify that hide progress was called.
-        verify(view).hideProgress();
-
-        // verify that login success was called.
         verify(view).showLoginSuccess();
-
-        // verify that we use the single scheduler
-        verify(rxSchedulerUtil).singleAsyncSchedulerTransformer();
-
-        // since we are done with our Login Request. This is to verify that we dont have
-        // any interactions with any objects related to login.
-        verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
-
-        // verify that we dont have any interactions with localUserSaver
-        //verifyZeroInteractions(localUserSaver);
-    }
-
-    @Test
-    public void loginFailed() {
-        // attach our view
-        attachView();
-
-        String expectedEmail = "ned@fanders.com";
-        String expectedPassword = "P@ssw0rd";
-
-        // when LoginView#getEmail is called, it will return ned@flanders.com
-        given(view.getEmail()).willReturn(expectedEmail);
-
-        // when LoginView#getPassword is called, it will return P@ssw0rd
-        given(view.getPassword()).willReturn(expectedPassword);
-
-        // given when userLoader#login with any string value passed on its parameter, it will
-        // return an InvalidAccountException
-        given(userLoader.login(anyString(), anyString()))
-            .willReturn(Single.error(InvalidAccountException::new));
-
-        // perform actual login call
-        classUnderTest.login();
-
-        // verify that show progress was called.
-        verify(view).showProgress();
-
-        // verify that UserLoader#login was called only once and to verify if the parameters received
-        // by this method is equal to our given expected email & password using ArgumentCaptor.
-        ArgumentCaptor<String> argumentCaptorEmail = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> argumentCaptorPassword = ArgumentCaptor.forClass(String.class);
-
-        verify(userLoader, times(1)).login(argumentCaptorEmail.capture(),
-                                           argumentCaptorPassword.capture());
-
-        assertThat(argumentCaptorEmail.getValue()).isEqualTo(expectedEmail);
-        assertThat(argumentCaptorPassword.getValue()).isEqualTo(expectedPassword);
-
-        verify(view).getEmail();
-
-        verify(view).getPassword();
-
-        // verify that hide progress was called.
         verify(view).hideProgress();
 
-        // verify that login failed was called.
-        verify(view).showLoginFailed();
-
-        // verify that we use the single scheduler
-        verify(rxSchedulerUtil).singleAsyncSchedulerTransformer();
-
         // since we are done with our Login Request. This is to verify that we dont have
         // any interactions with any objects related to login.
         verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
-
-        // verify that we don't performed any interaction with realmUtil object
-
     }
 
     @Test
-    public void saveUserToLocalWillSucceed() {
+    public void loadingOfUserWillFail() {
         attachView();
 
-        User expected = new UserDtoToUserMapper().apply(UserFactory.userDto()).blockingGet();
+        String expectedEmail = "nedflanders";
+        String expectedPassword = "Passw0rd";
 
-        //given(localUserSaver.saveUser(expected)).willReturn(Completable.complete());
+        given(userLoader.login(anyString(), anyString()))
+            .willReturn(Single.error(LoginException::new));
 
-        classUnderTest.saveUserToLocal(expected);
+        given(view.getEmail()).willReturn(expectedEmail);
 
-        verify(rxSchedulerUtil).completableAsychSchedulerTransformer();
+        given(view.getPassword()).willReturn(expectedPassword);
 
-        ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
+        classUnderTest.login();
 
-        verify(view).loadLocalUser(userArgumentCaptor.capture());
+        ArgumentCaptor<String> emailArgumentCaptor = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<String> passwordArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
-        assertThat(userArgumentCaptor.getValue())
-            .isEqualToComparingFieldByFieldRecursively(expected);
+        verify(view).getEmail();
+        verify(view).getPassword();
+
+        verify(userLoader).login(emailArgumentCaptor.capture(), passwordArgumentCaptor.capture());
+
+        assertThat(emailArgumentCaptor.getValue()).isEqualTo(expectedEmail);
+        assertThat(passwordArgumentCaptor.getValue()).isEqualTo(expectedPassword);
+
+        // verify that our request runs on the background thread and broadcasted the
+        // result to the main thread after the request.
+        verify(rxSchedulerUtil).singleAsyncSchedulerTransformer();
+
+        verify(view).showProgress();
+        verify(view).showLoginFailed();
+        verify(view).hideProgress();
 
         // since we are done with our Login Request. This is to verify that we dont have
         // any interactions with any objects related to login.
         verifyNoMoreInteractions(rxSchedulerUtil, userLoader, view);
-
-        // verify that we don't performed any interaction with realmUtil object
-
-
     }
 }

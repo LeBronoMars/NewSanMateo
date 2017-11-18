@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 
@@ -15,14 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.AndroidInjection;
 import sanmateo.com.profileapp.R;
-import sanmateo.com.profileapp.factory.user.UserFactory;
-import sanmateo.com.profileapp.user.login.model.User;
-import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMapper;
 import sanmateo.com.profileapp.user.login.presenter.LoginPresenter;
-
-
-import static android.widget.Toast.LENGTH_SHORT;
-import static sanmateo.com.profileapp.factory.user.UserFactory.userDto;
 
 /**
  * Created by rsbulanon on 06/11/2017.
@@ -46,7 +38,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
         unbinder = ButterKnife.bind(this);
 
         // TODO move to Login button click event later
-        presenter.checkForLocalUser();
+        presenter.login();
     }
 
     @NonNull
@@ -58,18 +50,13 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     @Override
     public String getEmail() {
         // TODO replace with EditText.getText().toString() later
-        return "ned@flanders.com";
+        return "aa@gmail.com";
     }
 
     @Override
     public String getPassword() {
         // TODO replace with EditText.getText().toString() later
-        return "P@ssw0rd";
-    }
-
-    @Override
-    public void loadLocalUser(User user) {
-        loginTextView.setText(user.firstName);
+        return "aa";
     }
 
     @Override
@@ -78,15 +65,8 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     }
 
     @Override
-    public void noLocalUser() {
-        Log.d("app", "no local user");
-        User user = new UserDtoToUserMapper().apply(userDto()).blockingGet();
-        presenter.saveUserToLocal(user);
-    }
-
-    @Override
     public void showLoginFailed() {
-
+        Log.d("aa", "login failed");
     }
 
     @Override
@@ -97,6 +77,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     @Override
     public void showLoginSuccess() {
         // TODO redirect to home screen
+        Log.d("app", "redirect to home");
     }
 
     @Override

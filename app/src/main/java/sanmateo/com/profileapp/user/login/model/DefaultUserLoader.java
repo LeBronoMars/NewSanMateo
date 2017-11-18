@@ -44,12 +44,11 @@ public class DefaultUserLoader implements UserLoader {
                                            user ->
                                                deleteExistingLocalUser(user)
                                                    .andThen(insertNewLocalUser(user))
-                                                   .andThen(checkForExistingUserFromLocal(user))
+                                                   .andThen(checkForExistingUserFromLocal())
                                                    .toSingle());
-
     }
 
-    private Maybe<User> checkForExistingUserFromLocal(User user) {
+    private Maybe<User> checkForExistingUserFromLocal() {
         return roomUserLoader.loadCurrentUser();
     }
 
