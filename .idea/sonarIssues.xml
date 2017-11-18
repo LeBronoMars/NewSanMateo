@@ -873,6 +873,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/waterlevel/presenter/DefaultWaterLevelPresenterTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/waterlevel/usecase/DefaultWaterLevelLoaderTest.java">
           <value>
             <set />

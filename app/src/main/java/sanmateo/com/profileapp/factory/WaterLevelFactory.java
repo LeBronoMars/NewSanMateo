@@ -33,4 +33,14 @@ public class WaterLevelFactory {
         }
         return waterLevelDtos;
     }
+
+    public static ArrayList<WaterLevelDto> dtos(String area) {
+        ArrayList<WaterLevelDto> waterLevelDtos = new ArrayList<>();
+        for (int i = 0; i < FACTORY.getNumberBetween(0, 20); i++) {
+            WaterLevelDto waterLevelDto = dto();
+            waterLevelDto.area = area;
+            waterLevelDtos.add(waterLevelDto);
+        }
+        return waterLevelDtos;
+    }
 }
