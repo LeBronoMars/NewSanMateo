@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.user.local;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,6 +15,7 @@ import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMappe
 
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
 
 /**
  * Created by rsbulanon on 17/11/2017.
@@ -26,6 +28,15 @@ public class DefaultRoomUserLoaderTest {
 
     @InjectMocks
     DefaultRoomUserLoader classUnderTest;
+
+    private User expected;
+
+    @Before
+    public void setUp() {
+        expected = new UserDtoToUserMapper()
+                            .apply(UserFactory.userDto())
+                            .blockingGet();
+    }
 
     @Test
     public void loadingOfCurrentLocalUserWillReturnEmpty() {
@@ -40,11 +51,29 @@ public class DefaultRoomUserLoaderTest {
     }
 
     @Test
-    public void loadingOfCurrentLocalUserWillSucceed() {
-        User expected = new UserDtoToUserMapper()
-                            .apply(UserFactory.userDto())
-                            .blockingGet();
+    public void findByEmailWillSucceed() {
+        given(userDao.findByEmail(anyString())).willReturn(Maybe.just(expected));
 
+        classUnderTest.findByEmail(expected.email)
+                      .test()
+                      .assertComplete()
+                      .assertNoErrors()
+                      .assertValue(expected);
+    }
+
+    @Test
+    public void findByEmailWillReturnEmpty() {
+        given(userDao.findByEmail(anyString())).willReturn(Maybe.empty());
+
+        classUnderTest.findByEmail(expected.email)
+                      .test()
+                      .assertComplete()
+                      .assertNoErrors()
+                      .assertNever(expected);
+    }
+
+    @Test
+    public void loadingOfCurrentLocalUserWillSucceed() {
         given(userDao.findOne()).willReturn(Maybe.just(expected));
 
         classUnderTest.loadCurrentUser()

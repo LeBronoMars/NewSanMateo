@@ -18,6 +18,9 @@ public interface UserDao {
     @Query("SELECT * FROM User LIMIT 1")
     Maybe<User> findOne();
 
+    @Query("SELECT * FROM User where email = :email")
+    Maybe<User> findByEmail(String email);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 

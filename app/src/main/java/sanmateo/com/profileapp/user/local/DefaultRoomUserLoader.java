@@ -19,6 +19,11 @@ public class DefaultRoomUserLoader implements RoomUserLoader {
     }
 
     @Override
+    public Maybe<User> findByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
+
+    @Override
     public Maybe<User> loadCurrentUser() {
         return userDao.findOne();
     }

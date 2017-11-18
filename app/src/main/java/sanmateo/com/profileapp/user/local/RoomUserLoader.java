@@ -9,5 +9,8 @@ import sanmateo.com.profileapp.user.login.model.User;
 
 public interface RoomUserLoader {
 
+    Maybe<User> findByEmail(String email);
+
     Maybe<User> loadCurrentUser();
+
 }

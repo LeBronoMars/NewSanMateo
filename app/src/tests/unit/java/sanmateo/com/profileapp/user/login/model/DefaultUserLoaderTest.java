@@ -14,6 +14,9 @@ import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import sanmateo.com.profileapp.api.user.UserDto;
 import sanmateo.com.profileapp.factory.user.UserFactory;
+import sanmateo.com.profileapp.user.local.RoomUserDeleter;
+import sanmateo.com.profileapp.user.local.RoomUserLoader;
+import sanmateo.com.profileapp.user.local.RoomUserSaver;
 import sanmateo.com.profileapp.user.login.model.remote.LoginRemoteAuthenticator;
 
 
@@ -27,14 +30,24 @@ import static org.mockito.Matchers.anyString;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultUserLoaderTest {
 
-    private DefaultUserLoader classUnderTest;
-
     @Mock
     private LoginRemoteAuthenticator loginRemoteAuthenticator;
 
+    @Mock
+    RoomUserDeleter roomUserDeleter;
+
+    @Mock
+    RoomUserLoader roomUserLoader;
+
+    @Mock
+    RoomUserSaver roomUserSaver;
+
+    private DefaultUserLoader classUnderTest;
+
     @Before
     public void setUp() {
-        classUnderTest = new DefaultUserLoader(loginRemoteAuthenticator);
+        classUnderTest = new DefaultUserLoader(loginRemoteAuthenticator, roomUserDeleter,
+                                               roomUserLoader, roomUserSaver);
     }
 
     @After
