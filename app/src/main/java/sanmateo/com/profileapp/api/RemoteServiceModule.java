@@ -22,6 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sanmateo.com.profileapp.BuildConfig;
 import sanmateo.com.profileapp.api.user.UserRemoteService;
+import sanmateo.com.profileapp.api.waterlevel.WaterLevelRemoteService;
 
 /**
  * Created by rsbulanon on 31/10/2017.
@@ -39,6 +40,12 @@ public class RemoteServiceModule {
     @Singleton
     static UserRemoteService provideUserRemoteService(Retrofit retrofit) {
         return retrofit.create(UserRemoteService.class);
+    }
+
+    @Provides
+    @Singleton
+    static WaterLevelRemoteService provideWaterLevelRemoteService(Retrofit retrofit) {
+        return retrofit.create(WaterLevelRemoteService.class);
     }
 
     @Provides
