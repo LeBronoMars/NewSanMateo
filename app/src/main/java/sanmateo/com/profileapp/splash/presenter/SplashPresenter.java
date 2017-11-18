@@ -10,5 +10,5 @@ import sanmateo.com.profileapp.splash.view.SplashView;
 
 public interface SplashPresenter extends MvpPresenter<SplashView> {
 
-    void checkForExistingUser();
+    void checkForLocalUser();
 }

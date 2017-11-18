@@ -47,7 +47,7 @@ public class DefaultSplashPresenterTest {
         given(roomUserLoader.loadCurrentUser())
             .willReturn(Maybe.error(NoQueryResultException::new));
 
-        classUnderTest.checkForExistingUser();
+        classUnderTest.checkForLocalUser();
 
         verify(roomUserLoader, times(1)).loadCurrentUser();
 
@@ -68,7 +68,7 @@ public class DefaultSplashPresenterTest {
 
         given(roomUserLoader.loadCurrentUser()).willReturn(Maybe.just(expected));
 
-        classUnderTest.checkForExistingUser();
+        classUnderTest.checkForLocalUser();
 
         verify(roomUserLoader, times(1)).loadCurrentUser();
 

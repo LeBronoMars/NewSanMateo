@@ -46,7 +46,7 @@ public class DefaultSplashPresenter extends MvpBasePresenter<SplashView>
     }
 
     @Override
-    public void checkForExistingUser() {
+    public void checkForLocalUser() {
         roomUserLoader.loadCurrentUser()
                       .compose(rxSchedulerUtils.mayBeAsyncSchedulerTransformer())
                       .subscribe(new MaybeObserver<User>() {
