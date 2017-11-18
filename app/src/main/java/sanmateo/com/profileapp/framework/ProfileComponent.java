@@ -8,6 +8,7 @@ import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import sanmateo.com.profileapp.api.RemoteServiceModule;
 import sanmateo.com.profileapp.database.DatabaseModule;
+import sanmateo.com.profileapp.splash.SplashModule;
 import sanmateo.com.profileapp.user.UserModule;
 import sanmateo.com.profileapp.util.rx.RxSchedulerModule;
 
@@ -20,6 +21,7 @@ import sanmateo.com.profileapp.util.rx.RxSchedulerModule;
                          DatabaseModule.class,
                          RemoteServiceModule.class,
                          RxSchedulerModule.class,
+                         SplashModule.class,
                          UserModule.class
     })
 @Singleton
