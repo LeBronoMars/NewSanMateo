@@ -25,6 +25,7 @@ public class DefaultRoomUserLoader implements RoomUserLoader {
 
     @Override
     public Maybe<User> loadCurrentUser() {
-        return userDao.findOne();
+        return userDao.findOne()
+                      .switchIfEmpty(Maybe.error(NoQueryResultException::new));
     }
 }

@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import io.reactivex.Maybe;
-import io.reactivex.observers.TestObserver;
 import sanmateo.com.profileapp.factory.user.UserFactory;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.user.login.model.remote.mapper.UserDtoToUserMapper;
@@ -42,12 +41,10 @@ public class DefaultRoomUserLoaderTest {
     public void loadingOfCurrentLocalUserWillReturnEmpty() {
         given(userDao.findOne()).willReturn(Maybe.empty());
 
-        TestObserver<User> testObserver = new TestObserver<>();
-
-        classUnderTest.loadCurrentUser().subscribe(testObserver);
-
-        testObserver.assertComplete();
-        testObserver.assertNoErrors();
+        classUnderTest.loadCurrentUser()
+                      .test()
+                      .assertNotComplete()
+                      .assertError(NoQueryResultException.class);
     }
 
     @Test
