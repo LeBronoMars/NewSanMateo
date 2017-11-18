@@ -41,7 +41,7 @@ public class DefaultWaterLevelLoaderTest {
     private DefaultWaterLevelLoader classUnderTest;
 
     @Test
-    public void loadingOfWaterLevelWillSucceed() {
+    public void loadingOfWaterLevelFromApiWillSucceed() {
         String expectedArea = "Area 1";
 
         List<WaterLevelDto> dtos = WaterLevelFactory.dtos();
@@ -60,6 +60,38 @@ public class DefaultWaterLevelLoaderTest {
         given(roomWaterLevelLoader.loadWaterLevel(anyString())).willReturn(Maybe.just(expected));
 
         given(waterLevelRemoteLoader.waterLevels(anyString())).willReturn(Single.just(dtos));
+
+        classUnderTest.loadWaterLevels(expectedArea)
+                      .test()
+                      .assertComplete()
+                      .assertNoErrors()
+                      .assertValue(expected);
+    }
+
+
+    @Test
+    public void loadingOfWaterLevelFromLocalWillSucceed() {
+        String expectedArea = "Area 1";
+
+        List<WaterLevelDto> dtos = WaterLevelFactory.dtos();
+
+        for (WaterLevelDto dto : dtos) {
+            dto.area = expectedArea;
+        }
+
+        List<WaterLevel> expected = Observable.fromIterable(dtos)
+                                              .flatMapSingle(new DtoToWaterLevelMapper())
+                                              .toSortedList((w1, w2)
+                                                                -> w2.createdAt
+                                                                       .compareTo(w1.createdAt))
+                                              .blockingGet();
+
+        // assume that our api call will fail
+        given(waterLevelRemoteLoader.waterLevels(anyString()))
+            .willReturn(Single.error(new Throwable()));
+
+        // fallback to return the locally cached records
+        given(roomWaterLevelLoader.loadWaterLevel(anyString())).willReturn(Maybe.just(expected));
 
         classUnderTest.loadWaterLevels(expectedArea)
                       .test()
