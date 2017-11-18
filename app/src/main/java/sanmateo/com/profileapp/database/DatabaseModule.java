@@ -8,6 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 import sanmateo.com.profileapp.framework.ProfileApplication;
 import sanmateo.com.profileapp.user.local.UserDao;
+import sanmateo.com.profileapp.waterlevel.local.WaterLevelDao;
 
 /**
  * Created by rsbulanon on 17/11/2017.
@@ -27,5 +28,11 @@ public class DatabaseModule {
     @Singleton
     static UserDao provideUserDao(AppDatabase appDatabase) {
         return appDatabase.userDao();
+    }
+
+    @Provides
+    @Singleton
+    static WaterLevelDao provideWaterLevelDao(AppDatabase appDatabase) {
+        return appDatabase.waterLevelDao();
     }
 }
