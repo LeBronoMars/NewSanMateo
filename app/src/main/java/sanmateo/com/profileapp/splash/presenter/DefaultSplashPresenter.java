@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import io.reactivex.MaybeObserver;
 import io.reactivex.disposables.Disposable;
 import sanmateo.com.profileapp.splash.view.SplashView;
+import sanmateo.com.profileapp.user.local.NoQueryResultException;
 import sanmateo.com.profileapp.user.local.RoomUserLoader;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
@@ -56,16 +57,14 @@ public class DefaultSplashPresenter extends MvpBasePresenter<SplashView>
 
                           @Override
                           public void onSuccess(User user) {
-                              if (null == user) {
-                                  splashView.onRedirectToLogin();
-                              } else {
-                                  splashView.onRedirectToHome();
-                              }
+                              splashView.onRedirectToHome();
                           }
 
                           @Override
                           public void onError(Throwable e) {
-                              splashView.onRedirectToLogin();
+                              if (e instanceof NoQueryResultException) {
+                                  splashView.onRedirectToLogin();
+                              }
                               dispose();
                           }
 
