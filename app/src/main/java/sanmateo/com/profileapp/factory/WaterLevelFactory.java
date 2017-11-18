@@ -2,6 +2,8 @@ package sanmateo.com.profileapp.factory;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 
+import java.util.ArrayList;
+
 import sanmateo.com.profileapp.api.waterlevel.WaterLevelDto;
 
 /**
@@ -22,5 +24,13 @@ public class WaterLevelFactory {
         waterLevelDto.updatedAt = FACTORY.getBirthDate().toString();
         waterLevelDto.waterLevel = FACTORY.getNumberBetween(1, 40);
         return waterLevelDto;
+    }
+
+    public static ArrayList<WaterLevelDto> dtos() {
+        ArrayList<WaterLevelDto> waterLevelDtos = new ArrayList<>();
+        for (int i = 0; i < FACTORY.getNumberBetween(0, 20); i++) {
+            waterLevelDtos.add(dto());
+        }
+        return waterLevelDtos;
     }
 }
