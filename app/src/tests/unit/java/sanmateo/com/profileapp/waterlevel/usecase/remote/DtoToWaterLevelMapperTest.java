@@ -5,6 +5,7 @@ import org.junit.Test;
 import sanmateo.com.profileapp.api.waterlevel.WaterLevelDto;
 import sanmateo.com.profileapp.factory.WaterLevelFactory;
 import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
+import sanmateo.com.profileapp.waterlevel.usecase.remote.mapper.DtoToWaterLevelMapper;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
