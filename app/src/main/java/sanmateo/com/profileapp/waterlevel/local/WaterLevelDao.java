@@ -9,7 +9,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import io.reactivex.Single;
-import sanmateo.com.profileapp.models.response.WaterLevel;
+import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
 
 @Dao
 public interface WaterLevelDao {
