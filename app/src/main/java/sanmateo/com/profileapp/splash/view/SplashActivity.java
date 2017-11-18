@@ -10,6 +10,7 @@ import com.hannesdorfmann.mosby3.mvp.MvpActivity;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.splash.presenter.SplashPresenter;
 import sanmateo.com.profileapp.user.login.view.LoginActivity;
 
@@ -19,7 +20,6 @@ import sanmateo.com.profileapp.user.login.view.LoginActivity;
 
 public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> implements SplashView {
 
-
     @Inject
     SplashPresenter splashPresenter;
 
@@ -27,7 +27,7 @@ public class SplashActivity extends MvpActivity<SplashView, SplashPresenter> imp
     protected void onCreate(Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_splash);
         presenter.checkForLocalUser();
     }
 

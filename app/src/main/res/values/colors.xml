@@ -73,6 +73,7 @@
     <color name="text_action_red">#ff0000</color>
 
     <color name="read_more_color">#2C3786</color>
+    <color name="white">#FFFFFF</color>
     <color name="white_70">#70FFFFFF</color>
 
     <color name="incident_details">#000000</color>
