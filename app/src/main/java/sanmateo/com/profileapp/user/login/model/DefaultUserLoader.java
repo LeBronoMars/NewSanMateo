@@ -25,15 +25,19 @@ public class DefaultUserLoader implements UserLoader {
 
     private RoomUserSaver roomUserSaver;
 
+    private User user;
+
     @Inject
     public DefaultUserLoader(LoginRemoteAuthenticator loginRemoteAuthenticator,
                              RoomUserDeleter roomUserDeleter,
                              RoomUserLoader roomUserLoader,
-                             RoomUserSaver roomUserSaver) {
+                             RoomUserSaver roomUserSaver,
+                             User user) {
         this.loginRemoteAuthenticator = loginRemoteAuthenticator;
         this.roomUserDeleter = roomUserDeleter;
         this.roomUserLoader = roomUserLoader;
         this.roomUserSaver = roomUserSaver;
+        this.user = user;
     }
 
     @Override
@@ -45,7 +49,8 @@ public class DefaultUserLoader implements UserLoader {
                                                deleteExistingLocalUser(user)
                                                    .andThen(insertNewLocalUser(user))
                                                    .andThen(checkForExistingUserFromLocal())
-                                                   .toSingle());
+                                                   .toSingle())
+                                       .flatMap(this::userFrom);
     }
 
     private Maybe<User> checkForExistingUserFromLocal() {
@@ -58,5 +63,21 @@ public class DefaultUserLoader implements UserLoader {
 
     private Completable insertNewLocalUser(User user) {
         return roomUserSaver.saveUser(user);
+    }
+
+    private Single<User> userFrom(User user) {
+        this.user.address = user.address;
+        this.user.createdAt = user.createdAt;
+        this.user.email = user.email;
+        this.user.firstName = user.firstName;
+        this.user.gender = user.gender;
+        this.user.id = user.id;
+        this.user.lastName = user.lastName;
+        this.user.picUrl = user.picUrl;
+        this.user.status = user.status;
+        this.user.token = user.token;
+        this.user.updatedAt = user.updatedAt;
+        this.user.userLevel = user.userLevel;
+        return Single.just(this.user);
     }
 }

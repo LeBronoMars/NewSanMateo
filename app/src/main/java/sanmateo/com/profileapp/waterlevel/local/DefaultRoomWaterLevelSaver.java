@@ -1,5 +1,7 @@
 package sanmateo.com.profileapp.waterlevel.local;
 
+import android.util.Log;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -18,6 +20,15 @@ public class DefaultRoomWaterLevelSaver implements RoomWaterLevelSaver {
     @Inject
     public DefaultRoomWaterLevelSaver(WaterLevelDao waterLevelDao) {
         this.waterLevelDao = waterLevelDao;
+    }
+
+    @Override
+    public Completable saveWaterLevel(WaterLevel waterLevel) {
+        return Completable.fromCallable(() -> {
+                waterLevelDao.insert(waterLevel);
+                Log.d("app", "must save to local -> " + waterLevel.id);
+                return Completable.complete();
+            });
     }
 
     @Override

@@ -3,7 +3,7 @@ package sanmateo.com.profileapp.waterlevel.usecase;
 import java.util.List;
 
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 /**
  * Created by rsbulanon on 18/11/2017.
@@ -11,7 +11,7 @@ import io.reactivex.Maybe;
 
 public interface WaterLevelLoader {
 
-    Maybe<List<WaterLevel>> loadWaterLevels(String area);
+    Single<List<WaterLevel>> loadWaterLevels(String area);
 
     Completable saveWaterLevelToLocal(List<WaterLevel> waterLevels);
 }

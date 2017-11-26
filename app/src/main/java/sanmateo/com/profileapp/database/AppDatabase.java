@@ -18,7 +18,7 @@ import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
        WaterLevel.class
     },
     exportSchema = false,
-    version = 1
+    version = 2
 )
 public abstract class AppDatabase extends RoomDatabase {
 

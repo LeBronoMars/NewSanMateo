@@ -1,10 +1,8 @@
 package sanmateo.com.profileapp.waterlevel.usecase.remote;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import io.reactivex.Single;
+import io.reactivex.Observable;
 import sanmateo.com.profileapp.api.waterlevel.WaterLevelDto;
 import sanmateo.com.profileapp.api.waterlevel.WaterLevelRemoteService;
 
@@ -22,8 +20,9 @@ public class DefaultWaterLevelRemoteLoader implements WaterLevelRemoteLoader {
     }
 
     @Override
-    public Single<List<WaterLevelDto>> waterLevels(String area) {
+    public Observable<WaterLevelDto> waterLevels(String area) {
         return remoteService.waterLevels(area)
-                            .flatMap(response -> Single.just(response.body()));
+                            .flatMapObservable(response ->
+                                                   Observable.fromIterable(response.body()));
     }
 }

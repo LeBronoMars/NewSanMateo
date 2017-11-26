@@ -1,8 +1,6 @@
 package sanmateo.com.profileapp.waterlevel.usecase.remote;
 
-import java.util.List;
-
-import io.reactivex.Single;
+import io.reactivex.Observable;
 import sanmateo.com.profileapp.api.waterlevel.WaterLevelDto;
 
 /**
@@ -11,5 +9,5 @@ import sanmateo.com.profileapp.api.waterlevel.WaterLevelDto;
 
 public interface WaterLevelRemoteLoader {
 
-    Single<List<WaterLevelDto>> waterLevels(String area);
+    Observable<WaterLevelDto> waterLevels(String area);
 }

@@ -4,7 +4,9 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import java.util.List;
 
-import io.reactivex.MaybeObserver;
+import javax.inject.Inject;
+
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
@@ -27,6 +29,7 @@ public class DefaultWaterLevelPresenter extends MvpBasePresenter<WaterLevelView>
 
     private WaterLevelView view;
 
+    @Inject
     public DefaultWaterLevelPresenter(RxSchedulerUtils rxSchedulerUtils,
                                       WaterLevelLoader waterLevelLoader) {
         this.rxSchedulerUtils = rxSchedulerUtils;
@@ -55,8 +58,8 @@ public class DefaultWaterLevelPresenter extends MvpBasePresenter<WaterLevelView>
     public void loadWaterLevel(String area) {
         view.showProgress(area);
         waterLevelLoader.loadWaterLevels(area)
-                        .compose(rxSchedulerUtils.mayBeAsyncSchedulerTransformer())
-                        .subscribe(new MaybeObserver<List<WaterLevel>>() {
+                        .compose(rxSchedulerUtils.singleAsyncSchedulerTransformer())
+                        .subscribe(new SingleObserver<List<WaterLevel>>() {
                             @Override
                             public void onSubscribe(Disposable d) {
                                 compositeDisposable.add(d);
@@ -72,12 +75,6 @@ public class DefaultWaterLevelPresenter extends MvpBasePresenter<WaterLevelView>
                             public void onError(Throwable e) {
                                 view.hideProgress(area);
                                 view.showError(area);
-                                dispose();
-                            }
-
-                            @Override
-                            public void onComplete() {
-                                dispose();
                             }
                         });
     }

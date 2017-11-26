@@ -7,13 +7,11 @@ import dagger.Module;
 import dagger.android.ActivityKey;
 import dagger.android.AndroidInjector;
 import dagger.multibindings.IntoMap;
+import sanmateo.com.profileapp.splash.usecase.SplashUseCaseModule;
 import sanmateo.com.profileapp.splash.view.SplashActivity;
-import sanmateo.com.profileapp.user.login.LoginSubComponent;
-import sanmateo.com.profileapp.user.login.model.LoginModelModule;
-import sanmateo.com.profileapp.user.login.view.LoginActivity;
 
-@Module(subcomponents = {SplashSubcomponent.class}
-    )
+@Module(includes = SplashUseCaseModule.class,
+    subcomponents = {SplashSubcomponent.class})
 public abstract class SplashModule {
 
     @Binds

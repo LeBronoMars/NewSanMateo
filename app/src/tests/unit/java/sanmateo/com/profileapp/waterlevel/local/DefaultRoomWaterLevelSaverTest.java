@@ -47,7 +47,7 @@ public class DefaultRoomWaterLevelSaverTest {
                      .assertValue(0l);
 
         List<WaterLevel> expected = Observable.fromIterable(dtos())
-                                              .flatMapSingle(new DtoToWaterLevelMapper())
+                                              .compose(new DtoToWaterLevelMapper())
                                               .toSortedList((w1, w2)
                                                                 -> w2.createdAt
                                                                        .compareTo(w1.createdAt))

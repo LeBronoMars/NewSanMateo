@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import sanmateo.com.profileapp.api.waterlevel.WaterLevelDto;
 import sanmateo.com.profileapp.factory.WaterLevelFactory;
 import sanmateo.com.profileapp.util.TestableRxSchedulerUtil;
@@ -58,11 +59,11 @@ public class DefaultWaterLevelPresenterTest {
         List<WaterLevelDto> dtos = WaterLevelFactory.dtos(expectedArea);
 
         List<WaterLevel> expected = Observable.fromIterable(dtos)
-                                              .flatMapSingle(new DtoToWaterLevelMapper())
+                                              .compose(new DtoToWaterLevelMapper())
                                               .toList()
                                               .blockingGet();
 
-        given(waterLevelLoader.loadWaterLevels(anyString())).willReturn(Maybe.just(expected));
+        given(waterLevelLoader.loadWaterLevels(anyString())).willReturn(Single.just(expected));
 
         attachView();
 
@@ -83,7 +84,7 @@ public class DefaultWaterLevelPresenterTest {
 
         verify(view).hideProgress(expectedArea);
 
-        verify(rxSchedulerUtil).mayBeAsyncSchedulerTransformer();
+        verify(rxSchedulerUtil).singleAsyncSchedulerTransformer();
 
         verifyNoMoreInteractions(rxSchedulerUtil, waterLevelLoader, view);
     }
@@ -91,7 +92,7 @@ public class DefaultWaterLevelPresenterTest {
     @Test
     public void loadingOfWaterLevelsWillFail() {
         given(waterLevelLoader.loadWaterLevels(anyString()))
-            .willReturn(Maybe.error(new Throwable()));
+            .willReturn(Single.error(new Throwable()));
 
         attachView();
 
@@ -103,7 +104,7 @@ public class DefaultWaterLevelPresenterTest {
 
         verify(view).hideProgress("");
 
-        verify(rxSchedulerUtil).mayBeAsyncSchedulerTransformer();
+        verify(rxSchedulerUtil).singleAsyncSchedulerTransformer();
 
         verify(view).showError("");
 

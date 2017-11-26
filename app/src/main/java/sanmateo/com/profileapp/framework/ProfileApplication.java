@@ -2,16 +2,16 @@ package sanmateo.com.profileapp.framework;
 
 import android.app.Activity;
 import android.app.Application;
-import android.app.Fragment;
 import android.app.Service;
+import android.support.v4.app.Fragment;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
-import dagger.android.HasFragmentInjector;
 import dagger.android.HasServiceInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * Created by rsbulanon on 31/10/2017.
@@ -19,7 +19,7 @@ import dagger.android.HasServiceInjector;
 
 public class ProfileApplication extends Application implements HasActivityInjector,
                                                                HasServiceInjector,
-                                                               HasFragmentInjector {
+                                                               HasSupportFragmentInjector {
 
     // Allows us to inject on Activity classes
     @Inject
@@ -54,7 +54,7 @@ public class ProfileApplication extends Application implements HasActivityInject
     }
 
     @Override
-    public AndroidInjector<Fragment> fragmentInjector() {
+    public AndroidInjector<Fragment> supportFragmentInjector() {
         return supportFragmentDispatchingAndroidInjector;
     }
 }

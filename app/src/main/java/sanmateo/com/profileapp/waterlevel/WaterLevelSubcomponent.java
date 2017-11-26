@@ -7,7 +7,7 @@ import sanmateo.com.profileapp.waterlevel.presenter.WaterLevelPresenterModule;
 import sanmateo.com.profileapp.waterlevel.view.WaterLevelFragment;
 
 @Subcomponent(modules = WaterLevelPresenterModule.class)
-@LoginScope
+@WaterLevelScope
 public interface WaterLevelSubcomponent extends AndroidInjector<WaterLevelFragment> {
 
     @Subcomponent.Builder

@@ -1,4 +1,4 @@
-package sanmateo.com.profileapp.user.login.model;
+package sanmateo.com.profileapp.dao;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
  * Created by rsbulanon on 31/10/2017.
  */
 @Entity
-public class User {
+public class UserEntity {
 
     public String address;
 
@@ -33,18 +33,4 @@ public class User {
     public String updatedAt;
 
     public String userLevel;
-
-    public User() {
-        this.address = "";
-        this.createdAt = "";
-        this.email = "";
-        this.firstName = "";
-        this.gender = "";
-        this.lastName = "";
-        this.picUrl = "";
-        this.status = "";
-        this.token = "";
-        this.updatedAt = "";
-        this.userLevel = "";
-    }
 }

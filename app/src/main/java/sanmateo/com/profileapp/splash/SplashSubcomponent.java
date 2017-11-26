@@ -13,7 +13,7 @@ import sanmateo.com.profileapp.user.login.view.LoginActivity;
  */
 
 @Subcomponent(modules = SplashPresenterModule.class)
-@LoginScope
+@SplashScope
 public interface SplashSubcomponent extends AndroidInjector<SplashActivity> {
 
     @Subcomponent.Builder

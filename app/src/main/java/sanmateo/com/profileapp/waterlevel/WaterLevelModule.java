@@ -8,13 +8,13 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.FragmentKey;
 import dagger.multibindings.IntoMap;
 import sanmateo.com.profileapp.waterlevel.local.RoomWaterLevelModule;
+import sanmateo.com.profileapp.waterlevel.usecase.WaterLevelUseCaseModule;
 import sanmateo.com.profileapp.waterlevel.usecase.remote.WaterLevelRemoteModule;
 import sanmateo.com.profileapp.waterlevel.view.WaterLevelFragment;
 
-@Module(
+@Module(subcomponents = WaterLevelSubcomponent.class,
     includes = {
-                   WaterLevelRemoteModule.class,
-                   RoomWaterLevelModule.class
+                   WaterLevelUseCaseModule.class,
     }
 )
 public interface WaterLevelModule {

@@ -4,11 +4,10 @@ import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
 
-import io.reactivex.MaybeObserver;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import sanmateo.com.profileapp.splash.usecase.SplashLoader;
 import sanmateo.com.profileapp.splash.view.SplashView;
-import sanmateo.com.profileapp.user.local.NoQueryResultException;
-import sanmateo.com.profileapp.user.local.RoomUserLoader;
 import sanmateo.com.profileapp.user.login.model.User;
 import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 
@@ -19,17 +18,18 @@ import sanmateo.com.profileapp.util.rx.RxSchedulerUtils;
 public class DefaultSplashPresenter extends MvpBasePresenter<SplashView>
     implements SplashPresenter {
 
-    private RoomUserLoader roomUserLoader;
-
     private RxSchedulerUtils rxSchedulerUtils;
+
+    private SplashLoader splashLoader;
 
     Disposable disposable;
 
     private SplashView splashView;
 
     @Inject
-    public DefaultSplashPresenter(RoomUserLoader roomUserLoader, RxSchedulerUtils rxSchedulerUtils) {
-        this.roomUserLoader = roomUserLoader;
+    public DefaultSplashPresenter(RxSchedulerUtils rxSchedulerUtils,
+                                  SplashLoader splashLoader) {
+        this.splashLoader = splashLoader;
         this.rxSchedulerUtils = rxSchedulerUtils;
     }
 
@@ -47,9 +47,9 @@ public class DefaultSplashPresenter extends MvpBasePresenter<SplashView>
 
     @Override
     public void checkForLocalUser() {
-        roomUserLoader.loadCurrentUser()
-                      .compose(rxSchedulerUtils.mayBeAsyncSchedulerTransformer())
-                      .subscribe(new MaybeObserver<User>() {
+        splashLoader.loadExistingUser()
+                      .compose(rxSchedulerUtils.singleAsyncSchedulerTransformer())
+                      .subscribe(new SingleObserver<User>() {
                           @Override
                           public void onSubscribe(Disposable d) {
                               disposable = d;
@@ -62,14 +62,7 @@ public class DefaultSplashPresenter extends MvpBasePresenter<SplashView>
 
                           @Override
                           public void onError(Throwable e) {
-                              if (e instanceof NoQueryResultException) {
-                                  splashView.onRedirectToLogin();
-                              }
-                              dispose();
-                          }
-
-                          @Override
-                          public void onComplete() {
+                              splashView.onRedirectToLogin();
                               dispose();
                           }
                       });

@@ -148,6 +148,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/dashboard/view/DashboardActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/dashboard/view/DashboardView.java">
           <value>
             <set />
@@ -278,6 +283,26 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/model/DefaultSplashLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/model/SplashLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/model/SplashLoaderModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/model/SplashModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/presenter/DefaultSplashPresenter.java">
           <value>
             <set />
@@ -289,6 +314,21 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/presenter/SplashPresenterModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/usecase/DefaultSplashLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/usecase/SplashLoaderModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/splash/usecase/SplashUseCaseModule.java">
           <value>
             <set />
           </value>
@@ -369,6 +409,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/local/UserDato.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/user/local/mapper/EntityToUserMapper.java">
           <value>
             <set />
           </value>
@@ -603,7 +648,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/WaterLevelSubcomponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/local/DefaultRoomWaterLevelLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/local/DefaultRoomWaterLevelSaver.java">
           <value>
             <set />
           </value>
@@ -658,6 +713,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/presenter/WaterLevelPresenterModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/usecase/DefaultWaterLevelLoader.java">
           <value>
             <set />
@@ -669,6 +729,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/usecase/WaterLevelLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/usecase/WaterLevelUseCaseModule.java">
           <value>
             <set />
           </value>
@@ -713,6 +778,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/view/WaterLevelFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/waterlevel/view/WaterLevelView.java">
           <value>
             <set />
@@ -728,6 +798,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_dashboard.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
           <value>
             <set />
@@ -738,7 +813,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_water_level.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <value>
             <set />
           </value>
@@ -868,6 +953,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/waterlevel/local/DefaultRoomWaterLevelSaverTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/waterlevel/local/DefaultWaterLevelSaverTest.java">
           <value>
             <set />
@@ -933,7 +1023,17 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/java/com/solutio/user/login/presenter/DefaultLoginPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/java/com/solutio/util/prefs/PrefsModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/res/values/strings.xml">
           <value>
             <set />
           </value>

@@ -11,5 +11,7 @@ import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
 
 public interface RoomWaterLevelSaver {
 
+    Completable saveWaterLevel(WaterLevel waterLevel);
+
     Completable saveWaterLevel(List<WaterLevel> waterLevel);
 }

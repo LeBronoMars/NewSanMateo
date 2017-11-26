@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.user.login.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -14,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.AndroidInjection;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.dashboard.view.DashboardActivity;
 import sanmateo.com.profileapp.user.login.presenter.LoginPresenter;
 
 /**
@@ -77,7 +79,7 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
     @Override
     public void showLoginSuccess() {
         // TODO redirect to home screen
-        Log.d("app", "redirect to home");
+        startActivity(new Intent(this, DashboardActivity.class));
     }
 
     @Override

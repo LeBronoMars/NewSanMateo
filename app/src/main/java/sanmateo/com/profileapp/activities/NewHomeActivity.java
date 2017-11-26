@@ -110,20 +110,11 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.cv_water_level_bridge)
     CardView cvWaterLevelBridge;
 
-    @BindView(R.id.tv_water_level_station_bridge)
+    @BindView(R.id.tv_water_level_reading_market)
     TextView tvWaterLevelStationBridge;
-
-    @BindView(R.id.tv_water_level_reading_bridge)
-    TextView tvWaterLevelReadingBridge;
 
     @BindView(R.id.cv_water_level_market)
     CardView getCvWaterLevelMarket;
-
-    @BindView(R.id.tv_water_level_station_market)
-    TextView tvWaterLevelStationMarket;
-
-    @BindView(R.id.tv_water_level_reading_market)
-    TextView tvWaterLevelReadingMarket;
 
     //weather
     @BindView(R.id.tv_weather_report_label)
@@ -215,10 +206,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     private void initDummyLabels() {
         //water level
         tvWaterLevelLabel.setText("Water Level as of 2:52am, October 20, 2017");
-        tvWaterLevelStationMarket.setText("San Mateo Bridge");
         tvWaterLevelStationBridge.setText("Montalban");
-        tvWaterLevelReadingMarket.setText("16 ft.");
-        tvWaterLevelReadingBridge.setText("18 ft.");
 
         //weather report
         tvWeatherReportLabel.setText("Weather Report");
