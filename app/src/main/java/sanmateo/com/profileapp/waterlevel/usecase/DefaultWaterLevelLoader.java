@@ -41,7 +41,6 @@ public class DefaultWaterLevelLoader implements WaterLevelLoader {
                                      .compose(new DtoToWaterLevelMapper())
                                      // save to local
                                      .flatMapSingle(this::saveToLocal)
-                                     // save each fetched WaterLevel to local if not existing
                                      .onErrorResumeNext(loadFromLocal(area))
                                      .toSortedList((w1, w2)
                                                        -> w2.createdAt.compareTo(w1.createdAt));
