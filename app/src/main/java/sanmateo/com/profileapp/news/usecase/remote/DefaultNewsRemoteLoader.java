@@ -20,7 +20,7 @@ public class DefaultNewsRemoteLoader implements NewsRemoteLoader {
     }
 
     @Override
-    public Observable<NewsDto> loadNews() {
-        return newsRemoteService.loadNews();
+    public Observable<NewsDto> loadNews(int start, int limit) {
+        return newsRemoteService.loadNews(start, limit);
     }
 }

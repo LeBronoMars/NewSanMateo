@@ -9,5 +9,5 @@ import sanmateo.com.profileapp.api.news.NewsDto;
 
 public interface NewsRemoteLoader {
 
-    Observable<NewsDto> loadNews();
+    Observable<NewsDto> loadNews(int start, int limit);
 }
