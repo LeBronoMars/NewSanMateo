@@ -1,5 +1,6 @@
 package sanmateo.com.profileapp.news.usecase;
 
+import dagger.Binds;
 import dagger.Module;
 import sanmateo.com.profileapp.news.usecase.remote.NewsRemoteModule;
 
@@ -10,5 +11,8 @@ import sanmateo.com.profileapp.news.usecase.remote.NewsRemoteModule;
                        NewsRemoteModule.class
 })
 public interface NewsUseCaseModule {
+
+    @Binds
+    NewsLoader bindNewsLoader(DefaultNewsLoader defaultNewsLoader);
 
 }
