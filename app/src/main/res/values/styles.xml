@@ -75,11 +75,19 @@
         <item name="android:textSize">@dimen/_10ssp</item>
     </style>
 
+    <style name="LoginEditTextTheme" parent="TextAppearance.AppCompat">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+    </style>
+
     <style name="SignupFloatingLabelStyle" parent="TextAppearance.AppCompat">
         //hint color And Label Color in False State
         <item name="android:textColor">@color/status_bar_bg</item>
         <item name="android:textSize">@dimen/_10ssp</item>
     </style>
+
+
 
 
 </resources>
