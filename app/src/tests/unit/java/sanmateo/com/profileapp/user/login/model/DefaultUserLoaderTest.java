@@ -39,12 +39,15 @@ public class DefaultUserLoaderTest {
     @Mock
     RoomUserSaver roomUserSaver;
 
+    @Mock
+    User user;
+
     private DefaultUserLoader classUnderTest;
 
     @Before
     public void setUp() {
         classUnderTest = new DefaultUserLoader(loginRemoteAuthenticator, roomUserDeleter,
-                                               roomUserLoader, roomUserSaver);
+                                               roomUserLoader, roomUserSaver, user);
     }
 
     @After
