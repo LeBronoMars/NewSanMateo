@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import sanmateo.com.profileapp.framework.ProfileApplication;
+import sanmateo.com.profileapp.news.local.NewsDao;
 import sanmateo.com.profileapp.user.local.UserDao;
 import sanmateo.com.profileapp.waterlevel.local.WaterLevelDao;
 
@@ -25,6 +26,13 @@ public class DatabaseModule {
                    .fallbackToDestructiveMigration()
                    .build() ;
     }
+
+    @Provides
+    @Singleton
+    static NewsDao provideNewsDao(AppDatabase appDatabase) {
+        return appDatabase.newsDao();
+    }
+
 
     @Provides
     @Singleton
