@@ -25,6 +25,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sanmateo.com.profileapp.BuildConfig;
+import sanmateo.com.profileapp.api.news.NewsRemoteService;
 import sanmateo.com.profileapp.api.user.UserRemoteService;
 import sanmateo.com.profileapp.api.waterlevel.WaterLevelRemoteService;
 import sanmateo.com.profileapp.user.login.model.User;
@@ -47,6 +48,12 @@ public class RemoteServiceModule {
 
     @Provides
     @Singleton
+    static NewsRemoteService provideNewsRemoteService(Retrofit retrofit) {
+        return retrofit.create(NewsRemoteService.class);
+    }
+
+    @Provides
+    @Singleton
     static UserRemoteService provideUserRemoteService(@Named(NO_HEADER) Retrofit retrofit) {
         return retrofit.create(UserRemoteService.class);
     }
@@ -56,6 +63,7 @@ public class RemoteServiceModule {
     static WaterLevelRemoteService provideWaterLevelRemoteService(Retrofit retrofit) {
         return retrofit.create(WaterLevelRemoteService.class);
     }
+
 
     @Provides
     static Retrofit provideRetrofit(OkHttpClient client) {
