@@ -1,7 +1,8 @@
 package sanmateo.com.profileapp.news.usecase;
 
-import io.reactivex.Observable;
-import sanmateo.com.profileapp.models.response.News;
+import java.util.List;
+
+import io.reactivex.Single;
 
 /**
  * Created by rsbulanon on 26/11/2017.
@@ -9,5 +10,5 @@ import sanmateo.com.profileapp.models.response.News;
 
 public interface NewsLoader {
 
-    Observable<News> loadNews();
+    Single<List<News>> loadNews(int start, int limit);
 }
