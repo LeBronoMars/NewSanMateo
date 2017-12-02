@@ -56,4 +56,21 @@ public class IncidentDto {
     public String reporterPicUrl;
 
     public String status;
+
+    public IncidentDto() {
+        this.images = "";
+        this.incidentDateReported = "";
+        this.incidentDateUpdated = "";
+        this.incidentAddress = "";
+        this.incidentDescription = "";
+        this.incidentStatus = "";
+        this.incidentType = "";
+        this.remarks = "";
+        this.reporterName = "";
+        this.reporterContactNo = "";
+        this.reporterEmail = "";
+        this.reportedAddress = "";
+        this.reporterPicUrl = "";
+        this.status = "";
+    }
 }
