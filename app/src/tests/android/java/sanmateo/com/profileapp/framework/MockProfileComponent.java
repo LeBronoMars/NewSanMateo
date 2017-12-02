@@ -19,8 +19,7 @@ import sanmateo.com.profileapp.util.rx.MockRxSchedulerModule;
                   AndroidInjectionModule.class,
                   MockAppModule.class,
                   MockLocalUserModule.class,
-                  MockRxSchedulerModule.class,
-                  RealmProviderModule.class
+                  MockRxSchedulerModule.class
     })
 @Singleton
 public interface MockProfileComponent extends ProfileComponent {

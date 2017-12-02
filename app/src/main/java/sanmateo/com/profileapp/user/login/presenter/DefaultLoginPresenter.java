@@ -1,7 +1,5 @@
 package sanmateo.com.profileapp.user.login.presenter;
 
-import android.util.Log;
-
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
@@ -50,7 +48,6 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
     }
 
     private void dispose() {
-        Log.d("app", "dispose subscription");
         if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
             compositeDisposable.dispose();
         }

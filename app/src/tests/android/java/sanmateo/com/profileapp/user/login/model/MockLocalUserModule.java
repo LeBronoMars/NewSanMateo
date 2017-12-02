@@ -5,7 +5,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import sanmateo.com.profileapp.user.login.model.local.loader.LocalUserLoader;
 
 
 import static org.mockito.Mockito.mock;
@@ -18,7 +17,7 @@ public abstract class MockLocalUserModule {
 
     @Provides
     @Singleton
-    LocalUserLoader provideMockLocalUserModule() {
-        return mock(LocalUserLoader.class);
+    UserLoader provideMockUserLoader() {
+        return mock(UserLoader.class);
     }
 }

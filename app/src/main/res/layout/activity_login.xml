@@ -4,117 +4,163 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_bg"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:background="@drawable/splash_bg">
 
-    <TextView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:background="@drawable/splash_sm_logo"
-        android:paddingBottom="@dimen/_10sdp"
-        android:paddingLeft="@dimen/_50sdp"
-        android:paddingRight="@dimen/_50sdp"
-        android:paddingTop="@dimen/_10sdp"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textColor="@color/white"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/activity_horizontal_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/login_text_input_layout_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_48sdp"
-        app:hintEnabled="false"
-        app:hintTextAppearance="@style/LogInFloatingLabelStyle"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        app:passwordToggleContentDescription="@null"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/white">
+        <TextView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:background="@drawable/splash_sm_logo"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_50sdp"
+            android:paddingRight="@dimen/_50sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <EditText
-            android:id="@+id/login_edit_text_username"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/login_text_input_layout_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_person_white_24dp"
-            android:drawablePadding="@dimen/activity_horizontal_margin"
-            android:drawableStart="@drawable/ic_person_white_24dp"
-            android:hint="@string/hint_username"
-            android:maxLines="1"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:theme="@style/LoginEditTextTheme"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="@dimen/_48sdp"
+            app:hintEnabled="false"
+            app:hintTextAppearance="@style/LogInFloatingLabelStyle"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            app:passwordToggleContentDescription="@null"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/login_text_input_layout_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        app:hintEnabled="false"
-        app:hintTextAppearance="@style/LogInFloatingLabelStyle"
-        app:layout_constraintTop_toBottomOf="@id/login_text_input_layout_username"
-        app:passwordToggleContentDescription="@null"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/white">
+            <EditText
+                android:id="@+id/login_edit_text_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_person_white_24dp"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableStart="@drawable/ic_person_white_24dp"
+                android:hint="@string/hint_username"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:theme="@style/LoginEditTextTheme"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/login_edit_text_password"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/login_text_input_layout_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
-            android:drawablePadding="@dimen/activity_horizontal_margin"
-            android:drawableStart="@drawable/ic_lock_outline_white_24dp"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:maxLines="1"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            app:hintEnabled="false"
+            app:hintTextAppearance="@style/LogInFloatingLabelStyle"
+            app:layout_constraintTop_toBottomOf="@id/login_text_input_layout_username"
+            app:passwordToggleContentDescription="@null"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white">
+
+            <EditText
+                android:id="@+id/login_edit_text_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:drawableStart="@drawable/ic_lock_outline_white_24dp"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:theme="@style/LoginEditTextTheme"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/button_light_blue_clickable"
+            android:enabled="false"
+            android:text="@string/login"
             android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:theme="@style/LoginEditTextTheme"/>
-    </android.support.design.widget.TextInputLayout>
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/signup_button"
+            app:layout_constraintTop_toBottomOf="@id/login_text_input_layout_password"/>
 
-    <Button
-        android:id="@+id/login"
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/button_moss_green_clickable"
+            android:text="@string/sign_up"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toRightOf="@id/login_button"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_text_input_layout_password"/>
+
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:text="@string/forgot_password"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login_button"/>
+
+        <LinearLayout
+            android:id="@+id/login_loading_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ProgressBar
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/login_message_loading"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/login_coordinator_layout"
         android:layout_width="0dp"
-        app:layout_constraintRight_toLeftOf="@id/signup"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_text_input_layout_password"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/_1sdp"
-        android:background="@drawable/button_light_blue_clickable"
-        android:text="@string/login"
-        android:textColor="@color/white"/>
-
-    <Button
-        android:id="@+id/signup"
-        android:layout_width="0dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        app:layout_constraintLeft_toRightOf="@id/login"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="@dimen/_2sdp"
-        app:layout_constraintTop_toBottomOf="@id/login_text_input_layout_password"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_moss_green_clickable"
-        android:text="@string/sign_up"
-        android:textColor="@color/white"/>
-
-    <TextView
-        android:id="@+id/forgot_password"
-        android:layout_width="0dp"
-        android:text="@string/forgot_password"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/login"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
