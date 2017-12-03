@@ -144,6 +144,7 @@ dependencies {
     }
     annotationProcessor libraries.daggerCompiler
     annotationProcessor libraries.daggerProcessor
+    annotationProcessor libraries.glideCompiler
     annotationProcessor libraries.roomCompiler
 
     compile(libraries.butterknife) {
@@ -162,6 +163,9 @@ dependencies {
     compile libraries.dagger
     compile libraries.daggerAndroidSupport
     compile libraries.dataFactory
+    compile (libraries.glide) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
     compile libraries.googleLocation
     compile libraries.googleMap
     compile libraries.gson
