@@ -25,7 +25,7 @@ public interface IncidentDao {
     @Delete
     void delete(Incident incident);
 
-    @Query("SELECT * FROM Incident ORDER BY updatedAt DESC")
+    @Query("SELECT * FROM Incident ORDER BY incidentDateUpdated DESC")
     Maybe<List<Incident>> findAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
