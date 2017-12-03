@@ -49,7 +49,7 @@ public class DefaultIncidentRoomLoaderTest {
                       .assertNoErrors()
                       .assertValue(0l);
     }
-    
+
     @Test
     public void loadingOfLocalIncidentsWillSucceed() {
         countShouldReturnZeroByDefault();
