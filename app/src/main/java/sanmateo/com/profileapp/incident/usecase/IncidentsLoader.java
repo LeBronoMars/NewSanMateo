@@ -11,4 +11,6 @@ import io.reactivex.Single;
 public interface IncidentsLoader {
 
     Single<List<Incident>> loadIncidents(int start, int limit);
+
+    Single<List<Incident>> loadIncidentsByIncidentType(int start, int limit, String incidentType);
 }

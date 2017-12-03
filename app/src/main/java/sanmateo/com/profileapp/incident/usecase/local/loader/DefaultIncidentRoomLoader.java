@@ -34,4 +34,11 @@ public class DefaultIncidentRoomLoader implements IncidentRoomLoader {
                                             .switchIfEmpty(Maybe.error(
                                                 NoQueryResultException::new)));
     }
+
+    @Override
+    public Maybe<List<Incident>> loadIncidents(String incidentType) {
+        return Maybe.defer(() -> incidentDao.findByIncidentType(incidentType)
+                                                   .switchIfEmpty(Maybe.error(
+                                                       NoQueryResultException::new)));
+    }
 }

@@ -13,5 +13,6 @@ public interface IncidentRemoteService {
 
     @GET("/api/v1/incidents")
     Observable<IncidentDto> loadIncidents(@Query("start") int start,
-                                          @Query("limit") int limit);
+                                          @Query("limit") int limit,
+                                          @Query("incident_type") String incidentType);
 }

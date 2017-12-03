@@ -33,7 +33,7 @@ public class DefaultIncidentRemoteLoaderTest {
         rule.server()
             .enqueue(new MockResponse().setResponseCode(HTTP_BAD_REQUEST));
 
-        clasUnderTest.loadIncidents(0, 10)
+        clasUnderTest.loadIncidents(0, 10, "")
                      .test()
                      .assertNotComplete()
                      .assertError(Throwable.class);
@@ -46,7 +46,7 @@ public class DefaultIncidentRemoteLoaderTest {
                          .setResponseCode(HTTP_OK)
                          .setBody(rule.toBody(dto())));
 
-        clasUnderTest.loadIncidents(0, 10)
+        clasUnderTest.loadIncidents(0, 10, "")
                      .test()
                      .assertComplete()
                      .assertNoErrors();

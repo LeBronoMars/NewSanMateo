@@ -10,4 +10,6 @@ import sanmateo.com.profileapp.api.incident.IncidentDto;
 public interface IncidentRemoteLoader {
 
     Observable<IncidentDto> loadIncidents(int start, int limit);
+
+    Observable<IncidentDto> loadIncidents(int start, int limit, String incidentType);
 }

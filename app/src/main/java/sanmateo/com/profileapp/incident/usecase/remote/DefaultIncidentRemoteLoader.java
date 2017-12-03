@@ -20,7 +20,7 @@ public class DefaultIncidentRemoteLoader implements IncidentRemoteLoader {
     }
 
     @Override
-    public Observable<IncidentDto> loadIncidents(int start, int limit) {
-        return incidentRemoteService.loadIncidents(start, limit);
+    public Observable<IncidentDto> loadIncidents(int start, int limit, String incidentType) {
+        return incidentRemoteService.loadIncidents(start, limit, incidentType);
     }
 }

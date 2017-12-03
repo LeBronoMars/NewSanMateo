@@ -14,5 +14,7 @@ public interface IncidentRoomLoader {
 
    Single<Long> count();
 
+   Maybe<List<Incident>> loadIncidents(String incidentType);
+
    Maybe<List<Incident>> loadIncidents();
 }

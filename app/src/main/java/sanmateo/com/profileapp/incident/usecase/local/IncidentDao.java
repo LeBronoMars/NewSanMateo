@@ -28,6 +28,9 @@ public interface IncidentDao {
     @Query("SELECT * FROM Incident ORDER BY incidentDateUpdated DESC")
     Maybe<List<Incident>> findAll();
 
+    @Query("SELECT * FROM Incident where incidentType = :incidentType ORDER BY incidentDateUpdated DESC")
+    Maybe<List<Incident>> findByIncidentType(String incidentType);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Incident incident);
 

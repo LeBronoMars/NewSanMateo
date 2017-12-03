@@ -35,12 +35,22 @@ public class DefaultIncidentsLoader implements IncidentsLoader {
     @Override
     public Single<List<Incident>> loadIncidents(int start, int limit) {
         return incidentRemoteLoader.loadIncidents(start, limit)
-                                   // translate each WaterLevelDto to WaterLevel
                                    .compose(new DtoToIncidentMapper())
-                                   // save to local
                                    .flatMapSingle(this::saveToLocal)
                                    .onErrorResumeNext(loadFromLocal())
                                    .toList();
+    }
+
+    @Override
+    public Single<List<Incident>> loadIncidentsByIncidentType(int start,
+                                                              int limit,
+                                                              String incidentType) {
+        return incidentRemoteLoader.loadIncidents(start, limit, incidentType)
+                                   .compose(new DtoToIncidentMapper())
+                                   .flatMapSingle(this::saveToLocal)
+                                   .onErrorResumeNext(loadFromLocal())
+                                   .toList();
+
     }
 
     public Observable<Incident> loadFromLocal() {
