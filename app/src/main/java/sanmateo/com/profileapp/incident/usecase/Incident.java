@@ -1,13 +1,17 @@
 package sanmateo.com.profileapp.incident.usecase;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 /**
  * Created by rsbulanon on 03/12/2017.
  */
-
+@Entity
 public class Incident {
 
     public String images;
 
+    @PrimaryKey
     public int incidentId;
 
     public String incidentAddress;
