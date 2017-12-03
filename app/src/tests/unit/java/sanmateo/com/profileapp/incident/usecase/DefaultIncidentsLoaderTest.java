@@ -25,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static sanmateo.com.profileapp.factory.IncidentFactory.dtos;
 
 /**
@@ -113,5 +114,81 @@ public class DefaultIncidentsLoaderTest {
                       .test()
                       .assertNotComplete()
                       .assertError(NoQueryResultException.class);
+    }
+
+    @Test
+    public void loadingOfIncidentsByTypeFromApiWillSucceed() {
+        String expectedIncidentType = "Test incident type";
+
+        IncidentDto[] expected = IncidentFactory.dtos();
+
+        for (IncidentDto incidentDto : expected) {
+            incidentDto.incidentType = expectedIncidentType;
+        }
+
+        given(incidentRemoteLoader.loadIncidents(anyInt(), anyInt(), anyString()))
+            .willReturn(Observable.fromArray(expected));
+
+        given(incidentRoomSaver.saveIncident(any(Incident.class)))
+            .willReturn(Completable.complete());
+
+        given(incidentRoomLoader.loadIncidents()).willReturn(Maybe.empty());
+
+        TestObserver<List<Incident>> testObserver = new TestObserver();
+
+        classUnderTest.loadIncidentsByIncidentType(0, 10, expectedIncidentType)
+                      .subscribe(testObserver);
+
+        testObserver.assertComplete();
+        testObserver.assertNoErrors();
+
+        assertThat(testObserver.valueCount()).isNotZero();
+
+        List<Incident> actual = testObserver.values().get(0);
+
+        assertThat(actual.size()).isEqualTo(expected.length);
+
+        for (Incident incident : actual) {
+            assertThat(incident.incidentType).isEqualTo(expectedIncidentType);
+        }
+    }
+
+    @Test
+    public void loadingOfLocallyCachedIncidentByTypeWillSucceed() {
+        String expectedIncidentType = "Test incident type";
+
+        List<Incident> expected = Observable.fromArray(dtos())
+                                            .compose(new DtoToIncidentMapper())
+                                            .toList()
+                                            .blockingGet();
+
+        for (Incident incident : expected) {
+            incident.incidentType = expectedIncidentType;
+        }
+
+        given(incidentRemoteLoader.loadIncidents(anyInt(), anyInt(), anyString()))
+            .willReturn(Observable.error(new Throwable()));
+
+        given(incidentRoomSaver.saveIncident(any(Incident.class)))
+            .willReturn(Completable.error(new Throwable()));
+
+        given(incidentRoomLoader.loadIncidents(expectedIncidentType))
+            .willReturn(Maybe.just(expected));
+
+        TestObserver<List<Incident>> testObserver = new TestObserver<>();
+
+        classUnderTest.loadIncidentsByIncidentType(0, 10, expectedIncidentType)
+                      .subscribe(testObserver);
+
+        testObserver.assertComplete();
+        testObserver.assertNoErrors();
+
+        assertThat(testObserver.valueCount()).isNotZero();
+
+        List<Incident> actual = testObserver.values().get(0);
+
+        for (Incident incident : actual) {
+            assertThat(incident.incidentType).isEqualTo(expectedIncidentType);
+        }
     }
 }

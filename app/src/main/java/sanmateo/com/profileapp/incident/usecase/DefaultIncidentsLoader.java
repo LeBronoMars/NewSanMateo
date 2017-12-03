@@ -48,13 +48,17 @@ public class DefaultIncidentsLoader implements IncidentsLoader {
         return incidentRemoteLoader.loadIncidents(start, limit, incidentType)
                                    .compose(new DtoToIncidentMapper())
                                    .flatMapSingle(this::saveToLocal)
-                                   .onErrorResumeNext(loadFromLocal())
+                                   .onErrorResumeNext(loadFromLocalByType(incidentType))
                                    .toList();
-
     }
 
     public Observable<Incident> loadFromLocal() {
         return incidentRoomLoader.loadIncidents()
+                                 .flatMapObservable(Observable::fromIterable);
+    }
+
+    public Observable<Incident> loadFromLocalByType(String incidentType) {
+        return incidentRoomLoader.loadIncidents(incidentType)
                                  .flatMapObservable(Observable::fromIterable);
     }
 
