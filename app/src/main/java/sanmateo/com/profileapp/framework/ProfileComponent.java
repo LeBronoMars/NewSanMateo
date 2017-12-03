@@ -8,6 +8,7 @@ import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import sanmateo.com.profileapp.api.RemoteServiceModule;
 import sanmateo.com.profileapp.database.DatabaseModule;
+import sanmateo.com.profileapp.incident.IncidentModule;
 import sanmateo.com.profileapp.news.NewsModule;
 import sanmateo.com.profileapp.splash.SplashModule;
 import sanmateo.com.profileapp.user.UserModule;
@@ -21,6 +22,7 @@ import sanmateo.com.profileapp.waterlevel.WaterLevelModule;
                          AndroidInjectionModule.class,
                          AppModule.class,
                          DatabaseModule.class,
+                         IncidentModule.class,
                          NewsModule.class,
                          RemoteServiceModule.class,
                          RxSchedulerModule.class,
