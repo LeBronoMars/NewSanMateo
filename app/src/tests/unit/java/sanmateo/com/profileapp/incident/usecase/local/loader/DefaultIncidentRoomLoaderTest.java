@@ -18,7 +18,9 @@ import sanmateo.com.profileapp.util.RoomTestRule;
 
 
 import static java.lang.Long.valueOf;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.robolectric.annotation.Config.NONE;
+import static sanmateo.com.profileapp.factory.IncidentFactory.dtos;
 
 /**
  * Created by rsbulanon on 03/12/2017.
@@ -54,7 +56,7 @@ public class DefaultIncidentRoomLoaderTest {
     public void loadingOfLocalIncidentsWillSucceed() {
         countShouldReturnZeroByDefault();
 
-        List<Incident> expected = Observable.fromArray(IncidentFactory.dtos())
+        List<Incident> expected = Observable.fromArray(dtos())
                                             .compose(new DtoToIncidentMapper())
                                             .toList()
                                             .blockingGet();
@@ -66,5 +68,40 @@ public class DefaultIncidentRoomLoaderTest {
                       .assertComplete()
                       .assertNoErrors()
                       .assertValue(valueOf(expected.size()));
+    }
+
+    @Test
+    public void loadingOfLocalIncidentsByTypeWillSucceed() {
+        String fireIncidentType = "fire incident";
+        String trafficIncidentType = "traffic incident";
+
+        List<Incident> fireIncidents = Observable.fromArray(dtos())
+                                            .compose(new DtoToIncidentMapper())
+                                            .toList()
+                                            .blockingGet();
+
+        for (Incident incident : fireIncidents) {
+            incident.incidentType = fireIncidentType;
+        }
+
+        List<Incident> trafficIncidents = Observable.fromArray(dtos())
+                                            .compose(new DtoToIncidentMapper())
+                                            .toList()
+                                            .blockingGet();
+
+        for (Incident incident : trafficIncidents) {
+            incident.incidentType = trafficIncidentType;
+        }
+
+        incidentDao.insertAll(fireIncidents);
+        incidentDao.insertAll(trafficIncidents);
+
+        // must fetch only incidents whose type is traffic
+        List<Incident> actual = classUnderTest.loadIncidents(trafficIncidentType)
+                                              .blockingGet();
+
+        for (Incident incident : actual) {
+            assertThat(incident.incidentType).isEqualTo(trafficIncidentType);
+        }
     }
 }
