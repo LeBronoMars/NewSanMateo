@@ -3,6 +3,8 @@ package sanmateo.com.profileapp.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
+import sanmateo.com.profileapp.incident.usecase.Incident;
+import sanmateo.com.profileapp.incident.usecase.local.IncidentDao;
 import sanmateo.com.profileapp.news.local.NewsDao;
 import sanmateo.com.profileapp.news.usecase.News;
 import sanmateo.com.profileapp.user.local.UserDao;
@@ -16,15 +18,18 @@ import sanmateo.com.profileapp.waterlevel.usecase.WaterLevel;
 
 @Database(
     entities = {
-       News.class,
-       User.class,
-       WaterLevel.class
+                   Incident.class,
+                   News.class,
+                   User.class,
+                   WaterLevel.class
     },
     exportSchema = false,
     version = 2
 )
 public abstract class AppDatabase extends RoomDatabase {
 
+    public abstract IncidentDao incidentDao();
+    
     public abstract NewsDao newsDao();
 
     public abstract UserDao userDao();
