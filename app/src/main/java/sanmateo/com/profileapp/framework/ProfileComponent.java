@@ -12,6 +12,7 @@ import sanmateo.com.profileapp.incident.IncidentModule;
 import sanmateo.com.profileapp.news.NewsModule;
 import sanmateo.com.profileapp.splash.SplashModule;
 import sanmateo.com.profileapp.user.UserModule;
+import sanmateo.com.profileapp.util.glide.ImageLoaderModule;
 import sanmateo.com.profileapp.util.rx.RxSchedulerModule;
 import sanmateo.com.profileapp.waterlevel.WaterLevelModule;
 
@@ -22,6 +23,7 @@ import sanmateo.com.profileapp.waterlevel.WaterLevelModule;
                          AndroidInjectionModule.class,
                          AppModule.class,
                          DatabaseModule.class,
+                         ImageLoaderModule.class,
                          IncidentModule.class,
                          NewsModule.class,
                          RemoteServiceModule.class,
