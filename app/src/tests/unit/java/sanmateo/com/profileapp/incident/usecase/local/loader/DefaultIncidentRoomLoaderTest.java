@@ -57,7 +57,7 @@ public class DefaultIncidentRoomLoaderTest {
         countShouldReturnZeroByDefault();
 
         List<Incident> expected = Observable.fromArray(dtos())
-                                            .compose(new DtoToIncidentMapper())
+                                            .flatMapSingle(new DtoToIncidentMapper())
                                             .toList()
                                             .blockingGet();
 
@@ -76,7 +76,7 @@ public class DefaultIncidentRoomLoaderTest {
         String trafficIncidentType = "traffic incident";
 
         List<Incident> fireIncidents = Observable.fromArray(dtos())
-                                            .compose(new DtoToIncidentMapper())
+                                            .flatMapSingle(new DtoToIncidentMapper())
                                             .toList()
                                             .blockingGet();
 
@@ -85,7 +85,7 @@ public class DefaultIncidentRoomLoaderTest {
         }
 
         List<Incident> trafficIncidents = Observable.fromArray(dtos())
-                                            .compose(new DtoToIncidentMapper())
+                                            .flatMapSingle(new DtoToIncidentMapper())
                                             .toList()
                                             .blockingGet();
 

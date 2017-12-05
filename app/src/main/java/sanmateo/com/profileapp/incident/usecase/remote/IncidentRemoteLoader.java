@@ -1,6 +1,8 @@
 package sanmateo.com.profileapp.incident.usecase.remote;
 
-import io.reactivex.Observable;
+import java.util.List;
+
+import io.reactivex.Single;
 import sanmateo.com.profileapp.api.incident.IncidentDto;
 
 /**
@@ -9,7 +11,7 @@ import sanmateo.com.profileapp.api.incident.IncidentDto;
 
 public interface IncidentRemoteLoader {
 
-    Observable<IncidentDto> loadIncidents(int start, int limit);
+    Single<List<IncidentDto>> loadIncidents(int start, int limit);
 
-    Observable<IncidentDto> loadIncidents(int start, int limit, String incidentType);
+    Single<List<IncidentDto>> loadIncidents(int start, int limit, String incidentType);
 }

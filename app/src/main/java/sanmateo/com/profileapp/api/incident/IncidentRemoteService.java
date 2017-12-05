@@ -1,6 +1,8 @@
 package sanmateo.com.profileapp.api.incident;
 
-import io.reactivex.Observable;
+import java.util.List;
+
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -12,7 +14,7 @@ public interface IncidentRemoteService {
 
 
     @GET("/api/v1/incidents")
-    Observable<IncidentDto> loadIncidents(@Query("start") int start,
-                                          @Query("limit") int limit,
-                                          @Query("incident_type") String incidentType);
+    Single<List<IncidentDto>> loadIncidents(@Query("start") int start,
+                                             @Query("limit") int limit,
+                                             @Query("incident_type") String incidentType);
 }

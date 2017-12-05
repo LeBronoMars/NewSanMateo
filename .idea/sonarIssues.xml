@@ -83,6 +83,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/api/incident/IncidentRemoteService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/api/news/NewsDto.java">
           <value>
             <set />
@@ -243,6 +248,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/framework/ProfileGlideModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/helpers/AmazonS3Helper.java">
           <value>
             <set />
@@ -279,6 +289,71 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/home/view/HomeView.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/list/presenter/DefaultIncidentListPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/list/view/IncidentItemFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/list/view/IncidentListFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/list/view/IncidentListViewPagerAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/list/view/IncidentsAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/usecase/DefaultIncidentsLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/usecase/IncidentsLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/usecase/local/IncidentDao.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/usecase/local/loader/DefaultIncidentRoomLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/usecase/local/loader/IncidentRoomLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/usecase/remote/DefaultIncidentRemoteLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/usecase/remote/IncidentRemoteLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/incident/usecase/remote/mapper/DtoToIncidentMapper.java">
           <value>
             <set />
           </value>
@@ -758,6 +833,21 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/glide/DefaultGlideImageLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/glide/GlideImageLoader.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/glide/ImageLoaderModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/util/realm/DefaultRealmUtil.java">
           <value>
             <set />
@@ -993,12 +1083,32 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_incident_item.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_incident_list.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/fragment_water_level.xml">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/item_incident_list.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
           <value>
             <set />
           </value>
@@ -1044,6 +1154,31 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/tests/android/java/sanmateo/com/profileapp/util/rx/MockRxSchedulerModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/incident/usecase/DefaultIncidentsLoaderTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/incident/usecase/local/loader/DefaultIncidentRoomLoaderTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/incident/usecase/local/saver/DefaultIncidentRoomSaverTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/incident/usecase/remote/DefaultIncidentRemoteLoaderTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/tests/unit/java/sanmateo/com/profileapp/incident/usecase/remote/mapper/DtoToIncidentMapperTest.java">
           <value>
             <set />
           </value>
@@ -1218,6 +1353,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$USER_HOME$/upraxis/solutio2-android/app/build/intermediates/manifest/androidTest/debug/AndroidManifest.xml">
           <value>
             <set />
@@ -1229,6 +1369,11 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/java/com/solutio/framework/SolutioApplication.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/main/java/com/solutio/framework/SolutioComponent.java">
           <value>
             <set />
           </value>
@@ -1264,6 +1409,11 @@
           </value>
         </entry>
         <entry key="$USER_HOME$/upraxis/solutio2-android/app/src/tests/unit/java/com/solutio/util/SharedPrefsTenantLoaderTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$USER_HOME$/upraxis/solutio2-android/config/dependencies.gradle">
           <value>
             <set />
           </value>

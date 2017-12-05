@@ -49,7 +49,7 @@ public class DefaultIncidentRoomSaverTest {
                    .assertValue(0l);
 
         Incident incident = Observable.just(IncidentFactory.dto())
-                                      .compose(new DtoToIncidentMapper())
+                                      .flatMapSingle(new DtoToIncidentMapper())
                                       .blockingFirst();
 
         classUnderTest.saveIncident(incident).blockingAwait();
@@ -69,7 +69,7 @@ public class DefaultIncidentRoomSaverTest {
                    .assertValue(0l);
 
         List<Incident> incidents = Observable.fromArray(IncidentFactory.dtos())
-                                             .compose(new DtoToIncidentMapper())
+                                             .flatMapSingle(new DtoToIncidentMapper())
                                              .toList()
                                              .blockingGet();
 

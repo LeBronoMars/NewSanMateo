@@ -324,4 +324,6 @@
     <string name="water_level_public_market">San Mateo Public Market</string>
     <string name="water_level_batasan">Montalban</string>
     <string name="water_level_reading">%1$s ft.</string>
+
+    <string name="incidents_loading_message">Loading incidents.</string>
 </resources>

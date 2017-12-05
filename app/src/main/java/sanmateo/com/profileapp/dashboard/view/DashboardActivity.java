@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.incident.list.view.IncidentListFragment;
 import sanmateo.com.profileapp.waterlevel.view.WaterLevelFragment;
 
 /**
@@ -16,19 +17,19 @@ import sanmateo.com.profileapp.waterlevel.view.WaterLevelFragment;
 
 public class DashboardActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
-        inflateWaterLevelFragment();
+        inflateFragments();
     }
 
-    private void inflateWaterLevelFragment() {
+    private void inflateFragments() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.water_level_container, WaterLevelFragment.newInstance());
+        fragmentTransaction.add(R.id.incidents_container, IncidentListFragment.newInstance());
         fragmentTransaction.commit();
     }
 }

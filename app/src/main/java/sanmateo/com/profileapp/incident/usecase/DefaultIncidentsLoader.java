@@ -35,7 +35,8 @@ public class DefaultIncidentsLoader implements IncidentsLoader {
     @Override
     public Single<List<Incident>> loadIncidents(int start, int limit) {
         return incidentRemoteLoader.loadIncidents(start, limit)
-                                   .compose(new DtoToIncidentMapper())
+                                   .flatMapObservable(Observable::fromIterable)
+                                   .flatMapSingle(new DtoToIncidentMapper())
                                    .flatMapSingle(this::saveToLocal)
                                    .onErrorResumeNext(loadFromLocal())
                                    .toList();
@@ -46,7 +47,8 @@ public class DefaultIncidentsLoader implements IncidentsLoader {
                                                               int limit,
                                                               String incidentType) {
         return incidentRemoteLoader.loadIncidents(start, limit, incidentType)
-                                   .compose(new DtoToIncidentMapper())
+                                   .flatMapObservable(Observable::fromIterable)
+                                   .flatMapSingle(new DtoToIncidentMapper())
                                    .flatMapSingle(this::saveToLocal)
                                    .onErrorResumeNext(loadFromLocalByType(incidentType))
                                    .toList();

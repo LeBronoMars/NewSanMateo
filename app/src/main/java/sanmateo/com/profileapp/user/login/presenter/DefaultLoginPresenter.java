@@ -1,5 +1,7 @@
 package sanmateo.com.profileapp.user.login.presenter;
 
+import android.util.Log;
+
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 
 import javax.inject.Inject;
@@ -72,6 +74,7 @@ class DefaultLoginPresenter extends MvpBasePresenter<LoginView> implements Login
 
                       @Override
                       public void onError(@NonNull Throwable e) {
+                          Log.d("app", "error ---> " + e.getMessage());
                           view.hideProgress();
                           view.showLoginFailed();
                       }

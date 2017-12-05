@@ -25,7 +25,7 @@ public class DtoToIncidentMapperTest {
         TestObserver<List<Incident>> testObserver = new TestObserver<>();
 
         Observable.fromArray(expected)
-                  .compose(new DtoToIncidentMapper())
+                  .flatMapSingle(new DtoToIncidentMapper())
                   .toList()
                   .subscribe(testObserver);
 

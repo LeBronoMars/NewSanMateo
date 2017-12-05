@@ -72,6 +72,15 @@ public class TimeUtils {
     }
 
     /**
+     * @return the given dateTime in HH:MM a
+     */
+    public static String toHourMinute(long dateTime) {
+        return new SimpleDateFormat("HH:mm a", Locale.getDefault())
+                   .format(dateTime);
+    }
+
+
+    /**
      * @return Hour:Minute:Seconds where Hour is in 24hour format (0-23)
      */
     public static String toHourMinuteSecond(long date) {

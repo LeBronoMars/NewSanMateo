@@ -7,7 +7,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,7 +30,8 @@ import sanmateo.com.profileapp.user.login.presenter.LoginPresenter;
 
 
 import static android.support.design.widget.Snackbar.LENGTH_INDEFINITE;
-import static android.view.View.*;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static sanmateo.com.profileapp.util.TextUtils.isNotNullOrEmpty;
 
 /**
@@ -156,7 +156,6 @@ public class LoginActivity extends MvpActivity<LoginView, LoginPresenter> implem
 
     @Override
     public void showLoginSuccess() {
-        // TODO redirect to home screen
         startActivity(new Intent(this, DashboardActivity.class));
     }
 

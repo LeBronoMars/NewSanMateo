@@ -8,9 +8,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 import sanmateo.com.profileapp.api.incident.IncidentDto;
 import sanmateo.com.profileapp.factory.IncidentFactory;
@@ -51,7 +53,7 @@ public class DefaultIncidentsLoaderTest {
         IncidentDto[] expected = dtos();
 
         given(incidentRemoteLoader.loadIncidents(anyInt(), anyInt()))
-            .willReturn(Observable.fromArray(expected));
+            .willReturn(Single.just(Arrays.asList(expected)));
 
         given(incidentRoomLoader.loadIncidents())
             .willReturn(Maybe.error(NoQueryResultException::new));
@@ -79,12 +81,12 @@ public class DefaultIncidentsLoaderTest {
     @Test
     public void loadingOfIncidentsFromLocalWillSucceed() {
         List<Incident> expected = Observable.fromArray(IncidentFactory.dtos())
-                                            .compose(new DtoToIncidentMapper())
+                                            .flatMapSingle(new DtoToIncidentMapper())
                                             .toList()
                                             .blockingGet();
 
         given(incidentRemoteLoader.loadIncidents(anyInt(), anyInt()))
-            .willReturn(Observable.error(new Throwable()));
+            .willReturn(Single.error(new Throwable()));
 
         given(incidentRoomSaver.saveIncident(any(Incident.class)))
             .willReturn(Completable.error(new Throwable()));
@@ -102,7 +104,7 @@ public class DefaultIncidentsLoaderTest {
     @Test
     public void loadingOfIncidentsWillFailIfApiFailsAndThereIsNoCachedRecords() {
         given(incidentRemoteLoader.loadIncidents(anyInt(), anyInt()))
-            .willReturn(Observable.error(new Throwable()));
+            .willReturn(Single.error(new Throwable()));
 
         given(incidentRoomSaver.saveIncident(any(Incident.class)))
             .willReturn(Completable.error(new Throwable()));
@@ -127,12 +129,12 @@ public class DefaultIncidentsLoaderTest {
         }
 
         given(incidentRemoteLoader.loadIncidents(anyInt(), anyInt(), anyString()))
-            .willReturn(Observable.fromArray(expected));
+            .willReturn(Single.just(Arrays.asList(expected)));
 
         given(incidentRoomSaver.saveIncident(any(Incident.class)))
             .willReturn(Completable.complete());
 
-        given(incidentRoomLoader.loadIncidents()).willReturn(Maybe.empty());
+        given(incidentRoomLoader.loadIncidents(anyString())).willReturn(Maybe.empty());
 
         TestObserver<List<Incident>> testObserver = new TestObserver();
 
@@ -158,7 +160,7 @@ public class DefaultIncidentsLoaderTest {
         String expectedIncidentType = "Test incident type";
 
         List<Incident> expected = Observable.fromArray(dtos())
-                                            .compose(new DtoToIncidentMapper())
+                                            .flatMapSingle(new DtoToIncidentMapper())
                                             .toList()
                                             .blockingGet();
 
@@ -167,7 +169,7 @@ public class DefaultIncidentsLoaderTest {
         }
 
         given(incidentRemoteLoader.loadIncidents(anyInt(), anyInt(), anyString()))
-            .willReturn(Observable.error(new Throwable()));
+            .willReturn(Single.error(new Throwable()));
 
         given(incidentRoomSaver.saveIncident(any(Incident.class)))
             .willReturn(Completable.error(new Throwable()));

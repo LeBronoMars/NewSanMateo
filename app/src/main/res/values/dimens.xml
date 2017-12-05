@@ -5,4 +5,6 @@
 
     <dimen name="status_bar_height">@dimen/_23sdp</dimen>
     <dimen name="toolbar_title_size">20sp</dimen>
+
+    <dimen name="incident_report_card_view_height">296dp</dimen>
 </resources>
