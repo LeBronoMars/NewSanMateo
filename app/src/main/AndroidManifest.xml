@@ -222,6 +222,11 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
+        <activity
+            android:name=".activities.NewDirectoriesActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:screenOrientation="portrait"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/fb_app_id"/>

@@ -394,7 +394,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @OnClick(R.id.ll_directory)
     public void goDirectory() {
-        startActivity(new Intent(this, DirectoriesActivity.class));
+        startActivity(new Intent(this, NewDirectoriesActivity.class));
         animateToLeft(this);
     }
 

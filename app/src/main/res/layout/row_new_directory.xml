@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_vertical_margin"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvDirectoryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        fontPath="fonts/Roboto-Medium.ttf"
+        android:textColor="@color/text_action_blue"
+        android:layout_weight="90"/>
+
+    <RelativeLayout
+        android:id="@+id/rlOptionsMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/tvOptionsMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/text_action_blue"
+            android:text="&#8942;"
+            android:textAppearance="?android:textAppearanceLarge"/>
+    </RelativeLayout>
+</LinearLayout>

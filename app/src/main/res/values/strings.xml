@@ -3,6 +3,7 @@
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="weather_forecast">Weather Forecast</string>
+    <string name="directories">Directories</string>
     <string name="password_reset">Password Reset</string>
     <string name="online_mode">Online Mode</string>
     <string name="sms_mode">SMS Mode</string>
@@ -319,4 +320,6 @@
 
     <string name="water_level_batasan">Batasan-San Mateo Bridge</string>
     <string name="water_level_montalban">Montalban</string>
+
+    <string name="call">Call</string>
 </resources>

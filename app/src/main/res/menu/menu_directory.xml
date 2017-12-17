@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_directory_call"
+        android:icon="@drawable/ic_call_blue_24dp"
+        android:title="@string/call"/>
+
+    <item
+        android:id="@+id/menu_directory_email"
+        android:icon="@drawable/ic_email_24dp"
+        android:title="@string/email"/>
+
+</menu>
