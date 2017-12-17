@@ -18,6 +18,7 @@ import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.models.response.Official;
 import sanmateo.com.profileapp.models.response.WaterLevel;
+import sanmateo.com.profileapp.models.response.Weather;
 import sanmateo.com.profileapp.singletons.RetrofitSingleton;
 
 /**
@@ -154,6 +155,11 @@ public class ApiRequestHelper {
         onApiRequestListener.onApiRequestBegin(ApiAction.GET_WATER_LEVEL_BY_AREA);
         final Observable<List<WaterLevel>> observable = apiInterface.getWaterLevelByArea(token,
                 area);
+        handleObservableResult(ApiAction.GET_WATER_LEVEL_BY_AREA, observable);
+    }
+
+    public void getWeather(final String token) {
+        final Observable<List<Weather>> observable = apiInterface.getLatestWeather(token, 1);
         handleObservableResult(ApiAction.GET_WATER_LEVEL_BY_AREA, observable);
     }
 

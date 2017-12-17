@@ -40,5 +40,7 @@ public enum  ApiAction {
 
     GET_LATEST_WATER_LEVEL,
 
-    GET_WATER_LEVEL_BY_AREA
+    GET_WATER_LEVEL_BY_AREA,
+
+    GET_WEATHER
 }

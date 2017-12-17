@@ -21,6 +21,7 @@ import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.models.response.Official;
 import sanmateo.com.profileapp.models.response.WaterLevel;
+import sanmateo.com.profileapp.models.response.Weather;
 
 /**
  * Created by rsbulanon on 10/2/16.
@@ -265,5 +266,9 @@ public interface ApiInterface {
     Observable<List<WaterLevel>> getLatestWaterLevels(@Header("Authorization") String token,
                                                       @Path("id") int id,
                                                       @Query("area") String area);
+
+    @GET("/api/v1/weather/reading")
+    Observable<List<Weather>> getLatestWeather(@Header("Authorization") String token,
+                                           @Query("limit") int limit);
 
 }

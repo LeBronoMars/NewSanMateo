@@ -4,18 +4,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Point;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.Picasso;
 
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
@@ -29,7 +24,6 @@ public class PicassoHelper {
 
     public static void loadImageFromURL(final String url,final int size,final int color,
                                         final ImageView imageView, final ProgressBar progressBar) {
-        LogHelper.log("pic","load pic url ---> " + url);
         progressBar.setVisibility(View.VISIBLE);
         PicassoSingleton.getInstance().getPicasso().load(url)
                 .placeholder(R.drawable.placeholder_image)
@@ -39,14 +33,16 @@ public class PicassoHelper {
                 .transform(new CircleTransform(color, 1)).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
-                progressBar.setVisibility(View.GONE);
-                LogHelper.log("pic","profile pic loaded successfully");
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onError() {
-                progressBar.setVisibility(View.GONE);
-                LogHelper.log("pic","profile pic loaded unable to load");
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -123,6 +119,12 @@ public class PicassoHelper {
                         Log.d("pic", "Image loading failed");
                     }
                 });
+    }
+
+    public static void loadImageFromURL(final String url, final ImageView imageView) {
+        PicassoSingleton.getInstance().getPicasso().load(url)
+                        .fit()
+                        .into(imageView);
     }
 
     public static void loadImageFromUri(final Uri uri, final ImageView imageView,

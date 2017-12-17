@@ -4,28 +4,48 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
+import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.helpers.ApiRequestHelper;
+import sanmateo.com.profileapp.helpers.PicassoHelper;
+import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
+import sanmateo.com.profileapp.models.response.Weather;
+import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
+
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 /**
  * Created by USER on 10/11/2017.
  */
 
-public class TodayWeatherFragment extends Fragment {
+public class TodayWeatherFragment extends Fragment implements OnApiRequestListener {
 
     @BindView(R.id.iv_bg_weather)
     ImageView ivBgWeather;
 
     @BindView(R.id.tv_weather_report_summary)
     TextView tvWeatherReportSummary;
+
+    @BindView(R.id.rl_content)
+    RelativeLayout rlContent;
+
+    @BindView(R.id.rl_progress)
+    RelativeLayout rlProgress;
 
     @BindView(R.id.iv_weather_icon)
     ImageView ivWeatherIcon;
@@ -65,6 +85,8 @@ public class TodayWeatherFragment extends Fragment {
 
     private Unbinder unbinder;
 
+    private ApiRequestHelper apiRequestHelper;
+
     public static TodayWeatherFragment newInstance() {
         final TodayWeatherFragment fragment = new TodayWeatherFragment();
         return fragment;
@@ -75,29 +97,9 @@ public class TodayWeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_today_weather, container, false);
         unbinder = ButterKnife.bind(this, view);
-
-        initViews();
+        apiRequestHelper = new ApiRequestHelper(this);
+        apiRequestHelper.getWeather(CurrentUserSingleton.getInstance().getCurrentUser().getToken());
         return view;
-    }
-
-    private void initViews() {
-        tvWeatherReportSummary.setText("PARTLY CLOUDY W/ THUNDERSTORMS");
-        tvHeatIndex.setText("Heat Index: 36\u00B0");
-        ivBgWeather.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.bg_day3));
-        ivWeatherIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.day06));
-        tvTemperature.setText("30\u00B0");
-
-        tvHumidity.setText("61%");
-        tvUVIndex.setText("5");
-        tvWindSpeed.setText("11 KPH");
-
-        tvCloudCover.setText("100%");
-        tvWindsForm.setText("NW");
-        tvWindGusts.setText("11 KPH");
-
-        tvDewPoint.setText("22\u00B0");
-        tvPressure.setText("1,003.0 MB");
-        tvVisibility.setText("16 KM");
     }
 
     @Override
@@ -106,5 +108,42 @@ public class TodayWeatherFragment extends Fragment {
         if (unbinder != null) {
             unbinder.unbind();
         }
+    }
+
+    @Override
+    public void onApiRequestBegin(ApiAction action) {
+
+    }
+
+    @Override
+    public void onApiRequestSuccess(ApiAction action, Object result) {
+        Weather weather = ((List<Weather>) result).get(0);
+
+        rlProgress.setVisibility(GONE);
+        rlContent.setVisibility(VISIBLE);
+
+        PicassoHelper.loadImageFromURL(weather.backgroundImage, ivBgWeather);
+        PicassoHelper.loadImageFromURL(weather.weatherIcon, ivWeatherIcon);
+
+        tvWeatherReportSummary.setText(weather.summary.toUpperCase());
+        tvHeatIndex.setText("Heat Index: "+ weather.heatIndex+ "\u00B0");
+        tvTemperature.setText(""+ weather.temperature +"\u00B0");
+
+        tvHumidity.setText(""+ weather.humidity + "%");
+        tvUVIndex.setText(weather.uvIndex);
+        tvWindSpeed.setText(""+ weather.windSpeed +" KPH");
+
+        tvCloudCover.setText(""+ weather.cloudCover + "%");
+        tvWindsForm.setText(weather.windsFrom);
+        tvWindGusts.setText(""+ weather.windGusts +" KPH");
+
+        tvDewPoint.setText(""+ weather.dewPoint +"\u00B0");
+        tvPressure.setText(weather.pressure + " MB");
+        tvVisibility.setText(weather.visibility + " KM");
+    }
+
+    @Override
+    public void onApiRequestFailed(ApiAction action, Throwable t) {
+        Log.d("app", "error --> " + t.getMessage());
     }
 }
