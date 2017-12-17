@@ -56,4 +56,6 @@ public class Weather {
     public String visibility;
 
     public String temperature;
+
+    public String remarks;
 }

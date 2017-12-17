@@ -160,7 +160,7 @@ public class ApiRequestHelper {
 
     public void getWeather(final String token) {
         final Observable<List<Weather>> observable = apiInterface.getLatestWeather(token, 1);
-        handleObservableResult(ApiAction.GET_WATER_LEVEL_BY_AREA, observable);
+        handleObservableResult(ApiAction.GET_WEATHER, observable);
     }
 
     /**

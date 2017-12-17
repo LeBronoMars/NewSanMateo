@@ -1,8 +1,6 @@
 package sanmateo.com.profileapp.activities;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,21 +12,16 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import butterknife.BindDimen;
@@ -37,11 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.realm.RealmResults;
-import io.realm.Sort;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
-import sanmateo.com.profileapp.adapters.CustomNavMenuAdapter;
 import sanmateo.com.profileapp.adapters.DashboardIncidentsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
@@ -60,15 +50,18 @@ import sanmateo.com.profileapp.helpers.PrefsHelper;
 import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.interfaces.OnConfirmDialogListener;
-import sanmateo.com.profileapp.models.others.CustomMenu;
 import sanmateo.com.profileapp.models.response.Announcement;
 import sanmateo.com.profileapp.models.response.ApiError;
 import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
+import sanmateo.com.profileapp.models.response.Weather;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
+
+
+import static android.view.View.GONE;
 
 /**
  * Created by USER on 9/13/2017.
@@ -96,21 +89,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
-
-//    @BindView(R.id.iv_profile_image)
-//    ImageView iv_profile_image;
-//
-//    @BindView(R.id.lv_menu)
-//    ListView lv_menu;
-//
-//    @BindView(R.id.iv_blur_background)
-//    ImageView iv_blur_background;
-//
-//    @BindView(R.id.pb_load_image)
-//    ProgressBar pb_load_image;
-//
-//    @BindView(R.id.tv_profile_name)
-//    TextView tv_profile_name;
 
     @BindView(R.id.sv_dashboard)
     ScrollView svDashboard;
@@ -143,6 +121,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @BindView(R.id.tv_weather_report_summary)
     TextView tvWeatherReportSummary;
+
+    @BindView(R.id.iv_weather_bg)
+    ImageView ivWeatherBg;
 
     @BindView(R.id.tv_weather_title)
     TextView tvWeatherTitle;
@@ -218,29 +199,14 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             token = currentUserSingleton.getCurrentUser().getToken();
 
             initNavigationDrawer();
-            initDummyLabels(); //todo remove
+            initWeatherSummary();
             initIncidents();
             svDashboard.scrollTo(0,0);
         }
     }
 
-    private void initDummyLabels() {
-        //water level
-        tvWaterLevelLabel.setText("Water Level as of 2:52am, October 20, 2017");
-        tvWaterLevelStationMarket.setText("San Mateo Bridge");
-        tvWaterLevelStationBridge.setText("Montalban");
-        tvWaterLevelReadingMarket.setText("16 ft.");
-        tvWaterLevelReadingBridge.setText("18 ft.");
-
-        //weather report
-        tvWeatherReportLabel.setText("Weather Report");
-        tvWeatherReportSummary.setText("Partly cloudy to cloudy skies with rainshowers or thunderstorms will prevail over San Mateo");
-        tvWeatherTitle.setText("Partly Cloudly");
-        tvWeatherTemp.setText("31" + "\u2103");
-
-        //incident
-        tvIncidentLabel.setText("Incident Reports");
-
+    private void initWeatherSummary() {
+        apiRequestHelper.getWeather(token);
     }
 
     private DashboardIncidentsAdapter adapter;
@@ -344,10 +310,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
             @Override
             public void onSelectedMenu(int position) {
-//                if (tvNotification.isShown()) {
-//                    tvNotification.setVisibility(View.INVISIBLE);
-//                    PrefsHelper.setBoolean(HomeActivity.this, "has_notifications", false);
-//                }
                 fragment.dismiss();
                 if (position == 0) {
                     moveToOtherActivity(PublicAnnouncementsActivity.class);
@@ -530,30 +492,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
-        if (action.equals(ApiAction.GET_NEWS)) {
-//            final ArrayList<News> news = (ArrayList<News>) result;
-//            newsSingleton.getAllNews().clear();
-//            final RealmHelper<News> realmHelper = new RealmHelper<>(News.class);
-//
-//            if (!news.isEmpty()) {
-//                for (News n : news) {
-//                    realmHelper.replaceInto(n);
-//                }
-//            }
-//
-//            if (realmHelper.count() > 0) {
-//                final RealmResults<News> cachedNews = realmHelper.findAll("createdAt", Sort.DESCENDING);
-//                for (News n : cachedNews) {
-//                    newsSingleton.getAllNews().add(n);
-//                }
-//            }
-//            newsSingleton.getAllNews().addAll(news);
-        } else if (action.equals(ApiAction.GET_NEWS_BY_ID)) {
-//            final RealmHelper<News> realmHelper = new RealmHelper<>(News.class);
-//            final News news = (News) result;
-//            realmHelper.replaceInto(news);
-//            newsSingleton.getAllNews().add(0, news);
-        } else if (action.equals(ApiAction.PUT_CHANGE_PW)) {
+        if (action.equals(ApiAction.PUT_CHANGE_PW)) {
             final GenericMessage genericMessage = (GenericMessage) result;
             showToast(genericMessage.getMessage());
         } else if (action.equals(ApiAction.PUT_CHANGE_PROFILE_PIC)) {
@@ -569,17 +508,39 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             currentUserSingleton.getCurrentUser().setPicUrl(genericMessage.getMessage());
             realmHelper.update(currentUserSingleton.getCurrentUser());
             realmHelper.commitTransaction();
-
-            LogHelper.log("changePic", "new pic url ---> " + currentUserSingleton.getCurrentUser().getPicUrl());
-
-//            PicassoHelper.loadBlurImageFromURL(this, currentUserSingleton.getCurrentUsernavi
-
         } else if (action.equals(ApiAction.GET_INCIDENTS)) {
             incidents = (ArrayList<Incident>) result;
-            llIncidentReports.setVisibility(incidents.size() > 0 ? View.VISIBLE : View.GONE);
+            llIncidentReports.setVisibility(incidents.size() > 0 ? View.VISIBLE : GONE);
             initIncidentsAdapter(incidents);
             incidentsSingleton.getIncidents("active").clear();
             incidentsSingleton.getIncidents("active").addAll(incidents);
+        } else if (action.equals(ApiAction.GET_WEATHER)) {
+            //water level
+            tvWaterLevelLabel.setText("Water Level as of 2:52am, October 20, 2017");
+            tvWaterLevelStationMarket.setText("San Mateo Bridge");
+            tvWaterLevelStationBridge.setText("Montalban");
+            tvWaterLevelReadingMarket.setText("16 ft.");
+            tvWaterLevelReadingBridge.setText("18 ft.");
+
+            Weather weather = ((List<Weather>) result).get(0);
+
+            //weather report
+            tvWeatherReportLabel.setText("Weather Report");
+
+            if (weather.remarks != null) {
+                tvWeatherReportSummary.setVisibility(View.VISIBLE);
+                tvWeatherReportSummary.setText(weather.remarks);
+            } else {
+                tvWeatherReportSummary.setVisibility(GONE);
+            }
+
+            PicassoHelper.loadImageFromURL(weather.backgroundImage, ivWeatherBg);
+
+            tvWeatherTitle.setText(weather.summary);
+            tvWeatherTemp.setText(weather.temperature + "\u2103");
+
+            //incident
+            tvIncidentLabel.setText("Incident Reports");
         }
     }
 

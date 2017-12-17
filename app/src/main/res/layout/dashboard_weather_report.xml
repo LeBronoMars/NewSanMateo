@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_weather_report_label"
@@ -15,14 +15,14 @@
         android:gravity="center_vertical"
         android:text="@string/app_name"
         android:textColor="@color/dashboard_label_color"
-        android:textSize="14sp" />
+        android:textSize="14sp"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="246dp"
+        android:layout_marginBottom="2dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"
         app:cardCornerRadius="2dp"
         app:cardElevation="2dp">
@@ -38,18 +38,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_alignParentBottom="true"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="@dimen/_16sdp"
+                android:gravity="center_vertical"
                 android:text="@string/read_more"
                 android:textColor="@color/read_more_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_above="@id/tv_read_more_weather"
-                android:background="@color/transparent_dark_20" />
+                android:background="@color/transparent_dark_20"/>
 
             <TextView
                 android:id="@+id/tv_weather_report_summary"
@@ -63,9 +63,8 @@
                 android:maxLines="2"
                 android:minLines="2"
                 android:padding="@dimen/_16sdp"
-                android:text="@string/app_name"
                 android:textColor="@android:color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -73,10 +72,10 @@
                 android:layout_above="@id/tv_weather_report_summary">
 
                 <ImageView
+                    android:id="@+id/iv_weather_bg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/cloudy" />
+                    android:scaleType="fitXY" />
 
                 <View
                     android:layout_width="match_parent"
@@ -90,20 +89,18 @@
                     android:layout_height="match_parent"
                     android:gravity="bottom|left"
                     android:padding="@dimen/_16sdp"
-                    android:text="@string/app_name"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"/>
 
                 <TextView
                     android:id="@+id/tv_weather_temp"
                     fontPath="fonts/Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="top|right"
                     android:layout_marginRight="16dp"
-                    android:text="@string/app_name"
+                    android:gravity="top|right"
                     android:textColor="@android:color/white"
-                    android:textSize="48sp" />
+                    android:textSize="48sp"/>
 
             </RelativeLayout>
 
