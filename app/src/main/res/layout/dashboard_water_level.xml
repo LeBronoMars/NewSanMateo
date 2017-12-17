@@ -8,22 +8,19 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_water_level_label"
         fontPath="fonts/Roboto-Medium.ttf"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:text="@string/app_name"
-        android:textSize="14sp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:gravity="center_vertical"
         android:layout_marginLeft="@dimen/_16sdp"
         android:layout_marginRight="@dimen/_16sdp"
-        android:textColor="@color/dashboard_label_color"/>
+        android:gravity="center_vertical"
+        android:text="Water Level Readings"
+        android:textColor="@color/dashboard_label_color"
+        android:textSize="14sp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp">
 
@@ -51,16 +48,25 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_water_level_station_market"
+                    android:id="@+id/tv_water_level_date_montalban"
+                    fontPath="fonts/Roboto-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/water_level_montalban"
                     android:textSize="12sp"
                     android:gravity="center_vertical"
                     android:textColor="@android:color/white"/>
 
                 <TextView
-                    android:id="@+id/tv_water_level_reading_market"
+                    android:id="@+id/tv_water_level_montalban_reading"
                     fontPath="fonts/Roboto-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,16 +97,25 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_water_level_station_bridge"
+                    android:id="@+id/tv_water_level_date_batasan"
+                    fontPath="fonts/Roboto-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/app_name"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:textColor="@android:color/black"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/water_level_batasan"
                     android:textSize="12sp"
                     android:gravity="center_vertical"
                     android:textColor="@android:color/black"/>
 
                 <TextView
-                    android:id="@+id/tv_water_level_reading_bridge"
+                    android:id="@+id/tv_water_level_reading_batasan"
                     fontPath="fonts/Roboto-Medium.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

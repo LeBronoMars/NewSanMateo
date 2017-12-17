@@ -153,8 +153,14 @@ public class ApiRequestHelper {
 
     public void getWaterLevelByArea(final String token, final String area) {
         onApiRequestListener.onApiRequestBegin(ApiAction.GET_WATER_LEVEL_BY_AREA);
+        final Observable<List<WaterLevel>> observable = apiInterface.getWaterLevelByArea(token, area);
+        handleObservableResult(ApiAction.GET_WATER_LEVEL_BY_AREA, observable);
+    }
+
+    public void getWaterLevelByArea(final String token, final String area, int limit) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_WATER_LEVEL_BY_AREA);
         final Observable<List<WaterLevel>> observable = apiInterface.getWaterLevelByArea(token,
-                area);
+                                                                                         area, limit);
         handleObservableResult(ApiAction.GET_WATER_LEVEL_BY_AREA, observable);
     }
 

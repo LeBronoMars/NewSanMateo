@@ -20,6 +20,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -56,12 +58,18 @@ import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
+import sanmateo.com.profileapp.models.response.WaterLevel;
 import sanmateo.com.profileapp.models.response.Weather;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 
 
 import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static sanmateo.com.profileapp.enums.ApiAction.GET_INCIDENTS;
+import static sanmateo.com.profileapp.enums.ApiAction.GET_WATER_LEVEL_BY_AREA;
+import static sanmateo.com.profileapp.enums.ApiAction.GET_WEATHER;
+import static sanmateo.com.profileapp.enums.ApiAction.PUT_CHANGE_PROFILE_PIC;
 
 /**
  * Created by USER on 9/13/2017.
@@ -71,6 +79,12 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     private static final int SELECT_IMAGE = 1;
     private static final int CAPTURE_IMAGE = 2;
+
+    @BindString(R.string.water_level_batasan)
+    String waterLevelBatasan;
+
+    @BindString(R.string.water_level_montalban)
+    String waterLevelMontalban;
 
     @BindView(R.id.rl_action_bar)
     RelativeLayout rlActionBar;
@@ -94,26 +108,23 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     ScrollView svDashboard;
 
     //water level
-    @BindView(R.id.tv_water_level_label)
-    TextView tvWaterLevelLabel;
+    @BindView(R.id.tv_water_level_date_batasan)
+    TextView tvWaterLevelDateBatasan;
+
+    @BindView(R.id.tv_water_level_date_montalban)
+    TextView tvWaterLevelDateStationMontalban;
 
     @BindView(R.id.cv_water_level_bridge)
     CardView cvWaterLevelBridge;
 
-    @BindView(R.id.tv_water_level_station_bridge)
-    TextView tvWaterLevelStationBridge;
-
-    @BindView(R.id.tv_water_level_reading_bridge)
-    TextView tvWaterLevelReadingBridge;
+    @BindView(R.id.tv_water_level_reading_batasan)
+    TextView tvWaterLevelReadingBatasan;
 
     @BindView(R.id.cv_water_level_market)
     CardView getCvWaterLevelMarket;
 
-    @BindView(R.id.tv_water_level_station_market)
-    TextView tvWaterLevelStationMarket;
-
-    @BindView(R.id.tv_water_level_reading_market)
-    TextView tvWaterLevelReadingMarket;
+    @BindView(R.id.tv_water_level_montalban_reading)
+    TextView tvWaterLevelMontalbanReading;
 
     //weather
     @BindView(R.id.tv_weather_report_label)
@@ -201,12 +212,18 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             initNavigationDrawer();
             initWeatherSummary();
             initIncidents();
+            initWaterLevelSummary();
             svDashboard.scrollTo(0,0);
         }
     }
 
     private void initWeatherSummary() {
         apiRequestHelper.getWeather(token);
+    }
+
+    private void initWaterLevelSummary() {
+        apiRequestHelper.getWaterLevelByArea(token, waterLevelMontalban, 1);
+        apiRequestHelper.getWaterLevelByArea(token, waterLevelBatasan, 1);
     }
 
     private DashboardIncidentsAdapter adapter;
@@ -482,9 +499,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             showCustomProgress("Fetching news, Please wait...");
         } else if (action.equals(ApiAction.PUT_CHANGE_PW)) {
             showCustomProgress("Changing password, Please wait...");
-        } else if (action.equals(ApiAction.PUT_CHANGE_PROFILE_PIC)) {
+        } else if (action.equals(PUT_CHANGE_PROFILE_PIC)) {
             showCustomProgress("Changing your profile pic, Please wait...");
-        } else if (action.equals(ApiAction.GET_INCIDENTS)) {
+        } else if (action.equals(GET_INCIDENTS)) {
             showCustomProgress("Fetching incidents, Please wait...");
         }
     }
@@ -495,7 +512,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         if (action.equals(ApiAction.PUT_CHANGE_PW)) {
             final GenericMessage genericMessage = (GenericMessage) result;
             showToast(genericMessage.getMessage());
-        } else if (action.equals(ApiAction.PUT_CHANGE_PROFILE_PIC)) {
+        } else if (action.equals(PUT_CHANGE_PROFILE_PIC)) {
             final GenericMessage genericMessage = (GenericMessage) result;
             showToast("You have successfully changed your profile pic");
 
@@ -508,27 +525,20 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             currentUserSingleton.getCurrentUser().setPicUrl(genericMessage.getMessage());
             realmHelper.update(currentUserSingleton.getCurrentUser());
             realmHelper.commitTransaction();
-        } else if (action.equals(ApiAction.GET_INCIDENTS)) {
+        } else if (action.equals(GET_INCIDENTS)) {
             incidents = (ArrayList<Incident>) result;
-            llIncidentReports.setVisibility(incidents.size() > 0 ? View.VISIBLE : GONE);
+            llIncidentReports.setVisibility(incidents.size() > 0 ? VISIBLE : GONE);
             initIncidentsAdapter(incidents);
             incidentsSingleton.getIncidents("active").clear();
             incidentsSingleton.getIncidents("active").addAll(incidents);
-        } else if (action.equals(ApiAction.GET_WEATHER)) {
-            //water level
-            tvWaterLevelLabel.setText("Water Level as of 2:52am, October 20, 2017");
-            tvWaterLevelStationMarket.setText("San Mateo Bridge");
-            tvWaterLevelStationBridge.setText("Montalban");
-            tvWaterLevelReadingMarket.setText("16 ft.");
-            tvWaterLevelReadingBridge.setText("18 ft.");
-
+        } else if (action.equals(GET_WEATHER)) {
             Weather weather = ((List<Weather>) result).get(0);
 
             //weather report
             tvWeatherReportLabel.setText("Weather Report");
 
             if (weather.remarks != null) {
-                tvWeatherReportSummary.setVisibility(View.VISIBLE);
+                tvWeatherReportSummary.setVisibility(VISIBLE);
                 tvWeatherReportSummary.setText(weather.remarks);
             } else {
                 tvWeatherReportSummary.setVisibility(GONE);
@@ -541,9 +551,30 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
             //incident
             tvIncidentLabel.setText("Incident Reports");
+        } else if (action.equals(GET_WATER_LEVEL_BY_AREA)) {
+
+            WaterLevel waterLevel = ((List<WaterLevel>) result).get(0);
+
+            String readingDate = "As of " + waterLevelReadingDate(waterLevel.getUdpatedAt());
+
+            if (waterLevel.getArea().equalsIgnoreCase(waterLevelMontalban)) {
+                tvWaterLevelMontalbanReading.setText(waterLevel.getWaterLevel() + " ft.");
+                tvWaterLevelDateStationMontalban.setText(readingDate);
+            } else {
+                tvWaterLevelReadingBatasan.setText(waterLevel.getWaterLevel() + " ft.");
+                tvWaterLevelDateBatasan.setText(readingDate);
+            }
         }
     }
 
+    private String waterLevelReadingDate(String readingDate) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a, MMMM dd, yyyy");
+            return sdf.format(getDateFormatter().parse(readingDate));
+        } catch (ParseException e) {
+            return "";
+        }
+    }
     @Override
     public void onApiRequestFailed(ApiAction action, Throwable t) {
         dismissCustomProgress();
