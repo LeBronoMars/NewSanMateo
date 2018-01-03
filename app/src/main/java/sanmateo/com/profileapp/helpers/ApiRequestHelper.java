@@ -17,6 +17,7 @@ import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.models.response.Official;
+import sanmateo.com.profileapp.models.response.StormWatch;
 import sanmateo.com.profileapp.models.response.WaterLevel;
 import sanmateo.com.profileapp.models.response.Weather;
 import sanmateo.com.profileapp.singletons.RetrofitSingleton;
@@ -52,6 +53,15 @@ public class ApiRequestHelper {
         final Observable<AuthResponse> observable = apiInterface.createUser(firstName, lastName,
                 contactNo, gender, email, address, userLevel, password);
         handleObservableResult(ApiAction.POST_REGISTER, observable);
+    }
+
+    public void updateUser(final String token, final int id, final String firstName,
+                           final String lastName, final String contactNo, final String address) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.PUT_UPDATE_USER);
+        final Observable<AuthResponse> observable = apiInterface.updateUser(token, id, firstName,
+                                                                            lastName, contactNo,
+                                                                            address);
+        handleObservableResult(ApiAction.PUT_UPDATE_USER, observable);
     }
 
     public void changePassword(final String token, final String email, final String oldPassword,
@@ -167,6 +177,11 @@ public class ApiRequestHelper {
     public void getWeather(final String token) {
         final Observable<List<Weather>> observable = apiInterface.getLatestWeather(token, 1);
         handleObservableResult(ApiAction.GET_WEATHER, observable);
+    }
+
+    public void getStormWatch(final String token) {
+        final Observable<List<StormWatch>> observable = apiInterface.getStormWatch(token, 1);
+        handleObservableResult(ApiAction.GET_STORM_WATCH, observable);
     }
 
     /**

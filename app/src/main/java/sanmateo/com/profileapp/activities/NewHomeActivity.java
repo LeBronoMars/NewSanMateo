@@ -32,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.DashboardIncidentsAdapter;
@@ -161,6 +162,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindDimen(R.dimen._90sdp)
     int profilePicSize;
 
+    @BindView(R.id.civ_profile_image)
+    CircleImageView civProfilePic;
+
     @BindView(R.id.tv_profile_name)
     TextView tvProfileName;
 
@@ -238,6 +242,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     protected void onResume() {
         super.onResume();
         apiRequestHelper.getAllIncidents(token, 0, null, "active");
+
+        initSideDrawerMenu();
     }
 
     private void initIncidentsAdapter(ArrayList<Incident> incidents) {
@@ -370,6 +376,17 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         tvProfileName.setText(currentUserSingleton.getCurrentUser().getFirstName() + " "
                 + currentUserSingleton.getCurrentUser().getLastName());
         tvProfileEmail.setText(currentUserSingleton.getCurrentUser().getEmail());
+
+        tvProfileEmail.setOnClickListener(v -> startActivity(new Intent(this,
+                                                                        UpdateProfileActivity.class)));
+        tvProfileName.setOnClickListener(v -> tvProfileEmail.performClick());
+
+        if (CurrentUserSingleton.getInstance().getCurrentUser().getPicUrl() != null
+                && !CurrentUserSingleton.getInstance().getCurrentUser().getPicUrl().isEmpty()) {
+            PicassoHelper.loadImageFromURL(CurrentUserSingleton.getInstance()
+                                                               .getCurrentUser().getPicUrl(),
+                                           civProfilePic);
+        }
     }
 
     @OnClick(R.id.ll_home_dashboard)
@@ -477,7 +494,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     }
 
     private void uploadFileToAmazon() {
-        /** delete previous profile pic from s3 if it's not the default profile pic using gravatar */
+        /** delete previous profile pic from Ba if it's not the default profile pic using gravatar */
         if (!currentUserSingleton.getCurrentUser().getPicUrl()
                 .contains("http://www.gravatar.com/avatar/")) {
             deleteImage(AppConstants.BUCKET_ROOT, currentUserSingleton.getCurrentUser().getPicUrl());

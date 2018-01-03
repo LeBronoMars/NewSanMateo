@@ -322,4 +322,6 @@
     <string name="water_level_montalban">Montalban</string>
 
     <string name="call">Call</string>
+    
+    <string name="member_since">Member Since</string>
 </resources>

@@ -12,6 +12,8 @@ public enum  ApiAction {
 
     POST_REGISTER,
 
+    PUT_UPDATE_USER,
+
     GET_NEWS,
 
     GET_NEWS_BY_ID,
@@ -42,5 +44,7 @@ public enum  ApiAction {
 
     GET_WATER_LEVEL_BY_AREA,
 
-    GET_WEATHER
+    GET_WEATHER,
+
+    GET_STORM_WATCH
 }

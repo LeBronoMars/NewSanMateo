@@ -94,7 +94,8 @@ public class TodayWeatherFragment extends Fragment implements OnApiRequestListen
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_today_weather, container, false);
         unbinder = ButterKnife.bind(this, view);
         apiRequestHelper = new ApiRequestHelper(this);

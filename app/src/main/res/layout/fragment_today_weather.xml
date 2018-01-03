@@ -44,8 +44,7 @@
                     android:layout_height="96dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="16dp"
-                    android:src="@drawable/day06"/>
+                    android:layout_marginRight="16dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -20,6 +20,7 @@ import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.models.response.Official;
+import sanmateo.com.profileapp.models.response.StormWatch;
 import sanmateo.com.profileapp.models.response.WaterLevel;
 import sanmateo.com.profileapp.models.response.Weather;
 
@@ -64,6 +65,15 @@ public interface ApiInterface {
                                         @Field("address") String address,
                                         @Field("user_level") String userLevel,
                                         @Field("password") String password);
+
+    @PUT("/api/v1/users/{id}")
+    @FormUrlEncoded
+    Observable<AuthResponse> updateUser(@Header("Authorization") String token,
+                                        @Path("id") int id,
+                                        @Field("first_name") String firstName,
+                                        @Field("last_name") String lastName,
+                                        @Field("contact_no") String contactNo,
+                                        @Field("address") String address);
 
     /**
      * get all news
@@ -266,5 +276,11 @@ public interface ApiInterface {
     @GET("/api/v1/weather/reading")
     Observable<List<Weather>> getLatestWeather(@Header("Authorization") String token,
                                                @Query("limit") int limit);
+
+    @GET("/api/v1/storm_watch")
+    Observable<List<StormWatch>> getStormWatch(@Header("Authorization") String token,
+                                               @Query("limit") int limit);
+
+
 
 }

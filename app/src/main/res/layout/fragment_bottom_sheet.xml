@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/change_profile_pic"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/text_action_blue"
         android:layout_marginBottom="@dimen/_15sdp"
         android:textSize="@dimen/_18sdp"/>
 
@@ -20,7 +19,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:drawablePadding="@dimen/_10sdp"
-        android:textSize="@dimen/_12sdp"
         android:drawableLeft="@drawable/upload_via_camera"
         android:text="@string/open_camera"/>
 
@@ -34,7 +32,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:drawablePadding="@dimen/_10sdp"
-        android:textSize="@dimen/_12sdp"
         android:drawableLeft="@drawable/upload_via_gallery"
         android:text="@string/open_gallery"/>
 

@@ -11,17 +11,36 @@ import io.realm.annotations.PrimaryKey;
 public class AuthResponse extends RealmObject {
 
     @PrimaryKey  private int id;
-    @SerializedName("created_at") private String createdAt;
-    @SerializedName("updated_at") private String updatedAt;
-    @SerializedName("first_name") private String firstName;
-    @SerializedName("last_name") private String lastName;
+
+    @SerializedName("created_at")
+    private String createdAt;
+
+    @SerializedName("updated_at")
+    private String updatedAt;
+
+    @SerializedName("first_name")
+    private String firstName;
+
+    @SerializedName("last_name")
+    private String lastName;
+
     private String email;
+
     private String address;
-    @SerializedName("contact_no") private String contactNo;
+
+    @SerializedName("contact_no")
+    private String contactNo;
+
     private String status;
-    @SerializedName("user_level") private String userLevel;
+
+    @SerializedName("user_level")
+    private String userLevel;
+
     private String gender;
-    @SerializedName("pic_url") private String picUrl;
+
+    @SerializedName("pic_url")
+    private String picUrl;
+
     private String token;
 
     public int getId() {

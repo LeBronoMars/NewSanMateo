@@ -28,7 +28,6 @@ import retrofit2.adapter.rxjava.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
-import sanmateo.com.profileapp.fragments.ForgotPasswordDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
@@ -288,18 +287,19 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         dismissCustomProgress();
         if (action.equals(ApiAction.POST_AUTH)) {
             final AuthResponse authResponse = (AuthResponse) result;
+
             if (authResponse.getUserLevel().equals("superadmin") ||
                     authResponse.getUserLevel().equals("admin")) {
                 showSnackbar(btnSignIn, AppConstants.WARN_INVALID_ACCOUNT);
             } else {
-                //DaoHelper.saveCurrentUser(authResponse);
                 realmHelper.replaceInto(authResponse);
                 CurrentUserSingleton.getInstance().setCurrentUser(authResponse);
                 moveToHome();
             }
         } else if (action.equals(ApiAction.POST_FORGOT_PASSWORD)) {
             final GenericMessage genericMessage = (GenericMessage) result;
-            showConfirmDialog("", "Forgot Password", genericMessage.getMessage(), "Close", "", null);
+            showConfirmDialog("", "Forgot Password", genericMessage.getMessage(),
+                              "Close", "", null);
         }
     }
 
@@ -311,7 +311,6 @@ public class LoginActivity extends BaseActivity implements OnApiRequestListener 
         if (t instanceof HttpException) {
             if (action.equals(ApiAction.POST_AUTH) || action.equals(ApiAction.POST_FORGOT_PASSWORD)) {
                 final ApiError apiError = ApiErrorHelper.parseError(((HttpException) t).response());
-//                showConfirmDialog("", "Login Failed", apiError.getMessage(), "Close", "", null);
                 showSnackbar(btnSignIn, apiError.getMessage());
             }
         }
