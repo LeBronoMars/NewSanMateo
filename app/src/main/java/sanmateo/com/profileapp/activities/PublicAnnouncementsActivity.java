@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.adapter.rxjava2.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.AnnouncementsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;

@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.adapter.rxjava2.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.DashboardIncidentsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
@@ -41,7 +42,6 @@ import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.ActionsDialogFragment;
 import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomBottomSheetDialogFragment;
-import sanmateo.com.profileapp.fragments.DisasterMgtMenuDialogFragment;
 import sanmateo.com.profileapp.fragments.ETextSiMayorDialogFragment;
 import sanmateo.com.profileapp.fragments.PanicSettingsDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
@@ -171,6 +171,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.tv_profile_email)
     TextView tvProfileEmail;
 
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     private Unbinder unbinder;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private String uploadToBucket;
@@ -196,7 +199,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         incidentsSingleton = IncidentsSingleton.getInstance();
         apiRequestHelper = new ApiRequestHelper(this);
 
-
         if (currentUserSingleton.getCurrentUser() == null) {
             showConfirmDialog("", "San Mateo Profile App", "Sorry, but your session has expired!",
                     "Re-login", "", new OnConfirmDialogListener() {
@@ -212,13 +214,18 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
                     });
         } else {
             token = currentUserSingleton.getCurrentUser().getToken();
-
             initNavigationDrawer();
-            initWeatherSummary();
-            initIncidents();
-            initWaterLevelSummary();
-            svDashboard.scrollTo(0,0);
+            refreshData();
         }
+
+        swipeRefreshLayout.setOnRefreshListener(() -> refreshData());
+    }
+
+    private void refreshData() {
+        initWeatherSummary();
+        initIncidents();
+        initWaterLevelSummary();
+        svDashboard.scrollTo(0,0);
     }
 
     private void initWeatherSummary() {
@@ -325,28 +332,30 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @OnClick(R.id.iv_notify)
     public void showNotifications() {
-        final ArrayList<String> menu = new ArrayList<>();
-        menu.add("Public Announcements");
-        menu.add("Water Level Monitoring");
-        final DisasterMgtMenuDialogFragment fragment = DisasterMgtMenuDialogFragment
-                .newInstance(headerAlertNotifications, menu);
-        fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
-            @Override
-            public void onSelectedMenu(int position) {
-                fragment.dismiss();
-                if (position == 0) {
-                    moveToOtherActivity(PublicAnnouncementsActivity.class);
-                } else {
-                    moveToOtherActivity(WaterLevelMonitoringActivity.class);
-                }
-            }
+        moveToOtherActivity(NotificationsActivity.class);
 
-            @Override
-            public void onClose() {
-                fragment.dismiss();
-            }
-        });
-        fragment.show(getFragmentManager(), "show notifications");
+//        final ArrayList<String> menu = new ArrayList<>();
+//        menu.add("Public Announcements");
+//        menu.add("Water Level Monitoring");
+//        final DisasterMgtMenuDialogFragment fragment = DisasterMgtMenuDialogFragment
+//                .newInstance(headerAlertNotifications, menu);
+//        fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
+//            @Override
+//            public void onSelectedMenu(int position) {
+//                fragment.dismiss();
+//                if (position == 0) {
+//                    moveToOtherActivity(PublicAnnouncementsActivity.class);
+//                } else {
+//                    moveToOtherActivity(WaterLevelMonitoringActivity.class);
+//                }
+//            }
+//
+//            @Override
+//            public void onClose() {
+//                fragment.dismiss();
+//            }
+//        });
+//        fragment.show(getFragmentManager(), "show notifications");
     }
 
     @OnClick(R.id.iv_burger)
@@ -526,6 +535,12 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @Override
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
+
+        if (refreshDataCounter == 5 && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+            showToast("Dashboard data refreshed successfully.");
+        }
+
         if (action.equals(ApiAction.PUT_CHANGE_PW)) {
             final GenericMessage genericMessage = (GenericMessage) result;
             showToast(genericMessage.getMessage());
@@ -606,9 +621,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     }
 
     private void logout() {
-        /** clear all singletons */
-//        newsSingleton.clearAll();
-//        incidentsSingleton.clearAll();
         currentUserSingleton.setCurrentUser(null);
 
         new RealmHelper<>(News.class).deleteRecords();

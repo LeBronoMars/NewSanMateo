@@ -25,7 +25,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.adapter.rxjava2.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.IncidentsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;

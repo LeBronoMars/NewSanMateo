@@ -3,10 +3,10 @@ package sanmateo.com.profileapp.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.interfaces.ApiInterface;
 import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
@@ -192,7 +192,7 @@ public class ApiRequestHelper {
      */
     private void handleObservableResult(final ApiAction action, final Observable observable) {
         observable.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io())
-                .subscribe(result -> onApiRequestListener.onApiRequestSuccess(action, result),
+                  .subscribe(result -> onApiRequestListener.onApiRequestSuccess(action, result),
                         throwable -> onApiRequestListener.onApiRequestFailed(action,
                                 (Throwable) throwable),
                         () -> LogHelper.log("api", "Api request completed --> " + action));

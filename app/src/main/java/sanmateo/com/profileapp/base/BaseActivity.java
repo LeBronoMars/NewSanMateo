@@ -62,7 +62,7 @@ import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.adapter.rxjava2.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.activities.LoginActivity;
 import sanmateo.com.profileapp.fragments.CustomProgressBarDialogFragment;

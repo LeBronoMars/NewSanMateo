@@ -42,7 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.adapter.rxjava2.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.BannerAdapter;
 import sanmateo.com.profileapp.adapters.CustomNavMenuAdapter;
