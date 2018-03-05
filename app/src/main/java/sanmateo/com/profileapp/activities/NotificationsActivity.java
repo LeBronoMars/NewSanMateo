@@ -11,6 +11,7 @@ import java.util.List;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -23,6 +24,7 @@ import sanmateo.com.profileapp.adapters.NotificationsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.interfaces.ApiInterface;
 import sanmateo.com.profileapp.models.response.Announcement;
+import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.Notification;
 import sanmateo.com.profileapp.models.response.WaterLevel;
 import sanmateo.com.profileapp.models.response.Weather;
@@ -31,7 +33,13 @@ import sanmateo.com.profileapp.singletons.RetrofitSingleton;
 
 
 import static java.lang.Integer.MAX_VALUE;
+import static sanmateo.com.profileapp.models.response.Incident.FIRE;
+import static sanmateo.com.profileapp.models.response.Incident.FLOODING;
+import static sanmateo.com.profileapp.models.response.Incident.MISCELLANEOUS;
+import static sanmateo.com.profileapp.models.response.Incident.SOLID_WASTE;
+import static sanmateo.com.profileapp.models.response.Incident.TRAFFIC_ROAD;
 import static sanmateo.com.profileapp.models.response.NotificationType.ANNOUNCEMENT;
+import static sanmateo.com.profileapp.models.response.NotificationType.INCIDENT;
 import static sanmateo.com.profileapp.models.response.NotificationType.WATER_LEVEL;
 import static sanmateo.com.profileapp.models.response.NotificationType.WEATHER;
 
@@ -58,6 +66,8 @@ public class NotificationsActivity extends BaseActivity {
 
     private ArrayList<Notification> notifications = new ArrayList<>();
 
+    private static final String ACTIVE = "active";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +79,7 @@ public class NotificationsActivity extends BaseActivity {
 
         token = CurrentUserSingleton.getInstance().getCurrentUser().getToken();
 
-        rvNotifications.setAdapter(new NotificationsAdapter(notifications));
+        rvNotifications.setAdapter(new NotificationsAdapter(this, notifications));
         rvNotifications.setLayoutManager(new LinearLayoutManager(this));
 
         getNotifications();
@@ -81,8 +91,14 @@ public class NotificationsActivity extends BaseActivity {
         unbinder.unbind();
     }
 
+    @OnClick(R.id.iv_back)
+    public void back() {
+        finish();
+        animateToRight(this);
+    }
+
     private void getNotifications() {
-        getAnnouncements()
+        getIncidets()
             .mergeWith(getWaterLevelByArea(waterLevelMontalban))
             .mergeWith(getWaterLevelByArea(waterLevelBatasan))
             .mergeWith(getWeather())
@@ -113,6 +129,16 @@ public class NotificationsActivity extends BaseActivity {
         return apiInterface.getAnnouncements(token, 0, MAX_VALUE)
                            .flatMap(Observable::fromIterable)
                            .flatMapSingle(this::mapAnnouncementToNotification);
+    }
+
+    private Observable<Notification> getIncidets() {
+        return apiInterface.getIncidents(token, 0, FIRE, ACTIVE)
+                           .mergeWith(apiInterface.getIncidents(token, 0, FLOODING, ACTIVE))
+                           .mergeWith(apiInterface.getIncidents(token, 0, SOLID_WASTE, ACTIVE))
+                           .mergeWith(apiInterface.getIncidents(token, 0, TRAFFIC_ROAD, ACTIVE))
+                           .mergeWith(apiInterface.getIncidents(token, 0, MISCELLANEOUS, ACTIVE))
+                           .flatMap(Observable::fromIterable)
+                           .flatMapSingle(this::mapIncidentToNotification);
     }
 
     private Observable<Notification> getWaterLevelByArea(String area) {
@@ -150,6 +176,7 @@ public class NotificationsActivity extends BaseActivity {
             notification.setTitle("Water Level Alert");
             notification.setDescription(waterLevel.getArea() + ": " + waterLevel.getWaterLevel() + " ft.");
             notification.setDate(waterLevel.getCreatedAt());
+            notification.setWaterAlert(waterLevel.getAlert());
 
             return Single.just(notification);
         });
@@ -164,6 +191,21 @@ public class NotificationsActivity extends BaseActivity {
             notification.setTitle("Weather Update");
             notification.setDescription(weather.summary);
             notification.setDate(weather.createdAt);
+
+            return Single.just(notification);
+        });
+    }
+
+    private Single<Notification> mapIncidentToNotification(Incident incident) {
+        return Single.defer(() -> {
+            Notification notification = new Notification();
+
+            notification.setNotificationType(INCIDENT);
+            notification.setId(incident.getIncidentId());
+            notification.setIncidentType(incident.getIncidentType());
+            notification.setTitle("Incident : " + incident.getIncidentType());
+            notification.setDescription(incident.getIncidentDescription());
+            notification.setDate(incident.getIncidentDateReported());
 
             return Single.just(notification);
         });

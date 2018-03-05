@@ -187,6 +187,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     private CurrentUserSingleton currentUserSingleton;
     private IncidentsSingleton incidentsSingleton;
 
+    private int refreshDataCounter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

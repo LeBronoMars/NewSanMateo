@@ -235,6 +235,7 @@
 
         <activity
             android:name=".activities.NotificationsActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:screenOrientation="portrait"/>
 
         <meta-data

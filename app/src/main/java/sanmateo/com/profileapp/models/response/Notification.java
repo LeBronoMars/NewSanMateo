@@ -16,16 +16,21 @@ public class Notification {
 
     private int id;
 
+    private String waterAlert;
+
+    private String incidentType;
+
     public Notification(NotificationType notificationType,
                         String date,
                         String title,
-                        String description,
-                        int id) {
+                        String description, int id, String waterAlert, String incidentType) {
         this.notificationType = notificationType;
         this.date = date;
         this.title = title;
         this.description = description;
         this.id = id;
+        this.waterAlert = waterAlert;
+        this.incidentType = incidentType;
     }
 
     public Notification() {
@@ -69,5 +74,21 @@ public class Notification {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getWaterAlert() {
+        return waterAlert;
+    }
+
+    public void setWaterAlert(String waterAlert) {
+        this.waterAlert = waterAlert;
+    }
+
+    public String getIncidentType() {
+        return incidentType;
+    }
+
+    public void setIncidentType(String incidentType) {
+        this.incidentType = incidentType;
     }
 }
