@@ -7,17 +7,18 @@ import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -61,6 +62,7 @@ import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
 import sanmateo.com.profileapp.models.response.WaterLevel;
 import sanmateo.com.profileapp.models.response.Weather;
+import sanmateo.com.profileapp.services.PusherService;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 
@@ -106,7 +108,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     DrawerLayout drawerLayout;
 
     @BindView(R.id.sv_dashboard)
-    ScrollView svDashboard;
+    NestedScrollView svDashboard;
 
     //water level
     @BindView(R.id.tv_water_level_date_batasan)
@@ -217,16 +219,22 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         } else {
             token = currentUserSingleton.getCurrentUser().getToken();
             initNavigationDrawer();
-            refreshData();
+            initIncidents();
         }
 
-        swipeRefreshLayout.setOnRefreshListener(() -> refreshData());
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            refreshData();
+        });
+
+        if (!isMyServiceRunning(PusherService.class)) {
+            startService(new Intent(this, PusherService.class));
+        }
     }
 
     private void refreshData() {
         initWeatherSummary();
-        initIncidents();
         initWaterLevelSummary();
+        apiRequestHelper.getAllIncidents(token, 0, null, "active");
         svDashboard.scrollTo(0,0);
     }
 
@@ -243,15 +251,13 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     private void initIncidents() {
         incidents = new ArrayList<>();
-        apiRequestHelper.getAllIncidents(token, 0, null, "active");
         initIncidentsAdapter(incidents);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        apiRequestHelper.getAllIncidents(token, 0, null, "active");
-
+        refreshData();
         initSideDrawerMenu();
     }
 
@@ -443,6 +449,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
                 "Yes", "No", new OnConfirmDialogListener() {
                     @Override
                     public void onConfirmed(String action) {
+                        if (isMyServiceRunning(PusherService.class)) {
+                            stopService(new Intent(NewHomeActivity.this, PusherService.class));
+                        }
                         logout();
                     }
 
@@ -538,8 +547,13 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     public void onApiRequestSuccess(ApiAction action, Object result) {
         dismissCustomProgress();
 
-        if (refreshDataCounter == 5 && swipeRefreshLayout.isRefreshing()) {
+        if (swipeRefreshLayout.isRefreshing()) {
+            refreshDataCounter += 1;
+        }
+
+        if (refreshDataCounter == 4 && swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
+            refreshDataCounter = 0;
             showToast("Dashboard data refreshed successfully.");
         }
 
@@ -560,9 +574,13 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             realmHelper.update(currentUserSingleton.getCurrentUser());
             realmHelper.commitTransaction();
         } else if (action.equals(GET_INCIDENTS)) {
-            incidents = (ArrayList<Incident>) result;
+            incidents.clear();
+            incidents.addAll((ArrayList<Incident>) result);
+            Log.d("app", "incidents size ---> " + incidents.size());
+
             llIncidentReports.setVisibility(incidents.size() > 0 ? VISIBLE : GONE);
-            initIncidentsAdapter(incidents);
+            rvIncidents.getAdapter().notifyDataSetChanged();
+
             incidentsSingleton.getIncidents("active").clear();
             incidentsSingleton.getIncidents("active").addAll(incidents);
         } else if (action.equals(GET_WEATHER)) {

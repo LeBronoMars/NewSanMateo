@@ -50,6 +50,7 @@ public class PusherService extends Service {
         super.onCreate();
         currentUserSingleton = CurrentUserSingleton.getInstance();
         incidentsSingleton = IncidentsSingleton.getInstance();
+
         /** start fore ground */
         final Intent notificationIntent = new Intent(this, NewHomeActivity.class);
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
@@ -59,7 +60,8 @@ public class PusherService extends Service {
                 .setSmallIcon(R.drawable.san_mateo_logo)
                 .setContentText(getString(R.string.app_name))
                 .setContentIntent(pendingIntent).build();
-        startForeground(9999, notification);
+
+        //startForeground(9999, notification);
         LogHelper.log("pusher", "pusher service created and started in fore ground");
     }
 

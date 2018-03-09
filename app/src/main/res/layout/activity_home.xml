@@ -63,14 +63,16 @@
 
         </RelativeLayout>
 
-        <ScrollView
-            android:id="@+id/sv_dashboard"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/rl_toolbar">
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh_layout"
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/sv_dashboard"
+                android:layout_below="@id/rl_toolbar"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -88,9 +90,9 @@
                         layout="@layout/dashboard_incident"/>
 
                 </LinearLayout>
-            </android.support.v4.widget.SwipeRefreshLayout>
 
-        </ScrollView>
+            </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_actions"

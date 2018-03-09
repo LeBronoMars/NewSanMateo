@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import sanmateo.com.profileapp.R;
@@ -16,10 +17,17 @@ public class NotificationHelper {
 
     public static void displayNotification(final int id,final Context context, final String title,
                                            final String content, final Class cls) {
-        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.san_mateo_logo)
-                        .setContentTitle(title)
-                        .setContentText(content);
+        final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mBuilder.setSmallIcon(R.drawable.san_mateo_logo);
+            mBuilder.setColor(context.getResources().getColor(R.color.colorPrimary));
+        } else {
+            mBuilder.setSmallIcon(R.drawable.san_mateo_logo);
+        }
+
+        mBuilder.setContentTitle(title)
+                .setContentText(content);
+
         if (cls != null) {
             final Intent intent = new Intent(context,cls);
             final PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,
