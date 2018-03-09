@@ -278,6 +278,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             query.put("notificationStatus", "UNSEEN");
             RealmResults<Notification> realmResults = notificationRealmHelper.findAll(query);
 
+            LogHelper.log("pusher", "unseen notification size ---> " + realmResults.size());
+
             tvNotification.setVisibility(realmResults.isEmpty() ? GONE : VISIBLE);
 
             if (!realmResults.isEmpty()) {
@@ -301,9 +303,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @Subscribe
     public void refreshNotificationsCount(HashMap<String, Object> map) {
-        LogHelper.log("pusher", "must refresh notifications count AAA");
         if (map.get("action").toString().equals("refreshNotificationCount")) {
-            LogHelper.log("pusher", "must refresh notifications count BBB");
             showUnseenNotificationsCount();
         }
     }

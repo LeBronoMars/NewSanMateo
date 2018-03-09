@@ -47,6 +47,8 @@ public class WeatherForecastActivity extends BaseActivity {
         viewPager.setAdapter(new TabPagerAdapter(getSupportFragmentManager(), fragments, new String[]{"TODAY'S WEATHER", "STORM WATCH"} ));
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setOffscreenPageLimit(fragments.size());
+
+        viewPager.setCurrentItem(getIntent().getIntExtra("selectedIndex", 0));
     }
 
     @OnClick(R.id.iv_back)

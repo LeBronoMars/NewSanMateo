@@ -46,5 +46,7 @@ public enum  ApiAction {
 
     GET_WEATHER,
 
-    GET_STORM_WATCH
+    GET_STORM_WATCH,
+
+    GET_INCIDENT_BY_ID
 }

@@ -115,4 +115,5 @@ dependencies {
     compile "com.facebook.android:facebook-android-sdk:$rootProject.ext.facebookVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.loggingInterceptorVesion"
     compile "com.squareup.okhttp3:okhttp:$rootProject.ext.loggingInterceptorVesion"
+    compile "com.github.curioustechizen.android-ago:library:$rootProject.ext.dateTimeAgo"
 }

@@ -1,6 +1,7 @@
 package sanmateo.com.profileapp.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.RealmResults;
@@ -50,6 +52,9 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
     @BindView(R.id.btnAdd)
     FloatingActionButton btnAdd;
 
+    @BindDrawable(R.drawable.bg_appbar)
+    Drawable bgAppBar;
+
     private AnnouncementsSingleton announcementsSingleton;
     private CurrentUserSingleton currentUserSingleton;
     private ApiRequestHelper apiRequestHelper;
@@ -63,6 +68,8 @@ public class PublicAnnouncementsActivity extends BaseActivity implements OnApiRe
         setContentView(R.layout.activity_public_announcements);
         ButterKnife.bind(this);
         setToolbarTitle("Public Announcements");
+        getSupportActionBar().setBackgroundDrawable(bgAppBar);
+
         announcementsSingleton = AnnouncementsSingleton.getInstance();
         currentUserSingleton = CurrentUserSingleton.getInstance();
         apiRequestHelper = new ApiRequestHelper(this);

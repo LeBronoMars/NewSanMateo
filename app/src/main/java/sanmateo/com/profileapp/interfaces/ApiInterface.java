@@ -127,6 +127,10 @@ public interface ApiInterface {
     Observable<List<Incident>> getLatestIncidents(@Header("Authorization") String token,
                                                   @Path("incident_id") int incidentId);
 
+    @GET("/api/v1/incidents/show/{incident_id}")
+    Observable<Incident> getIncidentById(@Header("Authorization") String token,
+                                         @Path("incident_id") int incidentId);
+
     /**
      * file new incident report
      *

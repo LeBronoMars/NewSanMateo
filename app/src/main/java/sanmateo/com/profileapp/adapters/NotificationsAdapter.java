@@ -1,7 +1,8 @@
 package sanmateo.com.profileapp.adapters;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,25 +10,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.curioustechizen.ago.RelativeTimeTextView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import sanmateo.com.profileapp.R;
-import sanmateo.com.profileapp.models.response.Incident;
+import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.models.response.Notification;
-import sanmateo.com.profileapp.models.response.NotificationType;
 
 
 import static android.support.v4.content.ContextCompat.getDrawable;
 import static sanmateo.com.profileapp.models.response.Incident.FIRE;
-import static sanmateo.com.profileapp.models.response.Incident.FLOODING;
-import static sanmateo.com.profileapp.models.response.Incident.MISCELLANEOUS;
-import static sanmateo.com.profileapp.models.response.Incident.SOLID_WASTE;
-import static sanmateo.com.profileapp.models.response.Incident.TRAFFIC_ROAD;
-import static sanmateo.com.profileapp.models.response.NotificationType.INCIDENT;
-import static sanmateo.com.profileapp.models.response.NotificationType.WATER_LEVEL;
-import static sanmateo.com.profileapp.models.response.NotificationType.WEATHER;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
 
@@ -35,9 +32,14 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
     private ArrayList<Notification> notifications;
 
+    private onSelectNotificationListener onSelectNotificationListener;
+
+    private SimpleDateFormat simpleDateFormat;
+
     public NotificationsAdapter(Context context, ArrayList<Notification> notifications) {
         this.context = context;
         this.notifications = notifications;
+        this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     }
 
     @Override
@@ -64,6 +66,12 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         @BindView(R.id.tv_description)
         TextView tvDescription;
 
+        @BindView(R.id.tv_date_posted)
+        RelativeTimeTextView tvDatePosted;
+
+        @BindView(R.id.ll_notification)
+        CardView llNotification;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
@@ -74,7 +82,6 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public void onBindViewHolder(ViewHolder holder, final int i) {
         final Notification notification = notifications.get(i);
 
-
         if (notification.getNotificationType().equals("WATER_LEVEL")) {
             if (notification.getWaterAlert().equals("Alert")) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_water_green_40dp));
@@ -83,7 +90,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             } else if (notification.getWaterAlert().equals("Critical")) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_water_red_40dp));
             }
-        } else if (notification.getNotificationType().equals("WEATHER")) {
+        } else if (notification.getNotificationType().equals("WEATHER") ||
+                     notification.getNotificationType().equals("STORM")) {
             holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_weather_40dp));
         } else if (notification.getNotificationType().equals("INCIDENT")) {
             if (notification.getIncidentType().equals(FIRE)) {
@@ -105,5 +113,31 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
 
         holder.tvDescription.setText(notification.getDescription());
 
+        if (notification.getNotificationStatus().equals("UNSEEN")) {
+            holder.llNotification.setCardBackgroundColor(Color.LTGRAY);
+        } else {
+            holder.llNotification.setCardBackgroundColor(Color.WHITE);
+        }
+
+        holder.llNotification.setOnClickListener(
+            view -> onSelectNotificationListener.onSelectedNotification(i));
+
+        LogHelper.log("pusher", "date ---> " + notification.getDate());
+
+        try {
+            holder.tvDatePosted.setReferenceTime(simpleDateFormat.parse(notification.getDate()).getTime());
+        } catch (ParseException e) {
+            holder.tvDatePosted.setText(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public interface onSelectNotificationListener {
+        void onSelectedNotification(int position);
+    }
+
+    public void setOnSelectNotificationListener(NotificationsAdapter.onSelectNotificationListener
+                                                    onSelectNotificationListener) {
+        this.onSelectNotificationListener = onSelectNotificationListener;
     }
 }

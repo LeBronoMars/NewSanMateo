@@ -25,15 +25,19 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.enums.ApiAction;
+import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
+import sanmateo.com.profileapp.interfaces.OnApiRequestListener;
 import sanmateo.com.profileapp.models.response.Incident;
+import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.PicassoSingleton;
 
 /**
  * Created by USER on 10/13/2017.
  */
 
-public class IncidentDetailActivity extends BaseActivity {
+public class IncidentDetailActivity extends BaseActivity implements OnApiRequestListener {
 
     private Unbinder unbinder;
     private Incident incident;
@@ -62,6 +66,8 @@ public class IncidentDetailActivity extends BaseActivity {
     @BindView(R.id.ll_container)
     LinearLayout llContainer;
 
+    private ApiRequestHelper apiRequestHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +76,22 @@ public class IncidentDetailActivity extends BaseActivity {
         setStatusBarColor(llActionBar, statusBar);
 
         shareCallBackManager = CallbackManager.Factory.create();
-        initDetails();
+
+        int selectedIncidentId = getIntent().getIntExtra("selectedId", 0);
+
+        if (selectedIncidentId > 0) {
+            if (isNetworkAvailable()) {
+                apiRequestHelper = new ApiRequestHelper(this);
+                apiRequestHelper.getIncidentById(CurrentUserSingleton.getInstance().getCurrentUser().getToken(),
+                                                 selectedIncidentId);
+            } else {
+                showToast(AppConstants.WARN_CONNECTION);
+                finish();
+            }
+        } else {
+            incident = getIntent().getParcelableExtra("incident");
+            initDetails();
+        }
     }
 
     @Override
@@ -80,7 +101,7 @@ public class IncidentDetailActivity extends BaseActivity {
     }
 
     private void initDetails() {
-        incident = getIntent().getParcelableExtra("incident");
+
         if (!incident.getImages().isEmpty()) {
             PicassoSingleton.getInstance().getPicasso().load(incident.getImages())
                     .placeholder(R.drawable.placeholder_image)
@@ -150,5 +171,28 @@ public class IncidentDetailActivity extends BaseActivity {
         if (unbinder != null) {
             unbinder.unbind();
         }
+    }
+
+    @Override
+    public void onApiRequestBegin(ApiAction action) {
+        if (action.equals(ApiAction.GET_INCIDENT_BY_ID)) {
+            showCustomProgress("Loading incident details, Please wait...");
+        }
+    }
+
+    @Override
+    public void onApiRequestSuccess(ApiAction action, Object result) {
+        dismissCustomProgress();
+
+        if (action.equals(ApiAction.GET_INCIDENT_BY_ID)) {
+            incident = (Incident) result;
+            initDetails();
+        }
+    }
+
+    @Override
+    public void onApiRequestFailed(ApiAction action, Throwable t) {
+        dismissCustomProgress();
+
     }
 }

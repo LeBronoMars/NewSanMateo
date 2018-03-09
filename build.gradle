@@ -54,4 +54,5 @@ ext {
     pusherVersion = '1.2.2'
     facebookVersion = '4.15.0'
     loggingInterceptorVesion = '3.4.1'
+    dateTimeAgo = '1.3.4'
 }

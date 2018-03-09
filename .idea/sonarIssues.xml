@@ -28,6 +28,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/activities/IncidentDetailActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/activities/IncidentsActivity.java">
           <value>
             <set />
@@ -184,6 +189,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/singletons/RetrofitSingleton.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/drawable/shape_circle_white.xml">
           <value>
             <set />
           </value>

@@ -1,39 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/_16sdp"
-              android:orientation="horizontal">
-
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_weight="20"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-
-    </RelativeLayout>
+<android.support.v7.widget.CardView android:id="@+id/ll_notification"
+                                    xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:layout_marginRight="@dimen/_5sdp"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:elevation="@dimen/_10sdp"
+                                    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="80"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:textSize="@dimen/_12sdp"
-            android:textColor="@android:color/black"
-            android:layout_height="match_parent"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:background="@android:color/transparent">
 
-        <TextView
-            android:id="@+id/tv_description"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            <ImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="80"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_12sdp"/>
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"/>
+
+            <com.github.curioustechizen.ago.RelativeTimeTextView
+                android:id="@+id/tv_date_posted"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"/>
+
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+
+</android.support.v7.widget.CardView>

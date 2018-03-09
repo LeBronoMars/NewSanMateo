@@ -152,11 +152,22 @@ public class PusherService extends Service {
                         notification.setNotificationType("WEATHER");
                         notification.setTitle("Weather Update: " + json.getString("title"));
                         notification.setDescription(json.getString("message"));
+                    } else if (action.equals("storm")) {
+                        NotificationHelper.displayNotification(id, PusherService.this,
+                                                               json.getString("title"),
+                                                               json.getString("message"),
+                                                               WeatherForecastActivity.class);
+
+                        notification.setNotificationType("STORM");
+                        notification.setTitle("Weather Update: " + json.getString("title"));
+                        notification.setDescription(json.getString("message"));
                     }
 
                     Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(() -> notificationRealmHelper.replaceInto(notification));
-
+                    handler.post(() -> {
+                        notificationRealmHelper.replaceInto(notification);
+                        LogHelper.log("pusher", "must save to local");
+                    });
                 }
             } catch (JSONException e) {
                 LogHelper.log("pusher", "unable to manage,construct and display push notification --> " + e);

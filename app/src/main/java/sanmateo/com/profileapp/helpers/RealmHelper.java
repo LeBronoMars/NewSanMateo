@@ -10,6 +10,7 @@ import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import sanmateo.com.profileapp.models.realm.PanicContact;
+import sanmateo.com.profileapp.models.response.Notification;
 
 /**
  * Created by rsbulanon on 10/2/16.
@@ -30,6 +31,11 @@ public class RealmHelper<T extends RealmObject> {
     public RealmResults<T> findAll() {
         final RealmQuery<T> query = realm.where(this.type);
         return query.findAll();
+    }
+
+    public RealmResults<T> findAllSorted(String key, Sort sort) {
+        final RealmQuery<T> query = realm.where(this.type);
+        return query.findAllSorted(key, sort);
     }
 
     public RealmResults<T> findAll(HashMap<String, String> map) {
@@ -68,6 +74,10 @@ public class RealmHelper<T extends RealmObject> {
 
     public void openRealm() {
         realm.beginTransaction();
+    }
+
+    public void closeRealm() {
+        realm.close();
     }
 
     public void commitTransaction() {

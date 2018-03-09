@@ -93,6 +93,12 @@ public class ApiRequestHelper {
         handleObservableResult(ApiAction.GET_INCIDENTS, observable);
     }
 
+    public void getIncidentById(final String token, final int id) {
+        onApiRequestListener.onApiRequestBegin(ApiAction.GET_INCIDENT_BY_ID);
+        final Observable<Incident> observable = apiInterface.getIncidentById(token, id);
+        handleObservableResult(ApiAction.GET_INCIDENT_BY_ID, observable);
+    }
+
     public void getLatestIncidents(final String token, final int incidentId) {
         onApiRequestListener.onApiRequestBegin(ApiAction.GET_LATEST_INCIDENTS);
         final Observable<List<Incident>> observable = apiInterface.getLatestIncidents(token,
