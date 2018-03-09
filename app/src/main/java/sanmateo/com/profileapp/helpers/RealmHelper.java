@@ -1,5 +1,9 @@
 package sanmateo.com.profileapp.helpers;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
@@ -25,6 +29,16 @@ public class RealmHelper<T extends RealmObject> {
      */
     public RealmResults<T> findAll() {
         final RealmQuery<T> query = realm.where(this.type);
+        return query.findAll();
+    }
+
+    public RealmResults<T> findAll(HashMap<String, String> map) {
+        final RealmQuery<T> query = realm.where(this.type);
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            query.equalTo(pair.getKey().toString(), pair.getValue().toString());
+        }
         return query.findAll();
     }
 

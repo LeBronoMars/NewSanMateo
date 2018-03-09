@@ -75,7 +75,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         final Notification notification = notifications.get(i);
 
 
-        if (notification.getNotificationType().equals(WATER_LEVEL)) {
+        if (notification.getNotificationType().equals("WATER_LEVEL")) {
             if (notification.getWaterAlert().equals("Alert")) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_water_green_40dp));
             } else if (notification.getWaterAlert().equals("Alarm")) {
@@ -83,20 +83,22 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
             } else if (notification.getWaterAlert().equals("Critical")) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_water_red_40dp));
             }
-        } else if (notification.getNotificationType().equals(WEATHER)) {
+        } else if (notification.getNotificationType().equals("WEATHER")) {
             holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_weather_40dp));
-        } else if (notification.getNotificationType().equals(INCIDENT)) {
+        } else if (notification.getNotificationType().equals("INCIDENT")) {
             if (notification.getIncidentType().equals(FIRE)) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_fire_40dp));
-            } else if (notification.getIncidentType().equals(FLOODING)) {
+            } else if (notification.getIncidentType().equals("FLOODING")) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_flood_40dp));
-            } else if (notification.getIncidentType().equals(TRAFFIC_ROAD)) {
+            } else if (notification.getIncidentType().equals("TRAFFIC_ROAD")) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_traffic_40dp));
-            } else if (notification.getIncidentType().equals(MISCELLANEOUS)) {
+            } else if (notification.getIncidentType().equals("MISCELLANEOUS")) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_misc_40dp));
-            } else if (notification.getIncidentType().equals(SOLID_WASTE)) {
+            } else if (notification.getIncidentType().equals("SOLID_WASTE")) {
                 holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_waste_40dp));
             }
+        } else if (notification.getNotificationType().equals("ANNOUNCEMENT")) {
+            holder.ivIcon.setImageDrawable(getDrawable(context, R.drawable.ic_notif_misc_40dp));
         }
 
         holder.tvTitle.setText(notification.getTitle());

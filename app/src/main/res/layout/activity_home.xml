@@ -46,13 +46,34 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/toolbar_title_size"/>
 
-                <ImageView
-                    android:id="@+id/iv_notify"
+                <RelativeLayout
+                    android:id="@+id/rlNotifications"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/ic_notification_48dp"/>
+                    android:clickable="true">
 
+                    <ImageView
+                        android:id="@+id/iv_notify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_notification_48dp"/>
+
+                    <TextView
+                        android:id="@+id/tvNotification"
+                        fontPath="fonts/Roboto-Medium.ttf"
+                        android:layout_width="@dimen/_17sdp"
+                        android:layout_height="@dimen/_17sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/shape_circle_white"
+                        android:gravity="center"
+                        android:text="@string/exclamation"
+                        android:textColor="@android:color/black"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
             <View
@@ -71,7 +92,6 @@
 
             <android.support.v4.widget.NestedScrollView
                 android:id="@+id/sv_dashboard"
-                android:layout_below="@id/rl_toolbar"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

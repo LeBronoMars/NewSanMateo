@@ -1,10 +1,11 @@
 package sanmateo.com.profileapp.services;
 
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -24,10 +25,13 @@ import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.activities.AlertLevelActivity;
 import sanmateo.com.profileapp.activities.NewHomeActivity;
 import sanmateo.com.profileapp.activities.PublicAnnouncementsActivity;
+import sanmateo.com.profileapp.activities.WeatherForecastActivity;
 import sanmateo.com.profileapp.helpers.LogHelper;
 import sanmateo.com.profileapp.helpers.NotificationHelper;
 import sanmateo.com.profileapp.helpers.PrefsHelper;
+import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.models.response.Incident;
+import sanmateo.com.profileapp.models.response.Notification;
 import sanmateo.com.profileapp.singletons.BusSingleton;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
@@ -39,6 +43,7 @@ import sanmateo.com.profileapp.singletons.IncidentsSingleton;
 public class PusherService extends Service {
     private CurrentUserSingleton currentUserSingleton;
     private IncidentsSingleton incidentsSingleton;
+    private RealmHelper<Notification> notificationRealmHelper = new RealmHelper<>(Notification.class);
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -56,13 +61,12 @@ public class PusherService extends Service {
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Notification notification = new NotificationCompat.Builder(this)
+        android.app.Notification notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.san_mateo_logo)
                 .setContentText(getString(R.string.app_name))
                 .setContentIntent(pendingIntent).build();
 
-        //startForeground(9999, notification);
-        LogHelper.log("pusher", "pusher service created and started in fore ground");
+       // startForeground(9999, notification);
     }
 
     @Override
@@ -79,18 +83,27 @@ public class PusherService extends Service {
                 final JSONObject json = new JSONObject(data);
 
                 if (json.has("action")) {
+
+                    Notification notification = new Notification();
+                    notification.setId(json.getInt("id"));
+                    notification.setDate(json.getString("created_at"));
+
                     final String action = json.getString("action");
                     final int id = Integer.valueOf(json.getInt("id"));
 
                     if (action.equals("new incident")) {
                         /** new incident notification */
                         PrefsHelper.setBoolean(PusherService.this, "refresh_incidents", true);
-                        LogHelper.log("pusher", "must show push notification for new incident");
                         NotificationHelper.displayNotification(id, PusherService.this,
-                                json.getString("title"), json.getString("content"), null);
+                                       "Incident : " + json.getString("incident_type"),
+                                       json.getString("content"), null);
+
+                        notification.setNotificationType("INCIDENT");
+                        notification.setIncidentType(json.getString("incident_type"));
+                        notification.setTitle("Incident : " + json.getString("incident_type"));
+                        notification.setDescription(json.getString("content"));
                     } else if (action.equals("block report")) {
                         /** new incident notification */
-                        LogHelper.log("pusher", "must delete incident report --> " + json.toString());
                         final int reportedBy = Integer.valueOf(json.getString("reported_by"));
                         if (currentUserSingleton.getCurrentUser().getId() == reportedBy) {
                             LogHelper.log("pusher", "Show notification for blocked report");
@@ -107,33 +120,53 @@ public class PusherService extends Service {
                             }
                         }
                     } else if (action.equals("news created")) {
-                        LogHelper.log("pusher", "news created");
                         NotificationHelper.displayNotification(id, PusherService.this,
                                 json.getString("title"), json.getString("reported_by"), null);
                     } else if (action.equals("announcements")) {
-                        LogHelper.log("pusher", "announcements created");
                         PrefsHelper.setBoolean(PusherService.this, "has_notifications", true);
                         PrefsHelper.setBoolean(PusherService.this, "refresh_announcements", true);
                         NotificationHelper.displayNotification(id, PusherService.this,
                                 json.getString("title"), json.getString("message"),
                                 PublicAnnouncementsActivity.class);
+
+                        notification.setNotificationType("ANNOUNCEMENT");
+                        notification.setTitle(json.getString("title"));
+                        notification.setDescription(json.getString("message"));
                     } else if (action.equals("water level")) {
                         PrefsHelper.setBoolean(PusherService.this, "has_notifications", true);
-                        LogHelper.log("pusher", "water level created");
                         PrefsHelper.setBoolean(PusherService.this, "refresh_water_level", true);
                         NotificationHelper.displayNotification(id, PusherService.this,
                                 json.getString("title"), json.getString("message"),
                                 AlertLevelActivity.class, json.getString("area"));
+
+                        notification.setNotificationType("WATER_LEVEL");
+                        notification.setTitle("Water Level Alert");
+                        notification.setDescription(json.getString("area") + ": " + json.getString("level") + " ft.");
+                        notification.setWaterAlert(json.getString("message"));
+                    } else if (action.equals("weather")) {
+                        NotificationHelper.displayNotification(id, PusherService.this,
+                                                               json.getString("title"),
+                                                               json.getString("message"),
+                                                               WeatherForecastActivity.class);
+
+                        notification.setNotificationType("WEATHER");
+                        notification.setTitle("Weather Update: " + json.getString("title"));
+                        notification.setDescription(json.getString("message"));
                     }
+
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(() -> notificationRealmHelper.replaceInto(notification));
+
                 }
             } catch (JSONException e) {
-                LogHelper.log("err", "unable to manage,construct and display push notification --> " + e);
+                LogHelper.log("pusher", "unable to manage,construct and display push notification --> " + e);
             }
 
             /** broadcast received push notification */
             final HashMap<String, Object> map = new HashMap<>();
             map.put("channel", channelName);
             map.put("data", data);
+            map.put("action", "refreshNotificationCount");
             BusSingleton.getInstance().post(map);
         });
 
@@ -143,13 +176,11 @@ public class PusherService extends Service {
             privateChannel.bind("san_mateo_event", (channelName, eventName, data) -> {
                 try {
                     final JSONObject json = new JSONObject(data);
-                    LogHelper.log("pusher", "JSON ---> " + json.toString());
                     if (json.has("action")) {
                         final String action = json.getString("action");
                         final int id = Integer.valueOf(json.getInt("id"));
 
                         if (action.equals("incident_approval")) {
-                            LogHelper.log("pusher", "new incident report needed for approval");
                             NotificationHelper.displayNotification(id, PusherService.this,
                                     json.getString("title"), json.getString("content"), null);
                         }

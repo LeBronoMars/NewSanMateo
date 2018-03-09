@@ -133,6 +133,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/helpers/RealmHelper.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/interfaces/ApiInterface.java">
           <value>
             <set />
@@ -149,6 +154,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/models/response/Notification.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/models/response/NotificationStatus.java">
           <value>
             <set />
           </value>

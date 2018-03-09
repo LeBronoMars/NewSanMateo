@@ -22,6 +22,7 @@ import io.reactivex.schedulers.Schedulers;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.NotificationsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
+import sanmateo.com.profileapp.helpers.RealmHelper;
 import sanmateo.com.profileapp.interfaces.ApiInterface;
 import sanmateo.com.profileapp.models.response.Announcement;
 import sanmateo.com.profileapp.models.response.Incident;
@@ -38,10 +39,6 @@ import static sanmateo.com.profileapp.models.response.Incident.FLOODING;
 import static sanmateo.com.profileapp.models.response.Incident.MISCELLANEOUS;
 import static sanmateo.com.profileapp.models.response.Incident.SOLID_WASTE;
 import static sanmateo.com.profileapp.models.response.Incident.TRAFFIC_ROAD;
-import static sanmateo.com.profileapp.models.response.NotificationType.ANNOUNCEMENT;
-import static sanmateo.com.profileapp.models.response.NotificationType.INCIDENT;
-import static sanmateo.com.profileapp.models.response.NotificationType.WATER_LEVEL;
-import static sanmateo.com.profileapp.models.response.NotificationType.WEATHER;
 
 /**
  * Created by rsbulanon on 05/03/2018.
@@ -68,6 +65,8 @@ public class NotificationsActivity extends BaseActivity {
 
     private static final String ACTIVE = "active";
 
+    private RealmHelper<Notification> notificationRealmHelper = new RealmHelper<>(Notification.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +81,8 @@ public class NotificationsActivity extends BaseActivity {
         rvNotifications.setAdapter(new NotificationsAdapter(this, notifications));
         rvNotifications.setLayoutManager(new LinearLayoutManager(this));
 
-        getNotifications();
+        //getNotifications();
+        getNotificationsFromDb();
     }
 
     @Override
@@ -95,6 +95,14 @@ public class NotificationsActivity extends BaseActivity {
     public void back() {
         finish();
         animateToRight(this);
+    }
+
+    private void getNotificationsFromDb() {
+        notifications.clear();
+        notifications.addAll(notificationRealmHelper.findAll());
+
+        Log.d("pusher", "refresh notifications recyclerview --> " + notifications.size());
+        rvNotifications.getAdapter().notifyDataSetChanged();
     }
 
     private void getNotifications() {
@@ -157,7 +165,7 @@ public class NotificationsActivity extends BaseActivity {
         return Single.defer(() -> {
             Notification notification = new Notification();
 
-            notification.setNotificationType(ANNOUNCEMENT);
+            notification.setNotificationType("ANNOUNCEMENT");
             notification.setId(announcement.getId());
             notification.setTitle(announcement.getTitle());
             notification.setDescription(announcement.getMessage());
@@ -171,7 +179,7 @@ public class NotificationsActivity extends BaseActivity {
         return Single.defer(() -> {
             Notification notification = new Notification();
 
-            notification.setNotificationType(WATER_LEVEL);
+            notification.setNotificationType("WATER_LEVEL");
             notification.setId(waterLevel.getId());
             notification.setTitle("Water Level Alert");
             notification.setDescription(waterLevel.getArea() + ": " + waterLevel.getWaterLevel() + " ft.");
@@ -186,7 +194,7 @@ public class NotificationsActivity extends BaseActivity {
         return Single.defer(() -> {
             Notification notification = new Notification();
 
-            notification.setNotificationType(WEATHER);
+            notification.setNotificationType("WEATHER");
             notification.setId(weather.id);
             notification.setTitle("Weather Update");
             notification.setDescription(weather.summary);
@@ -200,7 +208,7 @@ public class NotificationsActivity extends BaseActivity {
         return Single.defer(() -> {
             Notification notification = new Notification();
 
-            notification.setNotificationType(INCIDENT);
+            notification.setNotificationType("INCIDENT");
             notification.setId(incident.getIncidentId());
             notification.setIncidentType(incident.getIncidentType());
             notification.setTitle("Incident : " + incident.getIncidentType());

@@ -1,12 +1,15 @@
 package sanmateo.com.profileapp.models.response;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by rsbulanon on 05/03/2018.
  */
 
-public class Notification {
+public class Notification extends RealmObject {
 
-    private NotificationType notificationType;
+    private String notificationType;
 
     private String date;
 
@@ -14,13 +17,16 @@ public class Notification {
 
     private String description;
 
+    @PrimaryKey
     private int id;
 
     private String waterAlert;
 
     private String incidentType;
 
-    public Notification(NotificationType notificationType,
+    private String notificationStatus;
+
+    public Notification(String notificationType,
                         String date,
                         String title,
                         String description, int id, String waterAlert, String incidentType) {
@@ -31,17 +37,11 @@ public class Notification {
         this.id = id;
         this.waterAlert = waterAlert;
         this.incidentType = incidentType;
+        this.notificationStatus = "UNSEEN";
     }
 
     public Notification() {
-    }
-
-    public NotificationType getNotificationType() {
-        return notificationType;
-    }
-
-    public void setNotificationType(NotificationType notificationType) {
-        this.notificationType = notificationType;
+        this.notificationStatus = "UNSEEN";
     }
 
     public String getDate() {
@@ -90,5 +90,21 @@ public class Notification {
 
     public void setIncidentType(String incidentType) {
         this.incidentType = incidentType;
+    }
+
+    public String getNotificationType() {
+        return notificationType;
+    }
+
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
+    }
+
+    public String getNotificationStatus() {
+        return notificationStatus;
+    }
+
+    public void setNotificationStatus(String notificationStatus) {
+        this.notificationStatus = notificationStatus;
     }
 }

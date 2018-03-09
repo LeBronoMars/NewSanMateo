@@ -21,10 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.realm.RealmResults;
 import retrofit2.adapter.rxjava2.HttpException;
 import sanmateo.com.profileapp.R;
 import sanmateo.com.profileapp.adapters.DashboardIncidentsAdapter;
@@ -60,6 +64,7 @@ import sanmateo.com.profileapp.models.response.AuthResponse;
 import sanmateo.com.profileapp.models.response.GenericMessage;
 import sanmateo.com.profileapp.models.response.Incident;
 import sanmateo.com.profileapp.models.response.News;
+import sanmateo.com.profileapp.models.response.Notification;
 import sanmateo.com.profileapp.models.response.WaterLevel;
 import sanmateo.com.profileapp.models.response.Weather;
 import sanmateo.com.profileapp.services.PusherService;
@@ -176,6 +181,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @BindView(R.id.tvNotification)
+    TextView tvNotification;
+
     private Unbinder unbinder;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private String uploadToBucket;
@@ -190,6 +198,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     private IncidentsSingleton incidentsSingleton;
 
     private int refreshDataCounter;
+
+    private RealmHelper<Notification> notificationRealmHelper = new RealmHelper<>(Notification.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -259,6 +269,21 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         super.onResume();
         refreshData();
         initSideDrawerMenu();
+        showUnseenNotificationsCount();
+    }
+
+    private void showUnseenNotificationsCount() {
+        runOnUiThread(() -> {
+            HashMap<String, String> query = new HashMap<>();
+            query.put("notificationStatus", "UNSEEN");
+            RealmResults<Notification> realmResults = notificationRealmHelper.findAll(query);
+
+            tvNotification.setVisibility(realmResults.isEmpty() ? GONE : VISIBLE);
+
+            if (!realmResults.isEmpty()) {
+                tvNotification.setText(String.valueOf(realmResults.size()));
+            }
+        });
     }
 
     private void initIncidentsAdapter(ArrayList<Incident> incidents) {
@@ -272,6 +297,15 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         rvIncidents.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         rvIncidents.setAdapter(adapter);
         rvIncidents.scrollToPosition(0);
+    }
+
+    @Subscribe
+    public void refreshNotificationsCount(HashMap<String, Object> map) {
+        LogHelper.log("pusher", "must refresh notifications count AAA");
+        if (map.get("action").toString().equals("refreshNotificationCount")) {
+            LogHelper.log("pusher", "must refresh notifications count BBB");
+            showUnseenNotificationsCount();
+        }
     }
 
     @OnClick(R.id.tv_read_more_weather)
