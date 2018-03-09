@@ -640,6 +640,22 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         }
     }
 
+    @OnClick({R.id.tv_water_level_date_montalban, R.id.tv_water_level_montalban_reading})
+    public void viewMontalbanWaterReadings() {
+        Intent intent = new Intent(this, AlertLevelActivity.class);
+        intent.putExtra("area", "Montalban");
+        startActivity(intent);
+        animateToLeft(this);
+    }
+
+    @OnClick({R.id.cv_water_level_bridge, R.id.tv_water_level_reading_batasan})
+    public void viewBatasanBridgeWaterReadings() {
+        Intent intent = new Intent(this, AlertLevelActivity.class);
+        intent.putExtra("area", "Batasan-San Mateo Bridge");
+        startActivity(intent);
+        animateToLeft(this);
+    }
+
     private void logout() {
         currentUserSingleton.setCurrentUser(null);
 

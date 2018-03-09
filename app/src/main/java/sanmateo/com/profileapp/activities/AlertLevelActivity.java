@@ -1,6 +1,7 @@
 package sanmateo.com.profileapp.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,6 +40,7 @@ public class AlertLevelActivity extends BaseActivity implements OnMapReadyCallba
     @BindView(R.id.viewPager) ViewPager viewPager;
     @BindView(R.id.tabLayout) TabLayout tabLayout;
     @BindView(R.id.appBarLayout) AppBarLayout appBarLayout;
+    @BindDrawable(R.drawable.bg_appbar) Drawable bgAppBar;
     private ArrayList<Fragment> fragments = new ArrayList<>();
     private ArrayList<AppMarker> appMarkers = new ArrayList<>();
     private GoogleMap map;
@@ -53,6 +56,7 @@ public class AlertLevelActivity extends BaseActivity implements OnMapReadyCallba
         initMap();
         seen();
         setToolbarTitle("Water Level");
+        getSupportActionBar().setBackgroundDrawable(bgAppBar);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class AlertLevelActivity extends BaseActivity implements OnMapReadyCallba
 
     private void initMapMarker() {
         appMarkers.clear();
-        appMarkers.add(new AppMarker(14.6969916, 121.1197769, "San Mateo Public Market", "",
+        appMarkers.add(new AppMarker(14.6969916, 121.1197769, "Montalban", "",
                 AppConstants.IMAGE_URL_MARKER_MARKET_1, AppConstants.IMAGE_URL_MARKER_MARKET_2,
                 AppConstants.IMAGE_URL_MARKER_MARKET_3));
         appMarkers.add(new AppMarker(14.6776636, 121.1113037, "Batasan-San Mateo Bridge", "",
