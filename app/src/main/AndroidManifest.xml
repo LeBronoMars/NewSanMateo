@@ -195,6 +195,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"/>
 
+        <!-- change password activity -->
+        <activity
+            android:name=".activities.ChangePasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppNoActionBar"/>
+
         <activity
             android:name=".activities.NewMapActivity"
             android:screenOrientation="portrait"/>
@@ -235,8 +241,8 @@
 
         <activity
             android:name=".activities.NotificationsActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

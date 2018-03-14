@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -375,29 +376,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     @OnClick(R.id.iv_notify)
     public void showNotifications() {
         moveToOtherActivity(NotificationsActivity.class);
-
-//        final ArrayList<String> menu = new ArrayList<>();
-//        menu.add("Public Announcements");
-//        menu.add("Water Level Monitoring");
-//        final DisasterMgtMenuDialogFragment fragment = DisasterMgtMenuDialogFragment
-//                .newInstance(headerAlertNotifications, menu);
-//        fragment.setOnSelectDisasterMenuListener(new DisasterMgtMenuDialogFragment.OnSelectDisasterMenuListener() {
-//            @Override
-//            public void onSelectedMenu(int position) {
-//                fragment.dismiss();
-//                if (position == 0) {
-//                    moveToOtherActivity(PublicAnnouncementsActivity.class);
-//                } else {
-//                    moveToOtherActivity(WaterLevelMonitoringActivity.class);
-//                }
-//            }
-//
-//            @Override
-//            public void onClose() {
-//                fragment.dismiss();
-//            }
-//        });
-//        fragment.show(getFragmentManager(), "show notifications");
     }
 
     @OnClick(R.id.iv_burger)
@@ -421,6 +399,15 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         initSideDrawerMenu();
+    }
+
+    @OnClick(R.id.iv_burger)
+    public void toggleSideDrawerMenu() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawer(Gravity.LEFT);
+        } else {
+            drawerLayout.openDrawer(Gravity.LEFT);
+        }
     }
 
     private void initSideDrawerMenu() {
@@ -460,6 +447,11 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         panicSettingsFragment.show(getSupportFragmentManager(), "panic");
     }
 
+    @OnClick(R.id.ll_change_password)
+    public void changePassword() {
+        moveToOtherActivity(ChangePasswordActivity.class);
+    }
+
     @OnClick(R.id.ll_directory)
     public void goDirectory() {
         startActivity(new Intent(this, NewDirectoriesActivity.class));
@@ -494,14 +486,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
                     }
                 });
-    }
-
-    private void changePassword() {
-        ChangePasswordDialogFragment fragment = ChangePasswordDialogFragment.newInstance();
-        fragment.setOnChangePasswordListener((oldPassword, newPassword) ->
-                apiRequestHelper.changePassword(token, currentUserSingleton.getCurrentUser().getEmail(),
-                        oldPassword, newPassword));
-        fragment.show(getFragmentManager(), "chane password");
     }
 
     private void showChangeProfilePicMenu() {

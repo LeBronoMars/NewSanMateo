@@ -184,6 +184,30 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingLeft="16dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_lock_black_24dp"/>
+
+                <TextView
+                    fontPath="fonts/Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="56dp"
+                    android:text="@string/change_password_header"
+                    android:textColor="@color/status_bar_bg"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
