@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppNoActionBar"
             android:windowSoftInputMode="adjustPan">
@@ -32,6 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- login activity -->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/AppNoActionBar"
+            android:screenOrientation="portrait"/>
 
         <!-- home activity -->
         <activity

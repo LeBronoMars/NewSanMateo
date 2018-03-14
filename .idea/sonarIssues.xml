@@ -88,6 +88,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/activities/SplashActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/app/src/main/java/sanmateo/com/profileapp/activities/UpdateProfileActivity.java">
           <value>
             <set />
@@ -239,6 +244,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_password_reset.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/res/layout/activity_splash.xml">
           <value>
             <set />
           </value>
