@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -27,6 +29,12 @@ import static sanmateo.com.profileapp.adapters.NewDirectoriesAdapter.*;
 
 public class NewDirectoriesActivity extends BaseActivity {
 
+    @BindView(R.id.rl_action_bar)
+    RelativeLayout rlActionBar;
+
+    @BindView(R.id.status_bar)
+    View statusBar;
+
     @BindView(R.id.rv_directories)
     RecyclerView rvDirectories;
 
@@ -38,6 +46,8 @@ public class NewDirectoriesActivity extends BaseActivity {
         setContentView(R.layout.activity_new_directories);
 
         unbinder = ButterKnife.bind(this);
+
+        setStatusBarColor(rlActionBar, statusBar);
 
         rvDirectories.setLayoutManager(new LinearLayoutManager(this));
 
