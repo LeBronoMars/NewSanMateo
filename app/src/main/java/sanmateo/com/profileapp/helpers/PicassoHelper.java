@@ -131,7 +131,6 @@ public class PicassoHelper {
                                         final int placeHolder,
                                         final ProgressBar progressBar,
                                         final ImageView imageView) {
-        Log.d("app", "url to load --> " + url);
         if (progressBar != null) {
             progressBar.setVisibility(View.VISIBLE);
         }
@@ -142,7 +141,6 @@ public class PicassoHelper {
                 .into(imageView, new Callback() {
                     @Override
                     public void onSuccess() {
-                        Log.d("app", "on success");
                         if (progressBar != null) {
                             progressBar.setVisibility(View.GONE);
                         }
@@ -150,7 +148,6 @@ public class PicassoHelper {
 
                     @Override
                     public void onError() {
-                        Log.d("app", "on error");
                         if (progressBar != null) {
                             progressBar.setVisibility(View.GONE);
                         }

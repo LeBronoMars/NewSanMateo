@@ -49,7 +49,6 @@ import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.ActionsDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomBottomSheetDialogFragment;
 import sanmateo.com.profileapp.fragments.ETextSiMayorDialogFragment;
-import sanmateo.com.profileapp.fragments.PanicSettingsDialogFragment;
 import sanmateo.com.profileapp.helpers.ApiErrorHelper;
 import sanmateo.com.profileapp.helpers.ApiRequestHelper;
 import sanmateo.com.profileapp.helpers.AppConstants;
@@ -127,9 +126,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @BindView(R.id.tv_water_level_reading_batasan)
     TextView tvWaterLevelReadingBatasan;
-
-    @BindView(R.id.cv_water_level_market)
-    CardView getCvWaterLevelMarket;
 
     @BindView(R.id.tv_water_level_montalban_reading)
     TextView tvWaterLevelMontalbanReading;
@@ -243,7 +239,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
             startService(new Intent(this, PusherService.class));
         }
 
-        setPanicContacts();
+        initPanicContact();
     }
 
     private void refreshData() {
@@ -365,7 +361,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
                 builder.append("Classification : " + classification + "\n\n");
                 builder.append("Concern : " + message + "\n\n");
                 builder.append("Sent via San Mateo Profile App");
-                LogHelper.log("sms", "CONCERN ---> " + builder.toString());
                 sendSMS("09778397506", builder.toString(), true);
             }
 
@@ -383,8 +378,12 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
     }
 
     @OnClick(R.id.iv_burger)
-    public void toggleDrawer() {
-        drawerLayout.openDrawer(GravityCompat.START);  // OPEN DRAWER
+    public void showSideDrawerMenu() {
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawer(Gravity.LEFT);
+        } else {
+            drawerLayout.openDrawer(Gravity.LEFT);
+        }
     }
 
     public void initNavigationDrawer() {
@@ -403,15 +402,6 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         initSideDrawerMenu();
-    }
-
-    @OnClick(R.id.iv_burger)
-    public void toggleSideDrawerMenu() {
-        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-            drawerLayout.closeDrawer(Gravity.LEFT);
-        } else {
-            drawerLayout.openDrawer(Gravity.LEFT);
-        }
     }
 
     private void initSideDrawerMenu() {

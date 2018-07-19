@@ -35,7 +35,7 @@ public class RealmHelper<T extends RealmObject> {
 
     public RealmResults<T> findAllSorted(String key, Sort sort) {
         final RealmQuery<T> query = realm.where(this.type);
-        return query.findAllSorted(key, sort);
+        return query.findAll().sort(key, sort);
     }
 
     public RealmResults<T> findAll(HashMap<String, String> map) {
@@ -50,7 +50,7 @@ public class RealmHelper<T extends RealmObject> {
 
     public RealmResults<T> findAll(final String field, final Sort sort) {
         final RealmQuery<T> query = realm.where(this.type);
-        return query.findAllSorted(field, sort);
+        return query.findAll().sort(field, sort);
     }
 
     /**

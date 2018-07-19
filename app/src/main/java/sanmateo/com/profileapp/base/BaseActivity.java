@@ -143,7 +143,7 @@ public class BaseActivity extends AppCompatActivity {
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_bg));
         }
     }
 

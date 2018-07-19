@@ -40,7 +40,7 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@id/iv_back"
                     android:gravity="center_vertical"
-                    android:text="@string/menu_map"
+                    android:text="@string/directories"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/toolbar_title_size" />
 

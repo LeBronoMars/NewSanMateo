@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="@dimen/_20sdp"
             android:text="@string/text_si_mayor"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/text_action_blue_dark"
             android:textSize="@dimen/_25sdp" />
 
         <!-- classification -->
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
-            android:background="@color/colorPrimary"
+            android:background="@color/text_action_blue"
             android:text="@string/send"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_14sdp" />
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/text_action_blue_dark"
             android:text="@string/cancel"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_14sdp" />

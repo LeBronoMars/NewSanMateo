@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply plugin: 'android-apt'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 
 buildscript {
@@ -77,43 +75,44 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'META-INF/MANIFEST.MF'
     }
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '27.0.3'
 }
 
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    apt "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
-    compile "com.jakewharton:butterknife:$rootProject.ext.butterKnifeVersion"
-    compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
-    compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
-    compile "uk.co.chrisjenx:calligraphy:$rootProject.ext.calligraphyVersion"
-    compile "com.intuit.sdp:sdp-android:$rootProject.ext.sdpVersion"
-    compile "com.intuit.ssp:ssp-android:$rootProject.ext.sdpVersion"
-    compile "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picassoVersion"
-    compile "com.squareup:otto:$rootProject.ext.squareUpOttoVersion"
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
-    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.rxJavaAdapterVersion"
-    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.gsonConverterVersion"
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
+    implementation "com.jakewharton:butterknife:$rootProject.ext.butterKnifeVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    implementation "uk.co.chrisjenx:calligraphy:$rootProject.ext.calligraphyVersion"
+    implementation "com.intuit.sdp:sdp-android:$rootProject.ext.sdpVersion"
+    implementation "com.intuit.ssp:ssp-android:$rootProject.ext.sdpVersion"
+    implementation "com.jakewharton.picasso:picasso2-okhttp3-downloader:$rootProject.ext.picassoVersion"
+    implementation "com.squareup:otto:$rootProject.ext.squareUpOttoVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.ext.rxAndroidVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.rxJavaAdapterVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.gsonConverterVersion"
+    implementation('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
         transitive = true;
     }
-    compile "com.amazonaws:aws-android-sdk-s3:$rootProject.ext.awsS3Version"
-    compile "com.afollestad.material-dialogs:core:$rootProject.ext.materialDialogCoreVersion"
-    compile "org.ocpsoft.prettytime:prettytime:$rootProject.ext.prettyTimeVersion"
-    compile "com.google.android.gms:play-services-maps:$rootProject.ext.playServicesVersion"
-    compile "com.google.android.gms:play-services-location:$rootProject.ext.playServicesVersion"
-    compile "de.hdodenhof:circleimageview:$rootProject.ext.circleImageViewVersion"
-    compile "com.pusher:pusher-java-client:$rootProject.ext.pusherVersion"
-    compile "com.facebook.android:facebook-android-sdk:$rootProject.ext.facebookVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.loggingInterceptorVesion"
-    compile "com.squareup.okhttp3:okhttp:$rootProject.ext.loggingInterceptorVesion"
-    compile "com.github.curioustechizen.android-ago:library:$rootProject.ext.dateTimeAgo"
+    implementation "com.amazonaws:aws-android-sdk-s3:$rootProject.ext.awsS3Version"
+    implementation "com.afollestad.material-dialogs:core:$rootProject.ext.materialDialogCoreVersion"
+    implementation "org.ocpsoft.prettytime:prettytime:$rootProject.ext.prettyTimeVersion"
+    implementation "com.google.android.gms:play-services-maps:$rootProject.ext.playServicesVersion"
+    implementation "com.google.android.gms:play-services-location:$rootProject.ext.playServicesVersion"
+    implementation "de.hdodenhof:circleimageview:$rootProject.ext.circleImageViewVersion"
+    implementation "com.pusher:pusher-java-client:$rootProject.ext.pusherVersion"
+    implementation "com.facebook.android:facebook-android-sdk:$rootProject.ext.facebookVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.loggingInterceptorVesion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.loggingInterceptorVesion"
+    implementation "com.github.curioustechizen.android-ago:library:$rootProject.ext.dateTimeAgo"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayout"
 }

@@ -8,6 +8,8 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -56,6 +58,7 @@ public class AlertLevelActivity extends BaseActivity implements OnMapReadyCallba
         initMap();
         seen();
         setToolbarTitle("Water Level");
+        setStatusBarColor();
         getSupportActionBar().setBackgroundDrawable(bgAppBar);
     }
 
