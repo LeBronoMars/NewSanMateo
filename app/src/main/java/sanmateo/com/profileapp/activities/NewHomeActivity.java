@@ -47,7 +47,6 @@ import sanmateo.com.profileapp.adapters.DashboardIncidentsAdapter;
 import sanmateo.com.profileapp.base.BaseActivity;
 import sanmateo.com.profileapp.enums.ApiAction;
 import sanmateo.com.profileapp.fragments.ActionsDialogFragment;
-import sanmateo.com.profileapp.fragments.ChangePasswordDialogFragment;
 import sanmateo.com.profileapp.fragments.CustomBottomSheetDialogFragment;
 import sanmateo.com.profileapp.fragments.ETextSiMayorDialogFragment;
 import sanmateo.com.profileapp.fragments.PanicSettingsDialogFragment;
@@ -72,7 +71,6 @@ import sanmateo.com.profileapp.models.response.Weather;
 import sanmateo.com.profileapp.services.PusherService;
 import sanmateo.com.profileapp.singletons.CurrentUserSingleton;
 import sanmateo.com.profileapp.singletons.IncidentsSingleton;
-
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -448,12 +446,7 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @OnClick(R.id.ll_emergency_contact_details)
     public void goEmergency() {
-        final PanicSettingsDialogFragment panicSettingsFragment = PanicSettingsDialogFragment.newInstance();
-        panicSettingsFragment.setOnPanicContactListener(() -> {
-            panicSettingsFragment.dismiss();
-            initPanicContact();
-        });
-        panicSettingsFragment.show(getSupportFragmentManager(), "panic");
+        setPanicContacts();
     }
 
     @OnClick(R.id.ll_change_password)

@@ -70,6 +70,7 @@
     <color name="critical_level_color">#CD2931</color>
 
     <color name="text_action_blue">#2C378C</color>
+    <color name="text_action_blue_dark">#1e255f</color>
     <color name="text_action_red">#ff0000</color>
 
     <color name="read_more_color">#2C3786</color>

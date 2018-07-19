@@ -26,11 +26,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +43,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
@@ -91,6 +94,7 @@ public class BaseActivity extends AppCompatActivity {
     private CustomProgressBarDialogFragment customProgressBarDialogFragment;
     private AmazonS3Helper amazonS3Helper;
     private OnS3UploadListener onS3UploadListener;
+    private static MaterialDialog materialDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,23 +286,30 @@ public class BaseActivity extends AppCompatActivity {
     public void showNonCancelableConfirmDialog(final String action, final String title, final String content,
                                   final String positiveText, final String negativeText,
                                   final OnConfirmDialogListener onConfirmDialogListener) {
-        new MaterialDialog.Builder(this)
+        if (null != materialDialog) {
+            materialDialog.dismiss();
+        }
+        materialDialog = new MaterialDialog.Builder(this)
                 .title(title)
                 .content(content)
+                .cancelable(false)
                 .canceledOnTouchOutside(false)
                 .positiveText(positiveText)
                 .negativeText(negativeText)
                 .onPositive((dialog, which) -> {
                     if (onConfirmDialogListener != null) {
+                        dialog.dismiss();
                         onConfirmDialogListener.onConfirmed(action);
                     }
                 })
                 .onNegative((dialog, which) -> {
                     if (onConfirmDialogListener != null) {
+                        dialog.dismiss();
                         onConfirmDialogListener.onCancelled(action);
                     }
                 })
-                .show();
+                .build();
+        materialDialog.show();
     }
 
     public void showSnackbar(final View parent, final String message) {
@@ -559,8 +570,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public void initPanicContact() {
         if (PrefsHelper.getInt(this, "panicContactSize") == 0) {
-            LogHelper.log("book", "show");
-            showConfirmDialog("", "Emergency Contacts", "Please add at least one contact person" +
+            showNonCancelableConfirmDialog("", "Emergency Contacts", "Please add at least one contact person" +
                     " for emergency purposes", "Ok", "", new OnConfirmDialogListener() {
                 @Override
                 public void onConfirmed(String action) {
@@ -573,7 +583,10 @@ public class BaseActivity extends AppCompatActivity {
                 }
             });
         } else {
-            LogHelper.log("book", "do not show");
+            if (null != materialDialog) {
+                materialDialog.dismiss();
+                materialDialog = null;
+            }
         }
     }
 

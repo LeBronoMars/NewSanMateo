@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +109,7 @@ public class PanicSettingsDialogFragment extends DialogFragment {
             lv_contacts.setVisibility(View.VISIBLE);
         }
         PrefsHelper.setInt(activity, "panicContactSize",contacts.size());
+        Log.d("book", "new contact size --> " + PrefsHelper.getInt(getActivity(), "panicContactSize"));
     }
 
     @OnClick(R.id.btn_select)

@@ -16,7 +16,7 @@
         android:paddingLeft="@dimen/_10sdp"
         android:paddingTop="@dimen/_10sdp"
         android:text="@string/panic_settings_header"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_action_blue_dark"
         android:textSize="@dimen/_20sdp" />
 
     <TextView
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/colorPrimary"
+                android:background="@color/text_action_blue"
                 android:text="@string/select_contact"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_14sdp" />
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/text_action_blue_dark"
                 android:text="@string/close"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_14sdp" />
