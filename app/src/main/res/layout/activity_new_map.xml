@@ -5,6 +5,57 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_action_bar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/bg_appbar">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_back" />
+
+                <TextView
+                    fontPath="fonts/Roboto-Medium.ttf"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/iv_back"
+                    android:gravity="center_vertical"
+                    android:text="@string/menu_map"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/toolbar_title_size" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/status_bar"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/transparent_dark_20" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:background="@color/text_action_blue"

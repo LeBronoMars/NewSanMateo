@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -39,6 +41,12 @@ import static sanmateo.com.profileapp.helpers.AppConstants.CATEGORY_SHOPPING_MAL
 
 public class NewMapActivity extends BaseActivity {
 
+    @BindView(R.id.rl_action_bar)
+    RelativeLayout rlActionBar;
+
+    @BindView(R.id.status_bar)
+    View statusBar;
+
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
@@ -57,6 +65,7 @@ public class NewMapActivity extends BaseActivity {
         unbinder = ButterKnife.bind(this);
         initTabs();
         setUpToolbar();
+        setStatusBarColor(rlActionBar, statusBar);
     }
 
     private void setUpToolbar() {
