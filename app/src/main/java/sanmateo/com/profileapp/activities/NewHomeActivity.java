@@ -242,6 +242,8 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
         if (!isMyServiceRunning(PusherService.class)) {
             startService(new Intent(this, PusherService.class));
         }
+
+        setPanicContacts();
     }
 
     private void refreshData() {
