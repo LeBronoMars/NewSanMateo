@@ -127,6 +127,37 @@ public class PicassoHelper {
                         .into(imageView);
     }
 
+    public static void loadImageFromURL(final String url,
+                                        final int placeHolder,
+                                        final ProgressBar progressBar,
+                                        final ImageView imageView) {
+        Log.d("app", "url to load --> " + url);
+        if (progressBar != null) {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+        PicassoSingleton.getInstance().getPicasso()
+                .load(url)
+                .placeholder(placeHolder)
+                .error(R.drawable.placeholder_image)
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("app", "on success");
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.d("app", "on error");
+                        if (progressBar != null) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
+    }
+
     public static void loadImageFromUri(final Uri uri, final ImageView imageView,
                                         final ProgressBar progressBar) {
         if (progressBar != null) {

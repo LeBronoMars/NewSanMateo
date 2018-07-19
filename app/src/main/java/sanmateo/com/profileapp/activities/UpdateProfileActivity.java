@@ -1,13 +1,16 @@
 package sanmateo.com.profileapp.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,6 +92,9 @@ public class UpdateProfileActivity extends BaseActivity implements OnApiRequestL
     @BindView(R.id.etAddress)
     EditText etAddress;
 
+    @BindView(R.id.pbProfilePic)
+    ProgressBar pbProfilePic;
+
     private Unbinder unbinder;
 
     private AuthResponse currentUser;
@@ -117,10 +123,14 @@ public class UpdateProfileActivity extends BaseActivity implements OnApiRequestL
         setContentView(R.layout.activity_update_profile);
         unbinder = ButterKnife.bind(this);
 
+        setStatusBarColor();
+
         currentUser = CurrentUserSingleton.getInstance().getCurrentUser();
 
         if (currentUser.getPicUrl() != null && !currentUser.getPicUrl().isEmpty()) {
-            PicassoHelper.loadImageFromURL(currentUser.getPicUrl(), civProfilePic);
+            PicassoHelper.loadImageFromURL(currentUser.getPicUrl(),
+                    R.drawable.ic_avatar_placeholder_64dp,
+                    pbProfilePic, civProfilePic);
         }
 
         tvFullName.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
@@ -251,6 +261,7 @@ public class UpdateProfileActivity extends BaseActivity implements OnApiRequestL
                         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                         startActivityForResult(cameraIntent, CAPTURE_IMAGE);
                     } catch (Exception ex) {
+                        Log.d("app", "exception --> " + ex.getMessage());
                         showConfirmDialog("", "Capture Image",
                                           "We can't get your image. Please try again.", "Close", "", null);
                     }
@@ -302,7 +313,9 @@ public class UpdateProfileActivity extends BaseActivity implements OnApiRequestL
             realmHelper.commitTransaction();
 
             if (currentUser.getPicUrl() != null && !currentUser.getPicUrl().isEmpty()) {
-                PicassoHelper.loadImageFromURL(currentUser.getPicUrl(), civProfilePic);
+                PicassoHelper.loadImageFromURL(currentUser.getPicUrl(),
+                        R.drawable.ic_avatar_placeholder_64dp,
+                        pbProfilePic, civProfilePic);
             }
         } else if (action.equals(PUT_UPDATE_USER)) {
             AuthResponse authResponse = (AuthResponse) result;

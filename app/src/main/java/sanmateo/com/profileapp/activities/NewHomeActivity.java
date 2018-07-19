@@ -19,6 +19,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -172,6 +173,9 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
 
     @BindView(R.id.civ_profile_image)
     CircleImageView civProfilePic;
+
+    @BindView(R.id.pb_profile_pic)
+    ProgressBar pbProfilePic;
 
     @BindView(R.id.tv_profile_name)
     TextView tvProfileName;
@@ -415,15 +419,20 @@ public class NewHomeActivity extends BaseActivity implements OnApiRequestListene
                 + currentUserSingleton.getCurrentUser().getLastName());
         tvProfileEmail.setText(currentUserSingleton.getCurrentUser().getEmail());
 
-        tvProfileEmail.setOnClickListener(v -> startActivity(new Intent(this,
-                                                                        UpdateProfileActivity.class)));
+        tvProfileEmail.setOnClickListener(v ->
+                startActivity(new Intent(this, UpdateProfileActivity.class)));
+
         tvProfileName.setOnClickListener(v -> tvProfileEmail.performClick());
+
+        civProfilePic.setOnClickListener(v ->
+                startActivity(new Intent(this, UpdateProfileActivity.class)));
 
         if (CurrentUserSingleton.getInstance().getCurrentUser().getPicUrl() != null
                 && !CurrentUserSingleton.getInstance().getCurrentUser().getPicUrl().isEmpty()) {
             PicassoHelper.loadImageFromURL(CurrentUserSingleton.getInstance()
                                                                .getCurrentUser().getPicUrl(),
-                                           civProfilePic);
+                                           R.drawable.ic_avatar_placeholder_64dp,
+                                                pbProfilePic, civProfilePic);
         }
     }
 
